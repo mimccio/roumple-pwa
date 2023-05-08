@@ -1,3 +1,9 @@
+import { Bla } from '&/common/components/bla'
+
 export function App() {
-  return <div>Hello world</div>
+  return (
+    <div>
+      <Bla />
+    </div>
+  )
 }
