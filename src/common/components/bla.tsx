@@ -1,3 +1,3 @@
 export function Bla() {
-  return <div>Bla Component</div>
+  return <div className="text-3xl font-bold underline">Bla Component</div>
 }
