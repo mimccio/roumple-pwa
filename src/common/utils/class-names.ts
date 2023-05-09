@@ -1,4 +1,6 @@
-export function classNames(...classes: string[]) {
+type Style = string | null | false
+
+export function classNames(...classes: Style[]) {
   return classes.filter(Boolean).join(' ')
 }
 
