@@ -1,38 +1,28 @@
-import { Link, Route, Routes, useMatch, useParams } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 
 import { cl } from '&/common/utils'
-import { NotFound } from '&/screens/not-found'
 import { EmptyItem } from '&/screens/empty-item'
+import { Routine } from '&/screens/routine'
+import { NotFoundDetails } from '&/screens/errors/not-found-details'
+import { SettingsDetails } from '&/screens/settings/settings-details'
 
 export function DetailsScreen() {
   const showDetails = useMatch('/:nav/d/*')
 
-  console.log('hello :', showDetails)
-
   return (
-    <div
+    <section
       className={cl(
-        'absolute bottom-0 left-0 right-0 top-0 w-full bg-white lg:relative lg:w-1/2',
+        'absolute bottom-0 left-0 right-0 top-0 h-screen min-h-screen w-full overflow-y-scroll bg-white lg:relative lg:w-1/2',
         showDetails ? 'z-10 lg:z-0' : '-z-10 lg:z-0'
       )}
     >
       <Routes>
-        <Route
-          element={
-            <div>
-              <Link to="/routines">routines</Link>
-            </div>
-          }
-          path=":nav/d/routine/:routineId/details"
-        />
-        <Route element={<div>Routine 1564</div>} path=":nav/d/routine/:routineId/activity" />
-        <Route element={<div>Routine 1564</div>} path=":nav/d/routine/:routineId/checklist" />
+        <Route path=":nav/d/routine/:routineId/*" element={<Routine />} />
+        <Route path="settings" element={<SettingsDetails />} />
 
-        <Route element={<div>task 84</div>} path=":nav/d/task/:taskId/details" />
-
-        <Route element={<NotFound />} path=":nav/d/*" />
-        <Route element={<EmptyItem />} path="*" />
+        <Route path=":nav/d/*" element={<NotFoundDetails />} />
+        <Route path="*" element={<EmptyItem />} />
       </Routes>
-    </div>
+    </section>
   )
 }

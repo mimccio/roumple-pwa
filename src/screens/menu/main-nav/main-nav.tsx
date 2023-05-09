@@ -8,7 +8,7 @@ interface Props {
 
 export function MainNav({ close }: Props) {
   return (
-    <section className="p-4">
+    <section className="flex flex-col gap-1 p-4">
       <NavItem close={close} name="Routines" to="routines" Icon={ArrowPathRoundedSquareIcon} />
       <NavItem close={close} name="Settings" to="settings" Icon={Cog6ToothIcon} />
     </section>

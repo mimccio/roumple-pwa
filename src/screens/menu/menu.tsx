@@ -21,7 +21,7 @@ export function Menu({ isOpen, close }: Props) {
       >
         <MenuContent close={close} />
       </Transition>
-      <div className="hidden md:block md:min-h-screen md:w-80 xl:w-96">
+      <div className="hidden h-screen md:block  md:w-80 xl:w-96">
         <MenuContent close={() => null} />
       </div>
     </>

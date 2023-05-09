@@ -9,23 +9,14 @@ export function AuthenticatedApp() {
   const toggleMenu = () => setMenuIsOpen((prevState) => !prevState)
 
   return (
-    <div className="relative flex min-h-screen w-full bg-white text-gray-800">
+    <div className="relative flex min-h-screen w-full overflow-hidden bg-white text-gray-800">
       <Menu close={toggleMenu} isOpen={menuIsOpen} />
       <MenuButton isOpen={menuIsOpen} toggle={toggleMenu} />
 
-      {/* <div className="w-full"> */}
       <div className="relative flex flex-1 ">
         <MainScreen />
         <DetailsScreen />
       </div>
-      {/* </div> */}
-
-      {/* <div className="w-full">
-        <Routes>
-          <Route path="/full" element={<p>Full screen route</p>} />
-          <Route path="*" element={<Panels />} />
-        </Routes>
-      </div> */}
     </div>
   )
 }
