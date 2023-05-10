@@ -11,7 +11,7 @@ export function Menu({ isOpen, close }: Props) {
     <>
       <Transition
         show={isOpen}
-        className="absolute bottom-0 left-0 right-0 top-0 z-40 bg-red-400 shadow-lg md:hidden"
+        className="absolute bottom-0 left-0 right-0 top-0 z-40 shadow-lg md:hidden"
         enter="transition ease-in-out duration-300 transform  md:duration-0"
         enterFrom="-translate-x-full"
         enterTo="translate-x-0"
