@@ -11,7 +11,6 @@ export default {
     extend: {
       fontFamily: {
         sans: ['nunito', ...defaultTheme.fontFamily.sans],
-        serif: ['crimson-pro', ...defaultTheme.fontFamily.serif],
       },
     },
   },
