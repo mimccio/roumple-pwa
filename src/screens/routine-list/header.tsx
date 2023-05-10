@@ -5,7 +5,7 @@ import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
 
 export function Header() {
   return (
-    <header className="flex h-14 w-full items-center justify-between border-b-4 border-indigo-500 px-2">
+    <header className=" flex h-14 w-full items-center justify-between border-b-4 border-indigo-500 px-2">
       <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">
         <ArrowPathRoundedSquareIcon width={20} className="text-gray-500" />
 

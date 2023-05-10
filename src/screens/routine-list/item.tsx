@@ -30,9 +30,9 @@ export function Item({ routine }: Props) {
             <p className="capitalize text-gray-800">{routine.name}</p>
             <p className="text-sm font-semibold text-gray-400">category</p>
           </div>
-          <div className="pr-2">
+          <span className="pr-2">
             <FlagIcon width={24} className="text-indigo-500" />
-          </div>
+          </span>
         </>
       )}
     </NavLink>

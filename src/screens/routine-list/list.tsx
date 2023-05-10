@@ -18,17 +18,27 @@ const routines = [
   },
   {
     name: 'Seconde routine',
+    id: 44,
+    priority: 1,
+  },
+  {
+    name: 'Seconde routine',
     id: 4,
+    priority: 1,
+  },
+  {
+    name: 'Seconde routine',
+    id: 45,
     priority: 1,
   },
 ]
 
 export function List() {
   return (
-    <ul className="flex flex-col gap-4 px-2 py-8">
+    <div className="flex flex-col gap-4 px-2">
       {routines.map((routine) => (
         <Item key={routine.id} routine={routine} />
       ))}
-    </ul>
+    </div>
   )
 }
