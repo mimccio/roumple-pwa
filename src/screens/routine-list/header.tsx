@@ -9,7 +9,7 @@ export function Header() {
       <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">
         <ArrowPathRoundedSquareIcon width={20} className="text-gray-500" />
 
-        <h1 className="ml-2 pb-1">Routines</h1>
+        <h1 className="ml-2">Routines</h1>
       </div>
       <div className="flex gap-1">
         <button className="p-2">

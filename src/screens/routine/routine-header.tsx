@@ -13,7 +13,7 @@ export function RoutineHeader() {
         <button className="h-8 w-8">
           <FlagIcon width={20} />
         </button>
-        <h3 className="pb-1 font-semibold text-gray-700">Routine name</h3>
+        <h3 className="font-semibold text-gray-700">Routine name</h3>
       </div>
       <div>
         <Link to={mainPath} className="h-8 w-8">

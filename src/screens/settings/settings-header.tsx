@@ -6,7 +6,7 @@ export function SettingsHeader() {
       <div className="text flex h-full items-center text-xl font-bold leading-6 text-gray-500">
         <Cog6ToothIcon width={20} className="text-gray-500" />
 
-        <h1 className="ml-2 pb-1">Settings</h1>
+        <h1 className="ml-2">Settings</h1>
       </div>
     </header>
   )
