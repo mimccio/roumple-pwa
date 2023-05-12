@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { SettingsHeader } from './settings-header'
 
 export function SettingsMain() {
@@ -5,7 +6,9 @@ export function SettingsMain() {
     <>
       <SettingsHeader />
       <div className="mt-4 w-full px-4">
-        <button className="rounded-md border p-2">Logout</button>
+        <Link to="/logout" className="rounded-md border p-2">
+          Logout
+        </Link>
       </div>
     </>
   )
