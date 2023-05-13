@@ -1,5 +1,5 @@
 export interface Routine {
-  id: number
+  id: string
   name: string
   description?: string
 }
