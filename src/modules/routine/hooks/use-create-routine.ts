@@ -3,7 +3,8 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import { createRoutine } from '../mutations'
-import { Routine } from '../types'
+import { RoutineDetails } from '../types'
+import { ROUTINE } from '../constants'
 
 export function useCreateRoutine() {
   const queryClient = useQueryClient()
@@ -13,21 +14,21 @@ export function useCreateRoutine() {
   const name = 'New Routine'
   const { mutate } = useMutation(createRoutine, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: ['ROUTINE'] })
+      await queryClient.cancelQueries({ queryKey: [ROUTINE] })
 
-      const previousRoutineList = queryClient.getQueryData(['ROUTINE'])
+      const previousRoutineList = queryClient.getQueryData([ROUTINE])
 
-      queryClient.setQueryData(['ROUTINE'], (old: Routine[] = []) => [...old, data])
+      queryClient.setQueryData([ROUTINE], (old: RoutineDetails[] = []) => [...old, data])
       navigate(`d/routine/${id}`)
       return { previousRoutineList }
     },
 
     onError: (_err, _item, context) => {
-      queryClient.setQueryData(['ROUTINE'], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
       toast.error("Creation didn't work")
     },
     onSettled: () => {
-      queryClient.invalidateQueries(['ROUTINE'])
+      queryClient.invalidateQueries([ROUTINE])
     },
   })
   const onCreateRoutine = () => mutate({ id, name })

@@ -10,7 +10,11 @@ export const fetchRoutineById = async ({ queryKey }: IParams) => {
 
   if (!routineId) throw new Error('routine id is missing')
 
-  const { data, error } = await db.from('routine').select('id, name, description').eq('id', routineId).single()
+  const { data, error } = await db
+    .from('routine')
+    .select('id, name, description, priority')
+    .eq('id', routineId)
+    .single()
 
   if (error) throw error
   return data as Routine

@@ -6,7 +6,7 @@ interface Params {
   description?: string
 }
 
-export const editRoutine = async ({ id, name, description }: Params) => {
+export const editRoutineDetails = async ({ id, name, description }: Params) => {
   const { data, error } = await db
     .from('routine')
     .update({ name, description })

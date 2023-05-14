@@ -11,7 +11,7 @@ export const createRoutine = async ({ id, name }: Params) => {
 
   const { data, error } = await db
     .from('routine')
-    .insert({ id, name, user_id: userId })
+    .insert({ id, name, user_id: userId, priority: 0 })
     .select('id, name, description')
     .single()
   if (error) throw error

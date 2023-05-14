@@ -1,14 +1,17 @@
 import { useRoutineDetails } from '&/modules/routine/hooks'
-import { NotFoundDetails } from '&/screens/errors/not-found-details'
+import { Routine } from '&/modules/routine/types'
+import { Priority } from './priority'
 
-export function RoutineDetails() {
-  const { routine, register, errors, onBlur } = useRoutineDetails()
+interface Props {
+  routine: Routine
+}
 
-  if (!routine) return <NotFoundDetails />
+export function RoutineDetails({ routine }: Props) {
+  const { register, errors, submit } = useRoutineDetails(routine)
 
   return (
     <div className="w-full p-4">
-      <form onBlur={onBlur} onSubmit={onBlur}>
+      <form onBlur={submit} onSubmit={submit}>
         <div>
           <label htmlFor="name" className="mb-2 text-sm font-bold text-gray-400">
             Name
@@ -47,6 +50,7 @@ export function RoutineDetails() {
           </div>
         </div>
       </form>
+      <Priority priority={routine.priority} />
     </div>
   )
 }

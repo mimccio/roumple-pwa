@@ -1,26 +1,29 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
-import type { Routine, RoutineDetails } from '../types'
+import type { Routine } from '../types'
 import { ROUTINE } from '../constants'
 import { sortRoutines } from '../utils'
-import { editRoutineDetails } from '../mutations'
+import { editRoutinePriority } from '../mutations'
 
-export function useRoutineDetails(routine: Routine) {
+export function useRoutinePriority() {
+  const { routineId } = useParams()
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editRoutineDetails, {
+  const { mutate } = useMutation(editRoutinePriority, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
-      queryClient.setQueryData([ROUTINE, data.id], data)
+
+      queryClient.setQueryData([ROUTINE, data.id], (old: object = {}) => ({ ...old, priority: data.priority }))
+
       const previousRoutineList = queryClient.getQueryData([ROUTINE])
 
       queryClient.setQueryData([ROUTINE], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), { ...old[routineIndex], ...data }, ...old.slice(routineIndex + 1)].sort(
-          sortRoutines
-        )
+        const newRoutine = { ...old[routineIndex], priority: data.priority }
+        console.log('newRoutine :', newRoutine)
+        return [...old.slice(0, routineIndex), newRoutine, ...old.slice(routineIndex + 1)].sort(sortRoutines)
       })
 
       return { previousRoutineList }
@@ -36,16 +39,11 @@ export function useRoutineDetails(routine: Routine) {
     },
   })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RoutineDetails>({
-    values: routine,
-    mode: 'onBlur',
-  })
+  const onSelect = (priority: number) => {
+    if (!routineId) throw new Error('Routine ID is missing')
 
-  const submit = handleSubmit((formData) => mutate({ ...routine, ...formData }))
+    mutate({ priority, id: routineId })
+  }
 
-  return { register, errors, submit }
+  return { onSelect }
 }

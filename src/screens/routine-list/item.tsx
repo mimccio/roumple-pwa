@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 interface Routine {
   id: number
   name: string
-  priority?: number
+  priority: number
   category?: { name: string; color: string }
 }
 
@@ -14,6 +14,12 @@ interface Props {
 }
 
 export function Item({ routine }: Props) {
+  const getPriorityColor = () => {
+    if (routine.priority === 1) return 'text-blue-500'
+    if (routine.priority === 2) return 'text-orange-500'
+    return 'text-gray-400'
+  }
+
   return (
     <NavLink
       to={`d/routine/${routine.id}`}
@@ -31,7 +37,7 @@ export function Item({ routine }: Props) {
             <p className="text-sm font-semibold text-gray-400">category</p>
           </div>
           <span className="pr-2">
-            <FlagIcon width={24} className="text-indigo-500" />
+            <FlagIcon width={20} className={getPriorityColor()} />
           </span>
         </>
       )}

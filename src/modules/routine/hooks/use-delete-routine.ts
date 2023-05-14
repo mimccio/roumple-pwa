@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+
+import type { Routine } from '../types'
+import { ROUTINE } from '../constants'
 import { deleteRoutine } from '../mutations'
-import { Routine } from '../types'
 
 export function useDeleteRoutine() {
   const queryClient = useQueryClient()
@@ -10,10 +12,10 @@ export function useDeleteRoutine() {
 
   const { mutate } = useMutation(deleteRoutine, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: ['ROUTINE'], exact: false })
-      const previousRoutineList = queryClient.getQueryData(['ROUTINE'])
+      await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
+      const previousRoutineList = queryClient.getQueryData([ROUTINE])
 
-      queryClient.setQueryData(['ROUTINE'], (old: Routine[] = []) => {
+      queryClient.setQueryData([ROUTINE], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
       })
@@ -23,11 +25,11 @@ export function useDeleteRoutine() {
     },
 
     onError: (_err, _item, context) => {
-      queryClient.setQueryData(['ROUTINE'], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
       toast.error("Deletion didn't work")
     },
     onSettled: () => {
-      queryClient.invalidateQueries(['ROUTINE'])
+      queryClient.invalidateQueries([ROUTINE])
     },
   })
 
