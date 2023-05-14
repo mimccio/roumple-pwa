@@ -40,9 +40,8 @@ export function useRoutineDetails() {
 
     onError: (_err, item, context) => {
       queryClient.setQueryData(['ROUTINE', item.id], item)
-
       queryClient.setQueryData(['ROUTINE'], context?.previousRoutineList)
-      toast.error("Deletion didn't work")
+      toast.error("Modification didn't work")
     },
     onSettled: () => {
       queryClient.invalidateQueries(['ROUTINE'])
@@ -59,7 +58,6 @@ export function useRoutineDetails() {
   })
 
   const onBlur = handleSubmit((formData) => {
-    console.log('formData :', formData)
     try {
       mutate({ ...data, ...formData })
     } catch (error) {
