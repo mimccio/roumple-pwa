@@ -2,16 +2,15 @@ import { db } from '&/db'
 
 interface Params {
   name: string
-  routineId?: string
+  id: string
   description?: string
 }
 
-export const editRoutine = async ({ routineId, name, description }: Params) => {
-  if (!routineId) throw new Error('Routine ID is missing')
+export const editRoutine = async ({ id, name, description }: Params) => {
   const { data, error } = await db
     .from('routine')
     .update({ name, description })
-    .eq('id', routineId)
+    .eq('id', id)
     .select('id, name, description')
     .single()
   if (error) throw error

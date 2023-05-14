@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { XCircleIcon } from '@heroicons/react/20/solid'
 import { TrashIcon } from '@heroicons/react/24/outline'
 
 import { useMainPath } from '&/common/hooks/use-main-path'
+import { useDeleteRoutine } from '&/modules/routine/hooks'
 
-interface Props {
-  routineId: string
-}
-
-export function RoutineHeader({ routineId }: Props) {
+export function RoutineHeader() {
+  const { routineId } = useParams()
   const { mainPath } = useMainPath()
-  const onDelete = () => console.log('Delete :', routineId)
+  const { onDeleteRoutine } = useDeleteRoutine()
+  const onDelete = () => onDeleteRoutine(routineId)
 
   return (
     <div className="flex h-14 w-full items-center justify-between bg-gray-200 px-4 text-gray-400">

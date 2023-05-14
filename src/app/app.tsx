@@ -7,6 +7,7 @@ import { Login } from '&/screens/login'
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
+import { Toaster } from 'react-hot-toast'
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { networkMode: 'offlineFirst' } } })
 
@@ -29,6 +30,7 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster position="bottom-center" />
       <ReactQueryDevtools />
     </QueryClientProvider>
   )
