@@ -1,6 +1,18 @@
-alter table "public"."routine" add column "user_id" uuid not null;
+create table "public"."routine" (
+    "id2" bigint not null,
+    "created_at" timestamp with time zone not null default now(),
+    "name" text not null,
+    "description" text,
+    "user_id" uuid not null,
+    "id" uuid
+);
+
 
 alter table "public"."routine" enable row level security;
+
+CREATE UNIQUE INDEX routine_pkey ON public.routine USING btree (id2);
+
+alter table "public"."routine" add constraint "routine_pkey" PRIMARY KEY using index "routine_pkey";
 
 alter table "public"."routine" add constraint "routine_user_id_fkey" FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE not valid;
 
