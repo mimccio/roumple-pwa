@@ -40,7 +40,7 @@ export function RoutineDetails({ routine }: Props) {
             id="description"
             rows={4}
             className="w-full rounded-md border border-indigo-300 px-4 py-3"
-            defaultValue={routine.name}
+            defaultValue={routine.description}
             {...register('description', {
               maxLength: { value: 500, message: 'max 500' },
             })}
