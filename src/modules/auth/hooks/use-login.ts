@@ -26,7 +26,7 @@ export const useLogin = () => {
         options: {
           emailRedirectTo: getURL(),
           data: {
-            lang: 'fr',
+            lang: 'en',
           },
         },
       })
