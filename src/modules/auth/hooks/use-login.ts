@@ -30,11 +30,6 @@ export const useLogin = () => {
           },
         },
       })
-      await db.auth.updateUser({
-        data: {
-          lang: 'es',
-        },
-      })
       if (error) throw error
       alert('Check your email for the login link!')
     } catch (error) {
