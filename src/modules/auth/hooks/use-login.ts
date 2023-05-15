@@ -30,7 +30,7 @@ export const useLogin = () => {
           },
         },
       })
-      const hello = await db.auth.updateUser({
+      await db.auth.updateUser({
         data: {
           lang: 'es',
         },
