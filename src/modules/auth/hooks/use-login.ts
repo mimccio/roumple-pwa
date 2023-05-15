@@ -23,7 +23,12 @@ export const useLogin = () => {
       setIsLoading(true)
       const { error } = await db.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: getURL() },
+        options: {
+          emailRedirectTo: getURL(),
+          data: {
+            lang: 'fr',
+          },
+        },
       })
       if (error) throw error
       alert('Check your email for the login link!')
