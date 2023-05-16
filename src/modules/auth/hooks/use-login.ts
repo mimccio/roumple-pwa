@@ -37,11 +37,11 @@ export const useLogin = () => {
         },
       })
       if (error) throw error
+      setIsDone(true)
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {
       setIsLoading(false)
-      setIsDone(true)
     }
   }
 
@@ -51,7 +51,7 @@ export const useLogin = () => {
       const { error } = await db.auth.verifyOtp({
         email: email,
         token: opt.trim(),
-        type: 'magiclink',
+        type: 'email',
       })
       if (error) throw error
     } catch (error) {

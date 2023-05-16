@@ -9,8 +9,6 @@ export function Login() {
     useLogin()
   const websiteUrl = import.meta.env.VITE_SITE_URL
 
-  console.log('verifyIsLoading :', verifyIsLoading)
-
   return (
     <main className="flex h-screen flex-col p-8">
       <Transition
