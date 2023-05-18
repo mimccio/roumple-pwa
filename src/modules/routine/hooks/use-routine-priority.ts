@@ -22,7 +22,6 @@ export function useRoutinePriority() {
       queryClient.setQueryData([ROUTINE], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         const newRoutine = { ...old[routineIndex], priority: data.priority }
-        console.log('newRoutine :', newRoutine)
         return [...old.slice(0, routineIndex), newRoutine, ...old.slice(routineIndex + 1)].sort(sortRoutines)
       })
 

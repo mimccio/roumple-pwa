@@ -1,6 +1,7 @@
 import { useRoutineDetails } from '&/modules/routine/hooks'
 import { Routine } from '&/modules/routine/types'
 import { Priority } from './priority'
+import { Schedule } from './schedule'
 
 interface Props {
   routine: Routine
@@ -51,6 +52,7 @@ export function RoutineDetails({ routine }: Props) {
         </div>
       </form>
       <Priority priority={routine.priority} />
+      <Schedule period={routine.period} recurrence={routine.recurrence} type={routine.type} id={routine.id} />
     </div>
   )
 }

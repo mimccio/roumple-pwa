@@ -31,6 +31,10 @@ export function useCreateRoutine() {
       queryClient.invalidateQueries([ROUTINE])
     },
   })
-  const onCreateRoutine = () => mutate({ id, name })
+
+  const defaultRecurrence = [true, true, true, true, true, true, true]
+
+  const onCreateRoutine = () =>
+    mutate({ id, name, priority: 0, type: 'DAILY', recurrence: defaultRecurrence, period: 3 })
   return { onCreateRoutine }
 }

@@ -12,7 +12,7 @@ export const fetchRoutineById = async ({ queryKey }: IParams) => {
 
   const { data, error } = await db
     .from('routine')
-    .select('id, name, description, priority')
+    .select('id, name, description, priority, recurrence, period, type')
     .eq('id', routineId)
     .single()
 
