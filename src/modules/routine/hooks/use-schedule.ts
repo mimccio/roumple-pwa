@@ -2,24 +2,24 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { Routine } from '../types'
-import { ROUTINE } from '../constants'
+import { DAILY, ROUTINE, WEEKLY } from '../constants'
 import { sortRoutines } from '../utils'
 import { editRoutineSchedule } from '../mutations'
 import { useState } from 'react'
 
 type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 
-interface Params {
-  recurrence: boolean[]
-  period: number
-  type: ScheduleType
-  id: string
-}
-
-export function useSchedule({ recurrence, period, type, id }: Params) {
-  const [currentPeriod, setPeriod] = useState(period)
-  const [currentRecurrence, setRecurrence] = useState(recurrence)
+export function useSchedule({
+  daily_recurrence,
+  weekly_recurrence,
+  period,
+  type,
+  id,
+}: Pick<Routine, 'weekly_recurrence' | 'daily_recurrence' | 'period' | 'type' | 'id'>) {
   const [currentType, setType] = useState(type)
+  const [currentPeriod, setPeriod] = useState(period)
+  const [dailyRecurrence, setDailyRecurrence] = useState(daily_recurrence)
+  const [weeklyRecurrence, setWeeklyRecurrence] = useState(weekly_recurrence)
 
   const queryClient = useQueryClient()
 
@@ -49,19 +49,60 @@ export function useSchedule({ recurrence, period, type, id }: Params) {
     },
   })
 
-  const handleRecurrenceChange = (index: number) => {
-    setRecurrence((prevState) => {
-      const newRecurrence = [...prevState.slice(0, index), !prevState[index], ...prevState.slice(index + 1)]
-      mutate({ id, recurrence: currentRecurrence, type: currentType, period: currentPeriod })
-      return newRecurrence
-    })
+  const handleRecurrenceChange = ({
+    scheduleType,
+    recurrenceNum,
+  }: {
+    scheduleType: ScheduleType
+    recurrenceNum: number
+  }) => {
+    if (scheduleType === DAILY) {
+      setDailyRecurrence((prevState) => {
+        const index = prevState.findIndex((item) => item === recurrenceNum)
+        let newRec = prevState
+        if (index === -1) {
+          newRec = [...prevState, recurrenceNum]
+        }
+        newRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
+        mutate({
+          id,
+          daily_recurrence: newRec,
+          type: currentType,
+          period: currentPeriod,
+          weekly_recurrence: weeklyRecurrence,
+        })
+        return newRec
+      })
+    }
+
+    if (scheduleType === WEEKLY) {
+      setWeeklyRecurrence((prevState) => {
+        const index = prevState.findIndex((item) => item === recurrenceNum)
+        let newWeekRec = prevState
+        console.log('---newWeekRec :', newWeekRec)
+
+        if (index === -1) {
+          newWeekRec = [...prevState, recurrenceNum]
+        }
+        newWeekRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
+        mutate({
+          id,
+          daily_recurrence: dailyRecurrence,
+          type: currentType,
+          period: currentPeriod,
+          weekly_recurrence: newWeekRec,
+        })
+        console.log('newWeekRec :', newWeekRec)
+        return newWeekRec
+      })
+    }
   }
 
   const handlePeriodChange = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
     setType(scheduleType)
     setPeriod(period)
-    mutate({ id, recurrence: currentRecurrence, type: scheduleType, period })
+    mutate({ id, daily_recurrence: dailyRecurrence, type: scheduleType, period, weekly_recurrence: weeklyRecurrence })
   }
 
-  return { currentRecurrence, currentPeriod, handlePeriodChange, currentType, handleRecurrenceChange }
+  return { dailyRecurrence, currentPeriod, handlePeriodChange, currentType, handleRecurrenceChange, weeklyRecurrence }
 }

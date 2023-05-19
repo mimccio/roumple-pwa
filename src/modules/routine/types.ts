@@ -6,7 +6,9 @@ export interface Routine {
   description?: string
   priority: number
   period: number
-  recurrence: boolean[]
+  daily_recurrence: number[]
+  weekly_recurrence: number[]
+
   type: ScheduleType
 }
 

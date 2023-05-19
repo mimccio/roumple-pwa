@@ -10,6 +10,8 @@ interface Props {
 export function RoutineDetails({ routine }: Props) {
   const { register, errors, submit } = useRoutineDetails(routine)
 
+  console.log('routine :', routine)
+
   return (
     <div className="w-full p-4">
       <form onBlur={submit} onSubmit={submit}>
@@ -21,6 +23,7 @@ export function RoutineDetails({ routine }: Props) {
             id="name"
             className="w-full rounded-md border border-indigo-300 px-4 py-3"
             type="text"
+            autoFocus={routine.name === 'New Routine'}
             defaultValue={routine.name}
             {...register('name', {
               required: { value: true, message: 'required' },
@@ -52,7 +55,13 @@ export function RoutineDetails({ routine }: Props) {
         </div>
       </form>
       <Priority priority={routine.priority} />
-      <Schedule period={routine.period} recurrence={routine.recurrence} type={routine.type} id={routine.id} />
+      <Schedule
+        period={routine.period}
+        daily_recurrence={routine.daily_recurrence}
+        weekly_recurrence={routine.weekly_recurrence}
+        type={routine.type}
+        id={routine.id}
+      />
     </div>
   )
 }

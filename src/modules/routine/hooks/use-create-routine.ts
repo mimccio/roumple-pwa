@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import { createRoutine } from '../mutations'
 import { RoutineDetails } from '../types'
-import { ROUTINE } from '../constants'
+import { DAILY, ROUTINE } from '../constants'
 
 export function useCreateRoutine() {
   const queryClient = useQueryClient()
@@ -32,9 +32,17 @@ export function useCreateRoutine() {
     },
   })
 
-  const defaultRecurrence = [true, true, true, true, true, true, true]
+  const defaultDailyRecurrence = [0, 1, 2, 3, 4, 5, 6]
 
   const onCreateRoutine = () =>
-    mutate({ id, name, priority: 0, type: 'DAILY', recurrence: defaultRecurrence, period: 3 })
+    mutate({
+      id,
+      name,
+      priority: 0,
+      type: DAILY,
+      daily_recurrence: defaultDailyRecurrence,
+      period: 3,
+      weekly_recurrence: [0, 1],
+    })
   return { onCreateRoutine }
 }
