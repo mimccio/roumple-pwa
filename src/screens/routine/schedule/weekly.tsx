@@ -8,6 +8,7 @@ import { WEEKLY } from '&/modules/routine/constants'
 import { WeekRecurrence } from './week-recurrence'
 
 interface Props {
+  type: ScheduleType
   recurrence: number[]
   period: number
   handlePeriodChange: ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => void
@@ -18,7 +19,6 @@ interface Props {
     scheduleType: ScheduleType
     recurrenceNum: number
   }) => void
-  type: ScheduleType
 }
 
 export function Weekly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
@@ -31,7 +31,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
   return (
     <div
       className={cl(
-        'relative rounded-lg border-2  p-8',
+        'relative rounded-lg border-2 p-6 transition-colors',
         isSelected ? 'border-transparent bg-sky-100' : 'border-sky-200'
       )}
     >
@@ -39,10 +39,20 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
       <div className="grid grid-cols-6">
         <h4 className="col-span-2 text-sm font-bold text-sky-700 ">Weekly</h4>
         <div className="col-span-4 flex gap-2">
-          <WeekRecurrence value={1} handleChange={handleRecurrenceChange} isSelected={recurrence.includes(1)}>
+          <WeekRecurrence
+            handleChange={handleRecurrenceChange}
+            isSelected={isSelected && recurrence.includes(1)}
+            value={1}
+            disabled={!isSelected}
+          >
             odd
           </WeekRecurrence>
-          <WeekRecurrence value={0} handleChange={handleRecurrenceChange} isSelected={recurrence.includes(0)}>
+          <WeekRecurrence
+            handleChange={handleRecurrenceChange}
+            isSelected={isSelected && recurrence.includes(0)}
+            value={0}
+            disabled={!isSelected}
+          >
             even
           </WeekRecurrence>
         </div>
@@ -50,10 +60,22 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
       <div className="z-10 mt-8 grid grid-cols-6">
         <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">Period</h5>
         <div className="col-span-4">
-          <PeriodItem handleChange={onPeriodChange} checked={isSelected && period === 1} value={1} id="week">
+          <PeriodItem
+            checked={isSelected && period === 1}
+            handleChange={onPeriodChange}
+            id="week"
+            type={WEEKLY}
+            value={1}
+          >
             during the week
           </PeriodItem>
-          <PeriodItem handleChange={onPeriodChange} checked={isSelected && period === 2} value={2} id="weekend">
+          <PeriodItem
+            checked={isSelected && period === 2}
+            handleChange={onPeriodChange}
+            id="weekend"
+            type={WEEKLY}
+            value={2}
+          >
             in the weekend
           </PeriodItem>
         </div>

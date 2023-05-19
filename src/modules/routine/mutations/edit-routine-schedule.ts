@@ -7,7 +7,7 @@ export const editRoutineSchedule = async ({
   weekly_recurrence,
   type,
   period,
-}: Pick<Routine, 'weekly_recurrence' | 'daily_recurrence' | 'period' | 'type' | 'id'>) => {
+}: Pick<Routine, 'weekly_recurrence' | 'daily_recurrence' | 'period' | 'type' | 'id' | 'monthly_recurrence'>) => {
   const { data, error } = await db
     .from('routine')
     .update({ daily_recurrence, type, period, weekly_recurrence })

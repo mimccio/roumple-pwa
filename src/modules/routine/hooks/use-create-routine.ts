@@ -33,6 +33,7 @@ export function useCreateRoutine() {
   })
 
   const defaultDailyRecurrence = [0, 1, 2, 3, 4, 5, 6]
+  const defaultMonthlyRecurrence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
   const onCreateRoutine = () =>
     mutate({
@@ -43,6 +44,7 @@ export function useCreateRoutine() {
       daily_recurrence: defaultDailyRecurrence,
       period: 3,
       weekly_recurrence: [0, 1],
+      monthly_recurrence: defaultMonthlyRecurrence,
     })
   return { onCreateRoutine }
 }

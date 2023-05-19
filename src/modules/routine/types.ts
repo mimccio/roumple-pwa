@@ -8,7 +8,7 @@ export interface Routine {
   period: number
   daily_recurrence: number[]
   weekly_recurrence: number[]
-
+  monthly_recurrence: number[]
   type: ScheduleType
 }
 

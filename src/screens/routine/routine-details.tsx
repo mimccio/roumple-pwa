@@ -10,8 +10,6 @@ interface Props {
 export function RoutineDetails({ routine }: Props) {
   const { register, errors, submit } = useRoutineDetails(routine)
 
-  console.log('routine :', routine)
-
   return (
     <div className="w-full p-4">
       <form onBlur={submit} onSubmit={submit}>
@@ -56,11 +54,12 @@ export function RoutineDetails({ routine }: Props) {
       </form>
       <Priority priority={routine.priority} />
       <Schedule
-        period={routine.period}
         daily_recurrence={routine.daily_recurrence}
-        weekly_recurrence={routine.weekly_recurrence}
-        type={routine.type}
         id={routine.id}
+        monthly_recurrence={routine.monthly_recurrence}
+        period={routine.period}
+        type={routine.type}
+        weekly_recurrence={routine.weekly_recurrence}
       />
     </div>
   )
