@@ -36,12 +36,14 @@ export function useUpsertAction({ date, type, boardType }: Params) {
 
       return { previousList }
     },
-    onError: (_err, _item, context) => {
+    onError: (_err, item, context) => {
       queryClient.setQueryData([ROUTINE, boardType, { date, done: true, type }], context?.previousList)
+      queryClient.setQueryData([ROUTINE, item.routine.id], item.routine)
       toast.error('Error on check routine')
     },
-    onSettled: () => {
+    onSettled: (_item, _err, variables) => {
       queryClient.invalidateQueries({ queryKey: [ROUTINE, boardType], exact: false })
+      queryClient.invalidateQueries({ queryKey: [ROUTINE, variables.routine.id] })
     },
   })
 
