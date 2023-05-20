@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { RoutineList } from '&/screens/routine-list'
 import { NotFoundMain } from '&/screens/errors/not-found-main'
 import { SettingsMain } from '&/screens/settings/settings-main'
-import { Today } from '&/screens/today'
+import { Today } from '&/screens/board/today'
 
 export function MainScreen() {
   return (
