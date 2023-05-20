@@ -25,12 +25,7 @@ export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {
             <p className="capitalize text-gray-800">{routine.name}</p>
             <p className="text-sm font-semibold text-gray-400">category</p>
           </div>
-          <DoneButton
-            handleUpdateStatus={handleUpdateStatus}
-            priority={routine.priority}
-            action={routine.actions[0]}
-            routine={routine}
-          />
+          <DoneButton handleUpdateStatus={handleUpdateStatus} routine={routine} />
         </>
       )}
     </NavLink>

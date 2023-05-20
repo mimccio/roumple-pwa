@@ -1,3 +1,14 @@
+import { useRoutine } from '&/modules/routine/hooks'
+import { Header } from './header'
+
 export function RoutineAction() {
-  return <div>Routine Action Component</div>
+  const { routine } = useRoutine()
+
+  if (!routine) return null
+
+  return (
+    <>
+      <Header routine={routine} />
+    </>
+  )
 }

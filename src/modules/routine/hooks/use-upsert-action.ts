@@ -8,7 +8,7 @@ import { ROUTINE } from '../constants'
 interface Params {
   date: Date
   type: ScheduleType
-  boardType: BoardType
+  boardType?: BoardType
 }
 
 export function useUpsertAction({ date, type, boardType }: Params) {
@@ -24,6 +24,8 @@ export function useUpsertAction({ date, type, boardType }: Params) {
         ...data.routine,
         actions: [{ ...data.routine.actions?.[0], done: !data.routine.actions?.[0]?.done }],
       }
+
+      queryClient.setQueryData<Routine>([ROUTINE, data.routine.id], () => newRoutine)
 
       queryClient.setQueryData<Routine[]>([ROUTINE, boardType, { type, date }], (old) => {
         if (!old) return

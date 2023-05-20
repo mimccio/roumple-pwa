@@ -5,15 +5,15 @@ import { FormEvent } from 'react'
 
 interface Props {
   routine: Routine
-  priority: number
   handleUpdateStatus: ({ routine, actionId, done }: UpdateStatusParams) => void
-  action: { id: number; done: boolean }
 }
 
-export function DoneButton({ action, priority, handleUpdateStatus, routine }: Props) {
+export function DoneButton({ handleUpdateStatus, routine }: Props) {
+  const action = routine.actions?.[0]
+
   const getColor = () => {
-    if (priority === 1) return 'border-blue-500 hover:border-blue-400'
-    if (priority === 2) return 'border-orange-500 hover:border-orange-400'
+    if (routine.priority === 1) return 'border-blue-500 hover:border-blue-400'
+    if (routine.priority === 2) return 'border-orange-500 hover:border-orange-400'
     return 'border-gray-400 hover:border-gray-300'
   }
 
