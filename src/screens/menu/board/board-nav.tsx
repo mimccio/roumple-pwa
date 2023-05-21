@@ -59,7 +59,7 @@ export function BoardNav({ close }: Props) {
           </>
         )}
       </NavLink>
-      <NavLink
+      {/* <NavLink
         onClick={close}
         className={({ isActive }) =>
           cl(
@@ -75,7 +75,7 @@ export function BoardNav({ close }: Props) {
             <span className={cl(isActive ? 'text-indigo-500' : 'text-indigo-400')}>3</span>
           </>
         )}
-      </NavLink>
+      </NavLink> */}
     </nav>
   )
 }

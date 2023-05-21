@@ -3,26 +3,29 @@ import { ListSkeleton } from '&/common/components/list-skeleton'
 import { RoutineActionListItem } from '&/screens/board/components'
 import { useUpsertAction } from '&/modules/routine/hooks/'
 
-import { BOARD_TYPES, DAILY, SCHEDULE_TYPES } from '&/modules/routine/constants'
-import { Header } from '../components/header'
-import { EmptyTodo } from '../empty-todo'
-import { EmptyDone } from '../empty-done'
+import { BOARD_TYPES, SCHEDULE_TYPES } from '&/modules/routine/constants'
+import { Header } from './components/header'
+import { EmptyTodo } from './empty-todo'
+import { EmptyDone } from './empty-done'
 import { useBoardRoutines } from '&/modules/routine/hooks'
 
-export function Today() {
+const type = SCHEDULE_TYPES.monthly
+const boardType = BOARD_TYPES.month
+
+export function Month() {
   const { routines, isLoading, date, handleShowDone, showDone } = useBoardRoutines({
-    type: SCHEDULE_TYPES.daily,
-    boardType: BOARD_TYPES.today,
+    type,
+    boardType,
   })
 
-  const { handleUpdateStatus } = useUpsertAction({ date, type: DAILY, boardType: BOARD_TYPES.today })
+  const { handleUpdateStatus } = useUpsertAction({ date, type, boardType })
 
   return (
     <>
       <Header
         showDone={showDone}
         handleDoneChange={handleShowDone}
-        title={<h1 className="text-indigo-700">Today</h1>}
+        title={<h1 className="text-purple-700">This Month</h1>}
       />
       <ContentLayout>
         {!isLoading && !routines?.length && !showDone && <EmptyTodo />}
