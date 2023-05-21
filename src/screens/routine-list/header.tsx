@@ -1,10 +1,16 @@
 import { TagIcon, PlusCircleIcon } from '@heroicons/react/24/solid'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid'
-import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
 
 import { useCreateRoutine } from '&/modules/routine/hooks'
 
-export function Header() {
+interface Props {
+  archived: boolean
+  handleShowArchived: () => void
+}
+
+export function Header({ handleShowArchived, archived }: Props) {
   const { onCreateRoutine } = useCreateRoutine()
 
   return (
@@ -18,8 +24,9 @@ export function Header() {
         <button onClick={onCreateRoutine} className="p-2">
           <PlusCircleIcon width={24} className="text-gray-500" />
         </button>
-        <button className="p-2">
-          <ArchiveBoxIcon width={24} className="text-gray-400" />
+        <button onClick={handleShowArchived} className="p-2">
+          {archived && <ArchiveBoxIcon width={24} className="text-gray-600" />}
+          {!archived && <ArchiveBoxOutlineIcon width={24} className="text-gray-400" />}
         </button>
         <button className="p-2">
           <TagIcon width={24} className="text-indigo-500" />

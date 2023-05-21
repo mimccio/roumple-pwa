@@ -7,12 +7,12 @@ import { Header } from './header'
 import { Item } from './item'
 
 export function RoutineList() {
-  const { routines, isLoading } = useRoutineList()
+  const { routines, isLoading, handleShowArchived, archived } = useRoutineList()
   const { onCreateRoutine } = useCreateRoutine()
 
   return (
     <>
-      <Header />
+      <Header handleShowArchived={handleShowArchived} archived={archived} />
       <ContentLayout>
         {!isLoading && !routines?.length && (
           <EmptyMainContent onClick={onCreateRoutine} text="Create a new routine +" image={workflowImg} />
