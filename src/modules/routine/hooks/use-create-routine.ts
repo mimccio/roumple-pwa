@@ -14,11 +14,11 @@ export function useCreateRoutine() {
   const name = 'New Routine'
   const { mutate } = useMutation(createRoutine, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE] })
+      await queryClient.cancelQueries({ queryKey: [ROUTINE, { archived: false }] })
 
-      const previousRoutineList = queryClient.getQueryData([ROUTINE])
+      const previousRoutineList = queryClient.getQueryData([ROUTINE, { archived: false }])
 
-      queryClient.setQueryData([ROUTINE], (old: RoutineDetails[] = []) => [...old, data])
+      queryClient.setQueryData([ROUTINE, { archived: false }], (old: RoutineDetails[] = []) => [...old, data])
       navigate(`d/routine/${id}`)
       return { previousRoutineList }
     },
@@ -28,7 +28,7 @@ export function useCreateRoutine() {
       toast.error("Creation didn't work")
     },
     onSettled: () => {
-      queryClient.invalidateQueries([ROUTINE])
+      queryClient.invalidateQueries([ROUTINE, { archived: false }])
     },
   })
 
@@ -39,6 +39,7 @@ export function useCreateRoutine() {
     mutate({
       id,
       name,
+      archived: false,
       priority: 0,
       type: DAILY,
       daily_recurrence: defaultDailyRecurrence,
@@ -47,5 +48,6 @@ export function useCreateRoutine() {
       monthly_recurrence: defaultMonthlyRecurrence,
       actions: [],
     })
+
   return { onCreateRoutine }
 }

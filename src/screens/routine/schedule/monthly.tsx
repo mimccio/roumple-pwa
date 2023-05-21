@@ -125,7 +125,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
           />
         </div>
       </div>
-      <div className="mt-8 grid grid-cols-6">
+      <div className="mt-6 grid grid-cols-6">
         <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">Period</h5>
         <div className="z-10 col-span-4">
           <PeriodItem

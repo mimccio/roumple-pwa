@@ -90,7 +90,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
           />
         </div>
       </div>
-      <div className="z-10 mt-8 grid grid-cols-6">
+      <div className="z-10 mt-6 grid grid-cols-6">
         <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">Period</h5>
         <div className="col-span-4">
           <PeriodItem

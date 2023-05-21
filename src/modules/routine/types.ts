@@ -13,6 +13,7 @@ export interface Routine {
   id: string
   name: string
   description?: string
+  archived: boolean
   priority: number
   period: number
   daily_recurrence: number[]

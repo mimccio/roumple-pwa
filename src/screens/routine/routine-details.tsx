@@ -52,7 +52,7 @@ export function RoutineDetails({ routine }: Props) {
           </div>
         </div>
       </form>
-      <Priority priority={routine.priority} />
+      <Priority routine={routine} />
       <Schedule
         daily_recurrence={routine.daily_recurrence}
         id={routine.id}

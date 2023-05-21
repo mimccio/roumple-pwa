@@ -13,10 +13,12 @@ export function useRoutineDetails(routine: Routine) {
   const { mutate } = useMutation(editRoutineDetails, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
+
       queryClient.setQueryData([ROUTINE, data.id], data)
+
       const previousRoutineList = queryClient.getQueryData([ROUTINE])
 
-      queryClient.setQueryData([ROUTINE], (old: Routine[] = []) => {
+      queryClient.setQueryData([ROUTINE, { archived: data.archived }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), { ...old[routineIndex], ...data }, ...old.slice(routineIndex + 1)].sort(
           sortRoutines
@@ -28,11 +30,12 @@ export function useRoutineDetails(routine: Routine) {
 
     onError: (_err, item, context) => {
       queryClient.setQueryData([ROUTINE, item.id], item)
-      queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, { archived: item.archived }], context?.previousRoutineList)
       toast.error("Modification didn't work")
     },
-    onSettled: () => {
-      queryClient.invalidateQueries([ROUTINE])
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries([ROUTINE, variables.id])
+      queryClient.invalidateQueries([ROUTINE, { archived: variables.id }])
     },
   })
 

@@ -4,6 +4,7 @@ import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/out
 import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
 
 import { useCreateRoutine } from '&/modules/routine/hooks'
+import { Tooltip } from '&/common/components/tooltip'
 
 interface Props {
   archived: boolean
@@ -21,15 +22,23 @@ export function Header({ handleShowArchived, archived }: Props) {
         <h1 className="ml-2">Routines</h1>
       </div>
       <div className="flex gap-1">
-        <button onClick={onCreateRoutine} className="p-2">
-          <PlusCircleIcon width={24} className="text-gray-500" />
-        </button>
-        <button onClick={handleShowArchived} className="p-2">
-          {archived && <ArchiveBoxIcon width={24} className="text-gray-600" />}
-          {!archived && <ArchiveBoxOutlineIcon width={24} className="text-gray-400" />}
-        </button>
+        <Tooltip message="create routine">
+          <button className="group p-2" onClick={onCreateRoutine}>
+            <PlusCircleIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-500" />
+          </button>
+        </Tooltip>
+        <Tooltip message={archived ? 'show active' : 'show archived'}>
+          <button onClick={handleShowArchived} className="group p-2">
+            {archived && (
+              <ArchiveBoxIcon width={20} className="text-emerald-400 transition-colors group-hover:text-emerald-500" />
+            )}
+            {!archived && (
+              <ArchiveBoxOutlineIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-500" />
+            )}
+          </button>
+        </Tooltip>
         <button className="p-2">
-          <TagIcon width={24} className="text-indigo-500" />
+          <TagIcon width={20} className="text-indigo-500" />
         </button>
       </div>
     </header>

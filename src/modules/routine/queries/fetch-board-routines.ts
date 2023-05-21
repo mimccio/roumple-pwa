@@ -1,9 +1,8 @@
 import { addDays, format, getDay, lastDayOfWeek, startOfWeek, lastDayOfMonth } from 'date-fns'
 
-const DATE_FORMAT = 'yyyy-MM-dd'
-
 import { db } from '&/db'
-import { Routine, ScheduleType } from '../types'
+import { DATE_FORMAT } from '&/common/constants'
+import type { Routine, ScheduleType } from '../types'
 import { SCHEDULE_TYPES } from '../constants'
 
 interface Params {
