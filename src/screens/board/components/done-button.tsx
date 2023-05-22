@@ -36,9 +36,7 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
           isDone && 'bg-green-500'
         )}
       >
-        {isDone && (
-          <CheckIcon width={18} height={18} className="text-white transition-colors group-hover:text-gray-200" />
-        )}
+        <CheckIcon width={18} height={18} className="text-white transition-colors group-hover:text-gray-200" />
       </div>
     </button>
   )
