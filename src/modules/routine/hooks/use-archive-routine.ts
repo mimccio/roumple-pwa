@@ -4,9 +4,11 @@ import { ROUTINE } from '../constants'
 import { Routine } from '../types'
 import { sortRoutines } from '../utils'
 import { toast } from 'react-hot-toast'
+import { getTodayDate } from '&/common/utils'
 
 export function useArchiveRoutine() {
   const queryClient = useQueryClient()
+  const date = getTodayDate()
 
   const { mutate } = useMutation(archiveRoutine, {
     onMutate: async (data) => {
@@ -28,13 +30,23 @@ export function useArchiveRoutine() {
         return [...old, data].sort(sortRoutines)
       })
 
-      return { previousArchivedRoutineList, previousRoutineList }
+      const previousBoardRoutineList = queryClient.getQueryData([ROUTINE, { type: data.type, date }])
+      queryClient.setQueryData([ROUTINE, { type: data.type, date }], (old: Routine[] = []) => {
+        if (data.archived) {
+          const routineIndex = old.findIndex((item) => item.id === data.id)
+          return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)].sort(sortRoutines)
+        }
+        return [...old, data].sort(sortRoutines)
+      })
+
+      return { previousArchivedRoutineList, previousRoutineList, previousBoardRoutineList }
     },
 
     onError: (_err, item, context) => {
       queryClient.setQueryData([ROUTINE, item.id], item)
       queryClient.setQueryData([ROUTINE, { archived: false }], context?.previousRoutineList)
       queryClient.setQueryData([ROUTINE, { archived: true }], context?.previousArchivedRoutineList)
+      queryClient.setQueryData([ROUTINE, { type: item.type, date }], context?.previousBoardRoutineList)
       toast.error("Archive didn't work")
     },
 

@@ -5,11 +5,11 @@ import type { Routine } from '../types'
 import { ROUTINE } from '../constants'
 import { sortRoutines } from '../utils'
 import { editRoutinePriority } from '../mutations'
-
-const date = new Date()
+import { getTodayDate } from '&/common/utils'
 
 export function useRoutinePriority(routine: Routine) {
   const queryClient = useQueryClient()
+  const date = getTodayDate()
 
   const { mutate } = useMutation(editRoutinePriority, {
     onMutate: async (data) => {
