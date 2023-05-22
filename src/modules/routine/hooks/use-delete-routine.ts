@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { Routine } from '../types'
-import { ROUTINE } from '../constants'
+import { BOARD, LIST, ROUTINE } from '../constants'
 import { deleteRoutine } from '../mutations'
 import { getTodayDate } from '&/common/utils'
 
@@ -15,16 +15,16 @@ export function useDeleteRoutine() {
   const { mutate } = useMutation(deleteRoutine, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
-      const previousRoutineList = queryClient.getQueryData([ROUTINE, { archived: data.archived }])
+      const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: data.archived }])
 
-      queryClient.setQueryData([ROUTINE, { archived: data.archived }], (old: Routine[] = []) => {
+      queryClient.setQueryData([ROUTINE, LIST, { archived: data.archived }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
       })
 
-      const previousBoardRoutines = queryClient.getQueryData([ROUTINE, { date, type: data.type }])
+      const previousBoardRoutines = queryClient.getQueryData([ROUTINE, BOARD, { date, type: data.type }])
 
-      queryClient.setQueryData([ROUTINE, { date, type: data.type }], (old: Routine[] = []) => {
+      queryClient.setQueryData([ROUTINE, BOARD, { date, type: data.type }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
       })
@@ -34,14 +34,14 @@ export function useDeleteRoutine() {
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE, { archived: item.archived }], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, LIST, { archived: item.archived }], context?.previousRoutineList)
       navigate(`/routines/d/routine/${item.id}`)
       toast.error("Deletion didn't work")
-      queryClient.setQueryData([ROUTINE, { date, type: item.type }], context?.previousBoardRoutines)
+      queryClient.setQueryData([ROUTINE, BOARD, { date, type: item.type }], context?.previousBoardRoutines)
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([ROUTINE, { archived: variables.archived }])
-      queryClient.invalidateQueries([ROUTINE, { date, type: variables.type }])
+      queryClient.invalidateQueries([ROUTINE, LIST, { archived: variables.archived }])
+      queryClient.invalidateQueries([ROUTINE, BOARD, { date, type: variables.type }])
     },
   })
 

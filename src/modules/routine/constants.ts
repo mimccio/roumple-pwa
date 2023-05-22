@@ -1,4 +1,6 @@
 export const ROUTINE = 'ROUTINE'
+export const LIST = 'LIST'
+export const BOARD = 'ROUTINE'
 
 export const DAILY = 'DAILY'
 export const WEEKLY = 'WEEKLY'

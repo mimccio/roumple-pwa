@@ -1,10 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import { upsertRoutineAction } from '../mutations'
 import type { Routine, ScheduleType, UpdateStatusParams } from '../types'
-import { ROUTINE } from '../constants'
-import { getTodayDate } from '&/common/utils'
+import { BOARD, ROUTINE } from '../constants'
+import { upsertRoutineAction } from '../mutations'
 
 interface Params {
   type: ScheduleType
@@ -12,8 +11,6 @@ interface Params {
 }
 
 export function useUpsertAction({ type, date }: Params) {
-  // const date = getTodayDate()
-
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(upsertRoutineAction, {
@@ -22,7 +19,7 @@ export function useUpsertAction({ type, date }: Params) {
 
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
 
-      const previousList = queryClient.getQueryData([ROUTINE, { date, type }])
+      const previousList = queryClient.getQueryData([ROUTINE, BOARD, { date, type }])
 
       const newRoutine = {
         ...data.routine,
@@ -30,11 +27,9 @@ export function useUpsertAction({ type, date }: Params) {
       }
       queryClient.setQueryData<Routine>([ROUTINE, data.routine.id], () => newRoutine)
 
-      queryClient.setQueryData<Routine[]>([ROUTINE, { type, date }], (old) => {
-        console.log('old :', old)
+      queryClient.setQueryData<Routine[]>([ROUTINE, BOARD, { type, date }], (old) => {
         if (!old) return
         const index = old.findIndex((item) => item.id === data.routine.id)
-        console.log('index :', index)
         if (index >= 0) return [...old.slice(0, index), newRoutine, ...old.slice(index + 1)]
         return old
       })
@@ -42,13 +37,13 @@ export function useUpsertAction({ type, date }: Params) {
       return { previousList }
     },
     onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE, { date, type }], context?.previousList)
       queryClient.setQueryData([ROUTINE, item.routine.id], item.routine)
+      queryClient.setQueryData([ROUTINE, BOARD, { date, type }], context?.previousList)
       toast.error('Error on check routine')
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: [ROUTINE, { date, type }], exact: false })
       queryClient.invalidateQueries({ queryKey: [ROUTINE, variables.routine.id] })
+      queryClient.invalidateQueries({ queryKey: [ROUTINE, BOARD, { date, type }] })
     },
   })
 

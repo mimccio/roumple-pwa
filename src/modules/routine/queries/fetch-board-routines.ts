@@ -6,11 +6,11 @@ import type { Routine, ScheduleType } from '../types'
 import { SCHEDULE_TYPES } from '../constants'
 
 interface Params {
-  queryKey: [key: string, options: { date: Date; type: ScheduleType }]
+  queryKey: [key: string, list: string, options: { date: Date; type: ScheduleType }]
 }
 
 export const fetchBoardRoutines = async ({ queryKey }: Params) => {
-  const [, { date, type }] = queryKey
+  const [, , { date, type }] = queryKey
 
   let query = db
     .from('routine')

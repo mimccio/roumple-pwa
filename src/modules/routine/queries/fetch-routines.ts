@@ -1,11 +1,11 @@
 import { db } from '&/db'
 
 interface FetchRoutineParams {
-  queryKey: [key: string, options: { archived: boolean }]
+  queryKey: [key: string, list: string, options: { archived: boolean }]
 }
 
 export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {
-  const [, { archived }] = queryKey
+  const [, , { archived }] = queryKey
 
   const { data, error } = await db
     .from('routine')

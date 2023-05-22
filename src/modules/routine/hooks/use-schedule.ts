@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { Routine, ScheduleType } from '../types'
-import { DAILY, MONTHLY, ROUTINE, WEEKLY } from '../constants'
+import { DAILY, LIST, MONTHLY, ROUTINE, WEEKLY } from '../constants'
 import { editRoutineSchedule } from '../mutations'
 import { useState } from 'react'
 
@@ -29,8 +29,8 @@ export function useSchedule(routine: Routine) {
 
       queryClient.setQueryData([ROUTINE, data.id], () => data)
 
-      const previousRoutineList = queryClient.getQueryData([ROUTINE, { archived: data.archived }])
-      queryClient.setQueryData([ROUTINE, { archived: data.archived }], (old: Routine[] = []) => {
+      const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: data.archived }])
+      queryClient.setQueryData([ROUTINE, LIST, { archived: data.archived }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)]
       })
@@ -38,9 +38,9 @@ export function useSchedule(routine: Routine) {
       return { previousRoutineList }
     },
 
-    onError: (_err, _item, context) => {
+    onError: (_err, item, context) => {
       queryClient.setQueryData([ROUTINE, routine.id], routine)
-      queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, LIST, { archived: item.archived }], context?.previousRoutineList)
       toast.error("Schedule modification didn't work")
     },
     onSuccess: () => {

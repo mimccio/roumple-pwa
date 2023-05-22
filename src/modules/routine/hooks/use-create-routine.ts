@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import { createRoutine } from '../mutations'
 import { RoutineDetails } from '../types'
-import { DAILY, ROUTINE } from '../constants'
+import { DAILY, LIST, ROUTINE } from '../constants'
 
 export function useCreateRoutine() {
   const queryClient = useQueryClient()
@@ -14,21 +14,21 @@ export function useCreateRoutine() {
   const name = 'New Routine'
   const { mutate } = useMutation(createRoutine, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE, { archived: false }] })
+      await queryClient.cancelQueries({ queryKey: [ROUTINE, LIST, { archived: false }] })
 
-      const previousRoutineList = queryClient.getQueryData([ROUTINE, { archived: false }])
+      const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: false }])
 
-      queryClient.setQueryData([ROUTINE, { archived: false }], (old: RoutineDetails[] = []) => [...old, data])
+      queryClient.setQueryData([ROUTINE, LIST, { archived: false }], (old: RoutineDetails[] = []) => [...old, data])
       navigate(`d/routine/${id}`)
       return { previousRoutineList }
     },
 
     onError: (_err, _item, context) => {
-      queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, LIST, { archived: false }], context?.previousRoutineList)
       toast.error("Creation didn't work")
     },
     onSettled: () => {
-      queryClient.invalidateQueries([ROUTINE, { archived: false }])
+      queryClient.invalidateQueries([ROUTINE, LIST, { archived: false }])
     },
   })
 
