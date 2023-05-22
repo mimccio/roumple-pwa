@@ -9,7 +9,8 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "supabase start && vite",
-    "stop": "supabase stop"
+    "stop": "supabase stop",
+    "migration": "supabase db diff --file"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
