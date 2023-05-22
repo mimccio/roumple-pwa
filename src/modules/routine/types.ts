@@ -23,6 +23,8 @@ export interface Routine {
   actions: Pick<RoutineAction, 'id' | 'date' | 'done'>[]
 }
 
+export type RoutineItem = Omit<Routine, 'actions'>
+
 export interface UpdateStatusParams {
   routine: Routine
   actionId: number

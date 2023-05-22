@@ -1,11 +1,11 @@
 import { cl } from '&/common/utils'
-import { Routine } from '&/modules/routine/types'
+import { RoutineItem } from '&/modules/routine/types'
 import { getScheduleTypeColor } from '&/modules/routine/utils'
 import { FlagIcon } from '@heroicons/react/24/solid'
 import { NavLink } from 'react-router-dom'
 
 interface Props {
-  routine: Routine
+  routine: RoutineItem
 }
 
 export function Item({ routine }: Props) {
