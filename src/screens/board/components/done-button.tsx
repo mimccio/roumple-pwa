@@ -36,7 +36,11 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
           isDone && 'bg-green-500'
         )}
       >
-        <CheckIcon width={18} height={18} className="text-white transition-colors group-hover:text-gray-200" />
+        <CheckIcon
+          width={18}
+          height={18}
+          className={cl('transition-colors group-hover:text-gray-200', isDone ? 'text-white' : 'text-transparent')}
+        />
       </div>
     </button>
   )
