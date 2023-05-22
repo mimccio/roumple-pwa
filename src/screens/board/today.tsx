@@ -3,19 +3,17 @@ import { ListSkeleton } from '&/common/components/list-skeleton'
 import { RoutineActionListItem } from '&/screens/board/components'
 import { useUpsertAction } from '&/modules/routine/hooks/'
 
-import { BOARD_TYPES, DAILY, SCHEDULE_TYPES } from '&/modules/routine/constants'
+import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 import { Header } from './components/header'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
 import { useBoardRoutines } from '&/modules/routine/hooks'
 
-export function Today() {
-  const { routines, isLoading, date, handleShowDone, showDone } = useBoardRoutines({
-    type: SCHEDULE_TYPES.daily,
-    boardType: BOARD_TYPES.today,
-  })
+const type = SCHEDULE_TYPES.daily
 
-  const { handleUpdateStatus } = useUpsertAction({ date, type: DAILY, boardType: BOARD_TYPES.today })
+export function Today() {
+  const { routines, isLoading, handleShowDone, showDone } = useBoardRoutines({ type })
+  const { handleUpdateStatus } = useUpsertAction({ type })
 
   return (
     <>

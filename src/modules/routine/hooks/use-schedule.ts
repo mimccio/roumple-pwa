@@ -2,60 +2,49 @@ import { useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Routine } from '../types'
+import type { Routine, ScheduleType } from '../types'
 import { DAILY, MONTHLY, ROUTINE, WEEKLY } from '../constants'
-import { sortRoutines } from '../utils'
 import { editRoutineSchedule } from '../mutations'
 import { useState } from 'react'
 
-type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
-
-export function useSchedule({
-  daily_recurrence,
-  weekly_recurrence,
-  monthly_recurrence,
-  period,
-  type,
-  id,
-}: Pick<Routine, 'weekly_recurrence' | 'daily_recurrence' | 'period' | 'type' | 'id' | 'monthly_recurrence'>) {
-  const [currentType, setType] = useState(type)
-  const [currentPeriod, setPeriod] = useState(period)
-  const [dailyRecurrence, setDailyRecurrence] = useState(daily_recurrence)
-  const [weeklyRecurrence, setWeeklyRecurrence] = useState(weekly_recurrence)
-  const [monthlyRecurrence, setMonthlyRecurrence] = useState(monthly_recurrence)
+export function useSchedule(routine: Routine) {
+  const [currentType, setType] = useState(routine.type)
+  const [currentPeriod, setPeriod] = useState(routine.period)
+  const [dailyRecurrence, setDailyRecurrence] = useState(routine.daily_recurrence)
+  const [weeklyRecurrence, setWeeklyRecurrence] = useState(routine.weekly_recurrence)
+  const [monthlyRecurrence, setMonthlyRecurrence] = useState(routine.monthly_recurrence)
 
   useEffect(() => {
-    setType(type)
-    setDailyRecurrence(daily_recurrence)
-    setWeeklyRecurrence(weekly_recurrence)
-    setMonthlyRecurrence(monthly_recurrence)
-  }, [id, daily_recurrence, weekly_recurrence, monthly_recurrence, type])
+    setType(routine.type)
+    setDailyRecurrence(routine.daily_recurrence)
+    setWeeklyRecurrence(routine.weekly_recurrence)
+    setMonthlyRecurrence(routine.monthly_recurrence)
+  }, [routine])
 
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(editRoutineSchedule, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
-      queryClient.setQueryData([ROUTINE, data.id], (old?: Routine) => old && { ...old, ...data })
-      const previousRoutineList = queryClient.getQueryData([ROUTINE])
 
-      queryClient.setQueryData([ROUTINE], (old: Routine[] = []) => {
+      queryClient.setQueryData([ROUTINE, data.id], () => data)
+
+      const previousRoutineList = queryClient.getQueryData([ROUTINE, { archived: data.archived }])
+      queryClient.setQueryData([ROUTINE, { archived: data.archived }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), { ...old[routineIndex], ...data }, ...old.slice(routineIndex + 1)].sort(
-          sortRoutines
-        )
+        return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)]
       })
 
       return { previousRoutineList }
     },
 
-    onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE, item.id], item)
+    onError: (_err, _item, context) => {
+      queryClient.setQueryData([ROUTINE, routine.id], routine)
       queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
       toast.error("Schedule modification didn't work")
     },
-    onSettled: () => {
-      queryClient.invalidateQueries([ROUTINE])
+    onSuccess: () => {
+      queryClient.invalidateQueries([ROUTINE], { exact: false })
     },
   })
 
@@ -77,7 +66,7 @@ export function useSchedule({
           newRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
         }
         mutate({
-          id,
+          ...routine,
           daily_recurrence: newRec,
           type: currentType,
           period: currentPeriod,
@@ -100,7 +89,7 @@ export function useSchedule({
           newWeekRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
         }
         mutate({
-          id,
+          ...routine,
           daily_recurrence: dailyRecurrence,
           type: currentType,
           period: currentPeriod,
@@ -122,7 +111,7 @@ export function useSchedule({
           newMonthRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
         }
         mutate({
-          id,
+          ...routine,
           daily_recurrence: dailyRecurrence,
           type: currentType,
           period: currentPeriod,
@@ -139,7 +128,7 @@ export function useSchedule({
     setType(scheduleType)
     setPeriod(period)
     mutate({
-      id,
+      ...routine,
       daily_recurrence: dailyRecurrence,
       type: scheduleType,
       period,

@@ -1,19 +1,14 @@
-import type { ScheduleType } from '&/modules/routine/types'
+import type { Routine } from '&/modules/routine/types'
 import { useSchedule } from '&/modules/routine/hooks/use-schedule'
 import { Daily } from './daily'
 import { Weekly } from './weekly'
 import { Monthly } from './monthly'
 
 interface Props {
-  id: string
-  daily_recurrence: number[]
-  weekly_recurrence: number[]
-  monthly_recurrence: number[]
-  period: number
-  type: ScheduleType
+  routine: Routine
 }
 
-export function Schedule({ daily_recurrence, period, type, id, weekly_recurrence, monthly_recurrence }: Props) {
+export function Schedule({ routine }: Props) {
   const {
     dailyRecurrence,
     currentPeriod,
@@ -22,14 +17,7 @@ export function Schedule({ daily_recurrence, period, type, id, weekly_recurrence
     handleRecurrenceChange,
     weeklyRecurrence,
     monthlyRecurrence,
-  } = useSchedule({
-    daily_recurrence,
-    weekly_recurrence,
-    monthly_recurrence,
-    period,
-    type,
-    id,
-  })
+  } = useSchedule(routine)
 
   return (
     <div className="mt-8">

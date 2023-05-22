@@ -19,10 +19,7 @@ export function BoardNav({ close }: Props) {
         to="today"
       >
         {({ isActive }) => (
-          <>
-            <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Today</span>
-            <span className={cl(isActive ? 'text-indigo-500' : 'text-indigo-400')}>3</span>
-          </>
+          <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Today</span>
         )}
       </NavLink>
       <NavLink
@@ -36,10 +33,7 @@ export function BoardNav({ close }: Props) {
         to="week"
       >
         {({ isActive }) => (
-          <>
-            <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>This week</span>
-            <span className={cl(isActive ? 'text-sky-500' : 'text-sky-400')}>3</span>
-          </>
+          <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>This week</span>
         )}
       </NavLink>
       <NavLink
@@ -53,10 +47,7 @@ export function BoardNav({ close }: Props) {
         to="month"
       >
         {({ isActive }) => (
-          <>
-            <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>This month</span>
-            <span className={cl(isActive ? 'text-purple-500' : 'text-purple-400')}>3</span>
-          </>
+          <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>This month</span>
         )}
       </NavLink>
       {/* <NavLink

@@ -31,12 +31,13 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
     <button onClick={onClick} className="group h-8 w-8  rounded-full">
       <div
         className={cl(
-          'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors',
-          ringColor
+          'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors group-hover:bg-green-100',
+          ringColor,
+          isDone && 'bg-green-500'
         )}
       >
         {isDone && (
-          <CheckIcon width={18} height={18} className="text-lime-500 transition-colors group-hover:text-lime-300" />
+          <CheckIcon width={18} height={18} className="text-white transition-colors group-hover:text-gray-200" />
         )}
       </div>
     </button>

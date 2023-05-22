@@ -53,14 +53,7 @@ export function RoutineDetails({ routine }: Props) {
         </div>
       </form>
       <Priority routine={routine} />
-      <Schedule
-        daily_recurrence={routine.daily_recurrence}
-        id={routine.id}
-        monthly_recurrence={routine.monthly_recurrence}
-        period={routine.period}
-        type={routine.type}
-        weekly_recurrence={routine.weekly_recurrence}
-      />
+      <Schedule routine={routine} />
     </div>
   )
 }

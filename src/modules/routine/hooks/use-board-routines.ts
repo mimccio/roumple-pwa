@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
-import type { BoardType, Routine, ScheduleType } from '../types'
+import { getTodayDate } from '&/common/utils'
+import type { Routine, ScheduleType } from '../types'
 import { ROUTINE } from '../constants'
 import { fetchBoardRoutines } from '../queries'
 
 interface Params {
-  boardType: BoardType
   type: ScheduleType
 }
 
-const date = new Date()
+export function useBoardRoutines({ type }: Params) {
+  const date = getTodayDate()
 
-export function useBoardRoutines({ boardType, type }: Params) {
   const [showDone, setShowDone] = useState(false)
 
-  const { data, isLoading } = useQuery([ROUTINE, boardType, { date, type }], fetchBoardRoutines)
+  const { data, isLoading } = useQuery([ROUTINE, { date, type }], fetchBoardRoutines)
 
   const handleShowDone = () => setShowDone((prevState) => !prevState)
 
@@ -32,5 +32,5 @@ export function useBoardRoutines({ boardType, type }: Params) {
 
   const routines = showDone ? doneRoutines : todoRoutines
 
-  return { routines, isLoading, handleShowDone, date, showDone }
+  return { routines, isLoading, handleShowDone, showDone }
 }

@@ -22,8 +22,8 @@ export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {
             <div className="h-2 w-2 rounded-full bg-indigo-500" />
           </div>
           <div className={cl('mx-4 h-full w-full border-b pt-1', isActive ? 'border-transparent' : 'border-gray-100')}>
-            <p className="capitalize text-gray-800">{routine.name}</p>
-            <p className="text-sm font-semibold text-gray-400">category</p>
+            <p className="font-semibold capitalize text-gray-700">{routine.name}</p>
+            <p className="flex gap-2 text-xs font-semibold text-gray-400">category</p>
           </div>
           <DoneButton handleUpdateStatus={handleUpdateStatus} routine={routine} />
         </>

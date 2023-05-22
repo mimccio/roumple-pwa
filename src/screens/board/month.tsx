@@ -3,22 +3,17 @@ import { ListSkeleton } from '&/common/components/list-skeleton'
 import { RoutineActionListItem } from '&/screens/board/components'
 import { useUpsertAction } from '&/modules/routine/hooks/'
 
-import { BOARD_TYPES, SCHEDULE_TYPES } from '&/modules/routine/constants'
+import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 import { Header } from './components/header'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
 import { useBoardRoutines } from '&/modules/routine/hooks'
 
 const type = SCHEDULE_TYPES.monthly
-const boardType = BOARD_TYPES.month
 
 export function Month() {
-  const { routines, isLoading, date, handleShowDone, showDone } = useBoardRoutines({
-    type,
-    boardType,
-  })
-
-  const { handleUpdateStatus } = useUpsertAction({ date, type, boardType })
+  const { routines, isLoading, handleShowDone, showDone } = useBoardRoutines({ type })
+  const { handleUpdateStatus } = useUpsertAction({ type })
 
   return (
     <>

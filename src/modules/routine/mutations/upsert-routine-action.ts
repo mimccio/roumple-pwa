@@ -31,7 +31,7 @@ export const upsertRoutineAction = async ({ done, actionId, type, date, routine 
     done,
   }
 
-  const { error } = await db.from('routine_action').upsert(action)
+  const { error } = await db.from('routine_action').upsert(action).select('*').single()
 
   if (error) throw error
 }

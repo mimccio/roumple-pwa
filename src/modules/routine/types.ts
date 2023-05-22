@@ -1,6 +1,6 @@
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 
-export type BoardType = 'TODAY' | 'WEEK' | 'MONTH' | 'TOMORROW'
+// export type BoardType = 'TODAY' | 'WEEK' | 'MONTH' | 'TOMORROW'
 
 export interface RoutineAction {
   id: number

@@ -1,13 +1,8 @@
 import { cl } from '&/common/utils'
+import { Routine } from '&/modules/routine/types'
+import { getScheduleTypeColor } from '&/modules/routine/utils'
 import { FlagIcon } from '@heroicons/react/24/solid'
 import { NavLink } from 'react-router-dom'
-
-interface Routine {
-  id: number
-  name: string
-  priority: number
-  category?: { name: string; color: string }
-}
 
 interface Props {
   routine: Routine
@@ -19,6 +14,8 @@ export function Item({ routine }: Props) {
     if (routine.priority === 2) return 'text-orange-500'
     return 'text-gray-400'
   }
+
+  const typeColor = getScheduleTypeColor(routine.type)
 
   return (
     <NavLink
@@ -33,8 +30,11 @@ export function Item({ routine }: Props) {
             <div className="h-2 w-2 rounded-full bg-indigo-500" />
           </div>
           <div className={cl('mx-4 h-full w-full border-b pt-1', isActive ? 'border-transparent' : 'border-gray-100')}>
-            <p className="capitalize text-gray-800">{routine.name}</p>
-            <p className="text-sm font-semibold text-gray-400">category</p>
+            <p className="font-semibold capitalize text-gray-700">{routine.name}</p>
+            <div className="flex gap-2 text-xs font-semibold text-gray-400">
+              <p className={` opacity-75 ${typeColor}`}>{routine.type.toLocaleLowerCase()}</p>
+              <p>category</p>
+            </div>
           </div>
           <span className="pr-2">
             <FlagIcon width={20} className={getPriorityColor()} />
