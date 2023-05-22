@@ -1,6 +1,7 @@
 import { useRoutineDetails } from '&/modules/routine/hooks'
 import { Routine } from '&/modules/routine/types'
 import { Priority } from './priority'
+import { Schedule } from './schedule'
 
 interface Props {
   routine: Routine
@@ -20,6 +21,7 @@ export function RoutineDetails({ routine }: Props) {
             id="name"
             className="w-full rounded-md border border-indigo-300 px-4 py-3"
             type="text"
+            autoFocus={routine.name === 'New Routine'}
             defaultValue={routine.name}
             {...register('name', {
               required: { value: true, message: 'required' },
@@ -50,7 +52,8 @@ export function RoutineDetails({ routine }: Props) {
           </div>
         </div>
       </form>
-      <Priority priority={routine.priority} />
+      <Priority routine={routine} />
+      <Schedule routine={routine} />
     </div>
   )
 }

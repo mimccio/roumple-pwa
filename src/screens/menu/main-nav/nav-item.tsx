@@ -14,7 +14,12 @@ export function NavItem({ to, name, Icon, close }: Props) {
     <NavLink
       onClick={close}
       to={to}
-      className={({ isActive }) => cl('flex h-9 items-center gap-4 rounded-lg px-4 text-sm', isActive && 'bg-gray-200')}
+      className={({ isActive }) =>
+        cl(
+          'flex h-9 items-center gap-4 rounded-lg px-4 text-sm transition-colors',
+          isActive ? 'bg-gray-200' : 'hover:bg-gray-200'
+        )
+      }
     >
       {({ isActive }) => (
         <>

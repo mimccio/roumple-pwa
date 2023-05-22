@@ -1,12 +1,8 @@
 import { db } from '&/db'
+import { Routine } from '../types'
 
-interface Params {
-  id: string
-  priority: number
-}
-
-export const editRoutinePriority = async ({ id, priority }: Params) => {
-  const { data, error } = await db.from('routine').update({ priority }).eq('id', id).select('id, priority').single()
+export const editRoutinePriority = async ({ id, priority }: Routine) => {
+  const { data, error } = await db.from('routine').update({ priority }).eq('id', id).select('*').single()
   if (error) throw error
   return data
 }

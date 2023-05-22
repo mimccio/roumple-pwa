@@ -1,10 +1,17 @@
 import { TagIcon, PlusCircleIcon } from '@heroicons/react/24/solid'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid'
-import { ArchiveBoxIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
 
 import { useCreateRoutine } from '&/modules/routine/hooks'
+import { Tooltip } from '&/common/components/tooltip'
 
-export function Header() {
+interface Props {
+  archived: boolean
+  handleShowArchived: () => void
+}
+
+export function Header({ handleShowArchived, archived }: Props) {
   const { onCreateRoutine } = useCreateRoutine()
 
   return (
@@ -15,14 +22,23 @@ export function Header() {
         <h1 className="ml-2">Routines</h1>
       </div>
       <div className="flex gap-1">
-        <button onClick={onCreateRoutine} className="p-2">
-          <PlusCircleIcon width={24} className="text-gray-500" />
-        </button>
+        <Tooltip message="create routine">
+          <button className="group p-2" onClick={onCreateRoutine}>
+            <PlusCircleIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-500" />
+          </button>
+        </Tooltip>
+        <Tooltip message={archived ? 'show active' : 'show archived'}>
+          <button onClick={handleShowArchived} className="group p-2">
+            {archived && (
+              <ArchiveBoxIcon width={20} className="text-emerald-400 transition-colors group-hover:text-emerald-500" />
+            )}
+            {!archived && (
+              <ArchiveBoxOutlineIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-500" />
+            )}
+          </button>
+        </Tooltip>
         <button className="p-2">
-          <ArchiveBoxIcon width={24} className="text-gray-400" />
-        </button>
-        <button className="p-2">
-          <TagIcon width={24} className="text-indigo-500" />
+          <TagIcon width={20} className="text-indigo-500" />
         </button>
       </div>
     </header>

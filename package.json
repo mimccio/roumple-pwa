@@ -9,13 +9,16 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "supabase start && vite",
-    "stop": "supabase stop"
+    "stop": "supabase stop",
+    "ts": "tsc",
+    "migration": "supabase db diff --file"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@supabase/supabase-js": "^2.21.0",
     "@tanstack/react-query": "^4.29.5",
+    "date-fns": "^2.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",

@@ -1,49 +1,52 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
 import type { Routine } from '../types'
-import { ROUTINE } from '../constants'
+import { BOARD, LIST, ROUTINE } from '../constants'
 import { sortRoutines } from '../utils'
 import { editRoutinePriority } from '../mutations'
+import { getTodayDate } from '&/common/utils'
 
-export function useRoutinePriority() {
-  const { routineId } = useParams()
+export function useRoutinePriority(routine: Routine) {
   const queryClient = useQueryClient()
+  const date = getTodayDate()
 
   const { mutate } = useMutation(editRoutinePriority, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
 
-      queryClient.setQueryData([ROUTINE, data.id], (old: object = {}) => ({ ...old, priority: data.priority }))
+      queryClient.setQueryData([ROUTINE, data.id], () => data)
 
-      const previousRoutineList = queryClient.getQueryData([ROUTINE])
+      const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: data.archived }])
+      const previousBoardRoutines = queryClient.getQueryData([ROUTINE, BOARD, { date, type: data.type }])
 
-      queryClient.setQueryData([ROUTINE], (old: Routine[] = []) => {
+      queryClient.setQueryData([ROUTINE, LIST, { archived: data.archived }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
-        const newRoutine = { ...old[routineIndex], priority: data.priority }
-        console.log('newRoutine :', newRoutine)
-        return [...old.slice(0, routineIndex), newRoutine, ...old.slice(routineIndex + 1)].sort(sortRoutines)
+        return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)].sort(sortRoutines)
       })
 
-      return { previousRoutineList }
+      queryClient.setQueryData([ROUTINE, BOARD, { date, type: data.type }], (old: Routine[] = []) => {
+        const routineIndex = old.findIndex((item) => item.id === data.id)
+        return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)].sort(sortRoutines)
+      })
+
+      return { previousRoutineList, previousBoardRoutines }
     },
 
     onError: (_err, item, context) => {
       queryClient.setQueryData([ROUTINE, item.id], item)
-      queryClient.setQueryData([ROUTINE], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, LIST, { archived: item.archived }], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, BOARD, { date, type: item.type }], context?.previousBoardRoutines)
       toast.error("Modification didn't work")
     },
-    onSettled: () => {
-      queryClient.invalidateQueries([ROUTINE])
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries([ROUTINE, variables.id])
+      queryClient.invalidateQueries([ROUTINE, LIST, { archived: variables.archived }])
+      queryClient.invalidateQueries([ROUTINE, BOARD, { date, type: variables.type }])
     },
   })
 
-  const onSelect = (priority: number) => {
-    if (!routineId) throw new Error('Routine ID is missing')
-
-    mutate({ priority, id: routineId })
-  }
+  const onSelect = (priority: number) => mutate({ ...routine, priority })
 
   return { onSelect }
 }

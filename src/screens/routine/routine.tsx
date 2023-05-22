@@ -13,7 +13,7 @@ export function Routine() {
 
   return (
     <>
-      <RoutineHeader />
+      <RoutineHeader routine={routine} />
       <Routes>
         {/* <Route path="activity" element={<RoutineDetails />} /> */}
         <Route path="*" element={<RoutineDetails routine={routine} />} />

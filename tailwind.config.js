@@ -9,6 +9,7 @@ export default {
   plugins: [],
   theme: {
     extend: {
+      fontSize: { '2xs': '.65rem' },
       fontFamily: {
         sans: ['nunito', ...defaultTheme.fontFamily.sans],
       },
