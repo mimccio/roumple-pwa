@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import type { Routine } from '../types'
 import { ROUTINE } from '../constants'
 import { fetchRoutineById } from '../queries'
+import { getTodayDate } from '&/common/utils'
 
 export function useRoutine() {
   const { routineId } = useParams()
@@ -20,5 +21,7 @@ export function useRoutine() {
     },
   })
 
-  return { routine: data }
+  const date = getTodayDate()
+
+  return { routine: data, date }
 }

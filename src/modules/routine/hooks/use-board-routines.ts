@@ -32,5 +32,5 @@ export function useBoardRoutines({ type }: Params) {
 
   const routines = showDone ? doneRoutines : todoRoutines
 
-  return { routines, isLoading, handleShowDone, showDone }
+  return { routines, isLoading, handleShowDone, showDone, date }
 }

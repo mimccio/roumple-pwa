@@ -8,10 +8,11 @@ import { getTodayDate } from '&/common/utils'
 
 interface Params {
   type: ScheduleType
+  date: Date
 }
 
-export function useUpsertAction({ type }: Params) {
-  const date = getTodayDate()
+export function useUpsertAction({ type, date }: Params) {
+  // const date = getTodayDate()
 
   const queryClient = useQueryClient()
 

@@ -10,12 +10,13 @@ import { Tooltip } from '&/common/components/tooltip'
 
 interface Props {
   routine: Routine
+  date: Date
 }
 
-export function Header({ routine }: Props) {
+export function Header({ routine, date }: Props) {
   const { mainPath } = useMainPath()
 
-  const { handleUpdateStatus } = useUpsertAction({ type: routine.type })
+  const { handleUpdateStatus } = useUpsertAction({ type: routine.type, date })
 
   return (
     <div className="flex h-14 w-full items-center justify-between bg-gray-200 px-4 text-gray-400">

@@ -12,8 +12,8 @@ import { useBoardRoutines } from '&/modules/routine/hooks'
 const type = SCHEDULE_TYPES.daily
 
 export function Today() {
-  const { routines, isLoading, handleShowDone, showDone } = useBoardRoutines({ type })
-  const { handleUpdateStatus } = useUpsertAction({ type })
+  const { routines, isLoading, date, handleShowDone, showDone } = useBoardRoutines({ type })
+  const { handleUpdateStatus } = useUpsertAction({ type, date })
 
   return (
     <>

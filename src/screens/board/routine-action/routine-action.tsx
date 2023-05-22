@@ -5,7 +5,7 @@ import { getPeriodText, getScheduleTypeColor } from '&/modules/routine/utils'
 import { Header } from './header'
 
 export function RoutineAction() {
-  const { routine } = useRoutine()
+  const { routine, date } = useRoutine()
   if (!routine) return null
 
   const ScheduleColor = getScheduleTypeColor(routine.type)
@@ -13,7 +13,7 @@ export function RoutineAction() {
 
   return (
     <>
-      <Header routine={routine} />
+      <Header routine={routine} date={date} />
       <div className="flex flex-col p-4">
         <p className="flex items-center p-4">
           <ClockIcon width={20} className={ScheduleColor} />
