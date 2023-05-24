@@ -7,13 +7,8 @@ import { NotFoundDetails, OfflineError } from '../errors'
 export function Routine() {
   const { routine, isPaused } = useRoutine()
 
-  if (isPaused) {
-    return <OfflineError />
-  }
-
-  if (!routine) {
-    return <NotFoundDetails />
-  }
+  if (!routine && isPaused) return <OfflineError />
+  if (!routine) return <NotFoundDetails />
 
   return (
     <>
