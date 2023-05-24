@@ -15,8 +15,6 @@ import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
 import '../assets/fonts/fonts.css'
 
-import '../assets/illustrations/order-completed.png'
-
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
 })
@@ -24,6 +22,7 @@ const persister = createSyncStoragePersister({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      networkMode: 'offlineFirst',
       cacheTime: 1000 * 60 * 60 * 24, // 24 hours
       staleTime: 2000,
       retry: 0,
