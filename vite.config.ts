@@ -11,7 +11,13 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: { enabled: false },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      // add this to cache all the imports
+      workbox: {
+        globPatterns: ['**/*'],
+      },
+      // add this to cache all the
+      // static assets in the public folder
+      includeAssets: ['**/*'],
       manifest: {
         name: 'My Roumple',
         short_name: 'Roumple',
