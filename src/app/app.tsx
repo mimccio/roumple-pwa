@@ -15,6 +15,8 @@ import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
 import '../assets/fonts/fonts.css'
 
+import '../assets/illustrations/order-completed.png'
+
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
 })
