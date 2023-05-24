@@ -22,10 +22,10 @@ const persister = createSyncStoragePersister({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      networkMode: 'online',
+      // networkMode: 'online',
       cacheTime: 1000 * 60 * 60 * 24, // 24 hours
       staleTime: 2000,
-      retry: 0,
+      retry: 1,
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
     },
