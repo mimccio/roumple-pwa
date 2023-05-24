@@ -7,9 +7,11 @@ import { fetchRoutines } from '../queries'
 import { onlineManager } from '@tanstack/react-query'
 
 export function useRoutineList() {
-  const isConnected = onlineManager.isOnline()
+  const isOnline = onlineManager.isOnline()
+  const hello = navigator.onLine
 
-  console.log('isConnected :', isConnected)
+  console.log('isOnline :', isOnline)
+  console.log('hello :', hello)
 
   const [archived, setArchived] = useState(false)
   const {
@@ -18,8 +20,8 @@ export function useRoutineList() {
     error,
     isFetching,
   } = useQuery([ROUTINE, LIST, { archived }], fetchRoutines, {
-    enabled: isConnected ?? false,
-    networkMode: 'offlineFirst',
+    // enabled: isConnected ?? false,
+    // networkMode: 'offlineFirst',
   })
 
   if (error) console.log('error :', error)
