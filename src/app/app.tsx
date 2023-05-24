@@ -1,10 +1,10 @@
 import { Navigate, Route, createRoutesFromElements } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { QueryClient, MutationCache } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { Toaster, toast } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 import { Login } from '&/screens/login'
 import { LIST, ROUTINE } from '&/modules/routine/constants'
@@ -22,27 +22,13 @@ const persister = createSyncStoragePersister({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // networkMode: 'offlineFirst',
       cacheTime: 1000 * 60 * 60 * 24, // 24 hours
       staleTime: 2000,
       retry: 0,
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
     },
-    // mutations: {
-    //   networkMode: 'offlineFirst',
-    // },
   },
-  // configure global cache callbacks to show toast notifications
-  // mutationCache: new MutationCache({
-  //   onSuccess: (data: any) => {
-  //     console.log('data :', data)
-  //     toast.success(data.routine.name)
-  //   },
-  //   onError: (error: any) => {
-  //     toast.error('blouuuououou' + error.message)
-  //   },
-  // }),
 })
 
 // we need a default mutation function so that paused mutations can resume after a page reload

@@ -62,5 +62,5 @@ export function useRoutineDetails(routine: Routine) {
 
   const submit = handleSubmit((formData) => mutate({ ...routine, ...formData }))
 
-  return { register, errors, submit }
+  return { register, errors, submit, date }
 }

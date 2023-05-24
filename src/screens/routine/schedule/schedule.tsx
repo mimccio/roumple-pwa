@@ -6,9 +6,10 @@ import { Monthly } from './monthly'
 
 interface Props {
   routine: Routine
+  date: number
 }
 
-export function Schedule({ routine }: Props) {
+export function Schedule({ routine, date }: Props) {
   const {
     dailyRecurrence,
     currentPeriod,
@@ -17,7 +18,7 @@ export function Schedule({ routine }: Props) {
     handleRecurrenceChange,
     weeklyRecurrence,
     monthlyRecurrence,
-  } = useSchedule(routine)
+  } = useSchedule({ routine, date })
 
   return (
     <div className="mt-8">

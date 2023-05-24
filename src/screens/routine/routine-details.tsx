@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function RoutineDetails({ routine }: Props) {
-  const { register, errors, submit } = useRoutineDetails(routine)
+  const { register, errors, submit, date } = useRoutineDetails(routine)
 
   return (
     <div className="w-full p-4">
@@ -53,7 +53,7 @@ export function RoutineDetails({ routine }: Props) {
         </div>
       </form>
       <Priority routine={routine} />
-      <Schedule routine={routine} />
+      <Schedule routine={routine} date={date} />
     </div>
   )
 }

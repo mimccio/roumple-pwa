@@ -1,13 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { Routine, ScheduleType } from '../types'
-import { DAILY, LIST, MONTHLY, ROUTINE, WEEKLY } from '../constants'
+import { BOARD, DAILY, LIST, MONTHLY, ROUTINE, WEEKLY } from '../constants'
+import { sortRoutines } from '../utils'
 import { editRoutineSchedule } from '../mutations'
-import { useState } from 'react'
 
-export function useSchedule(routine: Routine) {
+interface Params {
+  routine: Routine
+  date: number
+}
+
+export function useSchedule({ routine, date }: Params) {
   const [currentType, setType] = useState(routine.type)
   const [currentPeriod, setPeriod] = useState(routine.period)
   const [dailyRecurrence, setDailyRecurrence] = useState(routine.daily_recurrence)
@@ -27,24 +32,48 @@ export function useSchedule(routine: Routine) {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
 
+      // Details
       queryClient.setQueryData([ROUTINE, data.id], () => data)
 
+      // List
       const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: data.archived }])
       queryClient.setQueryData([ROUTINE, LIST, { archived: data.archived }], (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)]
       })
 
-      return { previousRoutineList }
+      // Board
+      const previousBoardRoutines = queryClient.getQueryData([ROUTINE, BOARD, { type: routine.type, date }])
+
+      // previous type
+      queryClient.setQueryData([ROUTINE, BOARD, { type: routine.type, date }], (old: Routine[] = []) => {
+        if (data.type === routine.type) return
+        const routineIndex = old.findIndex((item) => item.id === data.id)
+        return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
+      })
+
+      // new type
+      queryClient.setQueryData([ROUTINE, BOARD, { type: data.type, date }], (old: Routine[] = []) => {
+        const routineIndex = old.findIndex((item) => item.id === data.id)
+        if (routineIndex >= 0) return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)]
+        if (data.archived) return old
+        return [...old, data].sort(sortRoutines)
+      })
+
+      return { previousRoutineList, previousBoardRoutines }
     },
 
     onError: (_err, item, context) => {
       queryClient.setQueryData([ROUTINE, routine.id], routine)
       queryClient.setQueryData([ROUTINE, LIST, { archived: item.archived }], context?.previousRoutineList)
+      queryClient.setQueryData([ROUTINE, BOARD, { type: item.type, date }], context?.previousBoardRoutines)
       toast.error("Schedule modification didn't work")
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries([ROUTINE], { exact: false })
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries([ROUTINE, variables.id])
+      queryClient.invalidateQueries([ROUTINE, LIST, { archived: variables.archived }])
+      queryClient.invalidateQueries([ROUTINE, BOARD, { type: routine.type, date }])
+      queryClient.invalidateQueries([ROUTINE, BOARD, { type: variables.type, date }])
     },
   })
 

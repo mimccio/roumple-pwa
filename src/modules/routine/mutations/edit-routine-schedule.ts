@@ -6,8 +6,8 @@ export const editRoutineSchedule = async ({ id, daily_recurrence, weekly_recurre
     .from('routine')
     .update({ daily_recurrence, type, period, weekly_recurrence })
     .eq('id', id)
-    .select('id, daily_recurrence, type, period, weekly_recurrence')
-    .single()
+  // .select('id, daily_recurrence, type, period, weekly_recurrence')
+  // .single()
   if (error) throw error
   return data
 }
