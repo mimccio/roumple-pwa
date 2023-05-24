@@ -1,17 +1,19 @@
 import { Navigate, Route, createRoutesFromElements } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, MutationCache } from '@tanstack/react-query'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster, toast } from 'react-hot-toast'
 
 import { Login } from '&/screens/login'
+import { LIST, ROUTINE } from '&/modules/routine/constants'
+import { editRoutineDetails } from '&/modules/routine/mutations'
+
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import { LIST, ROUTINE } from '&/modules/routine/constants'
-import { editRoutineDetails } from '&/modules/routine/mutations'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import '../assets/fonts/fonts.css'
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
