@@ -1,18 +1,18 @@
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { RoutineActionListItem } from '&/screens/board/components'
-import { useUpsertAction } from '&/modules/routine/hooks/'
-
+import { useUpsertAction, useBoardRoutines } from '&/modules/routine/hooks/'
 import { SCHEDULE_TYPES } from '&/modules/routine/constants'
+
+import { MainError } from '../errors'
 import { Header } from './components/header'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
-import { useBoardRoutines } from '&/modules/routine/hooks'
 
 const type = SCHEDULE_TYPES.daily
 
 export function Today() {
-  const { routines, isLoading, date, handleShowDone, showDone } = useBoardRoutines({ type })
+  const { routines, isLoading, date, handleShowDone, showDone, isError, isEmpty } = useBoardRoutines({ type })
   const { handleUpdateStatus } = useUpsertAction({ type, date })
 
   return (
@@ -23,8 +23,9 @@ export function Today() {
         title={<h1 className="text-indigo-700">Today</h1>}
       />
       <ContentLayout>
-        {!isLoading && !routines?.length && !showDone && <EmptyTodo />}
-        {!isLoading && !routines?.length && showDone && <EmptyDone />}
+        {isError && <MainError />}
+        {isEmpty && !showDone && <EmptyTodo />}
+        {isEmpty && showDone && <EmptyDone />}
 
         <div className="flex flex-col gap-4 px-2">
           {isLoading && <ListSkeleton />}

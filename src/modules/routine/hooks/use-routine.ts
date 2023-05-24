@@ -11,7 +11,7 @@ export function useRoutine() {
   const queryClient = useQueryClient()
   const options = { exact: false }
 
-  const { data } = useQuery([ROUTINE, routineId], fetchRoutineById, {
+  const { data, isLoading, isFetching, isPaused } = useQuery([ROUTINE, routineId], fetchRoutineById, {
     enabled: Boolean(routineId),
     initialDataUpdatedAt: () => queryClient.getQueryState([ROUTINE], options)?.dataUpdatedAt,
     initialData: () => {
@@ -21,7 +21,5 @@ export function useRoutine() {
     },
   })
 
-  const date = getTodayDate()
-
-  return { routine: data, date }
+  return { routine: data, date: getTodayDate(), isLoading: isLoading && isFetching, isPaused }
 }

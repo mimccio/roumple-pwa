@@ -2,10 +2,14 @@ import { Routes, Route } from 'react-router-dom'
 import { RoutineHeader } from './routine-header'
 import { RoutineDetails } from './routine-details'
 import { useRoutine } from '&/modules/routine/hooks'
-import { NotFoundDetails } from '../errors/not-found-details'
+import { NotFoundDetails, OfflineError } from '../errors'
 
 export function Routine() {
-  const { routine } = useRoutine()
+  const { routine, isPaused } = useRoutine()
+
+  if (isPaused) {
+    return <OfflineError />
+  }
 
   if (!routine) {
     return <NotFoundDetails />

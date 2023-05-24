@@ -10,12 +10,11 @@ import { Tooltip } from '&/common/components/tooltip'
 
 interface Props {
   routine: Routine
-  date: Date
+  date: number
 }
 
 export function Header({ routine, date }: Props) {
   const { mainPath } = useMainPath()
-
   const { handleUpdateStatus } = useUpsertAction({ type: routine.type, date })
 
   return (

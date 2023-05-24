@@ -11,7 +11,7 @@ interface Params {
   actionId?: number
   routine: Routine
   type: ScheduleType
-  date: Date
+  date: number
 }
 
 export const upsertRoutineAction = async ({ done, actionId, type, date, routine }: Params) => {
@@ -31,7 +31,8 @@ export const upsertRoutineAction = async ({ done, actionId, type, date, routine 
     done,
   }
 
-  const { error } = await db.from('routine_action').upsert(action).select('*').single()
+  const { error, data } = await db.from('routine_action').upsert(action).select('*').single()
 
   if (error) throw error
+  return data
 }

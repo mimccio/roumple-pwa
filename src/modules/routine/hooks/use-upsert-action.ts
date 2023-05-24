@@ -7,7 +7,7 @@ import { upsertRoutineAction } from '../mutations'
 
 interface Params {
   type: ScheduleType
-  date: Date
+  date: number
 }
 
 export function useUpsertAction({ type, date }: Params) {
@@ -15,19 +15,18 @@ export function useUpsertAction({ type, date }: Params) {
 
   const { mutate } = useMutation(upsertRoutineAction, {
     onMutate: async (data) => {
-      console.log('data :', data)
-
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
 
-      const previousList = queryClient.getQueryData([ROUTINE, BOARD, { date, type }])
+      const previousList = queryClient.getQueryData([ROUTINE, BOARD, { date, type: 'DAILY' }])
 
       const newRoutine = {
         ...data.routine,
         actions: [{ ...data.routine.actions?.[0], done: !data.routine.actions?.[0]?.done }],
       }
+
       queryClient.setQueryData<Routine>([ROUTINE, data.routine.id], () => newRoutine)
 
-      queryClient.setQueryData<Routine[]>([ROUTINE, BOARD, { type, date }], (old) => {
+      queryClient.setQueryData<Routine[]>([ROUTINE, BOARD, { date, type }], (old) => {
         if (!old) return
         const index = old.findIndex((item) => item.id === data.routine.id)
         if (index >= 0) return [...old.slice(0, index), newRoutine, ...old.slice(index + 1)]
