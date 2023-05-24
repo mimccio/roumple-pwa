@@ -4,9 +4,23 @@ import { useQuery } from '@tanstack/react-query'
 import { LIST, ROUTINE } from '../constants'
 import { fetchRoutines } from '../queries'
 
+import { onlineManager } from '@tanstack/react-query'
+
 export function useRoutineList() {
+  const isConnected = onlineManager.isOnline()
+
+  console.log('isConnected :', isConnected)
+
   const [archived, setArchived] = useState(false)
-  const { data, isLoading: queryIsLoading, error, isFetching } = useQuery([ROUTINE, LIST, { archived }], fetchRoutines)
+  const {
+    data,
+    isLoading: queryIsLoading,
+    error,
+    isFetching,
+  } = useQuery([ROUTINE, LIST, { archived }], fetchRoutines, {
+    enabled: isConnected ?? false,
+    networkMode: 'offlineFirst',
+  })
 
   if (error) console.log('error :', error)
 
