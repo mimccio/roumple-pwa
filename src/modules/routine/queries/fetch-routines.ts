@@ -6,7 +6,7 @@ interface FetchRoutineParams {
 
 export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {
   const [, , { archived }] = queryKey
-
+  console.log('yooooo')
   const { data, error } = await db
     .from('routine')
     .select(
@@ -15,6 +15,9 @@ export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {
     .eq('archived', archived)
     .order('priority', { ascending: false })
     .order('name', { ascending: true })
-  if (error) throw error
+
+  console.log('--- error :', error)
+
+  // if (error) throw error
   return data
 }
