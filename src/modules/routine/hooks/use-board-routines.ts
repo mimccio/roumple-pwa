@@ -37,7 +37,7 @@ export function useBoardRoutines({ type }: Params) {
   const isError = Boolean(error)
   const isLoading = !error && queryIsLoading && isFetching
   const routines = isError ? null : showDone ? doneRoutines : todoRoutines
-  const isEmpty = !error && !isLoading && !routines?.length
+  const isEmpty = !error && !queryIsLoading && !routines?.length
 
   return { routines, isLoading, handleShowDone, showDone, date, isError, isEmpty }
 }
