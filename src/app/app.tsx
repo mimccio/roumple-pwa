@@ -13,7 +13,7 @@ import { editRoutineDetails } from '&/modules/routine/mutations'
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
-import '../assets/fonts/fonts.css'
+// import '../assets/fonts/fonts.css'
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
