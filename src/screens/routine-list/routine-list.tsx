@@ -21,7 +21,7 @@ export function RoutineList() {
           <EmptyMainContent onClick={onCreateRoutine} text="Create a new routine +" image={workflowImg} />
         )}
         {isEmpty && archived && <EmptyArchived />}
-        <div className="flex flex-col gap-4 px-2">
+        <div className="flex flex-col gap-4 px-2 xl:px-4">
           {isLoading && <ListSkeleton />}
           {routines?.map((routine) => (
             <Item key={routine.id} routine={routine} />
