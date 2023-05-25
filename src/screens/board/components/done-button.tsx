@@ -13,9 +13,9 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
   const action = routine.actions?.[0]
 
   const getColor = () => {
-    if (routine.priority === 1) return 'border-blue-500 hover:border-blue-400'
-    if (routine.priority === 2) return 'border-orange-500 hover:border-orange-400'
-    return 'border-gray-400 hover:border-gray-300'
+    if (routine.priority === 1) return 'border-blue-500'
+    if (routine.priority === 2) return 'border-orange-500'
+    return 'border-gray-400'
   }
 
   const ringColor = getColor()
@@ -28,13 +28,15 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
   }
 
   return (
-    <button onClick={onClick} className="group h-8 w-8  rounded-full">
+    <button onClick={onClick} className="group h-8 w-8 rounded-full">
       <div
         className={cl(
-          'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors group-hover:bg-green-100',
+          'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors ',
           ringColor,
-          action?.status === ROUTINE_STATUSES.done && 'bg-green-500',
-          action?.status === ROUTINE_STATUSES.inProgress && 'border-dotted'
+          action?.status === ROUTINE_STATUSES.done
+            ? 'bg-green-500 group-hover:bg-green-400'
+            : 'group-hover:bg-green-100',
+          action?.status === ROUTINE_STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
         )}
       >
         {action?.status === ROUTINE_STATUSES.inProgress ? (
