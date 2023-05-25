@@ -4,8 +4,8 @@ interface Props {
   children: ReactNode
 }
 
-// 56px => header (h-14)
-
 export function ContentLayout({ children }: Props) {
-  return <main className="no-scrollbar flex h-[calc(100vh-56px)] flex-col overflow-y-auto py-8">{children}</main>
+  return (
+    <main className="no-scrollbar absolute bottom-0 top-14 flex w-full flex-col overflow-y-auto py-8">{children}</main>
+  )
 }
