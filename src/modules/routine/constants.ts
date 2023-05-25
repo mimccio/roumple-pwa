@@ -23,3 +23,13 @@ export const BOARD_TYPES = {
   month: MONTH as 'MONTH',
   tomorrow: TOMORROW as 'TOMORROW',
 }
+
+export const TODO = 'TODO'
+export const IN_PROGRESS = 'IN_PROGRESS'
+export const DONE = 'DONE'
+
+export const ROUTINE_STATUSES = {
+  todo: TODO as 'TODO',
+  inProgress: IN_PROGRESS as 'IN_PROGRESS',
+  done: DONE as 'DONE',
+}

@@ -1,4 +1,5 @@
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
+export type RoutineStatuses = 'TODO' | 'IN_PROGRESS' | 'DONE'
 
 // export type BoardType = 'TODAY' | 'WEEK' | 'MONTH' | 'TOMORROW'
 
@@ -6,7 +7,7 @@ export interface RoutineAction {
   id: number
   date: Date
   routine_id: string
-  done: boolean
+  status: RoutineStatuses
 }
 
 export interface Routine {
@@ -20,7 +21,7 @@ export interface Routine {
   weekly_recurrence: number[]
   monthly_recurrence: number[]
   type: ScheduleType
-  actions: Pick<RoutineAction, 'id' | 'date' | 'done'>[]
+  actions: Pick<RoutineAction, 'id' | 'date' | 'status'>[]
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>
@@ -28,7 +29,7 @@ export type RoutineItem = Omit<Routine, 'actions'>
 export interface UpdateStatusParams {
   routine: Routine
   actionId: number
-  done: boolean
+  status: RoutineStatuses
 }
 
 export interface RoutineDetails {

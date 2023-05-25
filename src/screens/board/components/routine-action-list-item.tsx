@@ -5,7 +5,7 @@ import { DoneButton } from './done-button'
 
 interface Props {
   routine: Routine
-  handleUpdateStatus: ({ routine, actionId, done }: UpdateStatusParams) => void
+  handleUpdateStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
 }
 
 export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {

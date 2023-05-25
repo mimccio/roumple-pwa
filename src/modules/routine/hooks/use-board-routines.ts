@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { getTodayDate } from '&/common/utils'
 import type { Routine, ScheduleType } from '../types'
-import { BOARD, ROUTINE } from '../constants'
+import { BOARD, ROUTINE, ROUTINE_STATUSES } from '../constants'
 import { fetchBoardRoutines } from '../queries'
 
 interface Params {
@@ -22,7 +22,7 @@ export function useBoardRoutines({ type }: Params) {
   const todoRoutines: Routine[] = []
 
   data?.forEach((routine) => {
-    if (routine.actions?.[0]?.done) {
+    if (routine.actions?.[0]?.status === ROUTINE_STATUSES.done) {
       doneRoutines.push(routine)
     } else {
       todoRoutines.push(routine)

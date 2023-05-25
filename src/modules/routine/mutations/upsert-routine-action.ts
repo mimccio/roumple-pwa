@@ -4,17 +4,17 @@ import { db } from '&/db'
 import { DATE_FORMAT } from '&/common/constants'
 import { getUserId } from '&/modules/utils'
 import { DAILY, MONTHLY, WEEKLY } from '&/modules/routine/constants'
-import { Routine, ScheduleType } from '../types'
+import { Routine, RoutineStatuses, ScheduleType } from '../types'
 
 interface Params {
-  done: boolean
   actionId?: number
-  routine: Routine
-  type: ScheduleType
   date: number
+  routine: Routine
+  status: RoutineStatuses
+  type: ScheduleType
 }
 
-export const upsertRoutineAction = async ({ done, actionId, type, date, routine }: Params) => {
+export const upsertRoutineAction = async ({ status, actionId, type, date, routine }: Params) => {
   const userId = await getUserId()
 
   const getDate = () => {
@@ -28,7 +28,7 @@ export const upsertRoutineAction = async ({ done, actionId, type, date, routine 
     id: actionId,
     routine_id: routine.id,
     user_id: userId,
-    done,
+    status,
   }
 
   const { error, data } = await db.from('routine_action').upsert(action).select('*').single()
