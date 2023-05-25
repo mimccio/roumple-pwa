@@ -10,7 +10,7 @@ export function Login() {
   const websiteUrl = import.meta.env.VITE_SITE_URL
 
   return (
-    <main className="flex h-screen flex-col p-8">
+    <main className=" flex min-h-screen flex-col gap-4 p-8 pb-12">
       <Transition
         as="h1"
         appear
@@ -27,7 +27,7 @@ export function Login() {
         as="section"
         appear
         show
-        className="flex h-2/5 flex-col items-center justify-center gap-4"
+        className="flex h-2/5 min-h-[320px] flex-col items-center justify-center gap-4"
         enter="transition ease-in-out duration-1000 transform"
         enterFrom="opacity-0 -translate-y-full"
         enterTo="opacity-100 translate-y-0"
@@ -109,7 +109,12 @@ export function Login() {
               onChange={handleChange}
               numInputs={6}
               renderInput={(props) => (
-                <input {...props} style={{ width: '32px' }} className="mx-2 h-8 rounded-md border text-center" />
+                <input
+                  {...props}
+                  style={{ width: '32px' }}
+                  type="number"
+                  className="mx-2 h-8 rounded-md border text-center"
+                />
               )}
             />
           </div>
