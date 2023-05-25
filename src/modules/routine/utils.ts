@@ -39,5 +39,5 @@ export const getScheduleTypeColor = (type: ScheduleType) => {
 export const getIsScheduled = ({ data, date }: { data: Routine; date: number }) => {
   if (data.type === SCHEDULE_TYPES.daily) return data.daily_recurrence.includes(getDay(date))
   if (data.type === SCHEDULE_TYPES.weekly) return data.weekly_recurrence.includes(getWeek(date) % 2)
-  if (data.type === SCHEDULE_TYPES.monthly) return data.daily_recurrence.includes(getMonth(date))
+  if (data.type === SCHEDULE_TYPES.monthly) return data.monthly_recurrence.includes(getMonth(date))
 }
