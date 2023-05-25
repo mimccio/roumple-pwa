@@ -16,6 +16,7 @@
   } */
 }
 
+/* Remove focus ring on tap */
 *:focus {
   -webkit-tap-highlight-color: transparent;
   /* outline: none;
@@ -23,6 +24,7 @@
   touch-action: manipulation; */
 }
 
+/* Remove arrows from number input*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

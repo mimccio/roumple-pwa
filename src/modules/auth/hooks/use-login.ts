@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router'
 export const useLogin = () => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const [isDone, setIsDone] = useState(false)
   const [verifyIsLoading, setVerifyIsLoading] = useState(false)
-
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
+
+  const handleEmailChange = (evt: FormEvent<HTMLInputElement>) => setEmail(evt.currentTarget.value)
 
   const getURL = () => {
     let incompleteUrl = window.location.href
@@ -37,10 +37,10 @@ export const useLogin = () => {
         },
       })
       if (error) throw error
-      setIsDone(true)
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {
+      navigate('email-sent')
       setIsLoading(false)
     }
   }
@@ -67,14 +67,21 @@ export const useLogin = () => {
     verifyOpt(code)
   }
 
-  const handleChange = async (value: string) => {
+  const handleOptChange = async (value: string) => {
     setCode(value)
     if (value.length === 6) {
       verifyOpt(value)
     }
   }
 
-  const reset = () => setIsDone(false)
-
-  return { handleLogin, isLoading, setEmail, email, isDone, handleChange, code, handleVerify, reset, verifyIsLoading }
+  return {
+    code,
+    email,
+    handleEmailChange,
+    handleLogin,
+    handleOptChange,
+    handleVerify,
+    isLoading,
+    verifyIsLoading,
+  }
 }
