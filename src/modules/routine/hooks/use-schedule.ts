@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast'
 
 import type { Routine, ScheduleType } from '../types'
 import { BOARD, DAILY, LIST, MONTHLY, ROUTINE, WEEKLY } from '../constants'
-import { sortRoutines } from '../utils'
+import { getIsScheduled, sortRoutines } from '../utils'
 import { editRoutineSchedule } from '../mutations'
 
 interface Params {
@@ -45,20 +45,33 @@ export function useSchedule({ routine, date }: Params) {
       // Board
       const previousBoardRoutines = queryClient.getQueryData([ROUTINE, BOARD, { type: routine.type, date }])
 
-      // previous type
-      queryClient.setQueryData([ROUTINE, BOARD, { type: routine.type, date }], (old: Routine[] = []) => {
-        if (data.type === routine.type) return
-        const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
-      })
+      const isScheduled = getIsScheduled({ data, date })
 
-      // new type
-      queryClient.setQueryData([ROUTINE, BOARD, { type: data.type, date }], (old: Routine[] = []) => {
-        const routineIndex = old.findIndex((item) => item.id === data.id)
-        if (routineIndex >= 0) return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)]
-        if (data.archived) return old
-        return [...old, data].sort(sortRoutines)
-      })
+      // Type stays the same
+      if (data.type === routine.type && !data.archived) {
+        queryClient.setQueryData([ROUTINE, BOARD, { type: data.type, date }], (old: Routine[] = []) => {
+          const routineIndex = old.findIndex((item) => item.id === data.id)
+
+          if (routineIndex >= 0 && !isScheduled) return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
+          if (routineIndex >= 0 && isScheduled)
+            return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)]
+          if (routineIndex === -1 && isScheduled) return [...old, data].sort(sortRoutines)
+          return old
+        })
+      }
+
+      // New type
+      if (data.type !== routine.type && !data.archived) {
+        queryClient.setQueryData([ROUTINE, BOARD, { type: routine.type, date }], (old: Routine[] = []) => {
+          const routineIndex = old.findIndex((item) => item.id === data.id)
+          return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
+        })
+
+        queryClient.setQueryData([ROUTINE, BOARD, { type: data.type, date }], (old: Routine[] = []) => {
+          if (isScheduled) return [...old, data].sort(sortRoutines)
+          return old
+        })
+      }
 
       return { previousRoutineList, previousBoardRoutines }
     },

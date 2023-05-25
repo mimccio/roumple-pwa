@@ -1,3 +1,4 @@
+import { getDay, getMonth, getWeek } from 'date-fns'
 import { SCHEDULE_TYPES } from './constants'
 import { Routine, ScheduleType } from './types'
 
@@ -33,4 +34,10 @@ export const getScheduleTypeColor = (type: ScheduleType) => {
   if (type === SCHEDULE_TYPES.daily) return 'text-indigo-700'
   if (type === SCHEDULE_TYPES.weekly) return 'text-sky-700'
   if (type === SCHEDULE_TYPES.monthly) return 'text-purple-700'
+}
+
+export const getIsScheduled = ({ data, date }: { data: Routine; date: number }) => {
+  if (data.type === SCHEDULE_TYPES.daily) return data.daily_recurrence.includes(getDay(date))
+  if (data.type === SCHEDULE_TYPES.weekly) return data.weekly_recurrence.includes(getWeek(date) % 2)
+  if (data.type === SCHEDULE_TYPES.monthly) return data.monthly_recurrence.includes(getMonth(date))
 }

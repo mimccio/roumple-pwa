@@ -21,6 +21,8 @@ interface Props {
   }) => void
 }
 
+const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+
 export function Monthly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
   const isSelected = type === MONTHLY
 
@@ -39,90 +41,16 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
       <div className="grid grid-cols-6">
         <h4 className="col-span-2 text-sm font-bold text-purple-700 ">Monthly</h4>
         <div className="col-span-4 flex flex-wrap gap-1">
-          <MonthCircle
-            disabled={!isSelected}
-            value={1}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(1)}
-            month="j"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={2}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(2)}
-            month="f"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={3}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(3)}
-            month="m"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={4}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(4)}
-            month="a"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={5}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(5)}
-            month="m"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={6}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(6)}
-            month="j"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={7}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(7)}
-            month="j"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={8}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(8)}
-            month="A"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={9}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(9)}
-            month="s"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={10}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(10)}
-            month="o"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={11}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(11)}
-            month="n"
-          />
-          <MonthCircle
-            disabled={!isSelected}
-            value={12}
-            handleChange={handleRecurrenceChange}
-            isSelected={isSelected && recurrence.includes(12)}
-            month="d"
-          />
+          {months.map((month, index) => (
+            <MonthCircle
+              key={index}
+              disabled={!isSelected}
+              value={index}
+              handleChange={handleRecurrenceChange}
+              isSelected={isSelected && recurrence.includes(index)}
+              month={month}
+            />
+          ))}
         </div>
       </div>
       <div className="mt-6 grid grid-cols-6">
