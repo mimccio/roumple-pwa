@@ -3,10 +3,15 @@ import { ClockIcon } from '@heroicons/react/24/outline'
 import { useRoutine } from '&/modules/routine/hooks'
 import { getPeriodText, getScheduleTypeColor } from '&/modules/routine/utils'
 import { Header } from './header'
+import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+import { NotFoundDetails, OfflineError } from '&/screens/errors'
 
 export function RoutineAction() {
-  const { routine, date } = useRoutine()
-  if (!routine) return null
+  const { routine, date, isPaused, isLoading } = useRoutine()
+
+  if (isLoading) return <DetailsLoadingPage />
+  if (!routine && isPaused) return <OfflineError />
+  if (!routine) return <NotFoundDetails />
 
   const ScheduleColor = getScheduleTypeColor(routine.type)
   const periodText = getPeriodText({ type: routine.type, period: routine.period })
