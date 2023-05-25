@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import type { FormEvent } from 'react'
-
-import { db } from '&/db'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-// TODO?: use react-hook-form in order to handle form errors
+import { db } from '&/db'
+
 export const useLogin = () => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
@@ -23,42 +22,41 @@ export const useLogin = () => {
   }
 
   const handleLogin = async (e: FormEvent) => {
-    e.preventDefault()
-
     try {
+      e.preventDefault()
       setIsLoading(true)
       const { error } = await db.auth.signInWithOtp({
         email,
         options: {
           emailRedirectTo: getURL(),
           data: {
-            lang: 'en',
+            lang: navigator.language.slice(0, 2),
           },
         },
       })
       if (error) throw error
+      navigate('email-sent')
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {
-      navigate('email-sent')
       setIsLoading(false)
     }
   }
 
   const verifyOpt = async (opt: string) => {
-    setVerifyIsLoading(true)
     try {
+      setVerifyIsLoading(true)
       const { error } = await db.auth.verifyOtp({
         email: email,
         token: opt.trim(),
         type: 'email',
       })
       if (error) throw error
+      navigate('/today')
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {
       setVerifyIsLoading(false)
-      navigate('/today')
     }
   }
 
