@@ -1,11 +1,12 @@
 import { cl } from '&/common/utils'
+import { ROUTINE_STATUSES } from '&/modules/routine/constants'
 import { Routine, UpdateStatusParams } from '&/modules/routine/types'
-import { CheckIcon } from '@heroicons/react/20/solid'
+import { CheckIcon, ChartBarIcon } from '@heroicons/react/20/solid'
 import { FormEvent } from 'react'
 
 interface Props {
   routine: Routine
-  handleUpdateStatus: ({ routine, actionId, done }: UpdateStatusParams) => void
+  handleUpdateStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
 }
 
 export function DoneButton({ handleUpdateStatus, routine }: Props) {
@@ -17,14 +18,13 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
     return 'border-gray-400 hover:border-gray-300'
   }
 
-  const isDone = action?.done || false
-
   const ringColor = getColor()
 
   const onClick = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault()
     evt.stopPropagation()
-    handleUpdateStatus({ routine, actionId: action?.id, done: !isDone })
+    const status = action?.status === ROUTINE_STATUSES.done ? ROUTINE_STATUSES.todo : ROUTINE_STATUSES.done
+    handleUpdateStatus({ routine, actionId: action?.id, status })
   }
 
   return (
@@ -33,14 +33,22 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
         className={cl(
           'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors group-hover:bg-green-100',
           ringColor,
-          isDone && 'bg-green-500'
+          action?.status === ROUTINE_STATUSES.done && 'bg-green-500',
+          action?.status === ROUTINE_STATUSES.inProgress && 'border-dotted'
         )}
       >
-        <CheckIcon
-          width={18}
-          height={18}
-          className={cl('transition-colors group-hover:text-gray-200', isDone ? 'text-white' : 'text-transparent')}
-        />
+        {action?.status === ROUTINE_STATUSES.inProgress ? (
+          <ChartBarIcon width={14} height={14} className="text-gray-300 transition-colors group-hover:text-gray-200" />
+        ) : (
+          <CheckIcon
+            width={18}
+            height={18}
+            className={cl(
+              'transition-colors group-hover:text-gray-200',
+              action?.status === ROUTINE_STATUSES.done ? 'text-white' : 'text-transparent'
+            )}
+          />
+        )}
       </div>
     </button>
   )

@@ -17,11 +17,11 @@ export function useUpsertAction({ type, date }: Params) {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
 
-      const previousList = queryClient.getQueryData([ROUTINE, BOARD, { date, type: 'DAILY' }])
+      const previousList = queryClient.getQueryData([ROUTINE, BOARD, { date, type }])
 
       const newRoutine = {
         ...data.routine,
-        actions: [{ ...data.routine.actions?.[0], done: !data.routine.actions?.[0]?.done }],
+        actions: [{ ...data.routine.actions?.[0], status: data.status }],
       }
 
       queryClient.setQueryData<Routine>([ROUTINE, data.routine.id], () => newRoutine)
@@ -46,8 +46,8 @@ export function useUpsertAction({ type, date }: Params) {
     },
   })
 
-  const handleUpdateStatus = ({ routine, actionId, done }: UpdateStatusParams) =>
-    mutate({ routine, actionId, done, type, date })
+  const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) =>
+    mutate({ routine, actionId, status, type, date })
 
   return { handleUpdateStatus }
 }
