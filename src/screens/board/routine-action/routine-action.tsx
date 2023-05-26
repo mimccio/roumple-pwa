@@ -20,14 +20,14 @@ export function RoutineAction() {
     <>
       <Header routine={routine} date={date} />
       <div className="flex flex-col p-4">
-        <p className="flex items-center p-4">
+        <p className="items-center4 flex">
           <ClockIcon width={20} className={ScheduleColor} />
           <span className="ml-2 font-semibold text-gray-600">{periodText}</span>
         </p>
         {routine.description && (
           <div className="mt-4">
             <h5 className="mb-2 font-semibold text-gray-400">Description</h5>
-            <p className="text-sm text-gray-600">{routine.description}</p>
+            <p className="max-w-xl text-sm text-gray-600">{routine.description}</p>
           </div>
         )}
       </div>
