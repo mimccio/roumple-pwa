@@ -13,10 +13,12 @@ interface Params {
 export function useBoardRoutines({ type }: Params) {
   const date = getTodayDate()
   const [showDone, setShowDone] = useState(false)
+  const [showPeriod, setShowPeriod] = useState(true)
 
   const { data, isLoading, error } = useQuery([ROUTINE, BOARD, { date, type }], fetchBoardRoutines)
 
   const handleShowDone = () => setShowDone((prevState) => !prevState)
+  const handleShowPeriod = () => setShowPeriod((prevState) => !prevState)
 
   const doneRoutines: Routine[] = []
   const todoRoutines: Routine[] = []
@@ -33,5 +35,5 @@ export function useBoardRoutines({ type }: Params) {
   const routines = isError ? null : showDone ? doneRoutines : todoRoutines
   const isEmpty = !error && !isLoading && !routines?.length
 
-  return { routines, isLoading, handleShowDone, showDone, date, isError, isEmpty }
+  return { routines, isLoading, handleShowDone, showDone, date, isError, isEmpty, showPeriod, handleShowPeriod }
 }

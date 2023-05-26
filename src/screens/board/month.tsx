@@ -7,19 +7,24 @@ import { MainError } from '../errors'
 import { Header } from './components/header'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
+import { PeriodList } from './period-list'
 
 const type = SCHEDULE_TYPES.monthly
 
 export function Month() {
-  const { routines, isLoading, date, handleShowDone, showDone, isError, isEmpty } = useBoardRoutines({ type })
+  const { routines, isLoading, date, handleShowDone, showDone, isError, isEmpty, showPeriod, handleShowPeriod } =
+    useBoardRoutines({ type })
   const { handleUpdateStatus } = useUpsertAction({ type, date })
 
   return (
     <>
       <Header
-        showDone={showDone}
         handleDoneChange={handleShowDone}
+        handleShowPeriod={handleShowPeriod}
+        showDone={showDone}
+        showPeriod={showPeriod}
         title={<h1 className="text-purple-700">This Month</h1>}
+        type={type}
       />
       <ContentLayout>
         {isError && <MainError />}
@@ -28,9 +33,11 @@ export function Month() {
 
         <div className="flex flex-col gap-4 px-2">
           {isLoading && <ListSkeleton />}
-          {routines?.map((routine) => (
-            <RoutineActionListItem key={routine.id} routine={routine} handleUpdateStatus={handleUpdateStatus} />
-          ))}
+          {!showPeriod &&
+            routines?.map((routine) => (
+              <RoutineActionListItem key={routine.id} routine={routine} handleUpdateStatus={handleUpdateStatus} />
+            ))}
+          {showPeriod && <PeriodList type={type} routines={routines} handleUpdateStatus={handleUpdateStatus} />}
         </div>
       </ContentLayout>
     </>

@@ -1,4 +1,5 @@
 import { getDay, getMonth, getWeek } from 'date-fns'
+
 import { SCHEDULE_TYPES } from './constants'
 import { Routine, ScheduleType } from './types'
 
@@ -28,6 +29,18 @@ export const getPeriodText = ({ type, period }: { type: ScheduleType; period: nu
     if (period === 2 || period === 0) return 'During the month'
     if (period === 3) return 'At the end of the month'
   }
+}
+
+export const getPeriodColor = (type: ScheduleType) => {
+  if (type === SCHEDULE_TYPES.weekly) return 'text-sky-500'
+  if (type === SCHEDULE_TYPES.monthly) return 'text-purple-500'
+  return 'text-indigo-500'
+}
+
+export const getGroupHoverPeriodColor = (type: ScheduleType) => {
+  if (type === SCHEDULE_TYPES.weekly) return 'group-hover:text-sky-400'
+  if (type === SCHEDULE_TYPES.monthly) return 'group-hover:text-purple-400'
+  return 'group-hover:text-indigo-400'
 }
 
 export const getScheduleTypeColor = (type: ScheduleType) => {
