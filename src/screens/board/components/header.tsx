@@ -1,7 +1,7 @@
+import { ReactNode } from 'react'
 import { TagIcon, CheckBadgeIcon, ClockIcon } from '@heroicons/react/24/solid'
 import { CheckBadgeIcon as CheckBadgeOutlineIcon, ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
 
-import { ReactNode } from 'react'
 import { Tooltip } from '&/common/components/tooltip'
 import { cl } from '&/common/utils'
 import { getGroupHoverPeriodColor, getPeriodColor } from '&/modules/routine/utils'
@@ -27,9 +27,9 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, type, ha
         <Tooltip message={showPeriod ? 'hide period' : 'show period'}>
           <button onClick={handleShowPeriod} className="group p-2">
             {showPeriod ? (
-              <ClockIcon width={24} className={cl('transition-colors', periodColor, hoverPeriodColor)} />
+              <ClockIcon width={20} className={cl('transition-colors', periodColor, hoverPeriodColor)} />
             ) : (
-              <ClockOutlineIcon width={24} className={cl('text-gray-400 transition-colors', hoverPeriodColor)} />
+              <ClockOutlineIcon width={20} className={cl('text-gray-400 transition-colors', hoverPeriodColor)} />
             )}
           </button>
         </Tooltip>
@@ -37,17 +37,17 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, type, ha
         <Tooltip message={showDone ? 'show to do' : 'show done'}>
           <button onClick={handleDoneChange} className="group p-2">
             {showDone ? (
-              <CheckBadgeIcon width={24} className="text-green-500 transition-colors group-hover:text-gray-300" />
+              <CheckBadgeIcon width={20} className="text-green-500 transition-colors group-hover:text-gray-300" />
             ) : (
               <CheckBadgeOutlineIcon
-                width={24}
+                width={20}
                 className="text-gray-400 transition-colors group-hover:text-green-300"
               />
             )}
           </button>
         </Tooltip>
         <button className="p-2">
-          <TagIcon width={24} className="text-indigo-500" />
+          <TagIcon width={20} className="text-indigo-500" />
         </button>
       </div>
     </header>
