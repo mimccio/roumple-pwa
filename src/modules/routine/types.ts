@@ -1,3 +1,5 @@
+import { Category } from '../category/types'
+
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 export type RoutineStatuses = 'TODO' | 'IN_PROGRESS' | 'DONE'
 
@@ -22,6 +24,8 @@ export interface Routine {
   monthly_recurrence: number[]
   type: ScheduleType
   actions: Pick<RoutineAction, 'id' | 'date' | 'status'>[]
+  category_id: string | null
+  category: Category | null
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>

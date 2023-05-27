@@ -27,13 +27,18 @@ export function Item({ routine }: Props) {
       {({ isActive }) => (
         <>
           <div>
-            <div className="h-2 w-2 rounded-full bg-indigo-500" />
+            <div
+              className={cl(
+                'h-2 w-2 rounded-full',
+                routine.category?.color ? `bg-${routine.category.color}-500` : 'bg-gray-300'
+              )}
+            />
           </div>
           <div className={cl('mx-4 h-full w-full border-b pt-1', isActive ? 'border-transparent' : 'border-gray-100')}>
             <p className="font-semibold capitalize text-gray-700">{routine.name}</p>
-            <div className="flex gap-2 text-xs font-semibold text-gray-400">
-              <p className={` opacity-75 ${typeColor}`}>{routine.type.toLocaleLowerCase()}</p>
-              <p>category</p>
+            <div className="flex gap-2 text-xs font-semibold text-gray-500">
+              <p className={`opacity-75 ${typeColor}`}>{routine.type.toLocaleLowerCase()}</p>
+              <p>{routine.category?.name && routine.category.name}</p>
             </div>
           </div>
           <span className="pr-2">

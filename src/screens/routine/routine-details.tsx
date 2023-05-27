@@ -1,5 +1,6 @@
 import { useRoutineDetails } from '&/modules/routine/hooks'
 import { Routine } from '&/modules/routine/types'
+import { Category } from './category'
 import { Priority } from './priority'
 import { Schedule } from './schedule'
 
@@ -53,6 +54,7 @@ export function RoutineDetails({ routine }: Props) {
         </div>
       </form>
       <Priority routine={routine} />
+      <Category routine={routine} />
       <Schedule routine={routine} date={date} />
     </div>
   )

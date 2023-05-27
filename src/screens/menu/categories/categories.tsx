@@ -17,7 +17,7 @@ export function Categories() {
       <div className="mt-6 flex flex-col gap-2 px-2">
         {isLoading && <ListSkeleton />}
         {error != null && <CategoriesError />}
-        {!error && categories?.map((category) => <CategoryItem category={category} />)}
+        {!error && categories?.map((category) => <CategoryItem key={category.id} category={category} />)}
       </div>
     </div>
   )
