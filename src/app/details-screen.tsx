@@ -6,6 +6,7 @@ import { Routine } from '&/screens/routine'
 import { NotFoundDetails } from '&/screens/errors/not-found-details'
 import { SettingsDetails } from '&/screens/settings/settings-details'
 import { RoutineAction } from '&/screens/board/routine-action'
+import { CategoryDetailsScreen } from '&/screens/categories/category-details-screen'
 
 export function DetailsScreen() {
   const showDetails = useMatch('/:nav/d/*')
@@ -21,6 +22,7 @@ export function DetailsScreen() {
         <Route path=":nav/d/routine/:routineId/*" element={<Routine />} />
         <Route path=":nav/d/action/:routineId/*" element={<RoutineAction />} />
 
+        <Route path="categories" element={<CategoryDetailsScreen />} />
         <Route path="settings" element={<SettingsDetails />} />
 
         <Route path=":nav/d/*" element={<NotFoundDetails />} />

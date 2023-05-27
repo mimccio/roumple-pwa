@@ -1,4 +1,5 @@
 import { BoardNav } from './board/board-nav'
+import { Categories } from './categories/categories'
 import { MainNav } from './main-nav/main-nav'
 
 interface Props {
@@ -10,6 +11,7 @@ export function MenuContent({ close }: Props) {
     <div className="no-scrollbar flex h-screen min-h-screen flex-col overflow-y-auto bg-gray-100">
       <BoardNav close={close} />
       <MainNav close={close} />
+      <Categories />
     </div>
   )
 }
