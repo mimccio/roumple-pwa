@@ -13,15 +13,14 @@ interface Props {
 }
 
 export function CategoryItem({ category }: Props) {
-  const { handleColorChange, errors, register, submit } = useEditCategory({ category })
+  const { handleColorChange, register, submit } = useEditCategory({ category })
   const { onDelete } = useDeleteCategory()
 
   return (
     <div className="flex items-center justify-between gap-4">
       <LabelButton handleColorChange={handleColorChange} color={category.color} />
-      <form className="w-full">
+      <form onSubmit={submit} onBlur={submit} className="w-full">
         <input className="h-8 w-full rounded-md px-2" {...register('name')} />
-        <input className="h-8 rounded-md px-2" hidden {...register('id')} />
       </form>
       <button onClick={() => onDelete(category)} className="rounded-md p-1">
         <XCircleIcon width={20} height={20} className="text-gray-400 transition-colors hover:text-gray-500" />

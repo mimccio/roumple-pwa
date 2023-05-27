@@ -26,18 +26,13 @@ export function NewCategory({ disabled }: Props) {
           />
           <button
             disabled={disabled || !name.length}
-            // className="flex h-8 w-8 items-center justify-center rounded-md"
             className={cl(
               'flex h-8 w-8 items-center justify-center rounded-md transition-colors',
               name.length >= 1 ? 'text-green-500 disabled:text-gray-300' : 'text-transparent'
             )}
             type="submit"
           >
-            <CheckIcon
-              // className={cl('flex h-8 w-8 items-center justify-center rounded-md transition-colors disabled:text-red-500', name.length >= 1 ? 'text-green-500' : 'text-transparent')}
-              width={24}
-              height={24}
-            />
+            <CheckIcon width={24} height={24} />
           </button>
         </form>
       </div>
