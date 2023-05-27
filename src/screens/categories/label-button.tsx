@@ -1,16 +1,17 @@
 import { usePopper } from '&/common/hooks'
 import { TagIcon } from '@heroicons/react/20/solid'
 import { ColorSelector } from './color-selector'
+import { TwColor } from '&/common/types'
 
 interface Props {
-  handleColorChange: (color: string) => void
-  color: string
+  handleColorChange: (color: TwColor) => void
+  color: TwColor
 }
 
 export function LabelButton({ handleColorChange, color }: Props) {
   const { toggle, isOpen, popperRef, buttonRef, close } = usePopper()
 
-  const onSelectColor = (newColor: string) => {
+  const onSelectColor = (newColor: TwColor) => {
     handleColorChange(newColor)
     close()
   }

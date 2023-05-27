@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
+import type { TwColor } from '&/common/types'
 import { createCategory } from '../mutations'
 import { Category } from '../types'
 import { CATEGORY_LIST } from '../constants'
@@ -13,7 +14,7 @@ export function useCreateCategory() {
   const queryClient = useQueryClient()
   const id = uuidv4()
   const ref = useRef<HTMLFormElement>(null)
-  const [color, setColor] = useState('gray')
+  const [color, setColor] = useState<TwColor>('gray')
 
   const { mutate } = useMutation(createCategory, {
     onMutate: async (data) => {
@@ -54,7 +55,7 @@ export function useCreateCategory() {
     setColor('gray')
   })
 
-  const handleColorChange = (color: string) => setColor(color)
+  const handleColorChange = (color: TwColor) => setColor(color)
 
   useOutsideClick({ handler: clearErrors, ref })
 

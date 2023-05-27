@@ -4,6 +4,7 @@ import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid'
 import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/outline'
 import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
 
+import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
 import { useCreateRoutine } from '&/modules/routine/hooks'
 import { Tooltip } from '&/common/components/tooltip'
 import { categoryAtom } from '&/modules/category/atoms'
@@ -22,7 +23,7 @@ export function Header({ handleShowArchived, archived }: Props) {
     <header
       className={cl(
         'flex h-14 w-full items-center justify-between border-b-4 px-2 transition-colors xl:px-4',
-        category?.color ? `border-${category.color}-500` : 'border-gray-200'
+        category?.color ? TW_COLOR_BORDER_500[category.color] : 'border-gray-200'
       )}
     >
       <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">
@@ -49,7 +50,7 @@ export function Header({ handleShowArchived, archived }: Props) {
         <button disabled={!category} onClick={() => setCategory(null)} className="p-2">
           <TagIcon
             width={20}
-            className={cl('transition-colors', category?.color ? `text-${category.color}-500` : 'text-gray-300')}
+            className={cl('transition-colors', category?.color ? TW_COLOR_TEXT_500[category.color] : 'text-gray-300')}
           />
         </button>
       </div>

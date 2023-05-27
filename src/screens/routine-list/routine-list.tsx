@@ -7,6 +7,7 @@ import { Header } from './header'
 import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
 import { MainError } from '../errors'
+import { Routine } from '&/modules/routine/types'
 
 export function RoutineList() {
   const { routines, isLoading, handleShowArchived, archived, isEmpty, isError } = useRoutineList()
@@ -24,7 +25,7 @@ export function RoutineList() {
         <div className="flex flex-col gap-4 px-2 xl:px-4">
           {isLoading && <ListSkeleton />}
           {routines?.map((routine) => (
-            <Item key={routine.id} routine={routine} />
+            <Item key={routine.id} routine={routine as Routine} />
           ))}
         </div>
       </ContentLayout>

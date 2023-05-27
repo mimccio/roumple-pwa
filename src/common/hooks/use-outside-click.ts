@@ -1,7 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import type { RefObject } from 'react'
-
-type Handler = () => void
 
 interface Params {
   ref: RefObject<HTMLElement>
@@ -9,8 +7,6 @@ interface Params {
 }
 
 export function useOutsideClick({ handler, ref }: Params) {
-  // const ref = useRef<HTMLElement>(null)
-
   useEffect(() => {
     const listener = (event: Event) => {
       if (!ref.current || ref.current.contains(event.target as HTMLElement)) return

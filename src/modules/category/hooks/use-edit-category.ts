@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
+import type { TwColor } from '&/common/types'
 import type { Category } from '../types'
 import { CATEGORY_LIST } from '../constants'
 import { editCategory } from '../mutations'
@@ -46,7 +47,7 @@ export function useEditCategory({ category }: Params) {
   })
 
   const submit = handleSubmit((formData) => mutate({ ...category, ...formData }))
-  const handleColorChange = (color: string) => mutate({ ...category, color })
+  const handleColorChange = (color: TwColor) => mutate({ ...category, color })
 
   return { handleColorChange, errors, register, submit }
 }

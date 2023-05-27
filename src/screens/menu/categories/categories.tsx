@@ -1,20 +1,17 @@
 import { Link } from 'react-router-dom'
+import { TagIcon } from '@heroicons/react/20/solid'
 import { useAtom } from 'jotai'
 
+import { Category } from '&/modules/category/types'
 import { useCategories } from '&/modules/category/hooks'
+import { categoryAtom } from '&/modules/category/atoms'
 import { CategoryItem } from './category-item'
 import { ListSkeleton } from './category-list-skeleton'
 import { CategoriesError } from './categories-error'
-import { Category } from '&/modules/category/types'
-import { categoryAtom } from '&/modules/category/atoms'
-import { TagIcon } from '@heroicons/react/20/solid'
 
 export function Categories() {
   const { categories, isLoading, error } = useCategories()
-  const [category, setCategory] = useAtom(categoryAtom)
-
-  console.log('category :', category)
-
+  const [selectedCategory, setCategory] = useAtom(categoryAtom)
   const selectCategory = (category: Category | null) => setCategory(category)
 
   return (
@@ -24,7 +21,7 @@ export function Categories() {
           <h4 className="text-sm font-bold text-gray-400">CATEGORIES</h4>
         </Link>
       </div>
-      <div className="mt-6 flex flex-col gap-2 px-2">
+      <div className="mt-4 flex flex-col gap-2 px-2">
         {isLoading && <ListSkeleton />}
         {!isLoading && (
           <button
@@ -38,7 +35,12 @@ export function Categories() {
         {error != null && <CategoriesError />}
         {!error &&
           categories?.map((category) => (
-            <CategoryItem key={category.id} category={category} selectCategory={selectCategory} />
+            <CategoryItem
+              key={category.id}
+              category={category}
+              selectCategory={selectCategory}
+              selectedCategory={selectedCategory}
+            />
           ))}
       </div>
     </div>
