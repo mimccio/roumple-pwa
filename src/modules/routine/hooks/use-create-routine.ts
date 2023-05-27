@@ -47,6 +47,8 @@ export function useCreateRoutine() {
       weekly_recurrence: [0, 1],
       monthly_recurrence: defaultMonthlyRecurrence,
       actions: [],
+      category: null,
+      category_id: null,
     })
 
   return { onCreateRoutine }

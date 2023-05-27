@@ -6,21 +6,25 @@ import type { Routine, ScheduleType } from '../types'
 import { SCHEDULE_TYPES } from '../constants'
 
 interface Params {
-  queryKey: [key: string, list: string, options: { date: number; type: ScheduleType }]
+  queryKey: [key: string, list: string, options: { date: number; type: ScheduleType; categoryId?: string }]
 }
 
 export const fetchBoardRoutines = async ({ queryKey }: Params) => {
-  const [, , { date, type }] = queryKey
+  const [, , { date, type, categoryId }] = queryKey
 
   let query = db
     .from('routine')
     .select(
-      'id, name, priority, description, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, actions:routine_action(id, status, date)'
+      'id, name, priority, description, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, actions:routine_action(id, status, date), category(id, name, color)'
     )
     .eq('archived', false)
     .eq('type', type)
     .order('priority', { ascending: false })
     .order('name', { ascending: true })
+
+  if (categoryId) {
+    query = query.eq('category_id', categoryId)
+  }
 
   if (type === SCHEDULE_TYPES.daily) {
     query = query.eq('routine_action.date', format(date, DATE_FORMAT)).contains('daily_recurrence', [getDay(date)])
