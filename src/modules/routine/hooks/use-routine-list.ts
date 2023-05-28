@@ -12,7 +12,7 @@ export function useRoutineList() {
   const [category] = useAtom(categoryAtom)
   const [routines, setRoutines] = useState<Routine[]>()
 
-  const { data, isLoading: queryIsLoading, error, isFetching } = useQuery([ROUTINE, LIST, { archived }], fetchRoutines)
+  const { data, isLoading, error } = useQuery([ROUTINE, LIST, { archived }], fetchRoutines)
 
   useEffect(() => {
     if (category && data) {
@@ -27,7 +27,6 @@ export function useRoutineList() {
   const handleShowArchived = () => setArchived((prevState) => !prevState)
 
   const isError = Boolean(error)
-  const isLoading = !error && queryIsLoading && isFetching
   const isEmpty = !error && !isLoading && !routines?.length
 
   return { routines, isLoading, handleShowArchived, archived, isEmpty, isError }
