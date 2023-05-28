@@ -66,11 +66,14 @@ export const filterRoutines = ({
   routine: Routine
 }) => {
   if (showDone)
-    return routine.actions?.[0]?.status === ROUTINE_STATUSES.done && category?.id
-      ? routine.category?.id === category.id
-      : true
-  if (!showDone)
-    return routine.actions?.[0]?.status !== ROUTINE_STATUSES.done && category?.id
-      ? routine.category?.id === category.id
-      : true
+    return (
+      routine.actions?.[0]?.status === ROUTINE_STATUSES.done &&
+      (category?.id ? routine.category?.id === category.id : true)
+    )
+  if (!showDone) {
+    return (
+      routine.actions?.[0]?.status !== ROUTINE_STATUSES.done &&
+      (category?.id ? routine.category?.id === category.id : true)
+    )
+  }
 }
