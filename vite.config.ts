@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     VitePWA({
-      registerType: 'autoUpdate',
+      // registerType: 'autoUpdate',
       devOptions: { enabled: false },
       // add this to cache all the imports
       workbox: {
