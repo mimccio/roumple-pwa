@@ -104,3 +104,21 @@ export const TW_COLOR_TEXT_500 = {
   pink: 'text-pink-500',
   rose: 'text-rose-500',
 }
+
+export const TW_BOARD_TEXT_COLORS_700 = {
+  sky: 'text-sky-700',
+  indigo: 'text-indigo-700',
+  purple: 'text-purple-700',
+}
+
+export const TW_BOARD_TEXT_COLORS_400 = {
+  sky: 'text-sky-400',
+  indigo: 'text-indigo-400',
+  purple: 'text-purple-400',
+}
+
+export const TW_BOARD_BG_COLORS = {
+  sky: 'bg-sky-100 hover:bg-sky-50',
+  indigo: 'bg-indigo-100 hover:bg-indigo-50',
+  purple: 'bg-purple-100 hover:bg-purple-50',
+}

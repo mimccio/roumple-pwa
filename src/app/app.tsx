@@ -14,6 +14,8 @@ import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
 import '../assets/fonts/fonts.css'
+import { CATEGORY_LIST } from '&/modules/category/constants'
+import { editCategory } from '&/modules/category/mutations'
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
@@ -37,6 +39,13 @@ queryClient.setMutationDefaults([ROUTINE, LIST, { archived: false }], {
     // to avoid clashes with our optimistic update when an offline mutation continues
     await queryClient.cancelQueries({ queryKey: [ROUTINE, routine.id] })
     return editRoutineDetails(routine)
+  },
+})
+
+queryClient.setMutationDefaults([CATEGORY_LIST], {
+  mutationFn: async (category) => {
+    await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
+    return editCategory(category)
   },
 })
 

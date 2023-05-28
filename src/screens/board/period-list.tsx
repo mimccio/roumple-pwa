@@ -6,7 +6,7 @@ import { getPeriodText } from '&/modules/routine/utils'
 import { RoutineActionListItem } from './components'
 
 interface Props {
-  routines: Routine[] | null
+  routines?: Routine[] | null
   type: ScheduleType
   handleUpdateStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
 }
@@ -14,7 +14,7 @@ interface Props {
 export function PeriodList({ type, routines, handleUpdateStatus }: Props) {
   const list = Object.entries(groupBy(routines, 'period'))
 
-  let color = 'indigo'
+  let color = 'indigo' as 'indigo' | 'sky' | 'purple'
   if (type === SCHEDULE_TYPES.weekly) color = 'sky'
   if (type === SCHEDULE_TYPES.monthly) color = 'purple'
 

@@ -6,18 +6,27 @@ import { TW_COLOR_BG_100 } from '&/common/constants'
 interface Props {
   category: Category
   selectedCategory: Category | null
-  selectCategory: (category: Category) => void
+  selectCategory: (category: Category | null) => void
 }
 
 export function CategoryItem({ category, selectCategory, selectedCategory }: Props) {
   const bg = TW_COLOR_BG_100[category.color]
+  const isSelected = selectedCategory?.id === category.id
+
+  const onSelectCategory = () => {
+    if (isSelected) {
+      selectCategory(null)
+    } else {
+      selectCategory(category)
+    }
+  }
 
   return (
     <button
-      onClick={() => selectCategory(category)}
+      onClick={onSelectCategory}
       className={cl(
         'flex h-9 items-center gap-4 rounded-lg px-2 text-sm font-semibold text-gray-500 transition-colors',
-        selectedCategory?.id === category.id && bg
+        isSelected && bg
       )}
     >
       <TagIcon className={`text-${category.color}-500`} width={20} height={20} />

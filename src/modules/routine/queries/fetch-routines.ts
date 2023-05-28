@@ -1,13 +1,14 @@
 import { db } from '&/db'
+import { Routine } from '../types'
 
 interface FetchRoutineParams {
-  queryKey: [key: string, list: string, options: { archived: boolean; categoryId?: string }]
+  queryKey: [key: string, list: string, options: { archived: boolean }]
 }
 
 export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {
-  const [, , { archived, categoryId }] = queryKey
+  const [, , { archived }] = queryKey
 
-  let query = db
+  const { data, error } = await db
     .from('routine')
     .select(
       'id, name, priority, description, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, category_id, category(id, name, color)'
@@ -16,12 +17,6 @@ export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {
     .order('priority', { ascending: false })
     .order('name', { ascending: true })
 
-  if (categoryId) {
-    query = query.eq('category_id', categoryId)
-  }
-
-  const { data, error } = await query
-
   if (error) throw error
-  return data
+  return data as Routine[]
 }

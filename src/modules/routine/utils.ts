@@ -1,7 +1,8 @@
 import { getDay, getMonth, getWeek } from 'date-fns'
 
-import { SCHEDULE_TYPES } from './constants'
-import { Routine, ScheduleType } from './types'
+import type { Category } from '../category/types'
+import type { Routine, ScheduleType } from './types'
+import { ROUTINE_STATUSES, SCHEDULE_TYPES } from './constants'
 
 export const sortRoutines = (a: Routine, b: Routine) => {
   if (a.priority === b.priority) {
@@ -53,4 +54,23 @@ export const getIsScheduled = ({ data, date }: { data: Routine; date: number }) 
   if (data.type === SCHEDULE_TYPES.daily) return data.daily_recurrence.includes(getDay(date))
   if (data.type === SCHEDULE_TYPES.weekly) return data.weekly_recurrence.includes(getWeek(date) % 2)
   if (data.type === SCHEDULE_TYPES.monthly) return data.monthly_recurrence.includes(getMonth(date))
+}
+
+export const filterRoutines = ({
+  showDone,
+  category,
+  routine,
+}: {
+  showDone: boolean
+  category: Category | null
+  routine: Routine
+}) => {
+  if (showDone)
+    return routine.actions?.[0]?.status === ROUTINE_STATUSES.done && category?.id
+      ? routine.category?.id === category.id
+      : true
+  if (!showDone)
+    return routine.actions?.[0]?.status !== ROUTINE_STATUSES.done && category?.id
+      ? routine.category?.id === category.id
+      : true
 }
