@@ -20,7 +20,7 @@ export function RoutineDetails({ routine }: Props) {
           </label>
           <input
             id="name"
-            className="w-full rounded-md border border-indigo-300 px-4 py-3"
+            className="h-10 w-full rounded-md border border-indigo-300 px-4"
             type="text"
             autoFocus={routine.name === 'New Routine'}
             defaultValue={routine.name}

@@ -1,4 +1,5 @@
 import { Category } from '../category/types'
+import { RoutineChecklistItem } from '../routine-checklist-item/types'
 
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 export type RoutineStatuses = 'TODO' | 'IN_PROGRESS' | 'DONE'
@@ -26,6 +27,7 @@ export interface Routine {
   actions: Pick<RoutineAction, 'id' | 'date' | 'status'>[]
   category_id: string | null
   category: Category | null
+  checklist?: RoutineChecklistItem[]
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>

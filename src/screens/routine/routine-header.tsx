@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom'
-import { XCircleIcon } from '@heroicons/react/20/solid'
+import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
+import { XCircleIcon, DocumentCheckIcon } from '@heroicons/react/20/solid'
 import { ArchiveBoxXMarkIcon } from '@heroicons/react/24/solid'
-import { TrashIcon, ArchiveBoxArrowDownIcon } from '@heroicons/react/24/outline'
+import {
+  TrashIcon,
+  ArchiveBoxArrowDownIcon,
+  DocumentCheckIcon as DocumentCheckOutlineIcon,
+} from '@heroicons/react/24/outline'
 
 import { useMainPath } from '&/common/hooks'
 import { Tooltip } from '&/common/components/tooltip'
@@ -15,7 +19,8 @@ interface Props {
 }
 
 export function RoutineHeader({ routine }: Props) {
-  const { mainPath } = useMainPath()
+  const { pathname } = useLocation()
+  const mainPath = useMainPath()
   const { onDeleteRoutine } = useDeleteRoutine()
   const { handleArchiveRoutine } = useArchiveRoutine()
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
@@ -44,7 +49,33 @@ export function RoutineHeader({ routine }: Props) {
           </button>
         </Tooltip>
       </div>
-      <div>
+      <div className="flex items-center gap-2">
+        <Routes>
+          <Route
+            path="checklist"
+            element={
+              <Tooltip message="show details">
+                <Link
+                  to={pathname.split('/checklist').slice(0, -1).join('/') + '/details'}
+                  className="group flex h-8 w-8 items-center justify-center"
+                >
+                  <DocumentCheckIcon width={24} className="text-blue-500 transition-colors group-hover:text-blue-400" />
+                </Link>
+              </Tooltip>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Tooltip message="show checklist">
+                <Link to="checklist" className="group flex h-8 w-8 items-center justify-center">
+                  <DocumentCheckOutlineIcon width={24} className="transition-colors group-hover:text-blue-400" />
+                </Link>
+              </Tooltip>
+            }
+          />
+        </Routes>
+
         <Tooltip message="close">
           <Link to={mainPath} className="group flex h-8 w-8 items-center justify-center">
             <XCircleIcon width={24} className="transition-colors group-hover:text-gray-500" />
