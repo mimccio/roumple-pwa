@@ -6,5 +6,5 @@ import { fetchCategories } from '../queries'
 export function useCategories() {
   const { data, isLoading, error } = useQuery([CATEGORY_LIST], fetchCategories)
 
-  return { categories: data, isLoading, error }
+  return { categoryList: data, isLoading, error }
 }

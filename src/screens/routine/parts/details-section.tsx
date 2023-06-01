@@ -4,13 +4,14 @@ import { cl } from '&/common/utils'
 import { Routine } from '&/modules/routine/types'
 import { CreatedAt } from './created-at'
 import { Priority } from './priority'
+import { RoutineCategory } from './routine-category'
 
 interface Props {
   routine: Routine
 }
 
 export function DetailsSection({ routine }: Props) {
-  const isDone = routine.actions?.[0].status === STATUSES.done
+  const isDone = routine.actions?.[0]?.status === STATUSES.done
 
   console.log('routine :', routine)
 
@@ -25,6 +26,11 @@ export function DetailsSection({ routine }: Props) {
         <StatusSelector />
         <Priority routine={routine} />
       </div>
+
+      <div>
+        <RoutineCategory routine={routine} />
+      </div>
+
       <div>
         <CreatedAt createdAt={routine.created_at} />
       </div>

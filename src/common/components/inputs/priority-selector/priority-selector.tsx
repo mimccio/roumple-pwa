@@ -24,7 +24,7 @@ export function PrioritySelector({ onSelect, priority }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-12 top-0 z-10 origin-right rounded-md bg-gray-50 shadow-lg">
+        <Menu.Items className="absolute right-12 top-0 z-10 origin-right rounded-md bg-gray-50 shadow-md">
           <div className="flex gap-1 p-1">
             <PriorityItem priority={0} onSelect={onSelect} />
             <PriorityItem priority={1} onSelect={onSelect} />
