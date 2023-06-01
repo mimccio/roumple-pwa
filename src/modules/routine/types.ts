@@ -15,6 +15,7 @@ export interface RoutineAction {
 
 export interface Routine {
   id: string
+  created_at: Date
   name: string
   description?: string
   archived: boolean
