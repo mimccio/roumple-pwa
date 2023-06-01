@@ -1,5 +1,5 @@
 import type { Routine } from '&/modules/routine/types'
-import { DetailsSection } from './parts/details-section'
+import { InfoSection } from './info-section'
 
 interface Props {
   routine: Routine
@@ -8,7 +8,7 @@ interface Props {
 export function RoutineDetails({ routine }: Props) {
   return (
     <div className="w-full">
-      <DetailsSection routine={routine} />
+      <InfoSection routine={routine} />
     </div>
   )
 }

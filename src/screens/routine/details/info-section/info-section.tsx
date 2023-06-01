@@ -1,19 +1,15 @@
-import { StatusSelector } from '&/common/components/inputs/status-selector'
-import { STATUSES } from '&/common/constants/statuses'
+import { STATUSES } from '&/common/constants'
 import { cl } from '&/common/utils'
-import { Routine } from '&/modules/routine/types'
-import { CreatedAt } from './created-at'
-import { Priority } from './priority'
-import { RoutineCategory } from './routine-category'
+import { StatusSelector } from '&/common/components/inputs/status-selector'
+import type { Routine } from '&/modules/routine/types'
+import { Priority, RoutineCategory, CreatedAt } from './parts'
 
 interface Props {
   routine: Routine
 }
 
-export function DetailsSection({ routine }: Props) {
+export function InfoSection({ routine }: Props) {
   const isDone = routine.actions?.[0]?.status === STATUSES.done
-
-  console.log('routine :', routine)
 
   return (
     <section

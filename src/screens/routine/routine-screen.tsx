@@ -2,9 +2,10 @@ import { Routes, Route } from 'react-router-dom'
 
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
 import { useRoutine } from '&/modules/routine/hooks'
+
 import { NotFoundDetails, OfflineError } from '../errors'
-import { RoutineDetails } from './routine-details'
-import { RoutineNavbar } from './parts'
+import { RoutineNavbar } from './nav'
+import { RoutineDetails } from './details'
 
 export function RoutineScreen() {
   const { routine, isPaused, isLoading } = useRoutine()

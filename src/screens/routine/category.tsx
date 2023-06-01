@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function Category({ routine }: Props) {
-  const { categories, isLoading, error, onSelect } = useRoutineCategory(routine)
+  const { categoryList, isLoading, error, onSelect } = useRoutineCategory(routine)
 
   return (
     <div className="mt-8 w-full">
@@ -83,7 +83,7 @@ export function Category({ routine }: Props) {
                       </>
                     )}
                   </Listbox.Option>
-                  {categories?.map((category) => (
+                  {categoryList?.map((category) => (
                     <Listbox.Option
                       key={category.id}
                       className={({ active }) =>
