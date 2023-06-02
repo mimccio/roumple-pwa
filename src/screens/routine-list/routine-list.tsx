@@ -8,14 +8,20 @@ import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
 import { MainError } from '../errors'
 import { Routine } from '&/modules/routine/types'
+import NewRoutineModale from './new-routine-modale/new-routine-modale'
+import { useState } from 'react'
 
 export function RoutineList() {
   const { routines, isLoading, handleShowArchived, archived, isEmpty, isError } = useRoutineList()
   const { onCreateRoutine } = useCreateRoutine()
 
+  const [newRoutineModaleIsOpen, setNewRoutineModaleIsOpen] = useState(false)
+
+  const toggle = (value: boolean) => setNewRoutineModaleIsOpen(value)
+
   return (
     <>
-      <Header handleShowArchived={handleShowArchived} archived={archived} />
+      <Header handleShowArchived={handleShowArchived} archived={archived} onOpenNewRoutineModale={() => toggle(true)} />
       <ContentLayout>
         {isError && <MainError />}
         {isEmpty && !archived && (
@@ -28,6 +34,7 @@ export function RoutineList() {
             <Item key={routine.id} routine={routine as Routine} />
           ))}
         </div>
+        <NewRoutineModale isOpen={newRoutineModaleIsOpen} close={() => toggle(false)} />
       </ContentLayout>
     </>
   )
