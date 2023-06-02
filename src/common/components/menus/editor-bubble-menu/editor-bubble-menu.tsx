@@ -1,5 +1,8 @@
 import { Editor, BubbleMenu } from '@tiptap/react'
 import { FloatingMenuButton } from './parts/floating-menu-button'
+import { BoldIcon } from '&/common/components/icons/bold'
+import { ItalicIcon } from '&/common/components/icons/italic'
+import { Strikethrough } from '&/common/components/icons/strikethrough'
 
 interface Props {
   editor: Editor
@@ -13,23 +16,21 @@ export function EditorBubbleMenu({ editor }: Props) {
       editor={editor}
     >
       <FloatingMenuButton
+        Icon={BoldIcon}
         isActive={editor.isActive('bold')}
         handleClick={() => editor.chain().focus().toggleBold().run()}
-      >
-        bold
-      </FloatingMenuButton>
+      />
+
       <FloatingMenuButton
+        Icon={ItalicIcon}
         isActive={editor.isActive('italic')}
         handleClick={() => editor.chain().focus().toggleItalic().run()}
-      >
-        italic
-      </FloatingMenuButton>
+      />
       <FloatingMenuButton
+        Icon={Strikethrough}
         isActive={editor.isActive('strike')}
         handleClick={() => editor.chain().focus().toggleStrike().run()}
-      >
-        strike
-      </FloatingMenuButton>
+      />
     </BubbleMenu>
   )
 }

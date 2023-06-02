@@ -1,5 +1,8 @@
 import { Editor, FloatingMenu } from '@tiptap/react'
 import { FloatingMenuButton } from './parts/floating-menu-button'
+import { H1Icon } from '&/common/components/icons/h1'
+import { H2Icon } from '&/common/components/icons/h2'
+import { UnorderedListIcon } from '&/common/components/icons/unordered-list'
 
 interface Props {
   editor: Editor
@@ -13,23 +16,22 @@ export function EditorFloatingMenu({ editor }: Props) {
       editor={editor}
     >
       <FloatingMenuButton
+        Icon={H1Icon}
         isActive={editor.isActive('heading', { level: 1 })}
         handleClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-      >
-        h1
-      </FloatingMenuButton>
+      />
+
       <FloatingMenuButton
+        Icon={H2Icon}
         isActive={editor.isActive('heading', { level: 2 })}
         handleClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-      >
-        h2
-      </FloatingMenuButton>
+      />
+
       <FloatingMenuButton
+        Icon={UnorderedListIcon}
         isActive={editor.isActive('bulletList')}
         handleClick={() => editor.chain().focus().toggleBulletList().run()}
-      >
-        <span className="block h-2 w-2 rounded-full bg-gray-500" />
-      </FloatingMenuButton>
+      />
     </FloatingMenu>
   )
 }

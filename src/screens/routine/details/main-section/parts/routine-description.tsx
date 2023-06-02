@@ -2,39 +2,40 @@ import { useEffect } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-import BulletList from '@tiptap/extension-bullet-list'
 
 import './style.css'
 
 import type { Routine } from '&/modules/routine/types'
-import { useEditRoutineName } from '&/modules/routine/hooks/use-edit-routine-name'
 import { EditorFloatingMenu } from '&/common/components/menus/editor-floating-menu'
 import { EditorBubbleMenu } from '&/common/components/menus/editor-bubble-menu'
+import { useEditRoutineDescription } from '&/modules/routine/hooks'
+import { isEqual } from 'lodash'
 
 interface Props {
   routine: Routine
 }
 
 export function RoutineDescription({ routine }: Props) {
-  const { submit } = useEditRoutineName(routine)
+  const { submit } = useEditRoutineDescription(routine)
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        bulletList: {
+          HTMLAttributes: {
+            class: 'list-disc',
+          },
+        },
+      }),
       Placeholder.configure({
         emptyEditorClass: 'is-editor-empty',
         placeholder: 'description',
-      }),
-      BulletList.configure({
-        HTMLAttributes: {
-          class: 'list-disc',
-        },
       }),
     ],
     content: routine.description,
     editorProps: {
       attributes: {
         class:
-          'prose-gray border min-h-[200px] prose-headings:font-semibold transition-colors rounded-lg marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
+          'prose-gray min-h-[200px] prose-headings:font-semibold transition-colors rounded-lg marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
       },
     },
   })
@@ -45,9 +46,8 @@ export function RoutineDescription({ routine }: Props) {
 
   const onBlur = () => {
     const json = editor?.getJSON()
-    console.log('json :', json)
-    // if (text === routine.description) return
-    // submit(text)
+    if (!json || isEqual(routine.description, json)) return
+    submit(json)
   }
 
   return (

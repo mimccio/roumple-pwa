@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 
 import { createRoutine } from '../mutations'
-import { RoutineDetails } from '../types'
+import { Routine } from '../types'
 import { BOARD, DAILY, LIST, ROUTINE, SCHEDULE_TYPES } from '../constants'
 import { categoryAtom } from '&/modules/category/atoms'
 import { getTodayDate } from '&/common/utils'
@@ -26,7 +26,7 @@ export function useCreateRoutine() {
 
       const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: false }])
 
-      queryClient.setQueryData([ROUTINE, LIST, { archived: false }], (old: RoutineDetails[] = []) => [...old, data])
+      queryClient.setQueryData([ROUTINE, LIST, { archived: false }], (old: Routine[] = []) => [...old, data])
 
       const previousBoardList = queryClient.getQueryData([
         ROUTINE,
@@ -34,7 +34,7 @@ export function useCreateRoutine() {
         { type: SCHEDULE_TYPES.daily, date: getTodayDate() },
       ])
 
-      queryClient.setQueryData([ROUTINE, BOARD, { type: SCHEDULE_TYPES.daily, date }], (old: RoutineDetails[] = []) => [
+      queryClient.setQueryData([ROUTINE, BOARD, { type: SCHEDULE_TYPES.daily, date }], (old: Routine[] = []) => [
         ...old,
         data,
       ])
@@ -73,6 +73,7 @@ export function useCreateRoutine() {
       actions: [],
       category: category,
       category_id: null,
+      created_at: new Date(),
     })
 
   return { onCreateRoutine }

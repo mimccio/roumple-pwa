@@ -1,22 +1,23 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, ComponentType } from 'react'
 import { cl } from '&/common/utils'
 
 interface Props {
-  children: ReactNode
+  children?: ReactNode
   handleClick: () => void
   isActive: boolean
+  Icon?: ComponentType<{ className?: string }>
 }
 
-export function FloatingMenuButton({ children, handleClick, isActive }: Props) {
+export function FloatingMenuButton({ children, handleClick, isActive, Icon }: Props) {
   return (
     <button
       onClick={handleClick}
       className={cl(
-        'flex h-8 w-8 items-center justify-center rounded-md p-1 transition-colors ',
+        'flex h-7 w-7 items-center justify-center rounded-md p-1 transition-colors ',
         isActive ? 'bg-indigo-200' : 'bg-gray-50 hover:bg-gray-100 '
       )}
     >
-      {children}
+      {Icon ? <Icon className="h-4 w-4 fill-blue-600" /> : children}
     </button>
   )
 }
