@@ -12,6 +12,8 @@ interface Props {
   name: string
   submit: (text: string) => void
   placeholder?: string
+  autofocus: boolean
+  setCharNum?: (num: number) => void
 }
 
 const DisableEnter = Extension.create({
@@ -22,8 +24,9 @@ const DisableEnter = Extension.create({
   },
 })
 
-export function NameEditor({ id, name, submit, placeholder = '' }: Props) {
+export function NameEditor({ id, name, submit, placeholder = '', autofocus, setCharNum }: Props) {
   const editor = useEditor({
+    autofocus,
     extensions: [
       Document,
       Text,
@@ -44,15 +47,23 @@ export function NameEditor({ id, name, submit, placeholder = '' }: Props) {
     },
   })
 
+  const charNum = editor?.storage.characterCount.characters()
+
   useEffect(() => {
     editor?.commands.setContent(name)
   }, [id, name, editor])
 
+  useEffect(() => {
+    if (setCharNum) {
+      setCharNum(charNum)
+    }
+  }, [charNum, setCharNum])
+
   const onBlur = () => {
-    const text = editor?.getText().trim() || ''
-    if (text === name) return
+    const text = editor?.getText().trim()
+    if (!text || !text.length || text === name) return
     submit(text)
   }
 
-  return <EditorContent id={id} style={{ whiteSpace: 'nowrap' }} onBlur={onBlur} editor={editor} />
+  return <EditorContent id={id} onBlur={onBlur} editor={editor} />
 }

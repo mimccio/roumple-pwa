@@ -25,11 +25,19 @@ export function NewRoutineContent({ close }: Props) {
     priority,
     onSelectCategory,
     category,
+    setCharNum,
+    charNum,
   } = useCreateRoutine()
+
+  const handleSave = () => {
+    onCreateRoutine()
+    if (!name.length) return
+    close()
+  }
 
   return (
     <div className="flex flex-col gap-4">
-      <RoutineName name={name} onChange={handleNameChange} />
+      <RoutineName name={name} onChange={handleNameChange} setCharNum={setCharNum} />
       <Schedule
         currentPeriod={currentPeriod}
         currentType={currentType}
@@ -41,7 +49,7 @@ export function NewRoutineContent({ close }: Props) {
       />
       <Category category={category} onSelect={onSelectCategory} />
       <Priority priority={priority} onSelect={onSelectPriority} />
-      <ActionSection close={close} onSubmit={onCreateRoutine} />
+      <ActionSection close={close} onSubmit={handleSave} disabled={charNum < 1} />
     </div>
   )
 }

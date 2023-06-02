@@ -18,7 +18,8 @@ export function useCreateRoutine() {
   const navigate = useNavigate()
   const [globalCategory] = useAtom(categoryAtom)
   const date = getTodayDate()
-  const [name, setName] = useState('') // TODO: handle required / limit
+  const [name, setName] = useState('')
+  const [charNum, setCharNum] = useState(0)
   const [currentType, setType] = useState<ScheduleType>(SCHEDULE_TYPES.daily)
   const [currentPeriod, setPeriod] = useState(3)
   const [dailyRecurrence, setDailyRecurrence] = useState([0, 1, 2, 3, 4, 5, 6])
@@ -26,7 +27,6 @@ export function useCreateRoutine() {
   const [monthlyRecurrence, setMonthlyRecurrence] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
   const [priority, setPriority] = useState(0)
   const [category, setCategory] = useState(globalCategory)
-  console.log('priority :', priority)
 
   const handlePeriodChange = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
     setType(scheduleType)
@@ -96,7 +96,9 @@ export function useCreateRoutine() {
     },
   })
 
-  const onCreateRoutine = () =>
+  const onCreateRoutine = () => {
+    if (charNum === 0) return
+
     mutate({
       id,
       name,
@@ -112,6 +114,7 @@ export function useCreateRoutine() {
       category_id: category?.id || null,
       created_at: new Date(),
     })
+  }
 
   const handleNameChange = (name: string) => setName(name)
 
@@ -134,5 +137,7 @@ export function useCreateRoutine() {
     onSelectPriority,
     onSelectCategory,
     category,
+    setCharNum,
+    charNum,
   }
 }
