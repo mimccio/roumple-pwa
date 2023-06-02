@@ -1,4 +1,4 @@
-import { getDay, getMonth, getWeek } from 'date-fns'
+import { compareAsc, getDay, getMonth, getWeek } from 'date-fns'
 
 import type { Category } from '../category/types'
 import type { Routine, ScheduleType } from './types'
@@ -6,6 +6,7 @@ import { ROUTINE_STATUSES, SCHEDULE_TYPES } from './constants'
 
 export const sortRoutines = (a: Routine, b: Routine) => {
   if (a.priority === b.priority) {
+    if (a.name.toLowerCase() === b.name.toLowerCase()) return compareAsc(new Date(b.created_at), new Date(a.created_at))
     return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
   } else {
     return b.priority - a.priority
