@@ -49,7 +49,7 @@ export function NewRoutineContent({ close }: Props) {
       />
       <Category category={category} onSelect={onSelectCategory} />
       <Priority priority={priority} onSelect={onSelectPriority} />
-      <ActionSection close={close} onSubmit={handleSave} disabled={charNum < 1} />
+      <ActionSection close={close} onSubmit={handleSave} disabled={!charNum || charNum < 1} />
     </div>
   )
 }

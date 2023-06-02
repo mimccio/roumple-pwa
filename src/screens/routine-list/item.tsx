@@ -40,7 +40,7 @@ export function Item({ routine }: Props) {
               isActive ? 'border-transparent' : 'border-gray-100'
             )}
           >
-            <p className="truncate font-semibold capitalize text-gray-700">{routine.name}</p>
+            <p className="truncate font-semibold text-gray-700">{routine.name}</p>
             <div className="flex gap-2 text-xs font-semibold text-gray-500">
               <p className={`opacity-75 ${typeColor}`}>{routine.type.toLocaleLowerCase()}</p>
               <p>{routine.category?.name && routine.category.name}</p>

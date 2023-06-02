@@ -11,7 +11,14 @@ export function RoutineName({ name, onChange, setCharNum }: Props) {
     <div>
       <label className="text-sm font-bold text-gray-400">Name</label>
       <div className="rounded-lg border p-2">
-        <NameEditor name={name} id={'new-routine-name'} submit={onChange} placeholder="Enter routine name" autofocus setCharNum={setCharNum} />
+        <NameEditor
+          name={name}
+          id={'new-routine-name'}
+          submit={onChange}
+          placeholder="Enter routine name"
+          autofocus
+          setCharNum={setCharNum}
+        />
       </div>
     </div>
   )
