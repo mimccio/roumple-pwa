@@ -8,7 +8,7 @@ import { RoutineNavbar } from './nav'
 import { RoutineDetails } from './details'
 
 export function RoutineScreen() {
-  const { routine, isPaused, isLoading } = useRoutine()
+  const { routine, isPaused, isLoading, date } = useRoutine()
 
   if (isLoading) return <DetailsLoadingPage />
   if (!routine && isPaused) return <OfflineError />
@@ -18,7 +18,7 @@ export function RoutineScreen() {
     <>
       <RoutineNavbar routine={routine} />
       <Routes>
-        <Route path="*" element={<RoutineDetails routine={routine} />} />
+        <Route path="*" element={<RoutineDetails routine={routine} date={date} />} />
       </Routes>
     </>
   )

@@ -4,9 +4,10 @@ import { Priority, RoutineCategory, CreatedAt, RoutineSchedule } from './parts'
 
 interface Props {
   routine: Routine
+  date: number
 }
 
-export function InfoSection({ routine }: Props) {
+export function InfoSection({ routine, date }: Props) {
   return (
     <section className="flex flex-col gap-4 border-b bg-gray-100 p-4">
       <div className="flex items-center justify-between">
@@ -14,7 +15,7 @@ export function InfoSection({ routine }: Props) {
         <Priority routine={routine} />
       </div>
 
-      <RoutineSchedule routine={routine} />
+      <RoutineSchedule routine={routine} date={date}  />
       <RoutineCategory routine={routine} />
       <CreatedAt createdAt={routine.created_at} />
     </section>

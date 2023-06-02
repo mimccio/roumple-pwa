@@ -3,7 +3,7 @@ import { ActionSection } from './action-section'
 import { Category } from './category'
 import { Priority } from './priority'
 import { RoutineName } from './routine-name'
-import { Schedule } from './schedule'
+import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 
 interface Props {
   close: () => void
@@ -38,7 +38,7 @@ export function NewRoutineContent({ close }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <RoutineName name={name} onChange={handleNameChange} setCharNum={setCharNum} />
-      <Schedule
+      <RoutineScheduleSelector
         currentPeriod={currentPeriod}
         currentType={currentType}
         dailyRecurrence={dailyRecurrence}

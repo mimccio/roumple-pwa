@@ -4,12 +4,13 @@ import { MainSection } from './main-section'
 
 interface Props {
   routine: Routine
+  date: number
 }
 
-export function RoutineDetails({ routine }: Props) {
+export function RoutineDetails({ routine, date }: Props) {
   return (
     <div className="w-full">
-      <InfoSection routine={routine} />
+      <InfoSection routine={routine} date={date} />
       <MainSection routine={routine} />
     </div>
   )

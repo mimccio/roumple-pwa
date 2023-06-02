@@ -107,14 +107,6 @@ export function useSchedule({ routine, date }: Params) {
         } else {
           newRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
         }
-        mutate({
-          ...routine,
-          daily_recurrence: newRec,
-          type: currentType,
-          period: currentPeriod,
-          weekly_recurrence: weeklyRecurrence,
-          monthly_recurrence: monthlyRecurrence,
-        })
 
         return newRec
       })
@@ -130,14 +122,7 @@ export function useSchedule({ routine, date }: Params) {
         } else {
           newWeekRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
         }
-        mutate({
-          ...routine,
-          daily_recurrence: dailyRecurrence,
-          type: currentType,
-          period: currentPeriod,
-          weekly_recurrence: newWeekRec,
-          monthly_recurrence: monthlyRecurrence,
-        })
+
         return newWeekRec
       })
     }
@@ -152,14 +137,6 @@ export function useSchedule({ routine, date }: Params) {
         } else {
           newMonthRec = [...prevState.slice(0, index), ...prevState.slice(index + 1)]
         }
-        mutate({
-          ...routine,
-          daily_recurrence: dailyRecurrence,
-          type: currentType,
-          period: currentPeriod,
-          weekly_recurrence: weeklyRecurrence,
-          monthly_recurrence: newMonthRec,
-        })
 
         return newMonthRec
       })
@@ -169,15 +146,17 @@ export function useSchedule({ routine, date }: Params) {
   const handlePeriodChange = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
     setType(scheduleType)
     setPeriod(period)
+  }
+
+  const onSubmit = () =>
     mutate({
       ...routine,
       daily_recurrence: dailyRecurrence,
-      type: scheduleType,
-      period,
+      type: currentType,
+      period: currentPeriod,
       weekly_recurrence: weeklyRecurrence,
       monthly_recurrence: monthlyRecurrence,
     })
-  }
 
   return {
     dailyRecurrence,
@@ -187,5 +166,6 @@ export function useSchedule({ routine, date }: Params) {
     handleRecurrenceChange,
     weeklyRecurrence,
     monthlyRecurrence,
+    onSubmit,
   }
 }
