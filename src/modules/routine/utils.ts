@@ -1,8 +1,9 @@
 import { compareAsc, getDay, getMonth, getWeek } from 'date-fns'
 
+import { STATUSES } from '&/common/constants'
 import type { Category } from '../category/types'
 import type { Routine, ScheduleType } from './types'
-import { ROUTINE_STATUSES, SCHEDULE_TYPES } from './constants'
+import { SCHEDULE_TYPES } from './constants'
 
 export const sortRoutines = (a: Routine, b: Routine) => {
   if (a.priority === b.priority) {
@@ -68,13 +69,11 @@ export const filterRoutines = ({
 }) => {
   if (showDone)
     return (
-      routine.actions?.[0]?.status === ROUTINE_STATUSES.done &&
-      (category?.id ? routine.category?.id === category.id : true)
+      routine.actions?.[0]?.status === STATUSES.done && (category?.id ? routine.category?.id === category.id : true)
     )
   if (!showDone) {
     return (
-      routine.actions?.[0]?.status !== ROUTINE_STATUSES.done &&
-      (category?.id ? routine.category?.id === category.id : true)
+      routine.actions?.[0]?.status !== STATUSES.done && (category?.id ? routine.category?.id === category.id : true)
     )
   }
 }

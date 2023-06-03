@@ -8,7 +8,7 @@ import { Toaster } from 'react-hot-toast'
 
 import { Login } from '&/screens/login'
 import { LIST, ROUTINE } from '&/modules/routine/constants'
-import { editRoutineDetails } from '&/modules/routine/mutations'
+import { editRoutineName } from '&/modules/routine/mutations'
 
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
@@ -38,7 +38,7 @@ queryClient.setMutationDefaults([ROUTINE, LIST, { archived: false }], {
   mutationFn: async (routine) => {
     // to avoid clashes with our optimistic update when an offline mutation continues
     await queryClient.cancelQueries({ queryKey: [ROUTINE, routine.id] })
-    return editRoutineDetails(routine)
+    return editRoutineName(routine)
   },
 })
 

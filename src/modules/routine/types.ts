@@ -5,7 +5,7 @@ import { RoutineChecklistItem } from '../routine-checklist-item/types'
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 export type RoutineStatuses = 'TODO' | 'IN_PROGRESS' | 'DONE'
 
-export interface RoutineAction {
+interface RoutineAction {
   id: number
   date: Date
   routine_id: string
@@ -42,15 +42,4 @@ export interface UpdateStatusParams {
 export interface UpdateCheckedListParams {
   routine: Routine
   checklistItemId: string
-}
-
-export interface RoutineDetails {
-  id: string
-  name: string
-  description?: string
-}
-
-export interface RoutinePriority {
-  id: string
-  priority: number
 }
