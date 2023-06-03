@@ -1,31 +1,34 @@
+import { useState } from 'react'
+
 import workflowImg from '&/assets/illustrations/workflow.png'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { EmptyMainContent } from '&/common/components/empty-main-content'
-import { useCreateRoutine, useRoutineList } from '&/modules/routine/hooks'
+
+import type { Routine } from '&/modules/routine/types'
+import { useRoutineList } from '&/modules/routine/hooks'
+
+import { MainError, MainOfflineEmpty } from '../errors'
 import { Header } from './header'
 import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
-import { MainError, MainOfflineEmpty } from '../errors'
-import { Routine } from '&/modules/routine/types'
 import NewRoutineModale from './new-routine-modale/new-routine-modale'
-import { useState } from 'react'
 
 export function RoutineList() {
   const { routines, isLoading, handleShowArchived, archived, isEmpty, isError, isOfflineEmpty } = useRoutineList()
-  const { onCreateRoutine } = useCreateRoutine()
-
-  const [newRoutineModaleIsOpen, setNewRoutineModaleIsOpen] = useState(false)
-
-  const toggle = (value: boolean) => setNewRoutineModaleIsOpen(value)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
-      <Header handleShowArchived={handleShowArchived} archived={archived} onOpenNewRoutineModale={() => toggle(true)} />
+      <Header
+        handleShowArchived={handleShowArchived}
+        archived={archived}
+        onOpenNewRoutineModale={() => setIsOpen(true)}
+      />
       <ContentLayout>
         {isError && <MainError />}
         {isEmpty && !archived && (
-          <EmptyMainContent onClick={onCreateRoutine} text="Create a new routine +" image={workflowImg} />
+          <EmptyMainContent onClick={() => setIsOpen(true)} text="Create a new routine +" image={workflowImg} />
         )}
         {isEmpty && archived && <EmptyArchived />}
         {isOfflineEmpty && <MainOfflineEmpty />}
@@ -36,7 +39,7 @@ export function RoutineList() {
             <Item key={routine.id} routine={routine as Routine} />
           ))}
         </div>
-        <NewRoutineModale isOpen={newRoutineModaleIsOpen} close={() => toggle(false)} />
+        <NewRoutineModale isOpen={isOpen} close={() => setIsOpen(false)} />
       </ContentLayout>
     </>
   )
