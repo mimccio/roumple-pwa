@@ -14,7 +14,7 @@ import { categoryAtom } from '&/modules/category/atoms'
 export function useRoutineCategory(routine: Routine) {
   const queryClient = useQueryClient()
   const date = getTodayDate()
-  const { categories, isLoading, error } = useCategories()
+  const { categoryList, isLoading, error } = useCategories()
   const [selectedCategory, setSelectedCategory] = useAtom(categoryAtom)
 
   const { mutate } = useMutation(editRoutineCategory, {
@@ -63,5 +63,5 @@ export function useRoutineCategory(routine: Routine) {
     }
   }
 
-  return { onSelect, categories, isLoading, error }
+  return { onSelect, categoryList, isLoading, error }
 }

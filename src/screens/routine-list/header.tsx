@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { TagIcon, PlusCircleIcon } from '@heroicons/react/24/solid'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid'
@@ -5,19 +6,20 @@ import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/out
 import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
 
 import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
-import { useCreateRoutine } from '&/modules/routine/hooks'
+import { cl } from '&/common/utils'
 import { Tooltip } from '&/common/components/tooltip'
 import { categoryAtom } from '&/modules/category/atoms'
-import { cl } from '&/common/utils'
+import NewRoutineModale from './new-routine-modale/new-routine-modale'
 
 interface Props {
   archived: boolean
   handleShowArchived: () => void
+  onOpenNewRoutineModale: () => void
 }
 
 export function Header({ handleShowArchived, archived }: Props) {
-  const { onCreateRoutine } = useCreateRoutine()
   const [category, setCategory] = useAtom(categoryAtom)
+  const [newRoutineModaleIsOpen, setNewRoutineModaleIsOpen] = useState(false)
 
   return (
     <header
@@ -33,7 +35,7 @@ export function Header({ handleShowArchived, archived }: Props) {
       </div>
       <div className="flex gap-1">
         <Tooltip message="create routine">
-          <button className="group p-2" onClick={onCreateRoutine}>
+          <button className="group p-2" onClick={() => setNewRoutineModaleIsOpen(true)}>
             <PlusCircleIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-500" />
           </button>
         </Tooltip>
@@ -54,6 +56,7 @@ export function Header({ handleShowArchived, archived }: Props) {
           />
         </button>
       </div>
+      <NewRoutineModale isOpen={newRoutineModaleIsOpen} close={() => setNewRoutineModaleIsOpen(false)} />
     </header>
   )
 }

@@ -1,21 +1,23 @@
+import { JSONContent } from '@tiptap/react'
 import { Category } from '../category/types'
+import { RoutineChecklistItem } from '../routine-checklist-item/types'
 
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 export type RoutineStatuses = 'TODO' | 'IN_PROGRESS' | 'DONE'
 
-// export type BoardType = 'TODAY' | 'WEEK' | 'MONTH' | 'TOMORROW'
-
-export interface RoutineAction {
+interface RoutineAction {
   id: number
   date: Date
   routine_id: string
   status: RoutineStatuses
+  checked_list?: string[]
 }
 
 export interface Routine {
   id: string
+  created_at: Date
   name: string
-  description?: string
+  description?: JSONContent
   archived: boolean
   priority: number
   period: number
@@ -23,9 +25,10 @@ export interface Routine {
   weekly_recurrence: number[]
   monthly_recurrence: number[]
   type: ScheduleType
-  actions: Pick<RoutineAction, 'id' | 'date' | 'status'>[]
+  actions: Pick<RoutineAction, 'id' | 'date' | 'status' | 'checked_list'>[]
   category_id: string | null
   category: Category | null
+  checklist?: RoutineChecklistItem[]
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>
@@ -36,13 +39,7 @@ export interface UpdateStatusParams {
   status: RoutineStatuses
 }
 
-export interface RoutineDetails {
-  id: string
-  name: string
-  description?: string
-}
-
-export interface RoutinePriority {
-  id: string
-  priority: number
+export interface UpdateCheckedListParams {
+  routine: Routine
+  checklistItemId: string
 }

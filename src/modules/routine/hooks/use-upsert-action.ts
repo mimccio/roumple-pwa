@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Routine, ScheduleType, UpdateStatusParams } from '../types'
+import type { Routine, ScheduleType, UpdateCheckedListParams, UpdateStatusParams } from '../types'
 import { BOARD, ROUTINE } from '../constants'
 import { upsertRoutineAction } from '../mutations'
+import { STATUSES } from '&/common/constants'
 
 interface Params {
   type: ScheduleType
@@ -21,7 +22,7 @@ export function useUpsertAction({ type, date }: Params) {
 
       const newRoutine = {
         ...data.routine,
-        actions: [{ ...data.routine.actions?.[0], status: data.status }],
+        actions: [{ ...data.routine.actions?.[0], status: data.status, checked_list: data.checkedList }],
       }
 
       queryClient.setQueryData<Routine>([ROUTINE, data.routine.id], () => newRoutine)
@@ -46,8 +47,46 @@ export function useUpsertAction({ type, date }: Params) {
     },
   })
 
-  const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) =>
-    mutate({ routine, actionId, status, type, date })
+  const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) => {
+    if (routine.actions?.[0]?.status === status) return
+    mutate({ routine, actionId, status, type, date, checkedList: routine.actions?.[0]?.checked_list })
+  }
 
-  return { handleUpdateStatus }
+  const handleSelectChecklistItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
+    const action = routine.actions?.[0]
+    const checkedList = action?.checked_list || []
+
+    const index = checkedList.findIndex((id) => id === checklistItemId)
+
+    let newList: string[] = []
+    if (index >= 0) {
+      newList = [...checkedList.slice(0, index), ...checkedList.slice(index + 1)]
+    } else {
+      newList = [...checkedList, checklistItemId]
+    }
+
+    let status = action?.status
+
+    if (newList.length === routine.checklist?.length) {
+      // TODO: verify that every items match
+      status = STATUSES.done
+    } else if (newList.length && action?.status !== STATUSES.done && index === -1) {
+      status = STATUSES.inProgress
+    }
+
+    mutate({ routine, actionId: action?.id, type, date, status, checkedList: newList })
+  }
+
+  const handleDeleteCheckedItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
+    const action = routine.actions?.[0]
+    const checkedList = action?.checked_list || []
+    const index = checkedList.findIndex((id) => id === checklistItemId)
+    let newList: string[] = []
+    if (index >= 0) {
+      newList = [...checkedList.slice(0, index), ...checkedList.slice(index + 1)]
+    }
+    mutate({ routine, actionId: action?.id, type, date, status: action?.status, checkedList: newList })
+  }
+
+  return { handleUpdateStatus, handleSelectChecklistItem, handleDeleteCheckedItem }
 }

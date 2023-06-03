@@ -10,7 +10,7 @@ import { ListSkeleton } from './category-list-skeleton'
 import { CategoriesError } from './categories-error'
 
 export function Categories() {
-  const { categories, isLoading, error } = useCategories()
+  const { categoryList, isLoading, error } = useCategories()
   const [selectedCategory, setCategory] = useAtom(categoryAtom)
   const selectCategory = (category: Category | null) => setCategory(category)
 
@@ -34,7 +34,7 @@ export function Categories() {
         )}
         {error != null && <CategoriesError />}
         {!error &&
-          categories?.map((category) => (
+          categoryList?.map((category) => (
             <CategoryItem
               key={category.id}
               category={category}

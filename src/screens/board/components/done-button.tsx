@@ -1,8 +1,9 @@
-import { cl } from '&/common/utils'
-import { ROUTINE_STATUSES } from '&/modules/routine/constants'
-import { Routine, UpdateStatusParams } from '&/modules/routine/types'
+import type { FormEvent } from 'react'
 import { CheckIcon, ChartBarIcon } from '@heroicons/react/20/solid'
-import { FormEvent } from 'react'
+
+import { STATUSES } from '&/common/constants'
+import { cl } from '&/common/utils'
+import type { Routine, UpdateStatusParams } from '&/modules/routine/types'
 
 interface Props {
   routine: Routine
@@ -23,7 +24,7 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
   const onClick = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault()
     evt.stopPropagation()
-    const status = action?.status === ROUTINE_STATUSES.done ? ROUTINE_STATUSES.todo : ROUTINE_STATUSES.done
+    const status = action?.status === STATUSES.done ? STATUSES.todo : STATUSES.done
     handleUpdateStatus({ routine, actionId: action?.id, status })
   }
 
@@ -33,13 +34,11 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
         className={cl(
           'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors ',
           ringColor,
-          action?.status === ROUTINE_STATUSES.done
-            ? 'bg-green-500 group-hover:bg-green-400'
-            : 'group-hover:bg-green-100',
-          action?.status === ROUTINE_STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
+          action?.status === STATUSES.done ? 'bg-green-500 group-hover:bg-green-400' : 'group-hover:bg-green-100',
+          action?.status === STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
         )}
       >
-        {action?.status === ROUTINE_STATUSES.inProgress ? (
+        {action?.status === STATUSES.inProgress ? (
           <ChartBarIcon width={14} height={14} className="text-gray-300 transition-colors group-hover:text-gray-200" />
         ) : (
           <CheckIcon
@@ -47,7 +46,7 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
             height={18}
             className={cl(
               'transition-colors group-hover:text-gray-200',
-              action?.status === ROUTINE_STATUSES.done ? 'text-white' : 'text-transparent'
+              action?.status === STATUSES.done ? 'text-white' : 'text-transparent'
             )}
           />
         )}

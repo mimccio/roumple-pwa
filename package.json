@@ -21,6 +21,13 @@
     "@tanstack/query-sync-storage-persister": "^4.29.7",
     "@tanstack/react-query": "^4.29.7",
     "@tanstack/react-query-persist-client": "^4.29.7",
+    "@tiptap/extension-bullet-list": "^2.0.3",
+    "@tiptap/extension-character-count": "^2.0.3",
+    "@tiptap/extension-list-item": "^2.0.3",
+    "@tiptap/extension-placeholder": "^2.0.3",
+    "@tiptap/pm": "^2.0.3",
+    "@tiptap/react": "^2.0.3",
+    "@tiptap/starter-kit": "^2.0.3",
     "date-fns": "^2.30.0",
     "jotai": "^2.1.0",
     "lodash": "^4.17.21",
@@ -34,6 +41,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
     "@tanstack/react-query-devtools": "^4.29.7",
     "@types/lodash": "^4.14.195",
     "@types/react": "^18.0.28",

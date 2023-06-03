@@ -7,7 +7,7 @@ import { CategoryItem } from './category-item'
 import { NewCategory } from './new-category'
 
 export function Categories() {
-  const { categories, isLoading, error } = useCategories()
+  const { categoryList, isLoading, error } = useCategories()
 
   return (
     <>
@@ -25,7 +25,7 @@ export function Categories() {
               <p className="mb-2 text-sm font-semibold text-gray-400">Category list</p>
               {isLoading && <ListSkeleton />}
 
-              {categories?.map((category) => (
+              {categoryList?.map((category) => (
                 <CategoryItem key={category.id} category={category} />
               ))}
             </div>
