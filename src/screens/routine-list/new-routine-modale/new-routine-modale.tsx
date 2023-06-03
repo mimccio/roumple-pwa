@@ -7,7 +7,7 @@ interface Props {
   close: () => void
 }
 
-export default function NewRoutineModale({ isOpen, close }: Props) {
+export function NewRoutineModale({ isOpen, close }: Props) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={close}>

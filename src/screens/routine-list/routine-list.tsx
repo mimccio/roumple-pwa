@@ -12,7 +12,7 @@ import { MainError, MainOfflineEmpty } from '../errors'
 import { Header } from './header'
 import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
-import NewRoutineModale from './new-routine-modale/new-routine-modale'
+import { NewRoutineModale } from './new-routine-modale'
 
 export function RoutineList() {
   const { routines, isLoading, handleShowArchived, archived, isEmpty, isError, isOfflineEmpty } = useRoutineList()
