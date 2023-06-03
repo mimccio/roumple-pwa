@@ -16,7 +16,7 @@ export function RoutineScreen() {
 
   return (
     <>
-      <RoutineNavbar routine={routine} />
+      <RoutineNavbar />
       <Routes>
         <Route path="*" element={<RoutineDetails routine={routine} date={date} />} />
       </Routes>

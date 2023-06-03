@@ -4,7 +4,6 @@ import { cl } from '&/common/utils'
 import { EmptyItem } from '&/screens/empty-item'
 import { NotFoundDetails } from '&/screens/errors/not-found-details'
 import { SettingsDetails } from '&/screens/settings/settings-details'
-import { RoutineAction } from '&/screens/board/routine-action'
 import { CategoryDetailsScreen } from '&/screens/categories/category-details-screen'
 import { RoutineScreen } from '&/screens/routine'
 
@@ -20,7 +19,6 @@ export function DetailsScreen() {
     >
       <Routes>
         <Route path=":nav/d/routine/:routineId/*" element={<RoutineScreen />} />
-        <Route path=":nav/d/action/:routineId/*" element={<RoutineAction />} />
 
         <Route path="categories" element={<CategoryDetailsScreen />} />
         <Route path="settings" element={<SettingsDetails />} />

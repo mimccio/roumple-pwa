@@ -27,7 +27,7 @@ export function RoutineChecklist({ routine, date }: Props) {
             key={checklistItem.id}
             onDelete={onDelete}
             onSelect={onSelectChecklistItem}
-            isChecked={routine.actions?.[0].checked_list?.includes(checklistItem.id)}
+            isChecked={routine.actions?.[0]?.checked_list?.includes(checklistItem.id)}
           />
         ))}
         <NewChecklistItem routine={routine} />

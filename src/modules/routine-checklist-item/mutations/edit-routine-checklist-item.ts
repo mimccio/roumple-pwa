@@ -1,18 +1,17 @@
 import { db } from '&/db'
 
-interface CreateChecklistItemParams {
+interface EditChecklistItemParams {
   id: string
   name: string
+  routine_id: string
 }
 
-export const editRoutineChecklistItem = async ({ id, name }: CreateChecklistItemParams) => {
-  throw new Error('qlskdfj')
-
+export const editRoutineChecklistItem = async ({ id, name }: EditChecklistItemParams) => {
   const { data, error } = await db
     .from('routine_checklist_item')
     .update({ name })
     .eq('id', id)
-    .select('id, name')
+    .select('id, name, routine_id')
     .single()
   if (error) throw error
   return data

@@ -1,5 +1,5 @@
 import { Listbox } from '@headlessui/react'
-import { ChevronUpDownIcon, TagIcon } from '@heroicons/react/24/solid'
+import { TagIcon } from '@heroicons/react/24/solid'
 
 import { cl } from '&/common/utils'
 import type { Category } from '&/modules/category/types'
@@ -29,12 +29,6 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
           {category?.name || (isLoading ? '' : isError ? 'Error' : 'no category')}
         </span>
       </span>
-      {/* <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-        <ChevronUpDownIcon
-          className="h-5 w-5 text-transparent transition-colors group-hover:text-gray-400"
-          aria-hidden="true"
-        />
-      </span> */}
     </Listbox.Button>
   )
 }

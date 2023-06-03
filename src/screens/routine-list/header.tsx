@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { TagIcon, PlusCircleIcon } from '@heroicons/react/24/solid'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid'
@@ -5,13 +6,10 @@ import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/out
 import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
 
 import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
-import { useCreateRoutine } from '&/modules/routine/hooks'
+import { cl } from '&/common/utils'
 import { Tooltip } from '&/common/components/tooltip'
 import { categoryAtom } from '&/modules/category/atoms'
-import { cl } from '&/common/utils'
 import NewRoutineModale from './new-routine-modale/new-routine-modale'
-import { useState } from 'react'
-import { ConfirmDeleteModale } from '&/common/components/confirm-delete-modale'
 
 interface Props {
   archived: boolean
@@ -19,8 +17,7 @@ interface Props {
   onOpenNewRoutineModale: () => void
 }
 
-export function Header({ handleShowArchived, archived, onOpenNewRoutineModale }: Props) {
-  const { onCreateRoutine } = useCreateRoutine()
+export function Header({ handleShowArchived, archived }: Props) {
   const [category, setCategory] = useAtom(categoryAtom)
   const [newRoutineModaleIsOpen, setNewRoutineModaleIsOpen] = useState(false)
 

@@ -55,9 +55,9 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
 
   const name = watch('name')
 
-  const submit = handleSubmit(({ name, id }) => {
+  const submit = handleSubmit(({ name }) => {
     if (name === checklistItem.name) return
-    mutate({ id, name })
+    mutate({ ...checklistItem, name })
     reset()
   })
 
