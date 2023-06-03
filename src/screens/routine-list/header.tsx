@@ -9,7 +9,7 @@ import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
 import { cl } from '&/common/utils'
 import { Tooltip } from '&/common/components/tooltip'
 import { categoryAtom } from '&/modules/category/atoms'
-import NewRoutineModale from './new-routine-modale/new-routine-modale'
+import { NewRoutineModale } from './new-routine-modale'
 
 interface Props {
   archived: boolean
