@@ -11,9 +11,14 @@ interface Props {
 
 export function RoutineChecklist({ routine, date }: Props) {
   const { onDelete } = useDeleteChecklistItem(routine)
-  const { handleSelectChecklistItem } = useUpsertAction({ type: routine.type, date })
+  const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({ type: routine.type, date })
 
   const onSelectChecklistItem = (checklistItemId: string) => handleSelectChecklistItem({ routine, checklistItemId })
+
+  const handleDelete = (checklistItemId: string) => {
+    handleDeleteCheckedItem({ routine, checklistItemId })
+    onDelete(checklistItemId)
+  }
 
   return (
     <div className="w-full py-4">
@@ -25,7 +30,7 @@ export function RoutineChecklist({ routine, date }: Props) {
           <ChecklistItem
             checklistItem={checklistItem}
             key={checklistItem.id}
-            onDelete={onDelete}
+            onDelete={handleDelete}
             onSelect={onSelectChecklistItem}
             isChecked={routine.actions?.[0]?.checked_list?.includes(checklistItem.id)}
           />

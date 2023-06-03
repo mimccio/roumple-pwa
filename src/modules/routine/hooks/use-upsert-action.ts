@@ -58,7 +58,7 @@ export function useUpsertAction({ type, date }: Params) {
 
     const index = checkedList.findIndex((id) => id === checklistItemId)
 
-    let newList = []
+    let newList: string[] = []
     if (index >= 0) {
       newList = [...checkedList.slice(0, index), ...checkedList.slice(index + 1)]
     } else {
@@ -68,13 +68,25 @@ export function useUpsertAction({ type, date }: Params) {
     let status = action?.status
 
     if (newList.length === routine.checklist?.length) {
+      // TODO: verify that every items match
       status = STATUSES.done
-    } else if (newList.length && action?.status !== STATUSES.done) {
+    } else if (newList.length && action?.status !== STATUSES.done && index === -1) {
       status = STATUSES.inProgress
     }
 
     mutate({ routine, actionId: action?.id, type, date, status, checkedList: newList })
   }
 
-  return { handleUpdateStatus, handleSelectChecklistItem }
+  const handleDeleteCheckedItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
+    const action = routine.actions?.[0]
+    const checkedList = action?.checked_list || []
+    const index = checkedList.findIndex((id) => id === checklistItemId)
+    let newList: string[] = []
+    if (index >= 0) {
+      newList = [...checkedList.slice(0, index), ...checkedList.slice(index + 1)]
+    }
+    mutate({ routine, actionId: action?.id, type, date, status: action?.status, checkedList: newList })
+  }
+
+  return { handleUpdateStatus, handleSelectChecklistItem, handleDeleteCheckedItem }
 }
