@@ -7,9 +7,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
 
 import { Login } from '&/screens/login'
-import { LIST, ROUTINE } from '&/modules/routine/constants'
-import { editRoutineName } from '&/modules/routine/mutations'
-
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
@@ -34,16 +31,9 @@ const queryClient = new QueryClient({
 })
 
 // we need a default mutation function so that paused mutations can resume after a page reload
-queryClient.setMutationDefaults([ROUTINE, LIST, { archived: false }], {
-  mutationFn: async (routine) => {
-    // to avoid clashes with our optimistic update when an offline mutation continues
-    await queryClient.cancelQueries({ queryKey: [ROUTINE, routine.id] })
-    return editRoutineName(routine)
-  },
-})
-
 queryClient.setMutationDefaults([CATEGORY_LIST], {
   mutationFn: async (category) => {
+    // to avoid clashes with our optimistic update when an offline mutation continues
     await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
     return editCategory(category)
   },
