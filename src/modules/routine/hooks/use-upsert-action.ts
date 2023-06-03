@@ -22,7 +22,7 @@ export function useUpsertAction({ type, date }: Params) {
 
       const newRoutine = {
         ...data.routine,
-        actions: [{ ...data.routine.actions?.[0], status: data.status }],
+        actions: [{ ...data.routine.actions?.[0], status: data.status, checked_list: data.checkedList }],
       }
 
       queryClient.setQueryData<Routine>([ROUTINE, data.routine.id], () => newRoutine)
