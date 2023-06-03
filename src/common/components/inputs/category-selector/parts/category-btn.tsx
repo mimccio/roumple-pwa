@@ -17,7 +17,7 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
   return (
     <Listbox.Button
       className={cl(
-        'group relative w-full cursor-pointer rounded-md border-transparent px-2 py-1.5 text-left transition-colors hover:bg-gray-50 hover:shadow-md',
+        'group relative cursor-pointer rounded-md border-transparent py-1.5 text-left transition-colors',
         isLoading && 'cursor-wait',
         isError && 'cursor-not-allowed'
       )}
@@ -25,16 +25,16 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
       <span className="flex items-center">
         <TagIcon height={16} width={16} className={color} />
 
-        <span className="ml-3 block truncate font-semibold text-gray-500">
+        <span className="ml-3 block truncate font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
           {category?.name || (isLoading ? '' : isError ? 'Error' : 'no category')}
         </span>
       </span>
-      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+      {/* <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
         <ChevronUpDownIcon
           className="h-5 w-5 text-transparent transition-colors group-hover:text-gray-400"
           aria-hidden="true"
         />
-      </span>
+      </span> */}
     </Listbox.Button>
   )
 }

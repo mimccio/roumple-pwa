@@ -46,8 +46,10 @@ export function useUpsertAction({ type, date }: Params) {
     },
   })
 
-  const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) =>
+  const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) => {
+    if (routine.actions?.[0]?.status === status) return
     mutate({ routine, actionId, status, type, date })
+  }
 
   return { handleUpdateStatus }
 }

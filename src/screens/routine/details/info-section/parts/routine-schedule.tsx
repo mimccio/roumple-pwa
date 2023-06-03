@@ -6,6 +6,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import { useSchedule } from '&/modules/routine/hooks/use-schedule'
 import { Fragment } from 'react'
+import { cl } from '&/common/utils'
 
 interface Props {
   routine: Routine
@@ -14,7 +15,7 @@ interface Props {
 
 export function RoutineSchedule({ routine, date }: Props) {
   const periodText = getPeriodText({ type: routine.type, period: routine.period })
-  const ScheduleColor = getScheduleTypeColor(routine.type)
+  const scheduleColor = getScheduleTypeColor(routine.type)
   const {
     dailyRecurrence,
     currentPeriod,
@@ -29,9 +30,11 @@ export function RoutineSchedule({ routine, date }: Props) {
   return (
     <Popover className="relative">
       <Popover.Button>
-        <p className="items-center4 flex">
-          <ClockIcon width={20} className={ScheduleColor} />
-          <span className="ml-2 font-semibold text-gray-600">{periodText}</span>
+        <p className="items-center4 group flex">
+          <ClockIcon width={20} className={cl('transition-colors', scheduleColor)} />
+          <span className="ml-2 font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
+            {periodText}
+          </span>
         </p>
       </Popover.Button>
 

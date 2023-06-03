@@ -46,9 +46,9 @@ export const getGroupHoverPeriodColor = (type: ScheduleType) => {
 }
 
 export const getScheduleTypeColor = (type: ScheduleType) => {
-  if (type === SCHEDULE_TYPES.daily) return 'text-indigo-700'
-  if (type === SCHEDULE_TYPES.weekly) return 'text-sky-700'
-  if (type === SCHEDULE_TYPES.monthly) return 'text-purple-700'
+  if (type === SCHEDULE_TYPES.weekly) return 'text-sky-500 group-hover:text-sky-600'
+  if (type === SCHEDULE_TYPES.monthly) return 'text-purple-500 group-hover:text-purple-600'
+  return 'text-indigo-500 group-hover:text-indigo-600'
 }
 
 export const getIsScheduled = ({ data, date }: { data: Routine; date: number }) => {
