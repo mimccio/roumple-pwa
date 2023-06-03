@@ -10,6 +10,7 @@ export interface RoutineAction {
   date: Date
   routine_id: string
   status: RoutineStatuses
+  checked_list?: string[]
 }
 
 export interface Routine {
@@ -24,7 +25,7 @@ export interface Routine {
   weekly_recurrence: number[]
   monthly_recurrence: number[]
   type: ScheduleType
-  actions: Pick<RoutineAction, 'id' | 'date' | 'status'>[]
+  actions: Pick<RoutineAction, 'id' | 'date' | 'status' | 'checked_list'>[]
   category_id: string | null
   category: Category | null
   checklist?: RoutineChecklistItem[]
@@ -36,6 +37,11 @@ export interface UpdateStatusParams {
   routine: Routine
   actionId: number
   status: RoutineStatuses
+}
+
+export interface UpdateCheckedListParams {
+  routine: Routine
+  checklistItemId: string
 }
 
 export interface RoutineDetails {

@@ -11,7 +11,7 @@ export function RoutineDetails({ routine, date }: Props) {
   return (
     <div className="w-full">
       <InfoSection routine={routine} date={date} />
-      <MainSection routine={routine} />
+      <MainSection routine={routine} date={date} />
     </div>
   )
 }

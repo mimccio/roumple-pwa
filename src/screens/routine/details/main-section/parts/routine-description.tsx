@@ -35,7 +35,7 @@ export function RoutineDescription({ routine }: Props) {
     editorProps: {
       attributes: {
         class:
-          'prose-gray min-h-[200px] prose-headings:font-semibold transition-colors rounded-lg marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
+          'prose-gray min-h-[120px] prose-headings:font-semibold transition-colors rounded-lg marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
       },
     },
   })

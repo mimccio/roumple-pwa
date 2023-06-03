@@ -11,7 +11,7 @@ interface Props {
 export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {
   return (
     <NavLink
-      to={`d/action/${routine.id}`}
+      to={`d/routine/${routine.id}`}
       className={({ isActive }) =>
         cl('flex h-14 items-center justify-between rounded-lg px-2', isActive && 'bg-gray-100')
       }

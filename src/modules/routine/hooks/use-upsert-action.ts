@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Routine, ScheduleType, UpdateStatusParams } from '../types'
+import type { Routine, ScheduleType, UpdateCheckedListParams, UpdateStatusParams } from '../types'
 import { BOARD, ROUTINE } from '../constants'
 import { upsertRoutineAction } from '../mutations'
+import { STATUSES } from '&/common/constants'
 
 interface Params {
   type: ScheduleType
@@ -48,8 +49,32 @@ export function useUpsertAction({ type, date }: Params) {
 
   const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) => {
     if (routine.actions?.[0]?.status === status) return
-    mutate({ routine, actionId, status, type, date })
+    mutate({ routine, actionId, status, type, date, checkedList: routine.actions?.[0]?.checked_list })
   }
 
-  return { handleUpdateStatus }
+  const handleSelectChecklistItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
+    const action = routine.actions?.[0]
+    const checkedList = action?.checked_list || []
+
+    const index = checkedList.findIndex((id) => id === checklistItemId)
+
+    let newList = []
+    if (index >= 0) {
+      newList = [...checkedList.slice(0, index), ...checkedList.slice(index + 1)]
+    } else {
+      newList = [...checkedList, checklistItemId]
+    }
+
+    let status = action?.status
+
+    if (newList.length === routine.checklist?.length) {
+      status = STATUSES.done
+    } else if (newList.length && action?.status !== STATUSES.done) {
+      status = STATUSES.inProgress
+    }
+
+    mutate({ routine, actionId: action?.id, type, date, status, checkedList: newList })
+  }
+
+  return { handleUpdateStatus, handleSelectChecklistItem }
 }
