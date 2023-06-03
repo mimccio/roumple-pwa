@@ -21,7 +21,7 @@ export function ChecklistItem({ checklistItem, onDelete, onSelect, isChecked }: 
         <div
           className={cl(
             'flex h-5 w-5 items-center justify-center rounded-md border-2 border-gray-300 transition-colors',
-            isChecked ? 'bg-green-400 group-hover:border-green-300' : 'group-hover:border-gray-400'
+            isChecked ? 'bg-green-400 group-hover:bg-green-300' : 'group-hover:border-gray-400'
           )}
         >
           <CheckIcon
