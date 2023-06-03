@@ -27,6 +27,7 @@ const queryClient = new QueryClient({
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
     },
+    mutations: { networkMode: 'offlineFirst' },
   },
 })
 
