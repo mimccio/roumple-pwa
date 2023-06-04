@@ -11,7 +11,10 @@ export function InProgressBtn({ handleClick, isSelected }: Props) {
   return (
     <Tooltip message="in progress">
       <button
-        className={cl('group rounded-md p-1', isSelected ? 'bg-green-100' : 'bg-gray-50 hover:bg-green-50')}
+        className={cl(
+          'group flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-gray-50',
+          isSelected ? 'bg-white shadow-md' : ' hover:shadow-md'
+        )}
         onClick={handleClick}
       >
         <div

@@ -11,7 +11,13 @@ interface Props {
 export function TodoBtn({ handleClick, isSelected }: Props) {
   return (
     <Tooltip message="reset">
-      <button className="group rounded-md bg-gray-50 p-1 hover:bg-gray-100" onClick={handleClick}>
+      <button
+        className={cl(
+          'group flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-gray-50',
+          isSelected ? 'bg-white shadow-md' : ' hover:shadow-md'
+        )}
+        onClick={handleClick}
+      >
         <div
           className={cl(
             'flex h-7 w-7 items-center justify-center rounded-full border-[3px] transition-colors ',

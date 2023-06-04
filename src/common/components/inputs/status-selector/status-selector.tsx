@@ -22,8 +22,8 @@ export function StatusSelector({ routine, date }: Props) {
   return (
     <div
       className={cl(
-        'flex items-center gap-2 rounded-md p-2 transition-colors',
-        action?.status === STATUSES.done ? 'bg-green-300 ' : 'bg-gray-200 '
+        'flex items-center gap-2 rounded-md transition-colors'
+        // action?.status === STATUSES.done ? 'bg-green-300 ' : 'bg-gray-200 '
       )}
     >
       <TodoBtn
