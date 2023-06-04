@@ -1,15 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-
-import './style.css'
+import { debounce } from 'lodash'
 
 import type { Routine } from '&/modules/routine/types'
-import { EditorFloatingMenu } from '&/common/components/menus/editor-floating-menu'
-import { EditorBubbleMenu } from '&/common/components/menus/editor-bubble-menu'
 import { useEditRoutineDescription } from '&/modules/routine/hooks'
-import { isEqual } from 'lodash'
+import { EditorMenu } from '&/common/components/menus/editor-menu'
+import './style.css'
 
 interface Props {
   routine: Routine
@@ -17,6 +15,17 @@ interface Props {
 
 export function RoutineDescription({ routine }: Props) {
   const { submit } = useEditRoutineDescription(routine)
+
+  const onUpdate = useMemo(
+    () =>
+      debounce(({ editor }) => {
+        console.log('save')
+        const json = editor?.getJSON()
+        submit(json)
+      }, 800),
+    [] // eslint-disable-line react-hooks/exhaustive-deps
+  )
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -32,10 +41,11 @@ export function RoutineDescription({ routine }: Props) {
       }),
     ],
     content: routine.description,
+    onUpdate,
     editorProps: {
       attributes: {
         class:
-          'prose-gray min-h-[160px] border-y border-gray-100 py-4 prose-headings:font-semibold transition-colors marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
+          'prose-gray min-h-[160px] flex-1 p-4 prose-headings:font-semibold prose:leading-6 transition-colors marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl',
       },
     },
   })
@@ -44,17 +54,11 @@ export function RoutineDescription({ routine }: Props) {
     editor?.commands.setContent(routine.description || '')
   }, [routine.description, routine.id, editor])
 
-  const onBlur = () => {
-    const json = editor?.getJSON()
-    if (!json || isEqual(routine.description, json)) return
-    submit(json)
-  }
-
   return (
-    <div>
-      {editor && <EditorBubbleMenu editor={editor} />}
-      {editor && <EditorFloatingMenu editor={editor} />}
-      <EditorContent onBlur={onBlur} editor={editor} />
+    <div className="group flex flex-wrap-reverse">
+      <EditorContent id="description" className="-mx-4 flex flex-1 border-y border-gray-100" editor={editor} />
+
+      {editor && <EditorMenu editor={editor} />}
     </div>
   )
 }

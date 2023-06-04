@@ -32,7 +32,7 @@ export function RoutineName({ routine }: Props) {
     editorProps: {
       attributes: {
         class:
-          'prose prose-sm sm:prose relative prose-gray text-lg py-2 font-semibold transition-colors rounded-lg lg:prose-lg xl:prose-2xl mx-auto focus:outline-none ',
+          'prose relative prose-gray py-2 font-semibold transition-colors rounded-lg prose-2xl mx-auto focus:outline-none ',
       },
     },
   })

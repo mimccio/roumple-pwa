@@ -7,7 +7,7 @@
 }
 
 .ProseMirror > * + * {
-  margin-top: 0.75em;
+  margin-top: 0.3em;
 }
 .ProseMirror ul,
 .ProseMirror ol {
