@@ -47,7 +47,7 @@ export function RoutineSchedule({ routine, date }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute z-10 rounded-lg bg-gray-50 p-4 shadow-md">
+        <Popover.Panel className="absolute z-10 w-full max-w-lg rounded-lg bg-white p-4 shadow-md">
           {({ close }) => (
             <div>
               <RoutineScheduleSelector
