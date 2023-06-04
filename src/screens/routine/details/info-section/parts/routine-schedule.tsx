@@ -1,4 +1,4 @@
-import { ClockIcon } from '@heroicons/react/24/outline'
+import { ClockIcon } from '@heroicons/react/24/solid'
 
 import type { Routine } from '&/modules/routine/types'
 import { getIsScheduled, getPeriodText, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
@@ -40,20 +40,20 @@ export function RoutineSchedule({ routine, date }: Props) {
   return (
     <Popover className="relative">
       <Popover.Button>
-        <div className="group flex flex-wrap items-center">
-          <p className=' items-center" flex'>
-            <ClockIcon width={20} className={cl('transition-colors', scheduleColor)} />
-            <span className="ml-2 font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
+        <div className="group flex flex-wrap items-center gap-4">
+          <p className="flex items-center gap-2">
+            <ClockIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
+            <span className="font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
               {periodText}
             </span>
           </p>
           {!isScheduled && (
-            <p className="ml-2 text-sm text-gray-300 transition-colors hover:text-gray-400">
-              - Not scheduled for {scheduledText}
+            <p className="text-sm text-gray-300 transition-colors group-hover:text-gray-400">
+              Not scheduled for {scheduledText}
             </p>
           )}
           {isScheduled && (
-            <p className={cl('ml-2 text-sm transition-colors', isScheduledColor)}>- Scheduled for {scheduledText}</p>
+            <p className={cl('ml-2 text-sm transition-colors', isScheduledColor)}>Scheduled for {scheduledText}</p>
           )}
         </div>
       </Popover.Button>
