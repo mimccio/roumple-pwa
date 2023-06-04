@@ -1,4 +1,5 @@
 import { ClockIcon } from '@heroicons/react/24/solid'
+import { ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
 
 import type { Routine } from '&/modules/routine/types'
 import { getIsScheduled, getPeriodText, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
@@ -42,7 +43,11 @@ export function RoutineSchedule({ routine, date }: Props) {
       <Popover.Button>
         <div className="group flex flex-wrap items-center gap-4">
           <p className="flex items-center gap-2">
-            <ClockIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
+            {isScheduled ? (
+              <ClockIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
+            ) : (
+              <ClockOutlineIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
+            )}
             <span className="font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
               {periodText}
             </span>
