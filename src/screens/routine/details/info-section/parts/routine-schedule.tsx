@@ -1,12 +1,13 @@
 import { ClockIcon } from '@heroicons/react/24/outline'
 
 import type { Routine } from '&/modules/routine/types'
-import { getPeriodText, getScheduleTypeColor } from '&/modules/routine/utils'
+import { getIsScheduled, getPeriodText, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
 import { Popover, Transition } from '@headlessui/react'
 import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import { useSchedule } from '&/modules/routine/hooks/use-schedule'
 import { Fragment } from 'react'
 import { cl } from '&/common/utils'
+import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 
 interface Props {
   routine: Routine
@@ -16,6 +17,8 @@ interface Props {
 export function RoutineSchedule({ routine, date }: Props) {
   const periodText = getPeriodText({ type: routine.type, period: routine.period })
   const scheduleColor = getScheduleTypeColor(routine.type)
+  const isScheduledColor = getScheduleTypeLightColor(routine.type)
+  const isScheduled = getIsScheduled({ routine, date })
   const {
     dailyRecurrence,
     currentPeriod,
@@ -27,15 +30,32 @@ export function RoutineSchedule({ routine, date }: Props) {
     onSubmit,
   } = useSchedule({ routine, date })
 
+  const getIsScheduledText = () => {
+    if (routine.type === SCHEDULE_TYPES.monthly) return 'this month'
+    if (routine.type === SCHEDULE_TYPES.weekly) return 'this week'
+    return 'today'
+  }
+  const scheduledText = getIsScheduledText()
+
   return (
     <Popover className="relative">
       <Popover.Button>
-        <p className="items-center4 group flex">
-          <ClockIcon width={20} className={cl('transition-colors', scheduleColor)} />
-          <span className="ml-2 font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
-            {periodText}
-          </span>
-        </p>
+        <div className="group flex flex-wrap items-center">
+          <p className=' items-center" flex'>
+            <ClockIcon width={20} className={cl('transition-colors', scheduleColor)} />
+            <span className="ml-2 font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
+              {periodText}
+            </span>
+          </p>
+          {!isScheduled && (
+            <p className="ml-2 text-sm text-gray-300 transition-colors hover:text-gray-400">
+              - Not scheduled for {scheduledText}
+            </p>
+          )}
+          {isScheduled && (
+            <p className={cl('ml-2 text-sm transition-colors', isScheduledColor)}>- Scheduled for {scheduledText}</p>
+          )}
+        </div>
       </Popover.Button>
 
       <Transition

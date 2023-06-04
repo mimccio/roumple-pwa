@@ -10,7 +10,7 @@ interface Props {
 export function InfoSection({ routine, date }: Props) {
   return (
     <section className="flex flex-col border-b bg-gray-100 p-4">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="-mx-1 mb-6 flex items-center justify-between">
         <StatusSelector routine={routine} date={date} />
         <Priority routine={routine} />
       </div>

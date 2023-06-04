@@ -45,7 +45,7 @@ export function useSchedule({ routine, date }: Params) {
       // Board
       const previousBoardRoutines = queryClient.getQueryData([ROUTINE, BOARD, { type: routine.type, date }])
 
-      const isScheduled = getIsScheduled({ data, date })
+      const isScheduled = getIsScheduled({ routine: data, date })
 
       // Type stays the same
       if (data.type === routine.type && !data.archived) {

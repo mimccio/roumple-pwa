@@ -52,10 +52,16 @@ export const getScheduleTypeColor = (type: ScheduleType) => {
   return 'text-indigo-500 group-hover:text-indigo-600'
 }
 
-export const getIsScheduled = ({ data, date }: { data: Routine; date: number }) => {
-  if (data.type === SCHEDULE_TYPES.daily) return data.daily_recurrence.includes(getDay(date))
-  if (data.type === SCHEDULE_TYPES.weekly) return data.weekly_recurrence.includes(getWeek(date) % 2)
-  if (data.type === SCHEDULE_TYPES.monthly) return data.monthly_recurrence.includes(getMonth(date))
+export const getScheduleTypeLightColor = (type: ScheduleType) => {
+  if (type === SCHEDULE_TYPES.weekly) return 'text-sky-300 group-hover:text-sky-400'
+  if (type === SCHEDULE_TYPES.monthly) return 'text-purple-300 group-hover:text-purple-400'
+  return 'text-indigo-300 group-hover:text-indigo-400'
+}
+
+export const getIsScheduled = ({ routine, date }: { routine: Routine; date: number }) => {
+  if (routine.type === SCHEDULE_TYPES.daily) return routine.daily_recurrence.includes(getDay(date))
+  if (routine.type === SCHEDULE_TYPES.weekly) return routine.weekly_recurrence.includes(getWeek(date) % 2)
+  if (routine.type === SCHEDULE_TYPES.monthly) return routine.monthly_recurrence.includes(getMonth(date))
 }
 
 export const filterRoutines = ({
