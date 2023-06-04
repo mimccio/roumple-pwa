@@ -10,12 +10,9 @@ interface Props {
 
 export function MainSection({ routine, date }: Props) {
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="mb-4 flex flex-col px-4">
       <RoutineName routine={routine} />
       <RoutineDescription routine={routine} />
-      <div className="flex justify-center">
-        <span className="h-[1px] w-52 rounded-md bg-gray-200" />
-      </div>
       <RoutineChecklist routine={routine} date={date} />
     </div>
   )

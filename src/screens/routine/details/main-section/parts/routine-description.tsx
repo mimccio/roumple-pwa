@@ -35,7 +35,7 @@ export function RoutineDescription({ routine }: Props) {
     editorProps: {
       attributes: {
         class:
-          'prose-gray min-h-[120px] prose-headings:font-semibold transition-colors rounded-lg marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
+          'prose-gray min-h-[160px] border-y border-gray-100 py-4 prose-headings:font-semibold transition-colors marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl ',
       },
     },
   })
@@ -51,7 +51,7 @@ export function RoutineDescription({ routine }: Props) {
   }
 
   return (
-    <div className="">
+    <div>
       {editor && <EditorBubbleMenu editor={editor} />}
       {editor && <EditorFloatingMenu editor={editor} />}
       <EditorContent onBlur={onBlur} editor={editor} />
