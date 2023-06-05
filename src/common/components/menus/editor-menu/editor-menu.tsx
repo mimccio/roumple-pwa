@@ -13,7 +13,7 @@ interface Props {
 
 export function EditorMenu({ editor }: Props) {
   return (
-    <div className="-mr-4 flex flex-col justify-start gap-1 bg-gray-100 p-1">
+    <div className="flex justify-center gap-1 border-t border-gray-100 py-1">
       <EditorMenuButton
         Icon={H1Icon}
         isActive={editor.isActive('heading', { level: 1 })}

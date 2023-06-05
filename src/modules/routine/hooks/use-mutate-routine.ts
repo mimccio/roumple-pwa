@@ -15,7 +15,6 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
   const { mutate } = useMutation(mutation, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
-
       queryClient.setQueryData([ROUTINE, data.id], data)
 
       const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: data.archived }])

@@ -50,7 +50,7 @@ export function RoutineName({ routine }: Props) {
   const charNum = editor?.storage.characterCount.characters()
 
   return (
-    <div className="relative flex">
+    <div className="relative px-4">
       <EditorContent id={routine.id} onBlur={onBlur} editor={editor} />
 
       <Transition
