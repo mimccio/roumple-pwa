@@ -13,7 +13,9 @@ export function DoneBtn({ handleClick, isSelected }: Props) {
       <button
         className={cl(
           'group flex h-10 w-10 items-center justify-center rounded-md transition-colors ',
-          isSelected ? 'bg-green-400 shadow-md shadow-green-600 hover:bg-green-300' : 'hover:bg-gray-50 hover:shadow-md'
+          isSelected
+            ? 'bg-green-400 shadow-md shadow-green-600/50 hover:bg-green-300'
+            : 'hover:bg-gray-50 hover:shadow-md'
         )}
         onClick={handleClick}
       >
