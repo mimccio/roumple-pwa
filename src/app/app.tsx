@@ -6,13 +6,14 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
 
+import '&/assets/fonts/fonts.css'
+import { editCategory } from '&/modules/category/mutations'
+import { CATEGORY_LIST } from '&/modules/category/constants'
 import { Login } from '&/screens/login'
+
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import './styles.css'
-import '../assets/fonts/fonts.css'
-import { CATEGORY_LIST } from '&/modules/category/constants'
-import { editCategory } from '&/modules/category/mutations'
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
