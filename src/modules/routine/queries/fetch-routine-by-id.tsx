@@ -16,6 +16,7 @@ export const fetchRoutineById = async ({ queryKey }: IParams) => {
       'id, name, created_at, description, priority, archived, weekly_recurrence, period, type, daily_recurrence, monthly_recurrence, actions:routine_action(id, status, date, checked_list), category_id, category(id, name, color), checklist:routine_checklist_item(id, name, created_at, routine_id)'
     )
     .eq('id', routineId)
+    .order('created_at', { foreignTable: 'routine_checklist_item', ascending: true })
     .single()
 
   if (error) throw error

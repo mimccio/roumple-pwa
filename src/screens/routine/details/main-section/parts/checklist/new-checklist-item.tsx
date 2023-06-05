@@ -15,11 +15,15 @@ export function NewChecklistItem({ routine }: Props) {
     <div className="">
       <div className="flex items-center gap-4">
         <form ref={ref} className="flex w-full items-center gap-4" onSubmit={submit}>
-          <span className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400">
+          <label
+            htmlFor="new-checklist-element"
+            className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400"
+          >
             <PlusIcon width={20} height={20} />
-          </span>
+          </label>
           <input
-            className="h-10 w-full rounded-md border border-transparent px-2 text-sm outline-none focus:border-blue-400"
+            id="new-checklist-element"
+            className="h-8 w-full rounded-md border border-transparent px-2 text-sm outline-none transition-colors hover:bg-gray-50 focus:bg-gray-100"
             placeholder="New checklist element"
             {...register('name', {
               required: { value: true, message: 'required' },

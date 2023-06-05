@@ -28,10 +28,10 @@ export function RoutineChecklist({ routine, date }: Props) {
   }
 
   return (
-    <div className="w-full py-4">
-      <div className="flex flex-wrap items-start justify-between gap-x-8">
+    <div className="mx-auto w-full max-w-2xl py-4 2xl:mt-4">
+      <div className="flex flex-col">
         <h4 className="font-bold uppercase text-gray-400">Checklist</h4>
-        <p className="mt-1 text-xs text-gray-300">checklist will automatically reset {getText()}</p>
+        <p className="text-xs text-gray-300">checklist will automatically reset {getText()}</p>
       </div>
 
       <div className="mt-4 flex flex-col gap-2">

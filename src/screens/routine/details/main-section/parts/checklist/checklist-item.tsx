@@ -1,4 +1,4 @@
-import { XCircleIcon } from '@heroicons/react/20/solid'
+import { XMarkIcon } from '@heroicons/react/20/solid'
 import { useEditChecklistItem } from '&/modules/routine-checklist-item/hooks'
 import { RoutineChecklistItem } from '&/modules/routine-checklist-item/types'
 import { CheckIcon } from '@heroicons/react/24/solid'
@@ -16,7 +16,7 @@ export function ChecklistItem({ checklistItem, onDelete, onSelect, isChecked }: 
   const handleSelect = () => onSelect(checklistItem.id)
 
   return (
-    <form onSubmit={submit} onBlur={submit} className="flex w-full items-center justify-between gap-2">
+    <div className="flex w-full items-center gap-2">
       <button className="group" onClick={handleSelect}>
         <div
           className={cl(
@@ -31,13 +31,16 @@ export function ChecklistItem({ checklistItem, onDelete, onSelect, isChecked }: 
           />
         </div>
       </button>
-      <input
-        className="h-8 w-full rounded-md border border-transparent px-2 outline-none focus:border-gray-200"
-        {...register('name')}
-      />
+      <form className="w-full" onSubmit={submit} onBlur={submit}>
+        <input
+          onClick={(evt) => evt.preventDefault()}
+          className="h-8 w-full truncate rounded-md px-2 outline-none transition-colors hover:bg-gray-50 focus:bg-gray-100"
+          {...register('name')}
+        />
+      </form>
       <button onClick={() => onDelete(checklistItem.id)} className="rounded-md p-1">
-        <XCircleIcon width={20} height={20} className="text-gray-400 transition-colors hover:text-gray-500" />
+        <XMarkIcon width={20} height={20} className="text-gray-400 transition-colors hover:text-gray-500" />
       </button>
-    </form>
+    </div>
   )
 }

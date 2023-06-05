@@ -48,7 +48,6 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
     formState: { errors },
     clearErrors,
     watch,
-    reset,
   } = useForm<{ name: string; id: string }>({
     values: checklistItem,
   })
@@ -56,9 +55,9 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
   const name = watch('name')
 
   const submit = handleSubmit(({ name }) => {
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
     if (name === checklistItem.name) return
     mutate({ ...checklistItem, name })
-    reset()
   })
 
   useOutsideClick({ handler: clearErrors, ref })
