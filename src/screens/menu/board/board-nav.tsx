@@ -12,6 +12,10 @@ export function BoardNav({ close }: Props) {
   const weeklyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.weekly })
   const monthlyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.monthly })
 
+  const todayNum = dailyQuery.count && dailyQuery.count > 0 ? dailyQuery.count : null
+  const weekNum = weeklyQuery.count && weeklyQuery.count > 0 ? weeklyQuery.count : null
+  const monthNum = monthlyQuery.count && monthlyQuery.count > 0 ? monthlyQuery.count : null
+
   return (
     <nav className="gap-2 border-b py-4">
       <NavLink
@@ -27,7 +31,7 @@ export function BoardNav({ close }: Props) {
         {({ isActive }) => (
           <>
             <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Today</span>
-            <span className={cl('text-sm', isActive ? 'text-indigo-500' : 'text-indigo-400')}>{dailyQuery.count}</span>
+            <span className={cl('text-sm', isActive ? 'text-indigo-500' : 'text-indigo-400')}>{todayNum}</span>
           </>
         )}
       </NavLink>
@@ -44,7 +48,7 @@ export function BoardNav({ close }: Props) {
         {({ isActive }) => (
           <>
             <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>This week</span>
-            <span className={cl('text-sm', isActive ? 'text-sky-500' : 'text-sky-400')}>{weeklyQuery.count}</span>
+            <span className={cl('text-sm', isActive ? 'text-sky-500' : 'text-sky-400')}>{weekNum}</span>
           </>
         )}
       </NavLink>
@@ -61,9 +65,7 @@ export function BoardNav({ close }: Props) {
         {({ isActive }) => (
           <>
             <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>This month</span>
-            <span className={cl('text-sm', isActive ? 'text-purple-500' : 'text-purple-400')}>
-              {monthlyQuery.count}
-            </span>
+            <span className={cl('text-sm', isActive ? 'text-purple-500' : 'text-purple-400')}>{monthNum}</span>
           </>
         )}
       </NavLink>
