@@ -19,7 +19,6 @@ export function RoutineDescription({ routine }: Props) {
   const onUpdate = useMemo(
     () =>
       debounce(({ editor }) => {
-        console.log('save')
         const json = editor?.getJSON()
         submit(json)
       }, 800),
