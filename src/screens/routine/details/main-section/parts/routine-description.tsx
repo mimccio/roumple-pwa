@@ -55,9 +55,9 @@ export function RoutineDescription({ routine }: Props) {
   }, [routine.id, editor]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="group px-4">
+    <div className="px-4">
       {editor && <EditorMenu editor={editor} />}
-      <EditorContent id="description" className=" flex flex-1 border-b border-gray-100" editor={editor} />
+      <EditorContent id="description" className="mt-2 flex flex-1 border-b border-gray-100 py-4" editor={editor} />
     </div>
   )
 }
