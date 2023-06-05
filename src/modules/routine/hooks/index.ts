@@ -1,5 +1,6 @@
 export * from './use-archive-routine'
 export * from './use-board-routines'
+export * from './use-board-routine-count'
 export * from './use-create-routine'
 export * from './use-delete-routine'
 export * from './use-edit-routine-description'

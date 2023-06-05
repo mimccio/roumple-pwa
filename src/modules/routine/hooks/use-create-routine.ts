@@ -77,10 +77,7 @@ export function useCreateRoutine() {
         BOARD,
         { type: SCHEDULE_TYPES.daily, date: getTodayDate() },
       ])
-      queryClient.setQueryData([ROUTINE, BOARD, { type: SCHEDULE_TYPES.daily, date }], (old: Routine[] = []) => [
-        ...old,
-        data,
-      ])
+      queryClient.setQueryData([ROUTINE, BOARD, { type: data.type, date }], (old: Routine[] = []) => [...old, data])
       navigate(`d/routine/${id}`)
       return { previousRoutineList, previousBoardList }
     },

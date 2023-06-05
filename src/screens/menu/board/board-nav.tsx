@@ -1,4 +1,6 @@
 import { cl } from '&/common/utils'
+import { SCHEDULE_TYPES } from '&/modules/routine/constants'
+import { useBoardRoutineCount } from '&/modules/routine/hooks/use-board-routine-count'
 import { NavLink } from 'react-router-dom'
 
 interface Props {
@@ -6,6 +8,10 @@ interface Props {
 }
 
 export function BoardNav({ close }: Props) {
+  const dailyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.daily })
+  const weeklyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.weekly })
+  const monthlyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.monthly })
+
   return (
     <nav className="gap-2 border-b py-4">
       <NavLink
@@ -19,7 +25,10 @@ export function BoardNav({ close }: Props) {
         to="today"
       >
         {({ isActive }) => (
-          <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Today</span>
+          <>
+            <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Today</span>
+            <span className={cl('text-sm', isActive ? 'text-indigo-500' : 'text-indigo-400')}>{dailyQuery.count}</span>
+          </>
         )}
       </NavLink>
       <NavLink
@@ -33,7 +42,10 @@ export function BoardNav({ close }: Props) {
         to="week"
       >
         {({ isActive }) => (
-          <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>This week</span>
+          <>
+            <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>This week</span>
+            <span className={cl('text-sm', isActive ? 'text-sky-500' : 'text-sky-400')}>{weeklyQuery.count}</span>
+          </>
         )}
       </NavLink>
       <NavLink
@@ -47,7 +59,12 @@ export function BoardNav({ close }: Props) {
         to="month"
       >
         {({ isActive }) => (
-          <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>This month</span>
+          <>
+            <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>This month</span>
+            <span className={cl('text-sm', isActive ? 'text-purple-500' : 'text-purple-400')}>
+              {monthlyQuery.count}
+            </span>
+          </>
         )}
       </NavLink>
       {/* <NavLink
