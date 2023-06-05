@@ -7,7 +7,7 @@ interface Props {
 
 export function BoardNav({ close }: Props) {
   return (
-    <nav className="gap-2 border-b p-4">
+    <nav className="gap-2 border-b py-4">
       <NavLink
         onClick={close}
         className={({ isActive }) =>

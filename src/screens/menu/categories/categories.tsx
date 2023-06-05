@@ -15,7 +15,7 @@ export function Categories() {
   const selectCategory = (category: Category | null) => setCategory(category)
 
   return (
-    <div className="p-4">
+    <div className="py-4">
       <div className="flex items-center justify-between px-4">
         <Link to="/categories">
           <h4 className="text-sm font-bold text-gray-400">CATEGORIES</h4>
