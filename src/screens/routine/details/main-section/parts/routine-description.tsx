@@ -52,7 +52,7 @@ export function RoutineDescription({ routine }: Props) {
 
   useEffect(() => {
     editor?.commands.setContent(routine.description || '')
-  }, [routine.description, routine.id, editor])
+  }, [routine.id, editor]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="group flex flex-wrap-reverse">
