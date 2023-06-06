@@ -11,6 +11,7 @@ interface Props {
 export function EditorMenuButton({ children, handleClick, isActive, Icon }: Props) {
   const onClick = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault()
+    document.getElementById('focusdummy')?.focus() // prevent chrome keyboard from jumping around
     handleClick()
   }
 
