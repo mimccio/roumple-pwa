@@ -15,7 +15,7 @@ export const fetchBoardRoutines = async ({ queryKey }: Params) => {
   let query = db
     .from('routine')
     .select(
-      'id, name, priority, description, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, actions:routine_action(id, status, date, checked_list), category(id, name, color)'
+      'id, name, priority, created_at, description, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, actions:routine_action(id, status, date, checked_list), category(id, name, color)'
     )
     .eq('archived', false)
     .eq('type', type)

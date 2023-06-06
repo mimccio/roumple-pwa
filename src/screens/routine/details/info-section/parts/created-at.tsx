@@ -1,3 +1,4 @@
+import { cl } from '&/common/utils'
 import { format } from 'date-fns'
 
 interface Props {
@@ -5,10 +6,10 @@ interface Props {
 }
 
 export function CreatedAt({ createdAt }: Props) {
-  const displayedDate = format(new Date(createdAt), 'd MMMM yyyy')
+  const displayedDate = createdAt ? format(new Date(createdAt), 'd MMMM yyyy') : null
 
   return (
-    <p className="text-right text-xs text-gray-300">
+    <p className={cl('text-right text-xs text-gray-300', !displayedDate && 'opacity-0')}>
       created the <span>{displayedDate}</span>
     </p>
   )
