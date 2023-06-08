@@ -16,8 +16,8 @@ export function FolderList() {
       </Link>
       {isLoading && <ListSkeletonSmall />}
 
-      {folderList?.map(({ id, name }) => (
-        <FolderItem key={id} id={id} name={name} />
+      {folderList?.map((folder) => (
+        <FolderItem key={folder.id} folder={folder} />
       ))}
     </div>
   )
