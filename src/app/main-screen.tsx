@@ -9,6 +9,7 @@ import { RoutineList } from '&/screens/routine-list'
 import { SettingsMain } from '&/screens/settings/settings-main'
 import { Categories } from '&/screens/categories'
 import { FatalError, NotFoundMain } from '&/screens/errors'
+import { NoteListScreen } from '&/screens/note-list'
 
 export function MainScreen() {
   return (
@@ -21,6 +22,8 @@ export function MainScreen() {
           <Route path="/month/*" element={<Month />} />
           {/* Nav */}
           <Route path="/routines/*" element={<RoutineList />} />
+          <Route path="/notes/*" element={<NoteListScreen />} />
+
           <Route path="/categories/*" element={<Categories />} />
           <Route path="/settings/*" element={<SettingsMain />} />
           {/* catch all */}
