@@ -6,7 +6,7 @@ import type { Category } from '&/modules/category/types'
 import { TW_COLOR_TEXT_500 } from '&/common/constants'
 
 interface Props {
-  category: Category | null
+  category?: Category | null
   isLoading: boolean
   isError: boolean
 }

@@ -1,29 +1,26 @@
 import { Fragment } from 'react'
+import type { ElementType } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
-import type { Category } from '&/modules/category/types'
-import { CategoryOption } from './parts/category-option'
-import { CategoryBtn } from './parts/category-btn'
+import { SelectorOption } from './parts/selector-option'
+import { SelectorBtn } from './parts/selector-btn'
 
 interface Props {
-  category?: Category | null
-  categoryList?: Category[]
+  options?: { id: string; name: string }[]
+  item?: { id: string; name: string } | null
   isLoading: boolean
   isError: boolean
-  onSelect: (category: Category) => void
+  onSelect: (item: { id: string; name: string }) => void
+  Icon: ElementType
 }
 
-export function CategorySelector({ category, categoryList, isLoading, isError, onSelect }: Props) {
+export function Selector({ item, options, isLoading, isError, onSelect, Icon }: Props) {
   return (
     <div className="w-full">
-      <Listbox
-        disabled={isLoading || isError}
-        value={category || { id: null, name: 'no category' }}
-        onChange={onSelect}
-      >
+      <Listbox disabled={isLoading || isError} value={item || { id: null, name: 'none' }} onChange={onSelect}>
         {({ open }) => (
           <div className="relative">
-            <CategoryBtn category={category} isLoading={isLoading} isError={isError} />
+            <SelectorBtn item={item} Icon={Icon} isLoading={isLoading} isError={isError} />
             <Transition
               show={open}
               as={Fragment}
@@ -35,14 +32,10 @@ export function CategorySelector({ category, categoryList, isLoading, isError, o
               leaveTo="transform opacity-0 scale-95"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full max-w-lg overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <CategoryOption category={{ id: null, name: 'no category' }} selected={category?.id == null} />
+                <SelectorOption option={{ id: null, name: 'none' }} selected={item?.id == null} />
 
-                {categoryList?.map((categoryItem) => (
-                  <CategoryOption
-                    key={categoryItem.id}
-                    category={categoryItem}
-                    selected={categoryItem.id === category?.id}
-                  />
+                {options?.map((option) => (
+                  <SelectorOption key={option.id} option={option} selected={option.id === item?.id} />
                 ))}
               </Listbox.Options>
             </Transition>

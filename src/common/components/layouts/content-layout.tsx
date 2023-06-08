@@ -6,6 +6,6 @@ interface Props {
 
 export function ContentLayout({ children }: Props) {
   return (
-    <main className="no-scrollbar absolute bottom-0 top-14 flex w-full flex-col overflow-y-auto py-8">{children}</main>
+    <main className="no-scrollbar absolute bottom-0 top-14 flex w-full flex-col overflow-y-auto py-4">{children}</main>
   )
 }

@@ -23,7 +23,7 @@ export function EditorMenuButton({ children, handleClick, isActive, Icon }: Prop
         isActive ? 'bg-indigo-200 hover:bg-indigo-100' : ' hover:bg-gray-100'
       )}
     >
-      {Icon ? <Icon className="h-4 w-4 fill-blue-600" /> : children}
+      {Icon ? <Icon className="h-4 w-4 fill-gray-500" /> : children}
     </button>
   )
 }

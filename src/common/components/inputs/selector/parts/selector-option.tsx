@@ -1,38 +1,26 @@
 import { Listbox } from '@headlessui/react'
-import { CheckIcon, TagIcon } from '@heroicons/react/24/solid'
+import { CheckIcon } from '@heroicons/react/24/solid'
 
-import type { TwColor } from '&/common/types'
-import { cl, getTWTextColor500 } from '&/common/utils'
-
-interface CategoryOption {
-  id: string | null
-  name: string
-  color?: TwColor
-}
+import { cl } from '&/common/utils'
 
 interface Props {
-  category: CategoryOption
+  option: { id: string | null; name: string }
   selected: boolean
 }
 
-export function CategoryOption({ category, selected }: Props) {
-  const color = category.color ? getTWTextColor500(category.color) : 'text-gray-300'
-
+export function SelectorOption({ option, selected }: Props) {
   return (
     <Listbox.Option
-      key={category.id || 'none'}
+      key={option.id || 'none'}
       className={({ active }) =>
         cl(active ? 'bg-indigo-600 text-white' : 'text-gray-600', 'relative cursor-default select-none py-2 pl-3 pr-9')
       }
-      value={category}
+      value={option}
     >
       {({ active }) => (
         <>
           <div className="flex cursor-pointer items-center">
-            <TagIcon height={16} width={16} className={color} />
-            <span className={cl(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
-              {category.name}
-            </span>
+            <span className={cl(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>{option.name}</span>
           </div>
 
           {selected ? (

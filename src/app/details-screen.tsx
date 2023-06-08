@@ -7,6 +7,7 @@ import { EmptyItem } from '&/screens/empty-item'
 import { SettingsDetails } from '&/screens/settings/settings-details'
 import { CategoryDetailsScreen } from '&/screens/categories/category-details-screen'
 import { RoutineScreen } from '&/screens/routine'
+import { NoteDetailsScreen } from '&/screens/note-details'
 
 export function DetailsScreen() {
   const showDetails = useMatch('/:nav/d/*')
@@ -21,6 +22,7 @@ export function DetailsScreen() {
       <ErrorBoundary fallback={<FatalError />}>
         <Routes>
           <Route path=":nav/d/routine/:routineId/*" element={<RoutineScreen />} />
+          <Route path=":nav/:folderId/d/note/:noteId/*" element={<NoteDetailsScreen />} />
 
           <Route path="categories" element={<CategoryDetailsScreen />} />
           <Route path="settings" element={<SettingsDetails />} />
