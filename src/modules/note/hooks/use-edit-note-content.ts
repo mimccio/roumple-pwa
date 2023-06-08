@@ -16,28 +16,22 @@ export function useEditNoteContent(note: Note) {
 
       const previousNoteList = queryClient.getQueryData([NOTE, LIST])
 
-      queryClient.setQueryData(
-        [NOTE, LIST, { folderId: note.folder?.id, categoryId: note.category?.id }],
-        (old: Note[] = []) => {
-          const noteIndex = old.findIndex((item) => item.id === note.id)
-          return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
-        }
-      )
+      queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], (old: Note[] = []) => {
+        const noteIndex = old.findIndex((item) => item.id === note.id)
+        return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
+      })
 
       return { previousNoteList }
     },
     onError: (_err, item, context) => {
       queryClient.setQueryData([NOTE, note.id], item)
-      queryClient.setQueryData(
-        [NOTE, LIST, { folderId: note.folder?.id, categoryId: note.category?.id }],
-        context?.previousNoteList
-      )
+      queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], context?.previousNoteList)
 
       toast.error("Modification didn't work")
     },
     onSuccess: () => {
       queryClient.invalidateQueries([NOTE, note.id])
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id, categoryId: note.category?.id }])
+      queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id }])
     },
   })
 

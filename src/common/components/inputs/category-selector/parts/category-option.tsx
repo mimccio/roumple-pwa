@@ -12,9 +12,10 @@ interface CategoryOption {
 
 interface Props {
   category: CategoryOption
+  selected: boolean
 }
 
-export function CategoryOption({ category }: Props) {
+export function CategoryOption({ category, selected }: Props) {
   const color = category.color ? getTWTextColor500(category.color) : 'text-gray-300'
 
   return (
@@ -25,7 +26,7 @@ export function CategoryOption({ category }: Props) {
       }
       value={category}
     >
-      {({ selected, active }) => (
+      {({ active }) => (
         <>
           <div className="flex cursor-pointer items-center">
             <TagIcon height={16} width={16} className={color} />

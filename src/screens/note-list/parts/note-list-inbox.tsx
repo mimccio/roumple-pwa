@@ -8,7 +8,7 @@ import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 
 export function NoteListInbox() {
   const { noteList, isLoading, error } = useNoteList()
-  console.log('noteList :', noteList)
+
   if (error) return <MainError />
 
   return (

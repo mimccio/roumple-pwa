@@ -1,13 +1,17 @@
 import { db } from '&/db'
+import { Note } from '../types'
 
 interface FetchNoteListParams {
-  queryKey: [key: string, list: string, options: { folderId?: string; categoryId?: string }]
+  queryKey: [key: string, list: string, options: { folderId?: string }]
 }
 
 export const fetchNoteList = async ({ queryKey }: FetchNoteListParams) => {
-  const [, , { folderId, categoryId }] = queryKey
+  const [, , { folderId }] = queryKey
 
-  let query = db.from('note').select('id, title, created_at').order('created_at', { ascending: true })
+  let query = db
+    .from('note')
+    .select('id, title, created_at, category(id, name, color), folder:note_folder(id, name)')
+    .order('created_at', { ascending: true })
 
   if (!folderId || folderId === 'inbox') {
     query = query.is('folder_id', null)
@@ -15,14 +19,8 @@ export const fetchNoteList = async ({ queryKey }: FetchNoteListParams) => {
     query = query.eq('folder_id', folderId)
   }
 
-  if (categoryId) {
-    query = query.eq('category_id', categoryId)
-  } else {
-    query = query.is('category_id', null)
-  }
-
   const { data, error } = await query
 
   if (error) throw error
-  return data
+  return data as Note[]
 }

@@ -12,7 +12,6 @@ import { useAtom } from 'jotai'
 import { useMainPath } from '&/common/hooks'
 
 export function useCreateNote() {
-  // const { folderId } = useParams()
   const queryClient = useQueryClient()
   const id = uuidv4()
   const navigate = useNavigate()
@@ -25,8 +24,8 @@ export function useCreateNote() {
 
       queryClient.setQueryData([NOTE, id], () => ({ id }))
 
-      const previousNoteList = queryClient.getQueryData([NOTE, LIST, { categoryId: category?.id }])
-      queryClient.setQueryData([NOTE, LIST, { categoryId: category?.id }], (old: Note[] = []) => [...old, { id }])
+      const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: undefined }])
+      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], (old: Note[] = []) => [...old, { id }])
       navigate(`${mainPath}/d/note/${id}`)
 
       return { previousNoteList }
@@ -34,12 +33,12 @@ export function useCreateNote() {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData([NOTE, id], null)
-      queryClient.setQueryData([NOTE, LIST, { categoryId: category?.id }], context?.previousNoteList)
+      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], context?.previousNoteList)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
       queryClient.invalidateQueries([NOTE, id])
-      queryClient.invalidateQueries([NOTE, LIST, { categoryId: category?.id }])
+      queryClient.invalidateQueries([NOTE, LIST, { folderId: undefined }])
     },
   })
 

@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-import { debounce } from 'lodash'
+// import { debounce } from 'lodash'
 
 import { EditorMenu } from '&/common/components/menus/editor-menu'
 import type { Note } from '&/modules/note/types'
