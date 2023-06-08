@@ -1,12 +1,8 @@
 import { db } from '&/db'
 import { getUserId } from '&/modules/utils/get-user-id'
+import type { NoteFolder } from '../types'
 
-interface CreateNoteFolderParams {
-  id: string
-  name: string
-}
-
-export const createNoteFolder = async ({ id, name }: CreateNoteFolderParams) => {
+export const createNoteFolder = async ({ id, name }: NoteFolder) => {
   const user_id = await getUserId()
 
   const { data, error } = await db
