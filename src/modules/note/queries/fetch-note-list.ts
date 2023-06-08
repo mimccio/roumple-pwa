@@ -7,7 +7,7 @@ interface FetchNoteListParams {
 export const fetchNoteList = async ({ queryKey }: FetchNoteListParams) => {
   const [, , { folderId, categoryId }] = queryKey
 
-  let query = db.from('note').select('id, title').order('created_at', { ascending: true })
+  let query = db.from('note').select('id, title, created_at').order('created_at', { ascending: true })
 
   if (!folderId || folderId === 'inbox') {
     query = query.is('folder_id', null)

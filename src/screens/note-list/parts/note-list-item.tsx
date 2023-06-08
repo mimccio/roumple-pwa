@@ -2,12 +2,16 @@ import { NavLink } from 'react-router-dom'
 
 import { cl } from '&/common/utils'
 import type { Note } from '&/modules/note/types'
+import { format } from 'date-fns'
+import { FolderIcon, TagIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   note: Note
 }
 
 export function NoteListItem({ note }: Props) {
+  const createdAt = note.created_at ? format(new Date(note.created_at), 'dd/MM/yy') : null
+
   return (
     <NavLink
       to={`d/note/${note.id}`}
@@ -27,13 +31,25 @@ export function NoteListItem({ note }: Props) {
           </div>
           <div
             className={cl(
-              'mx-4 h-full w-full truncate border-b pt-1',
+              'mx-4 flex h-full w-full flex-col justify-between truncate border-b py-1',
               isActive ? 'border-transparent' : 'border-gray-100'
             )}
           >
             <p className="truncate font-semibold text-gray-700">{note.title || 'new note'}</p>
-            <div className="flex gap-2 text-xs font-semibold text-gray-500">
-              <p>{note.category?.name && note.category.name}</p>
+            <div className="flex justify-between gap-2  text-xs font-semibold text-gray-400">
+              <p className="flex items-end gap-4">
+                {note.category?.name && (
+                  <span className="flex items-center gap-1">
+                    <TagIcon width={12} className="text-gray-300" /> {note.category.name}
+                  </span>
+                )}
+                {note.folder?.name && (
+                  <span className="flex items-center gap-1">
+                    <FolderIcon width={12} className="text-gray-300" /> {note.folder.name}
+                  </span>
+                )}
+              </p>
+              <p className="text-2xs font-semibold text-gray-300">{createdAt}</p>
             </div>
           </div>
         </>
