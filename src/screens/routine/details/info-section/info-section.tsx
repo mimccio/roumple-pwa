@@ -1,6 +1,7 @@
+import { CreatedAt } from '&/common/components/display/created-at'
 import { StatusSelector } from '&/common/components/inputs/status-selector'
 import type { Routine } from '&/modules/routine/types'
-import { Priority, RoutineCategory, CreatedAt, RoutineSchedule } from './parts'
+import { Priority, RoutineCategory, RoutineSchedule } from './parts'
 
 interface Props {
   routine: Routine

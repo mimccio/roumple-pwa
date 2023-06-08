@@ -2,7 +2,7 @@ import { cl } from '&/common/utils'
 import { format } from 'date-fns'
 
 interface Props {
-  createdAt: Date
+  createdAt?: Date
 }
 
 export function CreatedAt({ createdAt }: Props) {
