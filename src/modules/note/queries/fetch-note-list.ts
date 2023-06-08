@@ -1,7 +1,7 @@
 import { db } from '&/db'
 
 interface FetchNoteListParams {
-  queryKey: [key: string, list: string, options: { folderId: string | null; categoryId?: string }]
+  queryKey: [key: string, list: string, options: { folderId?: string; categoryId?: string }]
 }
 
 export const fetchNoteList = async ({ queryKey }: FetchNoteListParams) => {

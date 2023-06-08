@@ -17,7 +17,7 @@ export function useEditNoteContent(note: Note) {
       const previousNoteList = queryClient.getQueryData([NOTE, LIST])
 
       queryClient.setQueryData(
-        [NOTE, LIST, { folderId: note.folder?.id || null, categoryId: note.category?.id }],
+        [NOTE, LIST, { folderId: note.folder?.id, categoryId: note.category?.id }],
         (old: Note[] = []) => {
           const noteIndex = old.findIndex((item) => item.id === note.id)
           return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
@@ -29,7 +29,7 @@ export function useEditNoteContent(note: Note) {
     onError: (_err, item, context) => {
       queryClient.setQueryData([NOTE, note.id], item)
       queryClient.setQueryData(
-        [NOTE, LIST, { folderId: note.folder?.id || null, categoryId: note.category?.id }],
+        [NOTE, LIST, { folderId: note.folder?.id, categoryId: note.category?.id }],
         context?.previousNoteList
       )
 
@@ -37,7 +37,7 @@ export function useEditNoteContent(note: Note) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries([NOTE, note.id])
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id || null, categoryId: note.category?.id }])
+      queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id, categoryId: note.category?.id }])
     },
   })
 

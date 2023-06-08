@@ -7,11 +7,9 @@ import { useParams } from 'react-router-dom'
 export function useNoteFolder() {
   const { folderId } = useParams()
 
-  const isInbox = folderId === 'inbox'
-
   const { data, isLoading, error } = useQuery([NOTE_FOLDER, folderId], fetchNoteFolder, {
-    enabled: Boolean(folderId) && !isInbox,
+    enabled: Boolean(folderId) && folderId !== 'inbox',
   })
 
-  return { folder: data, isLoading, error, isInbox }
+  return { folder: data, isLoading, error }
 }

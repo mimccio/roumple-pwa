@@ -7,7 +7,7 @@ import { NoteListItem } from './note-list-item'
 
 export function NoteListInbox() {
   const { noteList, isLoading, error } = useNoteList()
-
+  console.log('noteList :', noteList)
   if (error) return <MainError />
 
   return (

@@ -14,16 +14,18 @@ export function useDeleteNote() {
 
   const { mutate } = useMutation(deleteNote, {
     onMutate: async (data) => {
-      const folderId = data.folder?.id || null
       await queryClient.cancelQueries({ queryKey: [NOTE, LIST], exact: false })
       const previousNoteList = queryClient.getQueryData([
         [NOTE, LIST, { folderId: data.folder?.id, categoryId: data.category?.id }],
       ])
 
-      queryClient.setQueryData([NOTE, LIST, { folderId, categoryId: data.category?.id }], (old: Note[] = []) => {
-        const noteIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, noteIndex), ...old.slice(noteIndex + 1)]
-      })
+      queryClient.setQueryData(
+        [NOTE, LIST, { folderId: data.folder?.id, categoryId: data.category?.id }],
+        (old: Note[] = []) => {
+          const noteIndex = old.findIndex((item) => item.id === data.id)
+          return [...old.slice(0, noteIndex), ...old.slice(noteIndex + 1)]
+        }
+      )
       navigate(mainPath)
       return { previousNoteList }
     },
@@ -31,7 +33,7 @@ export function useDeleteNote() {
     onError: (_err, item, context) => {
       queryClient.setQueryData([NOTE, item.id], item)
       queryClient.setQueryData(
-        [NOTE, LIST, { folderId: item.folder?.id || null, categoryId: item.category?.id }],
+        [NOTE, LIST, { folderId: item.folder?.id, categoryId: item.category?.id }],
         context?.previousNoteList
       )
       toast.error("Deletion didn't work")
@@ -41,7 +43,7 @@ export function useDeleteNote() {
       queryClient.invalidateQueries([
         NOTE,
         LIST,
-        { folderId: variables.folder?.id || null, categoryId: variables.category?.id },
+        { folderId: variables.folder?.id, categoryId: variables.category?.id },
       ])
     },
   })

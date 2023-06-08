@@ -10,7 +10,7 @@ export function useNoteList() {
   const { folderId: folderIdParams } = useParams()
   const [category] = useAtom(categoryAtom)
 
-  const folderId = !folderIdParams || folderIdParams === 'inbox' ? null : folderIdParams
+  const folderId = folderIdParams === 'inbox' ? undefined : folderIdParams
 
   const { data, isLoading, error } = useQuery([NOTE, LIST, { folderId, categoryId: category?.id }], fetchNoteList)
 
