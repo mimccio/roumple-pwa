@@ -61,7 +61,7 @@ export function NoteEditor({ note }: Props) {
     editorProps: {
       attributes: {
         class:
-          'prose-gray min-h-[160px] flex-1 prose-headings:font-semibold prose:leading-6 transition-colors marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl',
+          'prose-gray h-full flex-1 prose-headings:font-semibold prose:leading-6 transition-colors marker:text-gray-400 text-gray-600 focus:outline-none prose-h1:text-2xl prose-h2:text-xl',
       },
     },
   })
@@ -75,9 +75,9 @@ export function NoteEditor({ note }: Props) {
   // }, [note.id, editor])
 
   return (
-    <div className="px-4">
+    <div className="h-full">
       {editor && <EditorMenu editor={editor} />}
-      <EditorContent id="note" className="mt-2 flex flex-1 border-b border-gray-100 py-4" editor={editor} />
+      <EditorContent id="note" className="mt-2 flex h-full flex-1 px-4 py-4" editor={editor} />
     </div>
   )
 }
