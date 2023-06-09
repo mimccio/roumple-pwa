@@ -7,6 +7,8 @@ import { NoteFolder } from '&/modules/note-folder/types'
 import { FolderMenu } from './folder-menu'
 import { cl } from '&/common/utils'
 import { CheckIcon } from '@heroicons/react/24/solid'
+import { useDeleteNoteFolder } from '&/modules/note-folder/hooks'
+import { ConfirmDeleteModale } from '&/common/components/confirm-delete-modale'
 
 interface Props {
   folder: NoteFolder
@@ -14,8 +16,7 @@ interface Props {
 
 export function FolderTitle({ folder }: Props) {
   const { register, errors, submit, ref, name, onRename, isEditing } = useEditNoteFolder(folder)
-
-  const onDelete = () => console.log('delete !')
+  const { onDelete, isOpen, openDeleteModale, closeDeleteModale } = useDeleteNoteFolder(folder)
 
   if (isEditing)
     return (
@@ -57,7 +58,14 @@ export function FolderTitle({ folder }: Props) {
         <FolderOpenIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-300" />
         <span className="font-semibold text-gray-500 transition-colors  group-hover:text-gray-400">{folder?.name}</span>
       </Link>
-      <FolderMenu onDelete={onDelete} onRename={onRename} />
+      <FolderMenu onDelete={openDeleteModale} onRename={onRename} />
+      <ConfirmDeleteModale
+        isOpen={isOpen}
+        close={closeDeleteModale}
+        onDelete={onDelete}
+        title="Delete folder"
+        description="Are you sure you want to delete this folder and all notes inside? This can't be undone."
+      />
     </div>
   )
 }
