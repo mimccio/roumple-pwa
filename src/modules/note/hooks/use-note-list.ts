@@ -7,6 +7,7 @@ import { useAtom } from 'jotai'
 import { categoryAtom } from '&/modules/category/atoms'
 import { fetchNoteList } from '../queries/fetch-note-list'
 import { Note, NoteListQueryKey } from '../types'
+import { toast } from 'react-hot-toast'
 
 export function useNoteList(limit?: number) {
   const { folderId: folderIdParams } = useParams()
@@ -17,7 +18,10 @@ export function useNoteList(limit?: number) {
 
   const { data, isLoading, error } = useQuery(
     [NOTE, LIST, { folderId }],
-    ({ queryKey }: { queryKey: NoteListQueryKey }) => fetchNoteList({ queryKey, limit })
+    ({ queryKey }: { queryKey: NoteListQueryKey }) => fetchNoteList({ queryKey, limit }),
+    {
+      onError: () => toast.error('Error fetching note list'),
+    }
   )
 
   useEffect(() => {

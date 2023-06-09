@@ -7,15 +7,15 @@ import { Link } from 'react-router-dom'
 const LIMIT = 5
 
 export function InboxPreview() {
-  const { noteList, isLoading, error } = useNoteList(LIMIT)
+  const { noteList, isLoading } = useNoteList(LIMIT)
 
   return (
-    <div>
+    <div className="min-h-[80px]">
       <Link to="/notes/inbox" className="flex items-center gap-x-4 p-2">
         <InboxIcon width={20} className="text-gray-500" /> <span className="font-semibold text-gray-600">Inbox</span>
       </Link>
       <div className="ml-8 flex flex-col gap-y-1">
-        {isLoading && <ListSkeletonSmall />}
+        {isLoading && <ListSkeletonSmall count={1} />}
         {noteList?.map((note) => (
           <Link key={note.id} to={`d/note/${note.id}`} className="flex items-center gap-x-4 px-2 py-1">
             <DocumentTextIcon width={20} className="text-gray-400" />
