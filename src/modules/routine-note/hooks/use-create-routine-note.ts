@@ -16,7 +16,6 @@ export function useCreateRoutineNote() {
   const { mutate } = useMutation(createRoutineNote, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [ROUTINE_NOTE_LIST, { routineId }] })
-      console.log('data :', data)
 
       const previousRoutineNoteList = queryClient.getQueryData([ROUTINE_NOTE_LIST, { routineId }])
       queryClient.setQueryData([ROUTINE_NOTE_LIST, { routineId }], (old: Note[] = []) => [...old, data])

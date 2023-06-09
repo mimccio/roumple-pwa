@@ -11,7 +11,7 @@ export function FolderItem({ folder }: Props) {
     <Link to={`/notes/${folder.id}`} className="flex items-center gap-x-4 p-2">
       <FolderIcon width={20} className="text-gray-500" />
       <span className="truncate font-semibold text-gray-600">{folder.name}</span>
-      <span className="text-sm text-gray-400">({folder.noteCount?.[0].count})</span>
+      <span className="text-xs text-gray-400">({folder.noteCount?.[0].count})</span>
     </Link>
   )
 }

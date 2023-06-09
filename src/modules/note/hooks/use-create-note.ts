@@ -25,7 +25,7 @@ export function useCreateNote() {
       queryClient.setQueryData([NOTE, id], () => ({ id }))
 
       const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: undefined }])
-      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], (old: Note[] = []) => [...old, { id }])
+      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], (old: Note[] = []) => [{ id }, ...old])
 
       navigate(`${mainPath}/d/note/${id}`)
 

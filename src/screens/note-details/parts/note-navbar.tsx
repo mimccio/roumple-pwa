@@ -23,20 +23,18 @@ export function NoteNavbar({ note }: Props) {
   const routineUrl = `${mainPath}/d/routine/${routineId}`
 
   return (
-    <>
-      <DetailsNavbar>
-        <div>
-          <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} />
-        </div>
-        <div>{routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}</div>
-        <ConfirmDeleteModale
-          isOpen={deleteModaleIsOpen}
-          onDelete={handleDelete}
-          close={() => setDeleteModaleIsOpen(false)}
-          title="Delete Note"
-          description="Are you sure you want to delete this note? This action cannot be undone."
-        />
-      </DetailsNavbar>
-    </>
+    <DetailsNavbar>
+      <div>
+        <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} />
+      </div>
+      <div>{routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}</div>
+      <ConfirmDeleteModale
+        isOpen={deleteModaleIsOpen}
+        onDelete={handleDelete}
+        close={() => setDeleteModaleIsOpen(false)}
+        title="Delete Note"
+        description="Are you sure you want to delete this note? This action cannot be undone."
+      />
+    </DetailsNavbar>
   )
 }

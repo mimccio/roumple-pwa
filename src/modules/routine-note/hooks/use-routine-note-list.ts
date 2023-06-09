@@ -11,7 +11,6 @@ export function useRoutineNoteList() {
   const { data, isLoading, error } = useQuery([ROUTINE_NOTE_LIST, { routineId }], fetchRoutineNoteList, {
     enabled: Boolean(routineId),
   })
-  console.log('data :', data)
 
   const notes = data?.map((routineNote) => routineNote.note)
 
