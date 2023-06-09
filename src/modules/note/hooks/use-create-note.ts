@@ -26,19 +26,25 @@ export function useCreateNote() {
 
       const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: undefined }])
       queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], (old: Note[] = []) => [...old, { id }])
+
       navigate(`${mainPath}/d/note/${id}`)
 
-      return { previousNoteList }
+      const previousSearchList = queryClient.getQueryData([NOTE, LIST, { searchText: '' }])
+      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => [{ id }, ...old])
+
+      return { previousNoteList, previousSearchList }
     },
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData([NOTE, id], null)
       queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], context?.previousNoteList)
+      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], context?.previousSearchList)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
       queryClient.invalidateQueries([NOTE, id])
       queryClient.invalidateQueries([NOTE, LIST, { folderId: undefined }])
+      queryClient.invalidateQueries([NOTE, LIST, { searchText: '' }])
     },
   })
 

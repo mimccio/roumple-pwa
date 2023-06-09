@@ -21,17 +21,26 @@ export function useEditNoteContent(note: Note) {
         return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
       })
 
-      return { previousNoteList }
+      const previousSearchNoteList = queryClient.getQueryData([NOTE, LIST, { searchText: '' }])
+
+      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => {
+        const noteIndex = old.findIndex((item) => item.id === note.id)
+        return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
+      })
+
+      return { previousNoteList, previousSearchNoteList }
     },
     onError: (_err, item, context) => {
       queryClient.setQueryData([NOTE, note.id], item)
       queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], context?.previousNoteList)
+      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], context?.previousNoteList)
 
       toast.error("Modification didn't work")
     },
     onSuccess: () => {
       queryClient.invalidateQueries([NOTE, note.id])
       queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id }])
+      queryClient.invalidateQueries([NOTE, LIST, { searchText: '' }])
     },
   })
 
