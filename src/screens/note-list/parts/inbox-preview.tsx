@@ -12,10 +12,13 @@ export function InboxPreview() {
 
   return (
     <div className="min-h-[80px]">
-      <Link to="/notes/inbox" className="flex items-center gap-x-4 p-2">
-        <InboxIcon width={20} className="text-gray-400" /> <span className="font-semibold text-gray-600">Inbox</span>
+      <Link
+        to="/notes/inbox"
+        className="flex items-center gap-x-4 p-2 text-gray-400 transition-colors hover:text-gray-500"
+      >
+        <InboxIcon width={20} /> <span className="font-bold ">Inbox</span>
       </Link>
-      <div className="ml-8 flex flex-col gap-y-1">
+      <div className="ml-0 flex flex-col gap-y-1 font-normal">
         {isLoading && <ListSkeletonSmall count={1} />}
         {noteList?.map((note) => (
           <InboxPreviewItem key={note.id} note={note} />
