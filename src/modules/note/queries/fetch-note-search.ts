@@ -8,7 +8,7 @@ interface FetchNoteSearchParams {
 export const fetchNoteSearch = async ({ queryKey }: FetchNoteSearchParams) => {
   const [, , { searchText }] = queryKey
 
-  let query = db.from('note').select('id, title').order('created_at', { ascending: true })
+  let query = db.from('note').select('id, title').order('created_at', { ascending: false })
 
   if (searchText?.length) {
     query = query.textSearch('title', `${searchText}`, { type: 'websearch', config: 'english' }).limit(20)

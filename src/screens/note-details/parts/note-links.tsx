@@ -7,7 +7,8 @@ interface Props {
 
 export function NoteLinks({ note }: Props) {
   const numberOfRoutines = note.routineNotes?.length
-  const routineText = numberOfRoutines && numberOfRoutines > 1 ? 'routines' : 'routine'
+  if (!numberOfRoutines || numberOfRoutines === 0) return null
+  const routineText = numberOfRoutines > 1 ? 'routines' : 'routine'
 
   return (
     <>
