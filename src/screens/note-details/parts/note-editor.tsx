@@ -24,7 +24,6 @@ export function NoteEditor({ note }: Props) {
   // const onUpdate = useMemo(
   //   () =>
   //     debounce(({ editor }) => {
-  //       console.log('editor.isFocused :', editor.isFocused)
   //       if (editor.isFocused) {
   //         const json = editor?.getJSON()
   //         submit(json)

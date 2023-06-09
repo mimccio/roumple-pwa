@@ -10,7 +10,9 @@ import { RoutineScreen } from '&/screens/routine'
 import { NoteDetailsScreen } from '&/screens/note-details'
 
 export function DetailsScreen() {
-  const showDetails = useMatch('/:nav/d/*')
+  const matchNav = useMatch('/:nav/d/*')
+  const matchSubNav = useMatch('/:nav/:subnav/d/*')
+  const showDetails = matchNav || matchSubNav
 
   return (
     <section
