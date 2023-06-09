@@ -8,9 +8,10 @@ interface Props {
   isLoading: boolean
   isError: boolean
   Icon?: ElementType
+  defaultName?: string
 }
 
-export function SelectorBtn({ isLoading, isError, item, Icon }: Props) {
+export function SelectorBtn({ isLoading, isError, item, Icon, defaultName = 'none' }: Props) {
   return (
     <Listbox.Button
       className={cl(
@@ -22,8 +23,13 @@ export function SelectorBtn({ isLoading, isError, item, Icon }: Props) {
       <span className="flex items-center">
         {Icon && <Icon height={16} width={16} className="text-gray-300" />}
 
-        <span className="ml-3 block truncate font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
-          {item?.name || (isLoading ? '' : isError ? 'Error' : 'none')}
+        <span
+          className={cl(
+            'ml-3 block truncate font-semibold transition-colors ',
+            item?.id ? 'text-gray-500 group-hover:text-gray-600' : 'text-gray-300 group-hover:text-gray-400'
+          )}
+        >
+          {item?.name || (isLoading ? '' : isError ? 'Error' : defaultName)}
         </span>
       </span>
     </Listbox.Button>

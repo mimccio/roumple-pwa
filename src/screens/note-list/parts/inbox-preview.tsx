@@ -13,7 +13,7 @@ export function InboxPreview() {
   return (
     <div className="min-h-[80px]">
       <Link to="/notes/inbox" className="flex items-center gap-x-4 p-2">
-        <InboxIcon width={20} className="text-gray-500" /> <span className="font-semibold text-gray-600">Inbox</span>
+        <InboxIcon width={20} className="text-gray-400" /> <span className="font-semibold text-gray-600">Inbox</span>
       </Link>
       <div className="ml-8 flex flex-col gap-y-1">
         {isLoading && <ListSkeletonSmall count={1} />}

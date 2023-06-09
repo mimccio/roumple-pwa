@@ -11,16 +11,35 @@ interface Props {
   isLoading: boolean
   isError: boolean
   onSelect: (item: { id: string; name: string }) => void
-  Icon: ElementType
+  ButtonIcon: ElementType
+  defaultName?: string
+  DefaultOptionIcon?: ElementType
+  OptionIcon?: ElementType
 }
 
-export function Selector({ item, options, isLoading, isError, onSelect, Icon }: Props) {
+export function Selector({
+  item,
+  options,
+  isLoading,
+  isError,
+  onSelect,
+  ButtonIcon,
+  defaultName = 'none',
+  DefaultOptionIcon,
+  OptionIcon,
+}: Props) {
   return (
     <div className="w-full">
-      <Listbox disabled={isLoading || isError} value={item || { id: undefined, name: 'none' }} onChange={onSelect}>
+      <Listbox disabled={isLoading || isError} value={item || { id: undefined, name: defaultName }} onChange={onSelect}>
         {({ open }) => (
           <div className="relative">
-            <SelectorBtn item={item} Icon={Icon} isLoading={isLoading} isError={isError} />
+            <SelectorBtn
+              item={item}
+              Icon={ButtonIcon}
+              isLoading={isLoading}
+              isError={isError}
+              defaultName={defaultName}
+            />
             <Transition
               show={open}
               as={Fragment}
@@ -32,10 +51,10 @@ export function Selector({ item, options, isLoading, isError, onSelect, Icon }: 
               leaveTo="transform opacity-0 scale-95"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full max-w-lg overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <SelectorOption option={{ id: undefined, name: 'none' }} selected={!item?.id} />
+                <SelectorOption Icon={DefaultOptionIcon} option={{ id: undefined, name: defaultName }} selected={!item?.id} />
 
                 {options?.map((option) => (
-                  <SelectorOption key={option.id} option={option} selected={option.id === item?.id} />
+                  <SelectorOption Icon={OptionIcon} key={option.id} option={option} selected={option.id === item?.id} />
                 ))}
               </Listbox.Options>
             </Transition>
