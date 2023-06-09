@@ -1,0 +1,1 @@
+export const ROUTINE_NOTE_LIST = 'ROUTINE_NOTE_LIST'

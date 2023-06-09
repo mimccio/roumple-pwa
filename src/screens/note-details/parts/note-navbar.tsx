@@ -1,21 +1,26 @@
 import { useState } from 'react'
 
 import { DetailsNavbar } from '&/common/components/layouts'
-import { CloseNavBtn } from '&/common/components/buttons'
+import { BackNavBtn, CloseNavBtn } from '&/common/components/buttons'
 import { ItemMenu } from '&/common/components/menus'
 import { ConfirmDeleteModale } from '&/common/components/confirm-delete-modale'
 
 import type { Note } from '&/modules/note/types'
 import { useDeleteNote } from '&/modules/note/hooks'
+import { useParams } from 'react-router-dom'
+import { useMainPath } from '&/common/hooks'
 
 interface Props {
   note: Note
 }
 
 export function NoteNavbar({ note }: Props) {
+  const { routineId } = useParams()
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const { onDelete } = useDeleteNote()
   const handleDelete = () => onDelete(note)
+  const mainPath = useMainPath()
+  const routineUrl = `${mainPath}/d/routine/${routineId}`
 
   return (
     <>
@@ -23,9 +28,7 @@ export function NoteNavbar({ note }: Props) {
         <div>
           <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} />
         </div>
-        <div>
-          <CloseNavBtn />
-        </div>
+        <div>{routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}</div>
         <ConfirmDeleteModale
           isOpen={deleteModaleIsOpen}
           onDelete={handleDelete}

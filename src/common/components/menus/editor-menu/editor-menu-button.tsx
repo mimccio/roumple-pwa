@@ -19,7 +19,7 @@ export function EditorMenuButton({ children, handleClick, isActive, Icon }: Prop
     <button
       onClick={onClick}
       className={cl(
-        'flex h-8 w-8 items-center justify-center rounded-md transition-colors ',
+        'flex h-7 w-7 items-center justify-center rounded-md transition-colors ',
         isActive ? 'bg-indigo-200 hover:bg-indigo-100' : ' hover:bg-gray-100'
       )}
     >

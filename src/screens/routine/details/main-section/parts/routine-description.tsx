@@ -56,7 +56,7 @@ export function RoutineDescription({ routine }: Props) {
   return (
     <div className="px-4">
       {editor && <EditorMenu editor={editor} />}
-      <EditorContent id="description" className="mt-2 flex flex-1 border-b border-gray-100 py-4" editor={editor} />
+      <EditorContent id="description" className="flex flex-1 border-b border-gray-100 py-4" editor={editor} />
     </div>
   )
 }

@@ -3,14 +3,16 @@ import type { RefObject } from 'react'
 
 interface Params {
   ref: RefObject<HTMLElement>
-  handler: () => void
+  handler?: () => void
 }
 
 export function useOutsideClick({ handler, ref }: Params) {
   useEffect(() => {
     const listener = (event: Event) => {
       if (!ref.current || ref.current.contains(event.target as HTMLElement)) return
-      handler()
+      if (handler) {
+        handler()
+      }
     }
 
     document.addEventListener('mousedown', listener)

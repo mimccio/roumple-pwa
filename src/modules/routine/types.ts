@@ -1,7 +1,6 @@
-import { JSONContent } from '@tiptap/react'
-import { Category } from '../category/types'
-import { RoutineChecklistItem } from '../routine-checklist-item/types'
-
+import type { JSONContent } from '@tiptap/react'
+import type { Category } from '../category/types'
+import type { RoutineChecklistItem } from '../routine-checklist-item/types'
 export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'
 export type RoutineStatuses = 'TODO' | 'IN_PROGRESS' | 'DONE'
 

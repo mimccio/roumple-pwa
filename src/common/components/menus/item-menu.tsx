@@ -3,13 +3,15 @@ import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { cl } from '&/common/utils'
 import { ArchiveBoxIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { LinkIcon } from '@heroicons/react/24/solid'
 
 interface Props {
   onDelete?: () => void
   onArchive?: () => void
+  onLinkNote?: () => void
 }
 
-export function ItemMenu({ onDelete, onArchive }: Props) {
+export function ItemMenu({ onDelete, onArchive, onLinkNote }: Props) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -30,6 +32,22 @@ export function ItemMenu({ onDelete, onArchive }: Props) {
       >
         <Menu.Items className="absolute left-2 z-10 mt-4 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
+            {onLinkNote && (
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    onClick={onLinkNote}
+                    className={cl(
+                      'flex w-full items-center gap-4',
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    <LinkIcon className="h-4 text-gray-400" /> Link note
+                  </button>
+                )}
+              </Menu.Item>
+            )}
             {onArchive && (
               <Menu.Item>
                 {({ active }) => (
