@@ -1,4 +1,5 @@
 import { db } from '&/db'
+import { NoteFolder } from '../types'
 
 interface IParams {
   queryKey: [key: string, routineId?: string]
@@ -15,5 +16,5 @@ export const fetchNoteFolder = async ({ queryKey }: IParams) => {
     .single()
 
   if (error) throw error
-  return data
+  return data as NoteFolder
 }
