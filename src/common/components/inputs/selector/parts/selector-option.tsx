@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 import { cl } from '&/common/utils'
 
 interface Props {
-  option: { id: string | null; name: string }
+  option: { id?: string; name: string }
   selected: boolean
 }
 

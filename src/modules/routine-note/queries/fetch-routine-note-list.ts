@@ -16,7 +16,7 @@ export const fetchRoutineNoteList = async ({ queryKey }: FetchRoutineNoteListPar
     .eq('routine_id', routineId)
   // .order('note(created_at)', { ascending: true })
   // .order('created_at', { foreignTable: 'note', ascending: true })
-  console.log('data :', data)
+
   if (error) throw error
   return data as RoutineNote[]
 }

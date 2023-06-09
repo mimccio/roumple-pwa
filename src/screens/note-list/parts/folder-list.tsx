@@ -1,24 +1,23 @@
-import { InboxIcon } from '@heroicons/react/20/solid'
-import { Link } from 'react-router-dom'
+import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+import { useFolderList } from '&/modules/note-folder/hooks/use-folder-list'
 import { FolderItem } from './folder-item'
 import { NewFolderItem } from './new-folder-item'
-import { useFolderList } from '&/modules/note-folder/hooks/use-folder-list'
-import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+import { InboxPreview } from './inbox-preview'
 
 export function FolderList() {
   const { folderList, isLoading } = useFolderList()
 
   return (
-    <div className="flex flex-col px-4">
-      <NewFolderItem />
-      <Link to="/notes/inbox" className="flex items-center gap-x-4 p-2">
-        <InboxIcon width={20} className="text-gray-500" /> <span className="font-semibold text-gray-600">Inbox</span>
-      </Link>
-      {isLoading && <ListSkeletonSmall />}
+    <div className="flex flex-col gap-y-8 px-4">
+      <InboxPreview />
 
-      {folderList?.map((folder) => (
-        <FolderItem key={folder.id} folder={folder} />
-      ))}
+      <div className="border-t border-gray-100 pt-8">
+        <NewFolderItem />
+        {isLoading && <ListSkeletonSmall />}
+        {folderList?.map((folder) => (
+          <FolderItem key={folder.id} folder={folder} />
+        ))}
+      </div>
     </div>
   )
 }

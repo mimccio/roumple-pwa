@@ -12,3 +12,5 @@ export interface Note {
   folder?: NoteFolder | null
   routineNotes?: RoutineNote[]
 }
+
+export type NoteListQueryKey = [key: string, list: string, options: { folderId?: string }]
