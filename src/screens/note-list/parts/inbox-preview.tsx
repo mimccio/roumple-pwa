@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom'
+import { InboxIcon } from '@heroicons/react/24/solid'
+
 import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
 import { useNoteList } from '&/modules/note/hooks'
-import { DocumentTextIcon } from '@heroicons/react/24/outline'
-import { InboxIcon } from '@heroicons/react/24/solid'
-import { Link } from 'react-router-dom'
+import { InboxPreviewItem } from './inbox-preview-item'
 
 const LIMIT = 5
 
@@ -17,10 +18,7 @@ export function InboxPreview() {
       <div className="ml-8 flex flex-col gap-y-1">
         {isLoading && <ListSkeletonSmall count={1} />}
         {noteList?.map((note) => (
-          <Link key={note.id} to={`d/note/${note.id}`} className="flex items-center gap-x-4 px-2 py-1">
-            <DocumentTextIcon width={20} className="text-gray-400" />
-            <span className="truncate font-semibold text-gray-600">{note.title || 'new note'}</span>
-          </Link>
+          <InboxPreviewItem key={note.id} note={note} />
         ))}
       </div>
       {noteList && noteList?.length >= LIMIT && (
