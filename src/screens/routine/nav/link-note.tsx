@@ -5,6 +5,8 @@ import { useSearchNote } from '&/modules/note/hooks'
 import { Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
+import { useCreateRoutineNote } from '&/modules/routine-note/hooks'
+import { Note } from '&/modules/note/types'
 
 interface Props {
   isOpen: boolean
@@ -14,8 +16,8 @@ interface Props {
 export function LinkNote({ isOpen = true, close }: Props) {
   const ref = useRef<HTMLFormElement>(null)
   const [searchText, setSearchText] = useState<string>('')
-
   const { notes, isLoading, onSearchSubmit } = useSearchNote()
+  const { onCreate } = useCreateRoutineNote()
 
   const handleTextChange = (evt: ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault()
@@ -30,10 +32,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
     setSearchText('')
   }
 
-  const onSelect = (evt: FormEvent<HTMLElement>) => {
-    evt.preventDefault()
-    console.log('select')
-  }
+  const onSelect = (note: Note) => onCreate(note)
 
   return (
     <Transition
@@ -65,7 +64,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
         {isLoading && <ListSkeletonSmall />}
         {notes?.map((note) => (
           <button
-            onClick={onSelect}
+            onClick={() => onSelect(note)}
             key={note.id}
             className="group flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-600"
           >

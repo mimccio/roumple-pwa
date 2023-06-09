@@ -2,7 +2,6 @@ import { db } from '&/db'
 import { Note } from '../types'
 
 export const editNoteContent = async ({ id, title, content }: Note) => {
-  console.log('title :', title)
   const { data, error } = await db
     .from('note')
     .update({ id, title, content })

@@ -9,7 +9,7 @@ interface Props {
 
 export function RoutineDetails({ routine, date }: Props) {
   return (
-    <div className="w-full">
+    <div className="flex w-full flex-1 flex-col">
       <InfoSection routine={routine} date={date} />
       <MainSection routine={routine} date={date} />
     </div>

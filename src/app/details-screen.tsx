@@ -17,13 +17,14 @@ export function DetailsScreen() {
   return (
     <section
       className={cl(
-        'no-scrollbar absolute bottom-0 left-0 right-0 top-0 h-screen min-h-screen w-full overflow-y-auto bg-white lg:relative lg:w-1/2',
+        'no-scrollbar absolute bottom-0 left-0 right-0 top-0 flex h-screen min-h-screen w-full flex-col overflow-y-auto bg-white lg:relative lg:w-1/2',
         showDetails ? 'z-10 lg:z-0' : '-z-10 lg:z-0'
       )}
     >
       <ErrorBoundary fallback={<FatalError />}>
         <Routes>
           <Route path=":nav/d/routine/:routineId/*" element={<RoutineScreen />} />
+          <Route path=":nav/d/routine/:routineId/note/:noteId/*" element={<NoteDetailsScreen />} />
           <Route path=":nav/:folderId/d/note/:noteId/*" element={<NoteDetailsScreen />} />
 
           <Route path="categories" element={<CategoryDetailsScreen />} />
