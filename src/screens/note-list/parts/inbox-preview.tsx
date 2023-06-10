@@ -32,6 +32,7 @@ export function InboxPreview() {
           See more...
         </Link>
       )}
+      {noteList?.length === 0 && <p className="px-2 py-1 text-gray-300">No note in inbox</p>}
     </div>
   )
 }
