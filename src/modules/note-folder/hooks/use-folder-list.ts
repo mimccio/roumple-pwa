@@ -11,5 +11,5 @@ export function useFolderList() {
 
   const { data, isLoading, error } = useQuery([NOTE_FOLDER, LIST, { categoryId: category?.id }], fetchNoteFolderList)
 
-  return { folderList: data, isLoading, error }
+  return { folderList: data, isLoading, error, category }
 }

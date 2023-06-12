@@ -17,17 +17,17 @@ export function useCreateNoteFolder() {
   const { mutate } = useMutation(createNoteFolder, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [NOTE_FOLDER], exact: false })
-      const previousFolderList = queryClient.getQueryData([NOTE_FOLDER, LIST])
-      queryClient.setQueryData([NOTE_FOLDER, LIST], (old: NoteFolder[] = []) => [...old, data])
+      const previousFolderList = queryClient.getQueryData([NOTE_FOLDER, LIST, {}])
+      queryClient.setQueryData([NOTE_FOLDER, LIST, {}], (old: NoteFolder[] = []) => [...old, data])
       return { previousFolderList }
     },
 
     onError: (_err, _item, context) => {
-      queryClient.setQueryData([NOTE_FOLDER, LIST], context?.previousFolderList)
+      queryClient.setQueryData([NOTE_FOLDER, LIST, {}], context?.previousFolderList)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST])
+      queryClient.invalidateQueries([NOTE_FOLDER, LIST, {}])
     },
   })
 

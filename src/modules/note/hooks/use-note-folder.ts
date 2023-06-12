@@ -29,8 +29,30 @@ export function useNoteFolder(note: Note) {
         return [...old, data].sort(sortNotes)
       })
 
-      const previousNoteFolder = queryClient.getQueryData([NOTE_FOLDER, LIST])
-      queryClient.setQueryData([NOTE_FOLDER, LIST], (old: NoteFolder[] = []) => {
+      // Folder list (no category)
+      const previousNoteFolder = queryClient.getQueryData([NOTE_FOLDER, LIST, { categoryId: undefined }])
+      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: undefined }], (old: NoteFolder[] = []) => {
+        const newList = old.map((item) => {
+          if (item.id === note.folder?.id) {
+            const prevCount = item?.noteCount?.[0]?.count || 1
+            return { ...item, noteCount: [{ count: prevCount - 1 }] }
+          }
+          if (item.id === data.folder?.id) {
+            const prevCount = item?.noteCount?.[0]?.count || 0
+            return { ...item, noteCount: [{ count: prevCount + 1 }] }
+          }
+          return item
+        })
+        return newList
+      })
+
+      // Folder list (note category)
+      const previousNoteFolderCategory = queryClient.getQueryData([
+        NOTE_FOLDER,
+        LIST,
+        { categoryId: note.category?.id },
+      ])
+      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: note.category?.id }], (old: NoteFolder[] = []) => {
         const newList = old.map((item) => {
           if (item.id === note.folder?.id) {
             const prevCount = item?.noteCount?.[0]?.count || 1
@@ -49,6 +71,7 @@ export function useNoteFolder(note: Note) {
         previousNoteListPreviousFolder,
         previousNoteListNewFolder,
         previousNoteFolder,
+        previousNoteFolderCategory,
       }
     },
 
@@ -56,14 +79,19 @@ export function useNoteFolder(note: Note) {
       queryClient.setQueryData([NOTE, item.id], item)
       queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], context?.previousNoteListPreviousFolder)
       queryClient.setQueryData([NOTE, LIST, { folderId: item.folder?.id }], context?.previousNoteListNewFolder)
-      queryClient.setQueryData([NOTE_FOLDER, LIST], context?.previousNoteFolder)
+      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: undefined }], context?.previousNoteFolder)
+      queryClient.setQueryData(
+        [NOTE_FOLDER, LIST, { categoryId: note.category?.id }],
+        context?.previousNoteFolderCategory
+      )
 
       toast.error("Modification didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries([NOTE, variables.id])
       queryClient.invalidateQueries([NOTE, LIST], { exact: false })
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST], { exact: false })
+      queryClient.invalidateQueries([NOTE_FOLDER, LIST, { categoryId: undefined }])
+      queryClient.invalidateQueries([NOTE_FOLDER, LIST, { categoryId: note.category?.id }])
     },
   })
 
