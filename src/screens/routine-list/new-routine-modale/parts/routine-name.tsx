@@ -9,7 +9,7 @@ interface Props {
 export function RoutineName({ name, onChange, setCharNum }: Props) {
   return (
     <div>
-      <label className="text-sm font-bold text-gray-400">Name</label>
+      <span className="text-sm font-bold text-gray-400">Name</span>
       <div className="rounded-lg border p-2">
         <NameEditor
           name={name}
