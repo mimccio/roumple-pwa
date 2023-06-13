@@ -12,7 +12,8 @@
     "stop": "supabase stop",
     "ts": "tsc",
     "migrate": "supabase db diff --file",
-    "reset": "supabase db reset"
+    "reset": "supabase db reset",
+    "list": "supabase migration list"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",

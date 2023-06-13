@@ -9,7 +9,6 @@ interface Props {
 
 export function NoteCategory({ note }: Props) {
   const { categoryList, isLoading, error, onSelect } = useNoteCategory(note)
-
   return (
     <>
       <CategorySelector

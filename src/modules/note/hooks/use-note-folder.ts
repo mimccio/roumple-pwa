@@ -39,7 +39,8 @@ export function useNoteFolder(note: Note) {
           }
           if (item.id === data.folder?.id) {
             const prevCount = item?.noteCount?.[0]?.count || 0
-            return { ...item, noteCount: [{ count: prevCount + 1 }] }
+            const count = prevCount + 1
+            return { ...item, noteCount: [{ count }] }
           }
           return item
         })
@@ -53,6 +54,8 @@ export function useNoteFolder(note: Note) {
         { categoryId: note.category?.id },
       ])
       queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: note.category?.id }], (old: NoteFolder[] = []) => {
+        if (!note.category?.id) return old
+
         const newList = old.map((item) => {
           if (item.id === note.folder?.id) {
             const prevCount = item?.noteCount?.[0]?.count || 1

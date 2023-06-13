@@ -15,8 +15,8 @@ export function useDeleteNoteFolder(folder: NoteFolder) {
   const { mutate } = useMutation(deleteNoteFolder, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [NOTE_FOLDER], exact: false })
-      const previousFolderList = queryClient.getQueryData([NOTE_FOLDER, LIST])
-      queryClient.setQueryData([NOTE_FOLDER, LIST], (old: NoteFolder[] = []) => {
+      const previousFolderList = queryClient.getQueryData([NOTE_FOLDER, LIST, {}])
+      queryClient.setQueryData([NOTE_FOLDER, LIST, {}], (old: NoteFolder[] = []) => {
         const folderIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, folderIndex), ...old.slice(folderIndex + 1)]
       })
@@ -25,12 +25,12 @@ export function useDeleteNoteFolder(folder: NoteFolder) {
     },
     onError: (_err, item, context) => {
       queryClient.setQueryData([NOTE_FOLDER, item.id], item)
-      queryClient.setQueryData([NOTE_FOLDER, LIST], context?.previousFolderList)
+      queryClient.setQueryData([NOTE_FOLDER, LIST, {}], context?.previousFolderList)
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries([NOTE_FOLDER, variables.id])
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST])
+      queryClient.invalidateQueries([NOTE_FOLDER, LIST, {}])
     },
   })
   const openDeleteModale = () => setIsOpen(true)

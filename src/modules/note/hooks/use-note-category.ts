@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
-// import { useAtom } from 'jotai'
+import { useAtom } from 'jotai'
 
 import type { Category } from '&/modules/category/types'
 import { useCategories } from '&/modules/category/hooks'
-// import { categoryAtom } from '&/modules/category/atoms'
-
-// TODO?: change selected category when user change note category ?
+import { categoryAtom } from '&/modules/category/atoms'
 
 import type { Note } from '../types'
 import { LIST, NOTE } from '../constants'
@@ -17,7 +15,7 @@ import { NoteFolder } from '&/modules/note-folder/types'
 export function useNoteCategory(note: Note) {
   const queryClient = useQueryClient()
   const { categoryList, isLoading, error } = useCategories()
-  // const [selectedCategory] = useAtom(categoryAtom)
+  const [selectedCategory, setSelectedCategory] = useAtom(categoryAtom)
 
   const { mutate } = useMutation(editNoteCategory, {
     onMutate: async (data) => {
@@ -34,34 +32,31 @@ export function useNoteCategory(note: Note) {
       })
 
       // Folder list count (previous category)
+      const previousCategoryId = note.category?.id
       const previousFolderListPrevCategory = queryClient.getQueryData([
         NOTE_FOLDER,
         LIST,
-        { categoryId: note.category?.id },
+        { categoryId: previousCategoryId },
       ])
-
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: note.category?.id }], (old: NoteFolder[] = []) => {
+      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: previousCategoryId }], (old: NoteFolder[] = []) => {
+        if (!previousCategoryId) return old
         const folderIndex = old.findIndex((item) => item.id === data.folder?.id)
         if (folderIndex < 0) return old
         const oldFolder = old[folderIndex]
-        const oldCount = oldFolder.noteCount?.[0].count || 1
-        const newCount = oldCount - 1
-        const newFolder = { ...oldFolder, noteCount: [{ count: newCount }] }
+        const count = (oldFolder.noteCount?.[0].count || 1) - 1
+        const newFolder = { ...oldFolder, noteCount: [{ count }] }
         return [...old.slice(0, folderIndex), newFolder, ...old.slice(folderIndex + 1)]
       })
 
       // Folder list count (new category)
-      const previousFolderListNewCategory = queryClient.getQueryData([
-        NOTE_FOLDER,
-        LIST,
-        { categoryId: data.category?.id },
-      ])
-
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: data.category?.id }], (old: NoteFolder[] = []) => {
+      const newCategoryId = data.category?.id
+      const previousFolderListNewCategory = queryClient.getQueryData([NOTE_FOLDER, LIST, { categoryId: newCategoryId }])
+      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: newCategoryId }], (old: NoteFolder[] = []) => {
+        if (!newCategoryId) return old
         const folderIndex = old.findIndex((item) => item.id === data.folder?.id)
         if (folderIndex < 0) return old
         const oldFolder = old[folderIndex]
-        const count = oldFolder.noteCount?.[0].count || 0 + 1
+        const count = (oldFolder.noteCount?.[0].count || 0) + 1
         const newFolder = { ...oldFolder, noteCount: [{ count }] }
         return [...old.slice(0, folderIndex), newFolder, ...old.slice(folderIndex + 1)]
       })
@@ -95,9 +90,9 @@ export function useNoteCategory(note: Note) {
     if (category.id === note.category?.id) return
     mutate({ ...note, category })
     // update selected category if there is one selected
-    // if (selectedCategory?.id) {
-    // setSelectedCategory(category)
-    // }
+    if (selectedCategory?.id) {
+      setSelectedCategory(category)
+    }
   }
 
   return { onSelect, categoryList, isLoading, error }

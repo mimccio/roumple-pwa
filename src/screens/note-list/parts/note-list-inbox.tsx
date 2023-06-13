@@ -7,9 +7,9 @@ import { NoteListItem } from './note-list-item'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 
 export function NoteListInbox() {
-  const { noteList, isLoading, error } = useNoteList()
+  const { noteList, show } = useNoteList()
 
-  if (error) return <MainError />
+  if (show.error) return <MainError />
 
   return (
     <>
@@ -20,7 +20,7 @@ export function NoteListInbox() {
       </Link>
 
       <div className="flex flex-col gap-2 p-2 px-4">
-        {isLoading && <ListSkeleton />}
+        {show.loading && <ListSkeleton />}
         {noteList?.map((note) => (
           <NoteListItem key={note.id} note={note} />
         ))}

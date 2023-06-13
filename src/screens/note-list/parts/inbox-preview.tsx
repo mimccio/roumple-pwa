@@ -8,7 +8,7 @@ import { InboxPreviewItem } from './inbox-preview-item'
 const LIMIT = 5
 
 export function InboxPreview() {
-  const { noteList, isLoading } = useNoteList(LIMIT)
+  const { noteList, show } = useNoteList(LIMIT)
 
   return (
     <div className="min-h-[80px]">
@@ -19,7 +19,7 @@ export function InboxPreview() {
         <InboxIcon width={20} /> <span className="font-bold ">Inbox</span>
       </Link>
       <div className="ml-0 flex flex-col gap-y-1 font-normal">
-        {isLoading && <ListSkeletonSmall count={1} />}
+        {show.loading && <ListSkeletonSmall count={1} />}
         {noteList?.map((note) => (
           <InboxPreviewItem key={note.id} note={note} />
         ))}
@@ -32,7 +32,7 @@ export function InboxPreview() {
           See more...
         </Link>
       )}
-      {noteList?.length === 0 && <p className="px-2 py-1 text-gray-300">No note in inbox</p>}
+      {noteList?.length === 0 && <p className="px-2 py-1 text-gray-300">empty</p>}
     </div>
   )
 }

@@ -22,22 +22,40 @@ export function useCreateNote() {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [NOTE], exact: false })
 
-      queryClient.setQueryData([NOTE, id], () => ({ id }))
+      queryClient.setQueryData([NOTE, id], () => ({ id, category }))
 
-      const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: undefined }])
-      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], (old: Note[] = []) => [{ id }, ...old])
+      const previousNoteListNoCategory = queryClient.getQueryData([
+        NOTE,
+        LIST,
+        { folderId: undefined, categoryId: undefined },
+      ])
+      queryClient.setQueryData([NOTE, LIST, { folderId: undefined, categoryId: undefined }], (old: Note[] = []) => [
+        { id, category },
+        ...old,
+      ])
+
+      const previousNoteListCategorySelected = queryClient.getQueryData([
+        NOTE,
+        LIST,
+        { folderId: undefined, categoryId: category?.id },
+      ])
+      queryClient.setQueryData([NOTE, LIST, { folderId: undefined, categoryId: category?.id }], (old: Note[] = []) => {
+        if (!category?.id) return old
+        return [{ id, category }, ...old]
+      })
 
       navigate(`${mainPath}/d/note/${id}`)
 
       const previousSearchList = queryClient.getQueryData([NOTE, LIST, { searchText: '' }])
       queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => [{ id }, ...old])
 
-      return { previousNoteList, previousSearchList }
+      return { previousNoteListNoCategory, previousSearchList, previousNoteListCategorySelected }
     },
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData([NOTE, id], null)
-      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], context?.previousNoteList)
+      queryClient.setQueryData([NOTE, LIST, { folderId: undefined }], context?.previousNoteListNoCategory)
+      queryClient.setQueryData([NOTE, LIST, { categoryId: category?.id }], context?.previousNoteListCategorySelected)
       queryClient.setQueryData([NOTE, LIST, { searchText: '' }], context?.previousSearchList)
       toast.error("Creation didn't work")
     },

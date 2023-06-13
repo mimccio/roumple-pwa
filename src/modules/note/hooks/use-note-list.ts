@@ -8,6 +8,7 @@ import { categoryAtom } from '&/modules/category/atoms'
 import { fetchNoteList } from '../queries/fetch-note-list'
 import { Note, NoteListQueryKey } from '../types'
 import { toast } from 'react-hot-toast'
+import { useShow } from '&/common/hooks/use-show'
 
 export function useNoteList(limit?: number) {
   const { folderId: folderIdParams } = useParams()
@@ -16,7 +17,7 @@ export function useNoteList(limit?: number) {
 
   const folderId = folderIdParams === 'inbox' ? undefined : folderIdParams
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error, isPaused } = useQuery(
     [NOTE, LIST, { folderId }],
     ({ queryKey }: { queryKey: NoteListQueryKey }) => fetchNoteList({ queryKey, limit }),
     {
@@ -32,5 +33,7 @@ export function useNoteList(limit?: number) {
     }
   }, [data, category])
 
-  return { noteList, isLoading, error }
+  const show = useShow({ data, isLoading, error, isPaused })
+
+  return { noteList, show }
 }
