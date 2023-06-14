@@ -3,6 +3,8 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
+import Link from '@tiptap/extension-link'
+
 import { debounce } from 'lodash'
 
 import { EditorMenu } from '&/common/components/menus/editor-menu'
@@ -56,6 +58,15 @@ export function NoteEditor({ note }: Props) {
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') return 'Title'
           return ''
+        },
+      }),
+      Link.configure({
+        protocols: ['ftp', 'mailto'],
+        autolink: true,
+        openOnClick: true,
+        linkOnPaste: true,
+        HTMLAttributes: {
+          class: 'text-sky-400 underline',
         },
       }),
     ],
