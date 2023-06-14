@@ -79,7 +79,7 @@ export function NoteEditor({ note }: Props) {
   // }, [note.id, editor])
 
   return (
-    <div className="h-full">
+    <div className="mb-12 flex flex-1 flex-col">
       {editor && <EditorMenu editor={editor} />}
       <EditorContent id="note" className="mt-2 flex h-full flex-1 px-4 py-4" editor={editor} />
     </div>
