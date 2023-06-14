@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-// import { debounce } from 'lodash'
+import { debounce } from 'lodash'
 
 import { EditorMenu } from '&/common/components/menus/editor-menu'
 import type { Note } from '&/modules/note/types'
@@ -21,16 +21,21 @@ const CustomDocument = Document.extend({
 export function NoteEditor({ note }: Props) {
   const { submit } = useEditNoteContent(note)
 
-  // const onUpdate = useMemo(
-  //   () =>
-  //     debounce(({ editor }) => {
-  //       if (editor.isFocused) {
-  //         const json = editor?.getJSON()
-  //         submit(json)
-  //       }
-  //     }, 800),
-  //   [note.id] // eslint-disable-line react-hooks/exhaustive-deps
-  // )
+  const onUpdate = useMemo(
+    () =>
+      debounce(({ editor }) => {
+        if (editor.isFocused) {
+          const json = editor?.getJSON()
+          submit(json)
+        }
+      }, 800),
+    [note.id] // eslint-disable-line react-hooks/exhaustive-deps
+  )
+
+  const onBlur = () => {
+    onUpdate.cancel()
+    submit(editor?.getJSON())
+  }
 
   const editor = useEditor({
     // autofocus: 'end',
@@ -55,8 +60,8 @@ export function NoteEditor({ note }: Props) {
       }),
     ],
     content: note.content,
-    // onUpdate,
-    onBlur: () => submit(editor?.getJSON()),
+    onUpdate,
+    onBlur,
     editorProps: {
       attributes: {
         class:
