@@ -17,12 +17,13 @@ export function useCreateNote() {
   const navigate = useNavigate()
   const [category] = useAtom(categoryAtom)
   const mainPath = useMainPath()
+  const created_at = new Date()
 
   const { mutate } = useMutation(createNote, {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [NOTE], exact: false })
 
-      queryClient.setQueryData([NOTE, id], () => ({ id, category }))
+      queryClient.setQueryData([NOTE, id], () => ({ id, category, created_at }))
 
       const previousNoteListNoCategory = queryClient.getQueryData([
         NOTE,
@@ -30,7 +31,7 @@ export function useCreateNote() {
         { folderId: undefined, categoryId: undefined },
       ])
       queryClient.setQueryData([NOTE, LIST, { folderId: undefined, categoryId: undefined }], (old: Note[] = []) => [
-        { id, category },
+        { id, category, created_at },
         ...old,
       ])
 
@@ -41,13 +42,13 @@ export function useCreateNote() {
       ])
       queryClient.setQueryData([NOTE, LIST, { folderId: undefined, categoryId: category?.id }], (old: Note[] = []) => {
         if (!category?.id) return old
-        return [{ id, category }, ...old]
+        return [{ id, category, created_at }, ...old]
       })
 
       navigate(`${mainPath}/d/note/${id}`)
 
       const previousSearchList = queryClient.getQueryData([NOTE, LIST, { searchText: '' }])
-      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => [{ id }, ...old])
+      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => [{ id, created_at }, ...old])
 
       return { previousNoteListNoCategory, previousSearchList, previousNoteListCategorySelected }
     },
@@ -66,7 +67,7 @@ export function useCreateNote() {
     },
   })
 
-  const onCreate = () => mutate({ id, categoryId: category?.id })
+  const onCreate = () => mutate({ id, categoryId: category?.id, created_at })
 
   return { onCreate }
 }
