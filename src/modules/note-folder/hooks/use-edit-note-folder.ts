@@ -5,20 +5,25 @@ import { toast } from 'react-hot-toast'
 
 import { useOutsideClick } from '&/common/hooks'
 import type { Note } from '&/modules/note/types'
-import { NOTE } from '&/modules/note/constants'
+import { NOTE, LIST } from '&/modules/note/constants'
+import { useCategories } from '&/modules/category/hooks'
 import type { NoteFolder } from '../types'
-import { LIST, NOTE_FOLDER } from '../constants'
+import { NOTE_FOLDER_KEYS } from '../constants'
 import { editNoteFolder } from '../mutations'
 
 export function useEditNoteFolder(folder: NoteFolder) {
   const queryClient = useQueryClient()
   const ref = useRef<HTMLFormElement>(null)
   const [isEditing, setIsEditing] = useState(false)
+  const { categoryList } = useCategories()
 
   const { mutate } = useMutation(editNoteFolder, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [NOTE_FOLDER], exact: false })
-      queryClient.setQueryData([NOTE_FOLDER, folder.id], () => ({ ...folder, name: data.name }))
+      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.detail(data.id) })
+      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists(), exact: false })
+
+      // Item
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(data.id), () => ({ ...folder, name: data.name }))
 
       const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: folder.id }])
       queryClient.setQueryData([NOTE, LIST, { folderId: folder.id }], (old: Note[] = []) => {
@@ -30,26 +35,43 @@ export function useEditNoteFolder(folder: NoteFolder) {
         })
       })
 
-      const previousFolderList = queryClient.getQueryData([NOTE_FOLDER, LIST])
-      queryClient.setQueryData([NOTE_FOLDER, LIST], (old: NoteFolder[] = []) => {
+      const previousFolderList = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), (old: NoteFolder[] = []) => {
         const folderIndex = old.findIndex((item) => item.id === folder.id)
         return [...old.slice(0, folderIndex), { ...old[folderIndex], name: data.name }, ...old.slice(folderIndex + 1)]
       })
 
-      return { previousNoteList, previousFolderList }
+      const categoryIds: string[] = []
+
+      if (categoryList) {
+        categoryList.forEach((category) => {
+          queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: category.id }), (old: NoteFolder[] = []) => {
+            const folderIndex = old.findIndex((item) => item.id === data.id)
+            if (folderIndex < 0) return old
+            categoryIds.push(category.id)
+            return [
+              ...old.slice(0, folderIndex),
+              { ...old[folderIndex], name: data.name },
+              ...old.slice(folderIndex + 1),
+            ]
+          })
+        })
+      }
+
+      return { previousNoteList, previousFolderList, categoryIds }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([NOTE_FOLDER, folder.id], item)
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(item.id), item)
       queryClient.setQueryData([NOTE, LIST, { folderId: folder.id }], context?.previousNoteList)
-      queryClient.setQueryData([NOTE_FOLDER, LIST], context?.previousFolderList)
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), context?.previousFolderList)
 
       toast.error("Edit didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([NOTE_FOLDER, folder.id])
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.detail(folder.id))
       queryClient.invalidateQueries([NOTE, LIST, { folderId: folder.id }])
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST], { exact: false })
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
     },
   })
 

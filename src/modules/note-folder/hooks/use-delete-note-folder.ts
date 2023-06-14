@@ -18,7 +18,7 @@ export function useDeleteNoteFolder(folder: NoteFolder) {
   const { mutate } = useMutation(deleteNoteFolder, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.detail(data.id) })
-      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists(), exact: false })
 
       const previousFolderList = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
       queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), (old: NoteFolder[] = []) => {

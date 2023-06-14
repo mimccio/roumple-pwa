@@ -2,11 +2,13 @@ import { db } from '&/db'
 import { NoteFolder } from '../types'
 
 interface IParams {
-  queryKey: [key: string, routineId?: string]
+  queryKey: readonly ['NOTE_FOLDER', 'DETAIL', string | undefined]
 }
 
 export const fetchNoteFolder = async ({ queryKey }: IParams) => {
-  const [, folderId] = queryKey
+  const [, , folderId] = queryKey
+
+  if (!folderId) throw new Error('Folder ID is missing')
 
   const { data, error } = await db
     .from('note_folder')

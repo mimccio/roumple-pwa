@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { LIST, NOTE_FOLDER } from '../constants'
+import { NOTE_FOLDER_KEYS } from '../constants'
 import { fetchNoteFolder } from '../queries'
 import { useParams } from 'react-router-dom'
 import { NoteFolder } from '../types'
@@ -10,11 +10,11 @@ export function useNoteFolder() {
   const { folderId } = useParams()
   const queryClient = useQueryClient()
 
-  const { data, isLoading, error, isPaused } = useQuery([NOTE_FOLDER, folderId], fetchNoteFolder, {
+  const { data, isLoading, error, isPaused } = useQuery(NOTE_FOLDER_KEYS.detail(folderId), fetchNoteFolder, {
     enabled: Boolean(folderId) && folderId !== 'inbox',
-    initialDataUpdatedAt: () => queryClient.getQueryState([NOTE_FOLDER, LIST], {})?.dataUpdatedAt,
+    initialDataUpdatedAt: () => queryClient.getQueryState(NOTE_FOLDER_KEYS.list({}))?.dataUpdatedAt,
     initialData: () => {
-      const folderList = queryClient.getQueryData<NoteFolder[]>([NOTE_FOLDER, LIST, {}])
+      const folderList = queryClient.getQueryData<NoteFolder[]>(NOTE_FOLDER_KEYS.list({}))
       return folderList?.find((item) => item.id === folderId)
     },
   })

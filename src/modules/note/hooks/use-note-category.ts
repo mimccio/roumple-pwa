@@ -9,7 +9,7 @@ import { categoryAtom } from '&/modules/category/atoms'
 import type { Note } from '../types'
 import { LIST, NOTE } from '../constants'
 import { editNoteCategory } from '../mutations'
-import { NOTE_FOLDER } from '&/modules/note-folder/constants'
+import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
 import { NoteFolder } from '&/modules/note-folder/types'
 
 export function useNoteCategory(note: Note) {
@@ -33,12 +33,10 @@ export function useNoteCategory(note: Note) {
 
       // Folder list count (previous category)
       const previousCategoryId = note.category?.id
-      const previousFolderListPrevCategory = queryClient.getQueryData([
-        NOTE_FOLDER,
-        LIST,
-        { categoryId: previousCategoryId },
-      ])
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: previousCategoryId }], (old: NoteFolder[] = []) => {
+      const previousFolderListPrevCategory = queryClient.getQueryData(
+        NOTE_FOLDER_KEYS.list({ categoryId: previousCategoryId })
+      )
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: previousCategoryId }), (old: NoteFolder[] = []) => {
         if (!previousCategoryId) return old
         const folderIndex = old.findIndex((item) => item.id === data.folder?.id)
         if (folderIndex < 0) return old
@@ -50,8 +48,10 @@ export function useNoteCategory(note: Note) {
 
       // Folder list count (new category)
       const newCategoryId = data.category?.id
-      const previousFolderListNewCategory = queryClient.getQueryData([NOTE_FOLDER, LIST, { categoryId: newCategoryId }])
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: newCategoryId }], (old: NoteFolder[] = []) => {
+      const previousFolderListNewCategory = queryClient.getQueryData(
+        NOTE_FOLDER_KEYS.list({ categoryId: newCategoryId })
+      )
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: newCategoryId }), (old: NoteFolder[] = []) => {
         if (!newCategoryId) return old
         const folderIndex = old.findIndex((item) => item.id === data.folder?.id)
         if (folderIndex < 0) return old
@@ -68,11 +68,11 @@ export function useNoteCategory(note: Note) {
       queryClient.setQueryData([NOTE, item.id], item)
       queryClient.setQueryData([NOTE, LIST, { folderId: item.folder?.id }], context?.previousNoteList)
       queryClient.setQueryData(
-        [NOTE_FOLDER, LIST, { categoryId: note.category?.id }],
+        NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }),
         context?.previousFolderListPrevCategory
       )
       queryClient.setQueryData(
-        [NOTE_FOLDER, LIST, { categoryId: item.category?.id }],
+        NOTE_FOLDER_KEYS.list({ categoryId: item.category?.id }),
         context?.previousFolderListNewCategory
       )
 
@@ -81,8 +81,8 @@ export function useNoteCategory(note: Note) {
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries([NOTE, variables.id])
       queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id }])
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST, { categoryId: note.category?.id }])
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST, { categoryId: variables.category?.id }])
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }))
     },
   })
 

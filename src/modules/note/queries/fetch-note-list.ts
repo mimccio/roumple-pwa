@@ -11,7 +11,7 @@ export const fetchNoteList = async ({ queryKey, limit }: FetchNoteListParams) =>
 
   let query = db
     .from('note')
-    .select('id, title, created_at, category(id, name, color), folder:note_folder(id, name)')
+    .select('id, title, created_at, content, category(id, name, color), folder:note_folder(id, name)')
     .order('created_at', { ascending: false })
 
   if (!folderId || folderId === 'inbox') {

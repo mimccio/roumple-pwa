@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { NoteFolder } from '&/modules/note-folder/types'
-import { NOTE_FOLDER } from '&/modules/note-folder/constants'
+import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
 import { useFolderList } from '&/modules/note-folder/hooks'
 import type { Note } from '../types'
 import { LIST, NOTE } from '../constants'
@@ -30,8 +30,8 @@ export function useNoteFolder(note: Note) {
       })
 
       // Folder list (no category)
-      const previousNoteFolder = queryClient.getQueryData([NOTE_FOLDER, LIST, { categoryId: undefined }])
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: undefined }], (old: NoteFolder[] = []) => {
+      const previousNoteFolder = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), (old: NoteFolder[] = []) => {
         const newList = old.map((item) => {
           if (item.id === note.folder?.id) {
             const prevCount = item?.noteCount?.[0]?.count || 1
@@ -48,12 +48,10 @@ export function useNoteFolder(note: Note) {
       })
 
       // Folder list (note category)
-      const previousNoteFolderCategory = queryClient.getQueryData([
-        NOTE_FOLDER,
-        LIST,
-        { categoryId: note.category?.id },
-      ])
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: note.category?.id }], (old: NoteFolder[] = []) => {
+      const previousNoteFolderCategory = queryClient.getQueryData(
+        NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id })
+      )
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }), (old: NoteFolder[] = []) => {
         if (!note.category?.id) return old
 
         const newList = old.map((item) => {
@@ -82,9 +80,9 @@ export function useNoteFolder(note: Note) {
       queryClient.setQueryData([NOTE, item.id], item)
       queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], context?.previousNoteListPreviousFolder)
       queryClient.setQueryData([NOTE, LIST, { folderId: item.folder?.id }], context?.previousNoteListNewFolder)
-      queryClient.setQueryData([NOTE_FOLDER, LIST, { categoryId: undefined }], context?.previousNoteFolder)
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), context?.previousNoteFolder)
       queryClient.setQueryData(
-        [NOTE_FOLDER, LIST, { categoryId: note.category?.id }],
+        NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }),
         context?.previousNoteFolderCategory
       )
 
@@ -93,8 +91,8 @@ export function useNoteFolder(note: Note) {
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries([NOTE, variables.id])
       queryClient.invalidateQueries([NOTE, LIST], { exact: false })
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST, { categoryId: undefined }])
-      queryClient.invalidateQueries([NOTE_FOLDER, LIST, { categoryId: note.category?.id }])
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
     },
   })
 
