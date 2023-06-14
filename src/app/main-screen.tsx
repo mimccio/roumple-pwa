@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { Today } from '&/screens/board/today'
@@ -9,7 +9,7 @@ import { RoutineList } from '&/screens/routine-list'
 import { SettingsMain } from '&/screens/settings/settings-main'
 import { Categories } from '&/screens/categories'
 import { FatalError, NotFoundMain } from '&/screens/errors'
-import { NoteListScreen } from '&/screens/note-list'
+import { FolderListScreen, NoteListByFolderScreen, NoteListInboxScreen } from '&/screens/note-list'
 
 export function MainScreen() {
   return (
@@ -22,7 +22,11 @@ export function MainScreen() {
           <Route path="/month/*" element={<Month />} />
           {/* Nav */}
           <Route path="/routines/*" element={<RoutineList />} />
-          <Route path="/notes/*" element={<NoteListScreen />} />
+
+          <Route path="/notes" element={<Navigate to="folders" />} />
+          <Route path="/notes/inbox/*" element={<NoteListInboxScreen />} />
+          <Route path="/notes/folders/*" element={<FolderListScreen />} />
+          <Route path="/notes/:folderId/*" element={<NoteListByFolderScreen />} />
 
           <Route path="/categories/*" element={<Categories />} />
           <Route path="/settings/*" element={<SettingsMain />} />

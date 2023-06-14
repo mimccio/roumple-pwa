@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom'
 import { NoteFolder } from '../types'
 import { useShow } from '&/common/hooks/use-show'
 
-export function useNoteFolder() {
+export function useNoteFolderDetails() {
   const { folderId } = useParams()
   const queryClient = useQueryClient()
 
   const { data, isLoading, error, isPaused } = useQuery(NOTE_FOLDER_KEYS.detail(folderId), fetchNoteFolder, {
-    enabled: Boolean(folderId) && folderId !== 'inbox',
+    enabled: Boolean(folderId),
     initialDataUpdatedAt: () => queryClient.getQueryState(NOTE_FOLDER_KEYS.list({}))?.dataUpdatedAt,
     initialData: () => {
       const folderList = queryClient.getQueryData<NoteFolder[]>(NOTE_FOLDER_KEYS.list({}))

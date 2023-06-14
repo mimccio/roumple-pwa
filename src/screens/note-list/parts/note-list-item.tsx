@@ -34,7 +34,11 @@ export function NoteListItem({ note }: Props) {
               isActive ? 'border-transparent' : 'border-gray-50'
             )}
           >
-            <p className="truncate font-semibold text-gray-700">{note.title || 'new note'}</p>
+            <p
+              className={cl('truncate font-semibold transition-colors', note.title ? 'text-gray-700' : 'text-gray-500')}
+            >
+              {note.title || 'new note'}
+            </p>
             <div className="flex justify-between gap-2  text-xs font-semibold text-gray-400">
               <p className="flex items-end gap-4">
                 <span className="flex items-center gap-1">
