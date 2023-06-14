@@ -25,7 +25,12 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
       <span className="flex items-center">
         <TagIcon height={16} width={16} className={color} />
 
-        <span className="ml-3 block truncate font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
+        <span
+          className={cl(
+            'ml-3 block truncate font-semibold  transition-colors ',
+            category?.id ? 'text-gray-500 group-hover:text-gray-600' : 'text-gray-300 group-hover:text-gray-400'
+          )}
+        >
           {category?.name || (isLoading ? '' : isError ? 'Error' : 'no category')}
         </span>
       </span>
