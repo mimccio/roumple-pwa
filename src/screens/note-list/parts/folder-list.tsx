@@ -12,7 +12,7 @@ export function FolderList() {
       <InboxPreview />
 
       <div className="border-t border-gray-100 pt-8">
-        <NewFolderItem />
+        {!category?.id && <NewFolderItem />}
         {isLoading && <ListSkeletonSmall />}
         {folderList?.map((folder) =>
           category?.id && !folder.noteCount?.[0].count ? null : <FolderItem key={folder.id} folder={folder} />

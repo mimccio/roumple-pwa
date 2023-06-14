@@ -90,7 +90,7 @@ export function useNoteCategory(note: Note) {
     if (category.id === note.category?.id) return
     mutate({ ...note, category })
     // update selected category if there is one selected
-    if (selectedCategory?.id) {
+    if (selectedCategory?.id && category?.id) {
       setSelectedCategory(category)
     }
   }

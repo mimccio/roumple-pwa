@@ -3,13 +3,13 @@ import { useAtom } from 'jotai'
 
 import { categoryAtom } from '&/modules/category/atoms'
 
-import { LIST, NOTE_FOLDER } from '../constants'
+import { NOTE_FOLDER_KEYS } from '../constants'
 import { fetchNoteFolderList } from '../queries'
 
 export function useFolderList() {
   const [category] = useAtom(categoryAtom)
 
-  const { data, isLoading, error } = useQuery([NOTE_FOLDER, LIST, { categoryId: category?.id }], fetchNoteFolderList)
+  const { data, isLoading, error } = useQuery(NOTE_FOLDER_KEYS.list({ categoryId: category?.id }), fetchNoteFolderList)
 
   return { folderList: data, isLoading, error, category }
 }
