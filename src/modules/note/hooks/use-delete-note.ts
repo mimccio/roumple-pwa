@@ -1,11 +1,13 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
-import type { Note } from '../types'
-import { LIST, NOTE } from '../constants'
-import { deleteNote } from '../mutations'
-import { useNavigate } from 'react-router-dom'
 import { useMainPath } from '&/common/hooks'
+import type { Note } from '../types'
+import { NOTE_KEYS } from '../constants'
+import { deleteNote } from '../mutations'
+
+// TODO!: handle count in folder
 
 export function useDeleteNote() {
   const queryClient = useQueryClient()
@@ -14,10 +16,12 @@ export function useDeleteNote() {
 
   const { mutate } = useMutation(deleteNote, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [NOTE, LIST], exact: false })
-      const previousNoteList = queryClient.getQueryData([[NOTE, LIST, { folderId: data.folder?.id }]])
+      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
 
-      queryClient.setQueryData([NOTE, LIST, { folderId: data.folder?.id }], (old: Note[] = []) => {
+      queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => null)
+
+      const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: data.folder?.id }))
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: data.folder?.id }), (old: Note[] = []) => {
         const noteIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, noteIndex), ...old.slice(noteIndex + 1)]
       })
@@ -26,13 +30,13 @@ export function useDeleteNote() {
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([NOTE, item.id], item)
-      queryClient.setQueryData([NOTE, LIST, { folderId: item.folder?.id }], context?.previousNoteList)
+      queryClient.setQueryData(NOTE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: item.folder?.id }), context?.previousNoteList)
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([NOTE, variables.id])
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: variables.folder?.id }])
+      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
+      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: variables.folder?.id }))
     },
   })
 

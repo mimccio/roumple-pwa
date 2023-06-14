@@ -2,7 +2,7 @@ import { db } from '&/db'
 import { Note } from '../types'
 
 interface FetchNoteSearchParams {
-  queryKey: [key: string, list: string, options: { searchText?: string }]
+  queryKey: readonly ['NOTE', 'SEARCH', { readonly searchText: string | undefined }]
 }
 
 export const fetchNoteSearch = async ({ queryKey }: FetchNoteSearchParams) => {

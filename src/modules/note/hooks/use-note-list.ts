@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast'
 import { useShow } from '&/common/hooks/use-show'
 import { categoryAtom } from '&/modules/category/atoms'
 import type { Note, NoteListQueryKey } from '../types'
-import { LIST, NOTE } from '../constants'
+import { NOTE_KEYS } from '../constants'
 import { fetchNoteList } from '../queries'
 
 export function useNoteList(limit?: number) {
@@ -16,7 +16,7 @@ export function useNoteList(limit?: number) {
   const [noteList, setNoteList] = useState<Note[]>()
 
   const { data, isLoading, error, isPaused } = useQuery(
-    [NOTE, LIST, { folderId }],
+    NOTE_KEYS.list({ folderId }),
     ({ queryKey }: { queryKey: NoteListQueryKey }) => fetchNoteList({ queryKey, limit }),
     {
       onError: () => toast.error('Error fetching note list'),

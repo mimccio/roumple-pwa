@@ -2,15 +2,15 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
-import { categoryAtom } from '&/modules/category/atoms'
-
-import { LIST, NOTE } from '../constants'
-import { createNote } from '../mutations'
-
-import { Note } from '../types'
 import { useAtom } from 'jotai'
+
 import { useMainPath } from '&/common/hooks'
+import { categoryAtom } from '&/modules/category/atoms'
 import { useNoteFolderDetails } from '&/modules/note-folder/hooks'
+
+import type { Note } from '../types'
+import { NOTE_KEYS } from '../constants'
+import { createNote } from '../mutations'
 
 export function useCreateNote() {
   const queryClient = useQueryClient()
@@ -23,49 +23,30 @@ export function useCreateNote() {
 
   const { mutate } = useMutation(createNote, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [NOTE], exact: false })
+      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
 
-      queryClient.setQueryData([NOTE, id], () => ({ id, category, created_at, folder }))
+      queryClient.setQueryData(NOTE_KEYS.detail(id), () => ({ id, category, created_at, folder }))
 
-      const previousNoteListNoCategory = queryClient.getQueryData([
-        NOTE,
-        LIST,
-        { folderId: folder?.id, categoryId: undefined },
-      ])
-      queryClient.setQueryData([NOTE, LIST, { folderId: folder?.id, categoryId: undefined }], (old: Note[] = []) => [
-        data,
-        ...old,
-      ])
+      const previousNoteListNoCategory = queryClient.getQueryData(NOTE_KEYS.list({ folderId: folder?.id }))
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder?.id }), (old: Note[] = []) => [data, ...old])
 
-      const previousNoteListCategorySelected = queryClient.getQueryData([
-        NOTE,
-        LIST,
-        { folderId: folder?.id, categoryId: category?.id },
-      ])
-      queryClient.setQueryData([NOTE, LIST, { folderId: folder?.id, categoryId: category?.id }], (old: Note[] = []) => {
-        if (!category?.id) return old
-        return [data, ...old]
-      })
+      const previousSearchList = queryClient.getQueryData(NOTE_KEYS.search({ searchText: '' }))
+      queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), (old: Note[] = []) => [data, ...old])
 
       navigate(`${mainPath}/d/note/${id}`)
-
-      const previousSearchList = queryClient.getQueryData([NOTE, LIST, { searchText: '' }])
-      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => [data, ...old])
-
-      return { previousNoteListNoCategory, previousSearchList, previousNoteListCategorySelected }
+      return { previousNoteListNoCategory, previousSearchList }
     },
 
     onError: (_err, _item, context) => {
-      queryClient.setQueryData([NOTE, id], null)
-      queryClient.setQueryData([NOTE, LIST, { folderId: folder?.id }], context?.previousNoteListNoCategory)
-      queryClient.setQueryData([NOTE, LIST, { categoryId: category?.id }], context?.previousNoteListCategorySelected)
-      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], context?.previousSearchList)
+      queryClient.setQueryData(NOTE_KEYS.detail(id), null)
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder?.id }), context?.previousNoteListNoCategory)
+      queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), context?.previousSearchList)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([NOTE, id])
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: folder?.id }])
-      queryClient.invalidateQueries([NOTE, LIST, { searchText: '' }])
+      queryClient.invalidateQueries(NOTE_KEYS.detail(id))
+      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: folder?.id }))
+      queryClient.invalidateQueries(NOTE_KEYS.search({ searchText: '' }))
     },
   })
 

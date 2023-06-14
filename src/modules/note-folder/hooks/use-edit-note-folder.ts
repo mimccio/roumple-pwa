@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast'
 
 import { useOutsideClick } from '&/common/hooks'
 import type { Note } from '&/modules/note/types'
-import { NOTE, LIST } from '&/modules/note/constants'
+import { NOTE_KEYS } from '&/modules/note/constants'
 import { useCategories } from '&/modules/category/hooks'
 import type { NoteFolder } from '../types'
 import { NOTE_FOLDER_KEYS } from '../constants'
@@ -25,8 +25,8 @@ export function useEditNoteFolder(folder: NoteFolder) {
       // Item
       queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(data.id), () => ({ ...folder, name: data.name }))
 
-      const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: folder.id }])
-      queryClient.setQueryData([NOTE, LIST, { folderId: folder.id }], (old: Note[] = []) => {
+      const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: folder.id }))
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder.id }), (old: Note[] = []) => {
         return old.map((item) => {
           if (item.folder?.id) {
             return { ...item, folder: { ...item.folder, name: data.name } }
@@ -63,14 +63,14 @@ export function useEditNoteFolder(folder: NoteFolder) {
 
     onError: (_err, item, context) => {
       queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(item.id), item)
-      queryClient.setQueryData([NOTE, LIST, { folderId: folder.id }], context?.previousNoteList)
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder.id }), context?.previousNoteList)
       queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), context?.previousFolderList)
 
       toast.error("Edit didn't work")
     },
     onSuccess: () => {
       queryClient.invalidateQueries(NOTE_FOLDER_KEYS.detail(folder.id))
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: folder.id }])
+      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: folder.id }))
       queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
     },
   })

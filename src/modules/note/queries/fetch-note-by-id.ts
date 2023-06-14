@@ -2,11 +2,11 @@ import { db } from '&/db'
 import { Note } from '../types'
 
 interface IParams {
-  queryKey: [key: string, routineId?: string]
+  queryKey: readonly ['NOTE', 'DETAIL', string | undefined]
 }
 
 export const fetchNoteById = async ({ queryKey }: IParams) => {
-  const [, noteId] = queryKey
+  const [, , noteId] = queryKey
 
   const { data, error } = await db
     .from('note')

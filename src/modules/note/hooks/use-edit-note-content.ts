@@ -3,7 +3,7 @@ import { JSONContent } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
 import type { Note } from '../types'
-import { LIST, NOTE } from '../constants'
+import { NOTE_KEYS } from '../constants'
 import { editNoteContent } from '../mutations'
 
 export function useEditNoteContent(note: Note) {
@@ -11,19 +11,18 @@ export function useEditNoteContent(note: Note) {
 
   const { mutate } = useMutation(editNoteContent, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [NOTE], exact: false })
-      queryClient.setQueryData([NOTE, note.id], data)
+      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
+      queryClient.setQueryData(NOTE_KEYS.detail(note.id), data)
 
-      const previousNoteList = queryClient.getQueryData([NOTE, LIST])
+      const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }))
 
-      queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], (old: Note[] = []) => {
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }), (old: Note[] = []) => {
         const noteIndex = old.findIndex((item) => item.id === note.id)
         return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
       })
 
-      const previousSearchNoteList = queryClient.getQueryData([NOTE, LIST, { searchText: '' }])
-
-      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], (old: Note[] = []) => {
+      const previousSearchNoteList = queryClient.getQueryData(NOTE_KEYS.search({ searchText: '' }))
+      queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), (old: Note[] = []) => {
         const noteIndex = old.findIndex((item) => item.id === note.id)
         return [...old.slice(0, noteIndex), { ...old[noteIndex], title: data.title }, ...old.slice(noteIndex + 1)]
       })
@@ -31,16 +30,16 @@ export function useEditNoteContent(note: Note) {
       return { previousNoteList, previousSearchNoteList }
     },
     onError: (_err, item, context) => {
-      queryClient.setQueryData([NOTE, note.id], item)
-      queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], context?.previousNoteList)
-      queryClient.setQueryData([NOTE, LIST, { searchText: '' }], context?.previousNoteList)
+      queryClient.setQueryData(NOTE_KEYS.detail(note.id), item)
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }), context?.previousNoteList)
+      queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), context?.previousNoteList)
 
       toast.error("Modification didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([NOTE, note.id])
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id }])
-      queryClient.invalidateQueries([NOTE, LIST, { searchText: '' }])
+      queryClient.invalidateQueries(NOTE_KEYS.detail(note.id))
+      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: note.folder?.id }))
+      queryClient.invalidateQueries(NOTE_KEYS.search({ searchText: '' }))
     },
   })
 

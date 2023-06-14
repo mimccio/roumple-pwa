@@ -7,7 +7,7 @@ import { useCategories } from '&/modules/category/hooks'
 import { categoryAtom } from '&/modules/category/atoms'
 
 import type { Note } from '../types'
-import { LIST, NOTE } from '../constants'
+import { NOTE_KEYS } from '../constants'
 import { editNoteCategory } from '../mutations'
 import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
 import { NoteFolder } from '&/modules/note-folder/types'
@@ -19,14 +19,14 @@ export function useNoteCategory(note: Note) {
 
   const { mutate } = useMutation(editNoteCategory, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [NOTE], exact: false })
+      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
 
       // Note item
-      queryClient.setQueryData([NOTE, data.id], () => data)
+      queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => data)
 
       // Note list
-      const previousNoteList = queryClient.getQueryData([NOTE, LIST, { folderId: note.folder?.id }])
-      queryClient.setQueryData([NOTE, LIST, { folderId: note.folder?.id }], (old: Note[] = []) => {
+      const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }))
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }), (old: Note[] = []) => {
         const noteIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, noteIndex), data, ...old.slice(noteIndex + 1)]
       })
@@ -65,8 +65,8 @@ export function useNoteCategory(note: Note) {
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([NOTE, item.id], item)
-      queryClient.setQueryData([NOTE, LIST, { folderId: item.folder?.id }], context?.previousNoteList)
+      queryClient.setQueryData(NOTE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_KEYS.list({ folderId: item.folder?.id }), context?.previousNoteList)
       queryClient.setQueryData(
         NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }),
         context?.previousFolderListPrevCategory
@@ -79,8 +79,8 @@ export function useNoteCategory(note: Note) {
       toast.error("Modification didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([NOTE, variables.id])
-      queryClient.invalidateQueries([NOTE, LIST, { folderId: note.folder?.id }])
+      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
+      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: note.folder?.id }))
       queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
       queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }))
     },

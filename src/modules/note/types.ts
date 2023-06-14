@@ -13,4 +13,4 @@ export interface Note {
   routineNotes?: RoutineNote[]
 }
 
-export type NoteListQueryKey = [key: string, list: string, options: { folderId?: string }]
+export type NoteListQueryKey = readonly ['NOTE', 'LIST', { readonly folderId: string | undefined }]
