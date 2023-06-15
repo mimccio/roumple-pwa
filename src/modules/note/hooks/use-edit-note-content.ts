@@ -12,7 +12,8 @@ export function useEditNoteContent(note: Note) {
   const { mutate } = useMutation(editNoteContent, {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
-      queryClient.setQueryData(NOTE_KEYS.detail(note.id), data)
+
+      queryClient.setQueryData(NOTE_KEYS.detail(note.id), { ...note, title: data.title, content: data.content })
 
       const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }))
 
