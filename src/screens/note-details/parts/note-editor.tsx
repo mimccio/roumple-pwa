@@ -66,7 +66,7 @@ export function NoteEditor({ note }: Props) {
         openOnClick: true,
         linkOnPaste: true,
         HTMLAttributes: {
-          class: 'text-sky-400 underline',
+          class: 'text-cyan-500 underline hover:text-teal-400 transition-colors',
         },
       }),
     ],

@@ -1,4 +1,4 @@
-import type { ReactNode, ComponentType, MouseEvent } from 'react'
+import type { ReactNode, ComponentType, MouseEvent, RefObject } from 'react'
 import { cl } from '&/common/utils'
 
 interface Props {
@@ -6,9 +6,10 @@ interface Props {
   handleClick: () => void
   isActive: boolean
   Icon?: ComponentType<{ className?: string }>
+  buttonRef?: RefObject<HTMLButtonElement>
 }
 
-export function EditorMenuButton({ children, handleClick, isActive, Icon }: Props) {
+export function EditorMenuButton({ children, handleClick, isActive, Icon, buttonRef }: Props) {
   const onClick = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault()
     document.getElementById('focusdummy')?.focus() // prevent chrome keyboard from jumping around
@@ -17,6 +18,7 @@ export function EditorMenuButton({ children, handleClick, isActive, Icon }: Prop
 
   return (
     <button
+      ref={buttonRef}
       onClick={onClick}
       className={cl(
         'flex h-7 w-7 items-center justify-center rounded-md transition-colors ',
