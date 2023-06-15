@@ -4,13 +4,12 @@ import Document from '@tiptap/extension-document'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
-
 import { debounce } from 'lodash'
 
 import { EditorMenu } from '&/common/components/menus/editor-menu'
 import type { Note } from '&/modules/note/types'
-import './style.css'
 import { useEditNoteContent } from '&/modules/note/hooks/use-edit-note-content'
+import './style.css'
 
 interface Props {
   note: Note
@@ -51,8 +50,13 @@ export function NoteEditor({ note }: Props) {
             class: 'list-disc',
           },
         },
-      }),
 
+        orderedList: {
+          HTMLAttributes: {
+            class: 'list-decimal',
+          },
+        },
+      }),
       Placeholder.configure({
         emptyEditorClass: 'is-editor-empty',
         placeholder: ({ node }) => {

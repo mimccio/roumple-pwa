@@ -4,6 +4,7 @@ import { LinkIcon } from '@heroicons/react/20/solid'
 import { usePopper } from '&/common/hooks'
 import { H1Icon } from '&/common/components/icons/h1'
 import { H2Icon } from '&/common/components/icons/h2'
+import { OrderedListIcon } from '&/common/components/icons/ordered-list'
 import { UnorderedListIcon } from '&/common/components/icons/unordered-list'
 import { BoldIcon } from '&/common/components/icons/bold'
 import { ItalicIcon } from '&/common/components/icons/italic'
@@ -47,6 +48,12 @@ export function EditorMenu({ editor }: Props) {
           isActive={editor.isActive('bulletList')}
           handleClick={() => editor.chain().focus().toggleBulletList().run()}
         />
+        <EditorMenuButton
+          Icon={OrderedListIcon}
+          isActive={editor.isActive('orderedList')}
+          handleClick={() => editor.chain().focus().toggleOrderedList().run()}
+        />
+
         <EditorMenuButton
           Icon={BoldIcon}
           isActive={editor?.isActive('bold')}
