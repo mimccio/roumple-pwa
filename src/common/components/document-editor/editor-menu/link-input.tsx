@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { RefObject, ChangeEvent } from 'react'
 import { Editor } from '@tiptap/react'
 import { Transition } from '@headlessui/react'
@@ -15,6 +15,17 @@ interface Props {
 
 export function LinkInput({ editor, isOpen, onClose, popperRef }: Props) {
   const [url, setUrl] = useState<string>(editor.getAttributes('link').href || '')
+
+  // Use clipboard text as default (works only on chrome)
+  useEffect(() => {
+    const getClipboardText = async () => {
+      if (typeof navigator?.clipboard?.readText === 'function') {
+        const text = await navigator.clipboard.readText()
+        setUrl((prevUrl) => (prevUrl === '' ? text : prevUrl))
+      }
+    }
+    getClipboardText()
+  }, [])
 
   const setLink = useCallback(() => {
     // empty
