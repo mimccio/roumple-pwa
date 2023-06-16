@@ -11,6 +11,7 @@ import { ItalicIcon } from '&/common/components/icons/italic'
 import { Strikethrough } from '&/common/components/icons/strikethrough'
 import { EditorMenuButton } from './editor-menu-button'
 import { LinkInput } from './link-input'
+import { TaskListIcon } from '../../icons/task-list'
 
 interface Props {
   editor: Editor
@@ -52,6 +53,11 @@ export function EditorMenu({ editor }: Props) {
           Icon={OrderedListIcon}
           isActive={editor.isActive('orderedList')}
           handleClick={() => editor.chain().focus().toggleOrderedList().run()}
+        />
+        <EditorMenuButton
+          Icon={TaskListIcon}
+          isActive={editor.isActive('taskList')}
+          handleClick={() => editor.chain().focus().toggleTaskList().run()}
         />
 
         <EditorMenuButton

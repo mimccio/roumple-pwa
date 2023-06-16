@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useEditor } from '@tiptap/react'
-import type { JSONContent } from '@tiptap/react'
 
+import type { JSONContent } from '@tiptap/react'
+import { useEditor } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
 import { debounce } from 'lodash'
 import { EditorState } from 'prosemirror-state'
 import { getUrl } from '&/common/utils'
@@ -66,6 +68,13 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
           if (pos > 0) return ''
           if (node.type.name === 'heading' && forceTitle) return 'title'
           return placeholder
+        },
+      }),
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+        HTMLAttributes: {
+          class: 'flex gap-x-2',
         },
       }),
       Link.configure({
