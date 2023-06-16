@@ -25,7 +25,7 @@ export function NoteNavbar({ note }: Props) {
   return (
     <DetailsNavbar>
       <div>
-        <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} />
+        <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} withCopyLink />
       </div>
       <div>{routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}</div>
       <ConfirmDeleteModale
