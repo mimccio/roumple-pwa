@@ -29,7 +29,7 @@ export function EditorMenu({ editor }: Props) {
 
   return (
     <div className="relative">
-      <div className="flex flex-wrap justify-center gap-1 border-b border-gray-100 bg-gray-50 py-1">
+      <div className="flex flex-wrap justify-center gap-1 border-b border-gray-100 py-1">
         <input id="focusdummy" className="opacity:0 w-0 outline-none" />
         <EditorMenuButton
           Icon={H1Icon}
