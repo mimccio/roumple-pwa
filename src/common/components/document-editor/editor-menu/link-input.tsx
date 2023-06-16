@@ -31,6 +31,7 @@ export function LinkInput({ editor, isOpen, onClose, popperRef }: Props) {
     evt.preventDefault()
     setLink()
     onClose()
+    setUrl('')
   }
 
   return (
