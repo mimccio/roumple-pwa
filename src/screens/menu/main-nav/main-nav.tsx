@@ -1,5 +1,4 @@
-import { ArrowPathRoundedSquareIcon, Cog6ToothIcon, TagIcon } from '@heroicons/react/20/solid'
-import { DocumentTextIcon } from '@heroicons/react/24/outline'
+import { DocumentTextIcon, TagIcon, Cog6ToothIcon, ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
 
 import { NavItem } from './nav-item'
 interface Props {

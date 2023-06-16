@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { useAtom } from 'jotai'
-import { TagIcon, PlusCircleIcon } from '@heroicons/react/24/solid'
-import { ArrowPathRoundedSquareIcon } from '@heroicons/react/20/solid'
-import { ArchiveBoxIcon as ArchiveBoxOutlineIcon } from '@heroicons/react/24/outline'
-import { ArchiveBoxIcon } from '@heroicons/react/24/solid'
+import { TagIcon, PlusCircleIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid'
+import { ArchiveBoxIcon as ArchiveBoxOutlineIcon, ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
 
 import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
 import { cl } from '&/common/utils'
@@ -29,7 +27,7 @@ export function Header({ handleShowArchived, archived }: Props) {
       )}
     >
       <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">
-        <ArrowPathRoundedSquareIcon width={20} className="text-gray-500" />
+        <ArrowPathRoundedSquareIcon width={20} className="text-gray-400" />
 
         <h1 className="ml-2">Routines</h1>
       </div>
