@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom'
 import { TagIcon } from '@heroicons/react/20/solid'
-import { Category } from '&/modules/category/types'
+
+import { TW_COLOR_BG_100 } from '&/common/constants/tw-colors'
 import { cl } from '&/common/utils'
-import { TW_COLOR_BG_100 } from '&/common/constants'
+import { useMainPath } from '&/common/hooks'
+import type { Category } from '&/modules/category/types'
 
 interface Props {
   category: Category
@@ -10,6 +13,8 @@ interface Props {
 }
 
 export function CategoryItem({ category, selectCategory, selectedCategory }: Props) {
+  const navigate = useNavigate()
+  const mainPath = useMainPath()
   const bg = TW_COLOR_BG_100[category.color]
   const isSelected = selectedCategory?.id === category.id
 
@@ -19,6 +24,7 @@ export function CategoryItem({ category, selectCategory, selectedCategory }: Pro
     } else {
       selectCategory(category)
     }
+    navigate(mainPath)
   }
 
   return (
