@@ -39,7 +39,8 @@ a.tiptap-link[href^="http://localhost"],
 a.tiptap-link[href^="https://dev.my.roumple"],
 a.tiptap-link[href^="https://my.roumple"]
 {
-  padding: 4px;
+  display: inline-block;
+  padding: 8px 16px;
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
