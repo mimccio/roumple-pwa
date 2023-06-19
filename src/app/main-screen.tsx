@@ -10,6 +10,7 @@ import { SettingsMain } from '&/screens/settings/settings-main'
 import { Categories } from '&/screens/categories'
 import { FatalError, NotFoundMain } from '&/screens/errors'
 import { FolderListScreen, NoteListByFolderScreen, NoteListInboxScreen } from '&/screens/note-list'
+import { TaskListScreen } from '&/screens/task-list'
 
 export function MainScreen() {
   return (
@@ -22,6 +23,7 @@ export function MainScreen() {
           <Route path="/month/*" element={<Month />} />
           {/* Nav */}
           <Route path="/routines/*" element={<RoutineList />} />
+          <Route path="/tasks/*" element={<TaskListScreen />} />
 
           <Route path="/notes" element={<Navigate to="folders" />} />
           <Route path="/notes/inbox/*" element={<NoteListInboxScreen />} />
