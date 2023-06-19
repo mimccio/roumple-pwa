@@ -11,7 +11,7 @@ export const fetchTaskDetail = async ({ queryKey }: IParams) => {
 
   const { data, error } = await db
     .from('task')
-    .select('id, name, createdAt:created_at, description')
+    .select('id, name, createdAt:created_at, description, category(id, name, color)')
     .eq('id', taskId)
     .order('created_at')
     .single()

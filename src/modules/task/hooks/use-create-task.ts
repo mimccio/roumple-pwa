@@ -15,7 +15,7 @@ import { createTask } from '../mutations'
 export function useCreateTask() {
   const queryClient = useQueryClient()
   const id = uuidv4()
-  const [globalCategory] = useAtom(categoryAtom)
+  const [globalCategory, setGlobalCategory] = useAtom(categoryAtom)
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [charNum, setCharNum] = useState(0)
@@ -57,10 +57,13 @@ export function useCreateTask() {
       createdAt: new Date(),
       category,
     })
+
+    setName('')
+    if (category?.id !== globalCategory?.id) setGlobalCategory(null)
   }
 
   const handleNameChange = (name: string) => setName(name)
   const onSelectCategory = (category: Category) => setCategory(category)
 
-  return { handleNameChange, setCharNum, onSelectCategory, onCreateTask, name, charNum }
+  return { handleNameChange, setCharNum, onSelectCategory, onCreateTask, name, charNum, category: category }
 }

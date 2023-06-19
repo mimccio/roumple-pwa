@@ -1,7 +1,9 @@
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+import { DetailContentSection } from '&/common/components/layouts'
 import { DetailInfoSection } from '&/common/components/layouts/detail-info-section'
 import { useTaskDetail } from '&/modules/task/hooks'
 import { NotFoundDetails, OfflineError } from '../errors'
+import { TaskCategory } from './parts/task-category'
 import { TaskName } from './parts/task-name'
 import { TaskNavbar } from './parts/task-navbar'
 
@@ -18,10 +20,13 @@ export function TaskDetailsScreen() {
 
       {task && (
         <>
-          <DetailInfoSection>hello</DetailInfoSection>
-          <div className="mb-14 flex flex-1 flex-col gap-2">
+          <DetailInfoSection>
+            <TaskCategory task={task} />
+          </DetailInfoSection>
+
+          <DetailContentSection>
             <TaskName task={task} />
-          </div>
+          </DetailContentSection>
         </>
       )}
     </>

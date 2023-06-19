@@ -1,4 +1,6 @@
 export * from './content-layout'
+export * from './detail-content-section'
+export * from './detail-info-section'
 export * from './details-navbar'
 export * from './header'
 export * from './main-list-layout'
