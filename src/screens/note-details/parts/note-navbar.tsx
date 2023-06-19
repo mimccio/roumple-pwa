@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { DetailsNavbar } from '&/common/components/layouts'
 import { BackNavBtn, CloseNavBtn } from '&/common/components/buttons'
 import { ItemMenu } from '&/common/components/menus'
-import { ConfirmDeleteModale } from '&/common/components/confirm-delete-modale'
+import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-modale'
 
 import type { Note } from '&/modules/note/types'
 import { useDeleteNote } from '&/modules/note/hooks'

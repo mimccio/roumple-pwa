@@ -13,7 +13,7 @@ import {
 import { TW_COLOR_BORDER_500 } from '../constants'
 import { TwColor } from '../types'
 
-type ColorType = 'text'
+type ColorType = 'text' | 'bg' | 'border'
 type Nuance = 100 | 400 | 500 | 700
 
 const getTextTwColors = (nuance: Nuance) => {

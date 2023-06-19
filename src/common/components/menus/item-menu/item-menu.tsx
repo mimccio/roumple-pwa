@@ -12,14 +12,18 @@ interface Props {
   onDelete?: () => void
   onArchive?: () => void
   onLinkNote?: () => void
-  withCopyLink: boolean
+  withCopyLink?: boolean
+  isLoading?: boolean
 }
 
-export function ItemMenu({ onDelete, onArchive, onLinkNote, withCopyLink }: Props) {
+export function ItemMenu({ onDelete, onArchive, onLinkNote, withCopyLink = false, isLoading = false }: Props) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-gray-400 transition-colors hover:border-gray-300 hover:text-gray-500 focus:outline-none">
+        <Menu.Button
+          disabled={isLoading}
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-gray-400 transition-colors hover:border-gray-300 hover:text-gray-500 focus:outline-none disabled:cursor-wait"
+        >
           <span className="sr-only">Open options</span>
           <EllipsisHorizontalIcon className="h-5 w-5" aria-hidden="true" />
         </Menu.Button>
