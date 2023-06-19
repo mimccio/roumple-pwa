@@ -6,4 +6,5 @@ export interface Task {
   createdAt: Date
   description?: string
   category: Category | null
+  priority: number
 }

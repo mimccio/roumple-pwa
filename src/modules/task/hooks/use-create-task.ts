@@ -17,10 +17,11 @@ export function useCreateTask() {
   const id = uuidv4()
   const [globalCategory, setGlobalCategory] = useAtom(categoryAtom)
   const navigate = useNavigate()
+  const mainPath = useMainPath()
   const [name, setName] = useState('')
   const [charNum, setCharNum] = useState(0)
   const [category, setCategory] = useState(globalCategory)
-  const mainPath = useMainPath()
+  const [priority, setPriority] = useState(0)
 
   const { mutate } = useMutation(createTask, {
     onMutate: async (data) => {
@@ -48,22 +49,38 @@ export function useCreateTask() {
     },
   })
 
+  const reset = () => {
+    setName('')
+    setPriority(0)
+    if (category?.id !== globalCategory?.id) setGlobalCategory(null)
+  }
+
   const onCreateTask = () => {
     if (charNum === 0) return
-
     mutate({
       id,
       name,
       createdAt: new Date(),
       category,
+      priority,
     })
-
-    setName('')
-    if (category?.id !== globalCategory?.id) setGlobalCategory(null)
+    reset()
   }
 
   const handleNameChange = (name: string) => setName(name)
   const onSelectCategory = (category: Category) => setCategory(category)
+  const onSelectPriority = (priority: number) => setPriority(priority)
 
-  return { handleNameChange, setCharNum, onSelectCategory, onCreateTask, name, charNum, category: category }
+  return {
+    handleNameChange,
+    setCharNum,
+    onSelectCategory,
+    onCreateTask,
+    name,
+    charNum,
+    category: category,
+    onSelectPriority,
+    priority,
+    reset,
+  }
 }

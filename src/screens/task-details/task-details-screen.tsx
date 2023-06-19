@@ -6,6 +6,7 @@ import { NotFoundDetails, OfflineError } from '../errors'
 import { TaskCategory } from './parts/task-category'
 import { TaskName } from './parts/task-name'
 import { TaskNavbar } from './parts/task-navbar'
+import { TaskPriority } from './parts/task-priority'
 
 export function TaskDetailsScreen() {
   const { task, isLoading, isPaused } = useTaskDetail()
@@ -21,6 +22,10 @@ export function TaskDetailsScreen() {
       {task && (
         <>
           <DetailInfoSection>
+            <div className="-mx-1 mb-6 flex items-center justify-between">
+              <p>status</p>
+              <TaskPriority task={task} />
+            </div>
             <TaskCategory task={task} />
           </DetailInfoSection>
 
