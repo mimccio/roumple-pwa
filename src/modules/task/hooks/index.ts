@@ -1,5 +1,6 @@
 export * from './use-create-task'
 export * from './use-delete-task'
+export * from './use-edit-task-description'
 export * from './use-edit-task-name'
 export * from './use-task-category'
 export * from './use-task-detail'

@@ -11,6 +11,7 @@ import { categoryAtom } from '&/modules/category/atoms'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 import { createTask } from '../mutations'
+import { STATUSES } from '&/common/constants'
 
 export function useCreateTask() {
   const queryClient = useQueryClient()
@@ -63,6 +64,7 @@ export function useCreateTask() {
       createdAt: new Date(),
       category,
       priority,
+      status: STATUSES.todo,
     })
     reset()
   }

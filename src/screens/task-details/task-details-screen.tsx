@@ -5,6 +5,7 @@ import { DetailInfoSection } from '&/common/components/layouts/detail-info-secti
 import { useTaskDetail } from '&/modules/task/hooks'
 import { NotFoundDetails, OfflineError } from '../errors'
 import { TaskCategory } from './parts/task-category'
+import { TaskDescription } from './parts/task-description'
 import { TaskName } from './parts/task-name'
 import { TaskNavbar } from './parts/task-navbar'
 import { TaskPriority } from './parts/task-priority'
@@ -34,6 +35,7 @@ export function TaskDetailsScreen() {
 
           <DetailContentSection>
             <TaskName task={task} />
+            <TaskDescription task={task} />
           </DetailContentSection>
         </>
       )}

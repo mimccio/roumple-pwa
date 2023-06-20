@@ -1,11 +1,12 @@
-import { Status } from '&/common/types'
-import { Category } from '../category/types'
+import type { JSONContent } from '@tiptap/react'
+import type { Status } from '&/common/types'
+import type { Category } from '../category/types'
 
 export interface Task {
   id: string
   name: string
   createdAt: Date
-  description?: string
+  description?: JSONContent
   category: Category | null
   priority: number
   status: Status
