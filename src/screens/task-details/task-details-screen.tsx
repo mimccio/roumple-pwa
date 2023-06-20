@@ -1,4 +1,5 @@
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+import { CreatedAt } from '&/common/components/display/created-at'
 import { DetailContentSection } from '&/common/components/layouts'
 import { DetailInfoSection } from '&/common/components/layouts/detail-info-section'
 import { useTaskDetail } from '&/modules/task/hooks'
@@ -27,6 +28,7 @@ export function TaskDetailsScreen() {
               <TaskPriority task={task} />
             </div>
             <TaskCategory task={task} />
+            <CreatedAt createdAt={task.createdAt} />
           </DetailInfoSection>
 
           <DetailContentSection>
