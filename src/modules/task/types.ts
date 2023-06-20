@@ -1,3 +1,4 @@
+import { Status } from '&/common/types'
 import { Category } from '../category/types'
 
 export interface Task {
@@ -7,4 +8,5 @@ export interface Task {
   description?: string
   category: Category | null
   priority: number
+  status: Status
 }

@@ -11,3 +11,8 @@ export const getTWTextColor500 = (color: TwColor) => {
   if (color) return TW_COLOR_TEXT_500[color]
   // return 'text-gray-500'
 }
+export const getPriorityTWBorderColor = (priority: number) => {
+  if (priority === 1) return 'border-blue-500'
+  if (priority === 2) return 'border-orange-500'
+  return 'border-gray-400'
+}

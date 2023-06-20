@@ -1,4 +1,6 @@
+import { SquareDoneButton } from '&/common/components/buttons/square-done-button'
 import { cl, getTwColor } from '&/common/utils'
+import { useTaskStatus } from '&/modules/task/hooks'
 import { Task } from '&/modules/task/types'
 import { NavLink } from 'react-router-dom'
 
@@ -7,6 +9,7 @@ interface Props {
 }
 
 export function TaskListItem({ task }: Props) {
+  const { onSelect } = useTaskStatus(task)
   const categoryBg = task.category?.color ? getTwColor('bg', task.category.color, 500) : 'bg-gray-300'
 
   return (
@@ -32,6 +35,7 @@ export function TaskListItem({ task }: Props) {
               <p>{task.category?.name}</p>
             </div>
           </div>
+          <SquareDoneButton status={task.status} priority={task.priority} onUpdate={onSelect} />
         </>
       )}
     </NavLink>

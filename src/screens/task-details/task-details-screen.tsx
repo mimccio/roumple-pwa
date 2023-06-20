@@ -8,6 +8,7 @@ import { TaskCategory } from './parts/task-category'
 import { TaskName } from './parts/task-name'
 import { TaskNavbar } from './parts/task-navbar'
 import { TaskPriority } from './parts/task-priority'
+import { TaskStatus } from './parts/task-status'
 
 export function TaskDetailsScreen() {
   const { task, isLoading, isPaused } = useTaskDetail()
@@ -24,7 +25,7 @@ export function TaskDetailsScreen() {
         <>
           <DetailInfoSection>
             <div className="-mx-1 mb-6 flex items-center justify-between">
-              <p>status</p>
+              <TaskStatus task={task} />
               <TaskPriority task={task} />
             </div>
             <TaskCategory task={task} />
