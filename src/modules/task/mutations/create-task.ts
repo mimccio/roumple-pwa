@@ -2,7 +2,7 @@ import { db } from '&/db'
 import { getUserId } from '&/modules/utils/get-user-id'
 import { Task } from '../types'
 
-export const createTask = async ({ id, createdAt, name, category, priority }: Task) => {
+export const createTask = async ({ id, createdAt, name, category, priority, period, scheduleType, date }: Task) => {
   const user_id = await getUserId()
 
   const { error } = await db.from('task').insert({
@@ -12,6 +12,9 @@ export const createTask = async ({ id, createdAt, name, category, priority }: Ta
     created_at: createdAt,
     category_id: category?.id,
     priority,
+    period,
+    schedule_type: scheduleType,
+    date,
   })
 
   if (error) throw error

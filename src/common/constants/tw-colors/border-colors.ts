@@ -19,6 +19,27 @@ export const TW_COLOR_BORDER_100 = {
   rose: 'border-rose-100',
 }
 
+export const TW_COLOR_BORDER_200 = {
+  gray: 'border-gray-200',
+  red: 'border-red-200',
+  orange: 'border-orange-200',
+  amber: 'border-amber-200',
+  yellow: 'border-yellow-200',
+  lime: 'border-lime-200',
+  green: 'border-green-200',
+  emerald: 'border-emerald-200',
+  teal: 'border-teal-200',
+  cyan: 'border-cyan-200',
+  sky: 'border-sky-200',
+  blue: 'border-blue-200',
+  indigo: 'border-indigo-200',
+  violet: 'border-violet-200',
+  purple: 'border-purple-200',
+  fuchsia: 'border-fuchsia-200',
+  pink: 'border-pink-200',
+  rose: 'border-rose-200',
+}
+
 export const TW_COLOR_BORDER_400 = {
   gray: 'border-gray-400',
   red: 'border-red-400',

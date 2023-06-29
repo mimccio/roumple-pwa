@@ -5,7 +5,7 @@ import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { Tooltip } from '&/common/components/tooltip'
 import { Header } from '&/common/components/layouts'
 import { CategoryBtn } from '&/common/components/buttons'
-import { CreateTaskModale } from './create-task-modale'
+import { CreateTaskModale } from '&/modules/task/components'
 
 export function TaskListHeader() {
   const [createIsOpen, setCreateIsOpen] = useState(false)

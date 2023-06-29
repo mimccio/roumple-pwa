@@ -14,7 +14,7 @@ module.exports = {
     react: { version: 'detect' },
   },
   rules: {
-    'no-console': ['warn', { allow: ['warn'] }],
+    'no-console': ['warn', { allow: ['error'] }],
     // React
     'react/react-in-jsx-scope': 'off',
     // React Refresh

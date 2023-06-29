@@ -5,13 +5,14 @@ import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 import { toast } from 'react-hot-toast'
 
+import type { ScheduleType } from '&/common/types'
+import { STATUSES } from '&/common/constants'
 import { useMainPath } from '&/common/hooks'
 import type { Category } from '&/modules/category/types'
 import { categoryAtom } from '&/modules/category/atoms'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 import { createTask } from '../mutations'
-import { STATUSES } from '&/common/constants'
 
 export function useCreateTask() {
   const queryClient = useQueryClient()
@@ -23,6 +24,9 @@ export function useCreateTask() {
   const [charNum, setCharNum] = useState(0)
   const [category, setCategory] = useState(globalCategory)
   const [priority, setPriority] = useState(0)
+  const [date, setDate] = useState<Date | null>(null)
+  const [scheduleType, setScheduleType] = useState<ScheduleType>(null)
+  const [period, setPeriod] = useState(0)
 
   const { mutate } = useMutation(createTask, {
     onMutate: async (data) => {
@@ -54,6 +58,9 @@ export function useCreateTask() {
     setName('')
     setPriority(0)
     if (category?.id !== globalCategory?.id) setGlobalCategory(null)
+    setDate(null)
+    setScheduleType(null)
+    setPeriod(0)
   }
 
   const onCreateTask = () => {
@@ -65,6 +72,9 @@ export function useCreateTask() {
       category,
       priority,
       status: STATUSES.todo,
+      period,
+      scheduleType,
+      date,
     })
     reset()
   }
@@ -72,6 +82,11 @@ export function useCreateTask() {
   const handleNameChange = (name: string) => setName(name)
   const onSelectCategory = (category: Category) => setCategory(category)
   const onSelectPriority = (priority: number) => setPriority(priority)
+  const onSelectDate = (date: Date | null) => setDate(date)
+  const onSelectPeriod = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
+    setScheduleType(scheduleType)
+    setPeriod(period)
+  }
 
   return {
     handleNameChange,
@@ -84,5 +99,10 @@ export function useCreateTask() {
     onSelectPriority,
     priority,
     reset,
+    scheduleType,
+    period,
+    date,
+    onSelectDate,
+    onSelectPeriod,
   }
 }
