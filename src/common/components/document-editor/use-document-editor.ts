@@ -40,6 +40,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
 
   const onBlur = () => {
     onUpdate.cancel()
+    // TODO compare if new content != saved content
     submit(editor?.getJSON())
   }
 
