@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function TaskSchedule({ scheduleType, period, onSelectDate, date, onSelectPeriod }: Props) {
-  const [showPreciseSchedule, setShowPreciseSchedule] = useState(false)
+  const [showPreciseSchedule, setShowPreciseSchedule] = useState(Boolean(date))
 
   const setSchedule = () => {
     onSelectPeriod({ scheduleType: SCHEDULE_TYPES.daily, period: 3 })

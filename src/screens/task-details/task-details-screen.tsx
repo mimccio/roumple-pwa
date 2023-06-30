@@ -9,6 +9,7 @@ import { TaskDescription } from './parts/task-description'
 import { TaskName } from './parts/task-name'
 import { TaskNavbar } from './parts/task-navbar'
 import { TaskPriority } from './parts/task-priority'
+import { Schedule } from './parts/task-schedule'
 import { TaskStatus } from './parts/task-status'
 
 export function TaskDetailsScreen() {
@@ -29,6 +30,7 @@ export function TaskDetailsScreen() {
               <TaskStatus task={task} />
               <TaskPriority task={task} />
             </div>
+            <Schedule task={task} />
             <TaskCategory task={task} />
             <CreatedAt createdAt={task.createdAt} />
           </DetailInfoSection>

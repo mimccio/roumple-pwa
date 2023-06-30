@@ -1,4 +1,3 @@
-export * from './calendar-modale'
 export * from './day-card'
 export * from './day-date-btn'
 export * from './month-card'

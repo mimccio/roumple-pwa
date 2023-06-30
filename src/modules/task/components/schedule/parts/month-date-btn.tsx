@@ -1,5 +1,8 @@
+import { addMonths, isThisWeek, subMonths } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import { addMonths, format, isSameMonth, isThisMonth, isThisWeek, startOfToday, subMonths } from 'date-fns'
+
+import { SCHEDULE_TYPES } from '&/common/constants'
+import { getDateText } from '&/modules/task/utils'
 
 interface Props {
   date: Date
@@ -7,12 +10,6 @@ interface Props {
 }
 
 export function MonthDateBtn({ date, onSelectDate }: Props) {
-  const getButtonText = () => {
-    if (isThisMonth(date)) return 'this month'
-    if (isSameMonth(date, addMonths(startOfToday(), 1))) return 'next month'
-    return format(date, 'MMMM yy')
-  }
-
   return (
     <div className="flex justify-center gap-x-2">
       <button
@@ -23,7 +20,7 @@ export function MonthDateBtn({ date, onSelectDate }: Props) {
         <ChevronLeftIcon height={16} />
       </button>
       <p className="flex w-40 justify-center rounded-md bg-purple-500 px-4 py-1 text-sm font-semibold text-white">
-        {getButtonText()}
+        {getDateText({ scheduleType: SCHEDULE_TYPES.monthly, date })}
       </p>
       <button
         onClick={() => onSelectDate(addMonths(date, 1))}
