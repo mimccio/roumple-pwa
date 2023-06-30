@@ -16,19 +16,20 @@ export function TaskNavbar({ task, isLoading }: Props) {
 
   return (
     <DetailsNavbar>
-      <div>
+      <h4 className="text-sm font-semibold text-gray-500">Task</h4>
+      <div className="flex gap-x-2">
         <ItemMenu onDelete={open} withCopyLink isLoading={isLoading} />
+        <CloseNavBtn />
+        {task && (
+          <ConfirmDeleteModale
+            isOpen={isOpen}
+            onDelete={() => onDelete(task)}
+            close={close}
+            title="Delete task"
+            description="Are you sure you want to delete this task? This action cannot be undone."
+          />
+        )}
       </div>
-      <CloseNavBtn />
-      {task && (
-        <ConfirmDeleteModale
-          isOpen={isOpen}
-          onDelete={() => onDelete(task)}
-          close={close}
-          title="Delete task"
-          description="Are you sure you want to delete this task? This action cannot be undone."
-        />
-      )}
     </DetailsNavbar>
   )
 }

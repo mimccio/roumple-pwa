@@ -24,10 +24,12 @@ export function NoteNavbar({ note }: Props) {
 
   return (
     <DetailsNavbar>
-      <div>
+      <h4 className="text-sm font-semibold text-gray-500">Note</h4>
+      <div className="flex gap-x-2">
         <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} withCopyLink />
+
+        {routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}
       </div>
-      <div>{routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}</div>
       <ConfirmDeleteModale
         isOpen={deleteModaleIsOpen}
         onDelete={handleDelete}
