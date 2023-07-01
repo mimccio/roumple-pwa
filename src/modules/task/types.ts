@@ -15,4 +15,5 @@ export interface Task {
   scheduleType: ScheduleType
   date: Date | null
   checklist: TaskChecklistItem[]
+  newChecklistItem?: TaskChecklistItem
 }

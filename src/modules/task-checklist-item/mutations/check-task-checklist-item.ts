@@ -1,8 +1,12 @@
 import { db } from '&/db'
+import { Task } from '&/modules/task/types'
 
-import { TaskChecklistItem } from '../types'
+export const checkTaskChecklistItem = async ({ newChecklistItem }: Task) => {
+  if (!newChecklistItem) throw new Error('newChecklistItem is missing')
 
-export const checkTaskChecklistItem = async ({ id, checked }: TaskChecklistItem) => {
-  const { error } = await db.from('task_checklist_item').update({ checked }).eq('id', id)
+  const { error } = await db
+    .from('task_checklist_item')
+    .update({ checked: newChecklistItem.checked })
+    .eq('id', newChecklistItem.id)
   if (error) throw error
 }
