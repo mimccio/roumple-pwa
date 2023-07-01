@@ -9,10 +9,9 @@ interface Props {
   checklistItem: TaskChecklistItem
   onDelete: (id: string) => void
   onCheck: (checklistItem: TaskChecklistItem) => void
-  isChecked?: boolean
 }
 
-export function ChecklistItem({ checklistItem, onDelete, onCheck, isChecked }: Props) {
+export function ChecklistItem({ checklistItem, onDelete, onCheck }: Props) {
   const { register, submit } = useEditChecklistItem(checklistItem)
   const handleSelect = () => onCheck(checklistItem)
 
@@ -22,13 +21,16 @@ export function ChecklistItem({ checklistItem, onDelete, onCheck, isChecked }: P
         <div
           className={cl(
             'flex h-5 w-5 items-center justify-center rounded-md border-2 border-gray-300 transition-colors',
-            isChecked ? 'bg-green-400 group-hover:bg-green-300' : 'group-hover:border-gray-400'
+            checklistItem.checked ? 'bg-green-400 group-hover:bg-green-300' : 'group-hover:border-gray-400'
           )}
         >
           <CheckIcon
             height={12}
             width={12}
-            className={cl('transition-colors', isChecked ? 'text-white' : 'text-transparent group-hover:text-gray-300')}
+            className={cl(
+              'transition-colors',
+              checklistItem.checked ? 'text-white' : 'text-transparent group-hover:text-gray-300'
+            )}
           />
         </div>
       </button>

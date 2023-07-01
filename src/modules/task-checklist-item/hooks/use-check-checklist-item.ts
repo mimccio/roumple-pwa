@@ -8,6 +8,7 @@ import type { TaskChecklistItem } from '../types'
 import { checkTaskChecklistItem } from '../mutations'
 import { useTaskStatus } from '&/modules/task/hooks'
 import { STATUSES } from '&/common/constants'
+import { Status } from '&/common/types'
 
 export function useCheckChecklistItem(task: Task) {
   const queryClient = useQueryClient()
@@ -23,19 +24,22 @@ export function useCheckChecklistItem(task: Task) {
         if (!old) return
         const oldChecklist = old.checklist || []
         const itemIndex = old.checklist?.findIndex((item) => item.id === data.id)
+
         const newChecklist =
           itemIndex >= 0
             ? [...oldChecklist.slice(0, itemIndex), data, ...oldChecklist.slice(itemIndex + 1)]
             : oldChecklist
 
+        let newStatus: Status = STATUSES.todo
+
         const doneChecklist = newChecklist.filter((item) => item.checked === true)
         if (doneChecklist.length > 0 && task.status === STATUSES.todo) {
-          onSelect(STATUSES.inProgress)
+          newStatus = STATUSES.inProgress
         } else if (doneChecklist.length === task.checklist.length && task.status !== STATUSES.done) {
-          onSelect(STATUSES.done)
+          newStatus = STATUSES.done
         }
 
-        return { ...old, checklist: newChecklist }
+        return { ...old, checklist: newChecklist, status: newStatus }
       })
 
       return { previousTask }

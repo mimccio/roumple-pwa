@@ -33,7 +33,6 @@ export function TaskChecklist({ task }: Props) {
             key={checklistItem.id}
             onDelete={() => onDelete(checklistItem.id)}
             onCheck={onCheck}
-            isChecked={checklistItem.checked}
           />
         ))}
         <NewChecklistItem task={task} />
