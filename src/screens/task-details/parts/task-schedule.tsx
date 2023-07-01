@@ -24,7 +24,7 @@ export function Schedule({ task }: Props) {
         <div className="group flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="flex items-center gap-2">
             <CalendarDaysIcon height={18} className={scheduleColor} />
-            <span className={cl('font-semibold transition-colors', scheduleColor)}>{text}</span>
+            <span className="font-semibold text-gray-500">{text}</span>
           </p>
         </div>
       </Popover.Button>

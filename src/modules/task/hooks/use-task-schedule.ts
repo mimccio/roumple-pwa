@@ -1,13 +1,13 @@
+import { useState, useEffect } from 'react'
+import type { ScheduleType } from '&/common/types'
 import type { Task } from '../types'
 import { editTaskSchedule } from '../mutations'
 import { useMutateTask } from './use-mutate-task'
-import { ScheduleType } from '&/common/types'
-import { useState } from 'react'
 
 export function useTaskSchedule(task: Task) {
   const [scheduleType, setScheduleType] = useState(task.scheduleType)
   const [period, setPeriod] = useState(task.period)
-  const [date, setDate] = useState(task.date)
+  const [date, setDate] = useState(task.date ? new Date(task.date) : null)
 
   const onSelectPeriod = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
     setScheduleType(scheduleType)
@@ -18,11 +18,18 @@ export function useTaskSchedule(task: Task) {
 
   const { mutate } = useMutateTask(editTaskSchedule)
   const onSubmit = () => mutate({ ...task, scheduleType, period, date })
+
   const reset = () => {
     setScheduleType(task.scheduleType)
     setPeriod(task.period)
-    setDate(task.date)
+    setDate(task.date ? new Date(task.date) : null)
   }
+
+  useEffect(() => {
+    setScheduleType(task.scheduleType)
+    setPeriod(task.period)
+    setDate(task.date ? new Date(task.date) : null)
+  }, [task.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return { onSelectPeriod, onSelectDate, onSubmit, scheduleType, period, date, reset }
 }
