@@ -4,6 +4,7 @@ import { DetailContentSection } from '&/common/components/layouts'
 import { DetailInfoSection } from '&/common/components/layouts/detail-info-section'
 import { useTaskDetail } from '&/modules/task/hooks'
 import { NotFoundDetails, OfflineError } from '../errors'
+import { TaskChecklist } from './parts/checklist/task-checklist'
 import { TaskCategory } from './parts/task-category'
 import { TaskDescription } from './parts/task-description'
 import { TaskName } from './parts/task-name'
@@ -38,6 +39,7 @@ export function TaskDetailsScreen() {
           <DetailContentSection>
             <TaskName task={task} />
             <TaskDescription task={task} />
+            <TaskChecklist task={task} />
           </DetailContentSection>
         </>
       )}

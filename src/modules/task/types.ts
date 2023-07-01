@@ -1,6 +1,7 @@
 import type { JSONContent } from '@tiptap/react'
 import type { ScheduleType, Status } from '&/common/types'
 import type { Category } from '../category/types'
+import { TaskChecklistItem } from '../task-checklist-item/types'
 
 export interface Task {
   id: string
@@ -13,4 +14,5 @@ export interface Task {
   period: number
   scheduleType: ScheduleType
   date: Date | null
+  checklist: TaskChecklistItem[]
 }

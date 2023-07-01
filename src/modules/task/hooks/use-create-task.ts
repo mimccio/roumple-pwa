@@ -75,6 +75,7 @@ export function useCreateTask() {
       period,
       scheduleType,
       date,
+      checklist: [],
     })
     reset()
   }
