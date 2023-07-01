@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
-import { cl, getScheduleTypeBg, getScheduleTypeColor } from '&/common/utils'
+import { cl, getScheduleTypeBg, getScheduleTypeColor, isPassed } from '&/common/utils'
 import type { Task } from '&/modules/task/types'
 import { getDateText } from '&/modules/task/utils'
 import { useTaskSchedule } from '&/modules/task/hooks'
@@ -15,7 +15,8 @@ interface Props {
 export function Schedule({ task }: Props) {
   const { onSelectPeriod, onSelectDate, onSubmit, scheduleType, period, date, reset } = useTaskSchedule(task)
   const text = getDateText(task)
-  const scheduleColor = getScheduleTypeColor(task.scheduleType)
+
+  const scheduleColor = isPassed({ date, scheduleType }) ? 'text-red-400' : getScheduleTypeColor(task.scheduleType)
   const btnBg = getScheduleTypeBg(scheduleType)
 
   return (
