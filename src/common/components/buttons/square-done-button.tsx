@@ -22,7 +22,7 @@ export function SquareDoneButton({ onUpdate, priority, status }: Props) {
   }
 
   return (
-    <button onClick={onClick} className="group h-7 w-7 rounded-lg">
+    <button onClick={onClick} className="group flex h-8 w-8 items-center justify-center rounded-lg">
       <div
         className={cl(
           'flex h-6  w-6 items-center justify-center rounded-lg border-[3px] transition-colors ',
