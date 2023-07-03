@@ -6,11 +6,11 @@ import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
 import type { Task } from '../types'
 
 interface Params {
-  queryKey: readonly ['TASK', 'BOARD', { date: Date; type: ScheduleType }]
+  queryKey: readonly ['TASK', 'BOARD', { date: string; type: ScheduleType }]
 }
 
 export const fetchBoardTasks = async ({ queryKey }: Params) => {
-  const [, , { date, type }] = queryKey
+  const [, , { date: dateString, type }] = queryKey
 
   let query = db
     .from('task')
@@ -22,16 +22,18 @@ export const fetchBoardTasks = async ({ queryKey }: Params) => {
     .order('name', { ascending: true })
 
   if (type === SCHEDULE_TYPES.daily) {
-    query = query.eq('date', format(new Date(date), DATE_FORMAT))
+    query = query.eq('date', dateString)
   }
 
   if (type === SCHEDULE_TYPES.weekly) {
+    const date = new Date(dateString)
     query = query
       .gte('date', format(startOfWeek(date), DATE_FORMAT))
       .lte('date', format(lastDayOfWeek(date), DATE_FORMAT))
   }
 
   if (type === SCHEDULE_TYPES.monthly) {
+    const date = new Date(dateString)
     query = query.gte('date', format(date, 'yyyy-MM-01')).lte('date', format(lastDayOfMonth(date), DATE_FORMAT))
   }
 

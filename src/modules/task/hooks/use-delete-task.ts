@@ -2,19 +2,20 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import { startOfToday } from 'date-fns'
 
 import { useMainPath } from '&/common/hooks'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 import { deleteRoutine } from '../mutations'
 
-// TODO: Board tasks
-
 export function useDeleteTask() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const mainPath = useMainPath()
   const [isOpen, setIsOpen] = useState(false)
+
+  const date = startOfToday()
 
   const { mutate } = useMutation(deleteRoutine, {
     onMutate: async (data) => {
@@ -32,7 +33,15 @@ export function useDeleteTask() {
         return [...old.slice(0, index), ...old.slice(index + 1)]
       })
 
-      navigate('/tasks')
+      // TODO: previous Board tasks in case of error
+      if (data.date != null && data.scheduleType != null) {
+        queryClient.setQueryData(TASK_KEYS.board({ type: data.scheduleType, date }), (old: Task[] = []) => {
+          const index = old.findIndex((item) => item.id === data.id)
+          return [...old.slice(0, index), ...old.slice(index + 1)]
+        })
+      }
+
+      navigate(mainPath)
       return { previousTaskList }
     },
     onError: (_err, item, context) => {
