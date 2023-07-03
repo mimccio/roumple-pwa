@@ -1,4 +1,4 @@
-import { format, getDay, lastDayOfWeek, startOfWeek, lastDayOfMonth, getWeek, getMonth } from 'date-fns'
+import { format, lastDayOfWeek, startOfWeek, lastDayOfMonth } from 'date-fns'
 
 import { db } from '&/db'
 import type { ScheduleType } from '&/common/types'
@@ -27,17 +27,13 @@ export const fetchBoardTasks = async ({ queryKey }: Params) => {
 
   if (type === SCHEDULE_TYPES.weekly) {
     query = query
-      .gte('routine_action.date', format(startOfWeek(date), DATE_FORMAT))
-      .lte('routine_action.date', format(lastDayOfWeek(date), DATE_FORMAT))
+      .gte('date', format(startOfWeek(date), DATE_FORMAT))
+      .lte('date', format(lastDayOfWeek(date), DATE_FORMAT))
   }
 
-  // if (type === SCHEDULE_TYPES.monthly) {
-  //   const lastDayOfMonthDate = format(lastDayOfMonth(date), DATE_FORMAT)
-  //   query = query
-  //     .gte('routine_action.date', format(date, 'yyyy-MM-01'))
-  //     .lte('routine_action.date', lastDayOfMonthDate)
-  //     .contains('monthly_recurrence', [getMonth(date)])
-  // }
+  if (type === SCHEDULE_TYPES.monthly) {
+    query = query.gte('date', format(date, 'yyyy-MM-01')).lte('date', format(lastDayOfMonth(date), DATE_FORMAT))
+  }
 
   const { data, error } = await query
 

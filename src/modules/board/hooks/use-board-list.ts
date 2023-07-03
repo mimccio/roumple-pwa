@@ -32,9 +32,11 @@ export function useBoardList({ type }: Params) {
     error: tasksShowStatus.error || routinesShowStatus.error,
     empty: tasksShowStatus.empty && routinesShowStatus.empty,
     offline: tasksShowStatus.offline || routinesShowStatus.offline,
+    data: tasksShowStatus.data && routinesShowStatus.data,
   }
 
   showStatus.empty = !list.length && !showStatus.loading && !showStatus.error && !showStatus.offline
+  showStatus.data = !showStatus.loading && !showStatus.error && !showStatus.empty && !showStatus.offline
 
   return {
     showStatus,
