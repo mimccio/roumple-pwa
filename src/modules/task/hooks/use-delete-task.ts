@@ -14,7 +14,6 @@ export function useDeleteTask() {
   const navigate = useNavigate()
   const mainPath = useMainPath()
   const [isOpen, setIsOpen] = useState(false)
-
   const date = startOfToday()
 
   const { mutate } = useMutation(deleteRoutine, {
@@ -33,26 +32,29 @@ export function useDeleteTask() {
         return [...old.slice(0, index), ...old.slice(index + 1)]
       })
 
-      // TODO: previous Board tasks in case of error
-      if (data.date != null && data.scheduleType != null) {
-        queryClient.setQueryData(TASK_KEYS.board({ type: data.scheduleType, date }), (old: Task[] = []) => {
-          const index = old.findIndex((item) => item.id === data.id)
-          return [...old.slice(0, index), ...old.slice(index + 1)]
-        })
-      }
+      // Update Task board list
+      const boardKey = TASK_KEYS.board({ type: data.scheduleType, date })
+      const previousTaskBoard = queryClient.getQueryData(boardKey)
+      queryClient.setQueryData(boardKey, (old: Task[] = []) => {
+        const index = old.findIndex((item) => item.id === data.id)
+        return index >= 0 ? [...old.slice(0, index), ...old.slice(index + 1)] : old
+      })
 
       navigate(mainPath)
-      return { previousTaskList }
+      return { previousTaskList, previousTaskBoard }
     },
     onError: (_err, item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
       queryClient.setQueryData(TASK_KEYS.list(), context?.previousTaskList)
+      queryClient.setQueryData(TASK_KEYS.board({ type: item.scheduleType, date }), context?.previousTaskList)
+
       navigate(`${mainPath}/${item.id}`)
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
       queryClient.invalidateQueries(TASK_KEYS.list())
+      queryClient.invalidateQueries(TASK_KEYS.board({ type: variables.scheduleType, date }))
     },
   })
 
