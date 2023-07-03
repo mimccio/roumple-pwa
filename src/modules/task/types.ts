@@ -6,7 +6,7 @@ import { TaskChecklistItem } from '../task-checklist-item/types'
 export interface Task {
   id: string
   name: string
-  createdAt: Date
+  created_at: Date
   description?: JSONContent
   category: Category | null
   priority: number

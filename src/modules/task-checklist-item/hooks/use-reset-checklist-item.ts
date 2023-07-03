@@ -33,6 +33,7 @@ export function useResetChecklistItem(task: Task) {
   })
 
   const onResetChecklist = () => {
+    if (!task.checklist) return
     const checklist = task.checklist.map((item) => ({ ...item, checked: false }))
     mutate(checklist)
   }

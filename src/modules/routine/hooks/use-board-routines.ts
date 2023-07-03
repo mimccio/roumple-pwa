@@ -1,30 +1,28 @@
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
+import type { ScheduleType } from '&/common/types'
 import { getTodayDate } from '&/common/utils'
-import type { ScheduleType } from '../types'
+
 import { BOARD, ROUTINE } from '../constants'
 import { fetchBoardRoutines } from '../queries'
 import { categoryAtom } from '&/modules/category/atoms'
 import { filterRoutines } from '../utils'
+import { useShow } from '&/common/hooks'
 
 interface Params {
   type: ScheduleType
+  showDone: boolean
 }
 
-export function useBoardRoutines({ type }: Params) {
+export function useBoardRoutines({ type, showDone }: Params) {
   const date = getTodayDate()
-  const [showDone, setShowDone] = useState(false)
-  const [showPeriod, setShowPeriod] = useState(true)
   const [category] = useAtom(categoryAtom)
-  const { data, isLoading, error } = useQuery([ROUTINE, BOARD, { date, type }], fetchBoardRoutines)
+  const { data, isLoading, error, isPaused } = useQuery([ROUTINE, BOARD, { date, type }], fetchBoardRoutines)
 
-  const handleShowDone = () => setShowDone((prevState) => !prevState)
-  const handleShowPeriod = () => setShowPeriod((prevState) => !prevState)
-  const isError = Boolean(error)
   const routines = data?.filter((routine) => filterRoutines({ routine, category, showDone }))
-  const isEmpty = !error && !isLoading && !routines?.length
 
-  return { routines, isLoading, handleShowDone, showDone, date, isError, isEmpty, showPeriod, handleShowPeriod }
+  const routinesShowStatus = useShow({ data, isLoading, error, isPaused })
+
+  return { routines, date, routinesShowStatus }
 }
