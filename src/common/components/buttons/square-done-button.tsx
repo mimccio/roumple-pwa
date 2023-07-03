@@ -22,10 +22,10 @@ export function SquareDoneButton({ onUpdate, priority, status }: Props) {
   }
 
   return (
-    <button onClick={onClick} className="group h-7 w-7 rounded-xl">
+    <button onClick={onClick} className="group h-7 w-7 rounded-lg">
       <div
         className={cl(
-          'flex h-7  w-7 items-center justify-center rounded-xl border-[3px] transition-colors ',
+          'flex h-6  w-6 items-center justify-center rounded-lg border-[3px] transition-colors ',
           borderColor,
           status === STATUSES.done ? 'bg-green-500 group-hover:bg-green-400' : 'group-hover:bg-green-100',
           status === STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
