@@ -33,7 +33,7 @@ export function TaskDetailsScreen() {
             </div>
             <Schedule task={task} />
             <TaskCategory task={task} />
-            <CreatedAt createdAt={task.createdAt} />
+            <CreatedAt createdAt={task.created_at} />
           </DetailInfoSection>
 
           <DetailContentSection>

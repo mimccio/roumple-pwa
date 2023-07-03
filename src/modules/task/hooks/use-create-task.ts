@@ -68,7 +68,7 @@ export function useCreateTask() {
     mutate({
       id,
       name,
-      createdAt: new Date(),
+      created_at: new Date(),
       category,
       priority,
       status: STATUSES.todo,
