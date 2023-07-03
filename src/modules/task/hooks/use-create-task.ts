@@ -32,13 +32,21 @@ export function useCreateTask() {
     onMutate: async (data) => {
       // Cancel list queries
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.list() })
+      if (data.date != null && data.scheduleType != null) {
+        await queryClient.cancelQueries(TASK_KEYS.board({ type: data.scheduleType, date: data.date }))
+      }
+
       // Update item
       queryClient.setQueryData(TASK_KEYS.detail(id), () => data)
       // Update task list
       const previousTaskList = queryClient.getQueryData(TASK_KEYS.list())
       queryClient.setQueryData(TASK_KEYS.list(), (old: Task[] = []) => [...old, data])
-
-      // TODO!: BOARD LIST
+      if (data.date != null && data.scheduleType != null) {
+        queryClient.setQueryData(TASK_KEYS.board({ type: data.scheduleType, date: data.date }), (old: Task[] = []) => [
+          ...old,
+          data,
+        ])
+      }
 
       navigate(`d/task/${id}`)
       return { previousTaskList }
