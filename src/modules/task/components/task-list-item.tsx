@@ -1,7 +1,9 @@
 import { SquareDoneButton } from '&/common/components/buttons/square-done-button'
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl, getTwColor } from '&/common/utils'
 import { useTaskStatus } from '&/modules/task/hooks'
 import { Task } from '&/modules/task/types'
+import { format, getWeek } from 'date-fns'
 import { NavLink } from 'react-router-dom'
 
 interface Props {
@@ -11,6 +13,15 @@ interface Props {
 export function TaskListItem({ task }: Props) {
   const { onSelect } = useTaskStatus(task)
   const categoryBg = task.category?.color ? getTwColor('bg', task.category.color, 500) : 'bg-gray-300'
+
+  const getDateText = () => {
+    if (!task.date) return null
+    if (task.scheduleType === SCHEDULE_TYPES.daily) return format(new Date(task.date), 'dd MMM yyyy')
+    if (task.scheduleType === SCHEDULE_TYPES.weekly) return getWeek(new Date(task.date))
+    if (task.scheduleType === SCHEDULE_TYPES.monthly) return format(new Date(task.date), 'MMMM yyyy')
+  }
+
+  const dateText = getDateText()
 
   return (
     <NavLink
@@ -26,14 +37,17 @@ export function TaskListItem({ task }: Props) {
           </div>
           <div
             className={cl(
-              'mx-4 h-full w-full truncate border-b pt-1',
+              'mx-4 flex h-full w-full flex-col gap-y-1 truncate border-b pt-1',
               isActive ? 'border-transparent' : 'border-gray-100'
             )}
           >
             <p className="truncate font-semibold text-gray-700">{task.name}</p>
-            <div className="flex gap-2 text-xs font-semibold text-gray-500">
-              <p>{task.category?.name}</p>
-            </div>
+            <p className="flex gap-4 text-xs font-semibold text-gray-500">
+              <span className={cl(!task.category?.name && 'text-gray-300')}>
+                {task.category?.name || 'no category'}
+              </span>
+              <span>{dateText}</span>
+            </p>
           </div>
           <SquareDoneButton status={task.status} priority={task.priority} onUpdate={onSelect} />
         </>
