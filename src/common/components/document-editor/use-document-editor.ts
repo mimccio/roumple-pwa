@@ -40,8 +40,15 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
 
   const onBlur = () => {
     onUpdate.cancel()
-    // TODO compare if new content != saved content
-    submit(editor?.getJSON())
+    const json = editor?.getJSON()
+
+    // Compare before saving (remove if it's bad on performance)
+    const prev = JSON.stringify(content?.content)
+    const current = JSON.stringify(json?.content)
+
+    if (prev !== current) {
+      submit(editor?.getJSON())
+    }
   }
 
   const editor = useEditor({
