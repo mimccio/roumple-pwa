@@ -1,18 +1,19 @@
 import type { Status } from '&/common/types'
+import { STATUSES } from '&/common/constants'
 import type { Task } from '../types'
 import { editTaskStatus } from '../mutations'
 import { useMutateTask } from './use-mutate-task'
-import { useResetChecklistItem } from '&/modules/task-checklist-item/hooks/use-reset-checklist-item'
-import { STATUSES } from '&/common/constants'
 
 export function useTaskStatus(task: Task) {
   const { mutate } = useMutateTask(editTaskStatus)
-  const { onResetChecklist } = useResetChecklistItem(task)
+
+  let checkedItemIds = task.checkedItemIds
   const onSelect = (status: Status) => {
     if (status === STATUSES.todo) {
-      onResetChecklist()
+      checkedItemIds = []
     }
-    mutate({ ...task, status })
+    mutate({ ...task, status, checkedItemIds })
   }
+
   return { onSelect }
 }

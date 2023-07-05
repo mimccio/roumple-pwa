@@ -16,4 +16,5 @@ export interface Task {
   date: Date | null
   checklist: TaskChecklistItem[]
   newChecklistItem?: TaskChecklistItem
+  checkedItemIds: string[]
 }

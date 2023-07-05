@@ -35,7 +35,6 @@ export function useMutateTask(mutation: (task: Task) => any) {
       })
       return { previousTaskList, previousBoardList }
     },
-
     onError: (_err, item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
       queryClient.setQueryData(TASK_KEYS.list(), context?.previousTaskList)

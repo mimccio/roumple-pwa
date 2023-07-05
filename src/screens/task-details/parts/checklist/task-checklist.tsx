@@ -1,7 +1,7 @@
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
+import { SCHEDULE_TYPES } from '&/common/constants'
+import type { Task } from '&/modules/task/types'
+import { useCheckItem } from '&/modules/task/hooks'
 import { useDeleteChecklistItem } from '&/modules/task-checklist-item/hooks'
-import { useCheckChecklistItem } from '&/modules/task-checklist-item/hooks/use-check-checklist-item'
-import { Task } from '&/modules/task/types'
 import { ChecklistItem } from './checklist-item'
 import { NewChecklistItem } from './new-checklist-item'
 
@@ -11,7 +11,12 @@ interface Props {
 
 export function TaskChecklist({ task }: Props) {
   const { onDelete } = useDeleteChecklistItem(task)
-  const { onCheck } = useCheckChecklistItem(task)
+  const { onCheckItem, onRemoveItemId } = useCheckItem(task)
+
+  const handleDelete = (id: string) => {
+    onRemoveItemId(id)
+    onDelete(id)
+  }
 
   const getText = () => {
     if (task.scheduleType === SCHEDULE_TYPES.monthly) return 'next month'
@@ -31,8 +36,9 @@ export function TaskChecklist({ task }: Props) {
           <ChecklistItem
             checklistItem={checklistItem}
             key={checklistItem.id}
-            onDelete={() => onDelete(checklistItem.id)}
-            onCheck={onCheck}
+            onDelete={() => handleDelete(checklistItem.id)}
+            onCheck={() => onCheckItem(checklistItem.id)}
+            checked={task.checkedItemIds?.includes(checklistItem.id)}
           />
         ))}
         <NewChecklistItem task={task} />

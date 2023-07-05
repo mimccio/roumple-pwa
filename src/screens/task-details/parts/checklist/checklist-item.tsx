@@ -7,30 +7,27 @@ import { TaskChecklistItem } from '&/modules/task-checklist-item/types'
 
 interface Props {
   checklistItem: TaskChecklistItem
-  onDelete: (id: string) => void
-  onCheck: (checklistItem: TaskChecklistItem) => void
+  onDelete: () => void
+  onCheck: () => void
+  checked: boolean
 }
 
-export function ChecklistItem({ checklistItem, onDelete, onCheck }: Props) {
+export function ChecklistItem({ checklistItem, onDelete, onCheck, checked }: Props) {
   const { register, submit } = useEditChecklistItem(checklistItem)
-  const handleSelect = () => onCheck(checklistItem)
 
   return (
     <div className="flex w-full items-center gap-2">
-      <button className="group" onClick={handleSelect}>
+      <button className="group" onClick={onCheck}>
         <div
           className={cl(
             'flex h-5 w-5 items-center justify-center rounded-md border-2 border-gray-300 transition-colors',
-            checklistItem.checked ? 'bg-green-400 group-hover:bg-green-300' : 'group-hover:border-gray-400'
+            checked ? 'bg-green-400 group-hover:bg-green-300' : 'group-hover:border-gray-400'
           )}
         >
           <CheckIcon
             height={12}
             width={12}
-            className={cl(
-              'transition-colors',
-              checklistItem.checked ? 'text-white' : 'text-transparent group-hover:text-gray-300'
-            )}
+            className={cl('transition-colors', checked ? 'text-white' : 'text-transparent group-hover:text-gray-300')}
           />
         </div>
       </button>
@@ -41,7 +38,7 @@ export function ChecklistItem({ checklistItem, onDelete, onCheck }: Props) {
           {...register('name')}
         />
       </form>
-      <button onClick={() => onDelete(checklistItem.id)} className="rounded-md p-1">
+      <button onClick={onDelete} className="rounded-md p-1">
         <XMarkIcon width={20} height={20} className="text-gray-400 transition-colors hover:text-gray-500" />
       </button>
     </div>
