@@ -19,9 +19,7 @@ export function TaskListScreen() {
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-          {taskList?.map((task) => (
-            <TaskListItem key={task.id} task={task}></TaskListItem>
-          ))}
+          {showStatus.data && taskList?.map((task) => <TaskListItem key={task.id} task={task}></TaskListItem>)}
         </MainListLayout>
       </ContentLayout>
     </>
