@@ -31,10 +31,10 @@ export function TaskListHeader({ showDone, handleDoneChange }: Props) {
         <Tooltip message={showDone ? 'show to do' : 'show done'}>
           <button onClick={handleDoneChange} className="group p-2">
             {showDone ? (
-              <CheckBadgeIcon width={20} className="text-green-500 transition-colors group-hover:text-gray-300" />
+              <CheckBadgeIcon width={24} className="text-green-500 transition-colors group-hover:text-gray-300" />
             ) : (
               <CheckBadgeOutlineIcon
-                width={20}
+                width={24}
                 className="text-gray-400 transition-colors group-hover:text-green-300"
               />
             )}
