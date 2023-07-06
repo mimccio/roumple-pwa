@@ -1,12 +1,14 @@
 import { useRef, useState, ChangeEvent, FormEvent } from 'react'
-import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
-import { useOutsideClick } from '&/common/hooks'
-import { useSearchNote } from '&/modules/note/hooks'
 import { Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
-import { useCreateRoutineNote } from '&/modules/routine-note/hooks'
-import { Note } from '&/modules/note/types'
+
+import { useOutsideClick } from '&/common/hooks'
+import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+
+import type { Note } from '&/modules/note/types'
+import { useSearchNote } from '&/modules/note/hooks'
+import { useCreateTaskNote } from '&/modules/task-note/hooks'
 
 interface Props {
   isOpen: boolean
@@ -17,7 +19,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
   const ref = useRef<HTMLFormElement>(null)
   const [searchText, setSearchText] = useState<string>('')
   const { notes, isLoading, onSearchSubmit } = useSearchNote()
-  const { onCreate } = useCreateRoutineNote()
+  const { onCreate } = useCreateTaskNote()
 
   const handleTextChange = (evt: ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault()

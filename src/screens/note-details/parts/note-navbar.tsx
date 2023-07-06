@@ -15,12 +15,19 @@ interface Props {
 }
 
 export function NoteNavbar({ note }: Props) {
-  const { routineId } = useParams()
+  const { routineId, taskId } = useParams()
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const { onDelete } = useDeleteNote()
   const handleDelete = () => onDelete(note)
   const mainPath = useMainPath()
-  const routineUrl = `${mainPath}/d/routine/${routineId}`
+
+  const getBackUrl = () => {
+    if (routineId) return `${mainPath}/d/routine/${routineId}`
+    if (taskId) return `${mainPath}/d/task/${taskId}`
+    return null
+  }
+
+  const backUrl = getBackUrl()
 
   return (
     <DetailsNavbar>
@@ -28,7 +35,7 @@ export function NoteNavbar({ note }: Props) {
       <div className="flex gap-x-2">
         <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} withCopyLink />
 
-        {routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}
+        {backUrl ? <BackNavBtn to={backUrl} /> : <CloseNavBtn />}
       </div>
       <ConfirmDeleteModale
         isOpen={deleteModaleIsOpen}

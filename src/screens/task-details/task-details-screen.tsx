@@ -9,6 +9,7 @@ import { TaskCategory } from './parts/task-category'
 import { TaskDescription } from './parts/task-description'
 import { TaskName } from './parts/task-name'
 import { TaskNavbar } from './parts/task-navbar'
+import { TaskNotes } from './parts/task-notes'
 import { TaskPriority } from './parts/task-priority'
 import { Schedule } from './parts/task-schedule'
 import { TaskStatus } from './parts/task-status'
@@ -40,6 +41,7 @@ export function TaskDetailsScreen() {
             <TaskName task={task} />
             <TaskDescription task={task} />
             <TaskChecklist task={task} />
+            <TaskNotes />
           </DetailContentSection>
         </>
       )}

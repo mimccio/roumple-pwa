@@ -30,6 +30,7 @@ export function DetailsScreen() {
           <Route path=":nav/:folderId/d/note/:noteId/*" element={<NoteDetailsScreen />} />
 
           <Route path=":nav/d/task/:taskId/*" element={<TaskDetailsScreen />} />
+          <Route path=":nav/d/task/:taskId/note/:noteId/*" element={<NoteDetailsScreen />} />
 
           <Route path="categories" element={<CategoryDetailsScreen />} />
           <Route path="settings" element={<SettingsDetails />} />
