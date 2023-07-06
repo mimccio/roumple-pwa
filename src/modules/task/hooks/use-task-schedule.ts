@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
-import type { ScheduleType } from '&/common/types'
-import type { Task } from '../types'
-import { editTaskSchedule } from '../mutations'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { TASK_KEYS } from '../constants'
-import { startOfToday } from 'date-fns'
+import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek } from 'date-fns'
 import { toast } from 'react-hot-toast'
+
+import type { ScheduleType } from '&/common/types'
+import { SCHEDULE_TYPES } from '&/common/constants'
+
+import type { Task } from '../types'
+import { sortTaskByDate } from '../utils'
+import { TASK_KEYS } from '../constants'
+import { editTaskSchedule } from '../mutations'
 
 export function useTaskSchedule(task: Task) {
   const queryClient = useQueryClient()
@@ -35,7 +39,7 @@ export function useTaskSchedule(task: Task) {
       const previousTaskList = queryClient.getQueryData(TASK_KEYS.list())
       queryClient.setQueryData(TASK_KEYS.list(), (old: Task[] = []) => {
         const i = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, i), data, ...old.slice(i + 1)]
+        return [...old.slice(0, i), data, ...old.slice(i + 1)].sort(sortTaskByDate)
       })
 
       // Update previous Board list
@@ -72,7 +76,20 @@ export function useTaskSchedule(task: Task) {
     },
   })
 
-  const onSubmit = () => mutate({ ...task, scheduleType, period, date })
+  const onSubmit = () => {
+    const getDate = () => {
+      if (!date) return null
+      if (scheduleType === SCHEDULE_TYPES.monthly) {
+        return period === 1 ? startOfMonth(date) : endOfMonth(date)
+      }
+      if (scheduleType === SCHEDULE_TYPES.weekly) {
+        return period === 1 ? startOfWeek(date) : endOfWeek(date)
+      }
+      return date
+    }
+
+    mutate({ ...task, scheduleType, period, date: getDate() })
+  }
 
   const reset = () => {
     setScheduleType(task.scheduleType)

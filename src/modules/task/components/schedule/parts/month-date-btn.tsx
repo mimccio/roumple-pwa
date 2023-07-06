@@ -1,4 +1,4 @@
-import { addMonths, isThisWeek, subMonths } from 'date-fns'
+import { addMonths, isThisMonth, subMonths } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -13,7 +13,7 @@ export function MonthDateBtn({ date, onSelectDate }: Props) {
   return (
     <div className="flex justify-center gap-x-2">
       <button
-        disabled={isThisWeek(date)}
+        disabled={isThisMonth(date)}
         onClick={() => onSelectDate(subMonths(date, 1))}
         className="p-1 text-purple-500 transition-colors hover:text-purple-600 disabled:text-gray-300"
       >
