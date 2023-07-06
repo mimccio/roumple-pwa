@@ -7,11 +7,11 @@ import { MainError, OfflineError } from '../errors'
 import { TaskListHeader } from './parts/task-list-header'
 
 export function TaskListScreen() {
-  const { taskList, showStatus } = useTaskList()
+  const { taskList, showStatus, showDone, handleDoneChange } = useTaskList()
 
   return (
     <>
-      <TaskListHeader />
+      <TaskListHeader showDone={showDone} handleDoneChange={handleDoneChange} />
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
