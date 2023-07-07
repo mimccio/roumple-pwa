@@ -10,7 +10,7 @@ export function TaskNotes() {
 
   if (!taskNotes?.length) return null
   return (
-    <div className="mx-4 flex flex-col gap-y-2 border-t border-gray-100 pt-8">
+    <div className="flex flex-col gap-y-2 border-t border-gray-100 p-4">
       <h4 className="font-bold uppercase text-gray-400 ">Notes</h4>
 
       <div className="flex flex-col gap-y-2">

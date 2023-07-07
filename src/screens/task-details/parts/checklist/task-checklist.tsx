@@ -18,7 +18,7 @@ export function TaskChecklist({ task }: Props) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl flex-1 p-4 2xl:mt-4">
+    <div className="w-full max-w-2xl flex-1 px-4 2xl:mt-4">
       <div className="flex flex-col">
         <h4 className="font-bold uppercase text-gray-400">Checklist</h4>
       </div>

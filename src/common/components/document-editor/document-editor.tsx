@@ -18,7 +18,7 @@ export function DocumentEditor({ id, content, submit, forceTitle, bt = false }: 
   const { editor } = useDocumentEditor({ id, content, submit, forceTitle })
 
   return (
-    <div className={cl('flex flex-1 flex-col', bt && 'border-t border-gray-100')}>
+    <div className={cl('flex flex-1 flex-col border-b border-gray-100', bt && 'border-t ')}>
       {editor && <EditorMenu editor={editor} />}
       <EditorContent id="note" className="flex h-full flex-1 p-4" editor={editor} />
     </div>
