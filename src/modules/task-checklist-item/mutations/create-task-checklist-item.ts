@@ -7,15 +7,14 @@ interface CreateChecklistItemParams {
   task: Task
   name: string
   created_at: Date
-  checked: boolean
 }
 
-export const createTaskChecklistItem = async ({ id, name, task, created_at, checked }: CreateChecklistItemParams) => {
+export const createTaskChecklistItem = async ({ id, name, task, created_at }: CreateChecklistItemParams) => {
   const user_id = await getUserId()
 
   const { error } = await db
     .from('task_checklist_item')
-    .insert({ id, name, user_id, task_id: task.id, created_at, checked })
+    .insert({ id, name, user_id, task_id: task.id, created_at })
     .single()
   if (error) throw error
 }

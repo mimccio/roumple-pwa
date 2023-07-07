@@ -19,16 +19,19 @@ export function useCreateChecklistItem(task: Task) {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(task.id) })
 
+      const previousTask = queryClient.getQueryData(TASK_KEYS.detail(task.id))
       queryClient.setQueryData(TASK_KEYS.detail(task.id), () => {
         return {
           ...data.task,
           checklist: data.task.checklist ? [...data.task.checklist, data] : [data],
         }
       })
+
+      return { previousTask }
     },
 
-    onError: () => {
-      queryClient.setQueryData(TASK_KEYS.detail(task.id), task)
+    onError: (_err, _item, context) => {
+      queryClient.setQueryData(TASK_KEYS.detail(task.id), context?.previousTask)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
@@ -50,7 +53,7 @@ export function useCreateChecklistItem(task: Task) {
   const name = watch('name')
 
   const submit = handleSubmit(({ name }) => {
-    mutate({ task, id, name, created_at: new Date(), checked: false })
+    mutate({ task, id, name, created_at: new Date() })
     reset()
   })
 
