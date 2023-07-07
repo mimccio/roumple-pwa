@@ -1,4 +1,3 @@
-import { SCHEDULE_TYPES } from '&/common/constants'
 import type { Task } from '&/modules/task/types'
 import { useCheckItem } from '&/modules/task/hooks'
 import { useDeleteChecklistItem } from '&/modules/task-checklist-item/hooks'
@@ -18,17 +17,10 @@ export function TaskChecklist({ task }: Props) {
     onDelete(id)
   }
 
-  const getText = () => {
-    if (task.scheduleType === SCHEDULE_TYPES.monthly) return 'next month'
-    if (task.scheduleType === SCHEDULE_TYPES.weekly) return 'next week'
-    return 'tomorrow'
-  }
-
   return (
     <div className="mx-auto w-full max-w-2xl flex-1 p-4 2xl:mt-4">
       <div className="flex flex-col">
         <h4 className="font-bold uppercase text-gray-400">Checklist</h4>
-        <p className="text-xs text-gray-300">checklist will automatically reset {getText()}</p>
       </div>
 
       <div className="mt-4 flex flex-col gap-2">
