@@ -6,6 +6,7 @@ import Text from '@tiptap/extension-text'
 import Paragraph from '@tiptap/extension-paragraph'
 import CharacterCount from '@tiptap/extension-character-count'
 import { Transition } from '@headlessui/react'
+import { toast } from 'react-hot-toast'
 
 interface Props {
   name: string
@@ -41,6 +42,11 @@ export function NameEditor({ name, id, submit }: Props) {
 
   const onBlur = () => {
     const text = editor?.getText().trim() || ''
+    if (!text.length) {
+      editor?.commands.setContent(name)
+      toast.error("Name can't be empty")
+      return
+    }
     if (text === name) return
     submit(text)
   }
