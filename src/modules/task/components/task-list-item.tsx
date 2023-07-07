@@ -17,7 +17,7 @@ export function TaskListItem({ task }: Props) {
   const getDateText = () => {
     if (!task.date) return null
     if (task.scheduleType === SCHEDULE_TYPES.daily) return format(new Date(task.date), 'dd MMM yyyy')
-    if (task.scheduleType === SCHEDULE_TYPES.weekly) return getWeek(new Date(task.date))
+    if (task.scheduleType === SCHEDULE_TYPES.weekly) return 'week ' + getWeek(new Date(task.date))
     if (task.scheduleType === SCHEDULE_TYPES.monthly) return format(new Date(task.date), 'MMMM yyyy')
   }
 
