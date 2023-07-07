@@ -16,3 +16,13 @@ export const TASK_KEYS = {
   details: () => [...TASK_KEYS.all, 'DETAIL'] as const,
   detail: (id?: string) => [...TASK_KEYS.details(), id] as const,
 }
+
+export const DATE = 'DATE'
+export const PRIORITY = 'PRIORITY'
+export const NAME = 'NAME'
+
+export const SORT_TYPES = {
+  date: DATE as 'DATE',
+  priority: PRIORITY as 'PRIORITY',
+  name: NAME as 'NAME',
+}

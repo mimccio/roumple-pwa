@@ -4,7 +4,7 @@ import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek } from '
 import { toast } from 'react-hot-toast'
 
 import type { ScheduleType } from '&/common/types'
-import { SCHEDULE_TYPES } from '&/common/constants'
+import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
 
 import type { Task } from '../types'
 import { sortTaskByDate } from '../utils'
@@ -27,8 +27,10 @@ export function useTaskSchedule(task: Task) {
 
   const { mutate } = useMutation(editTaskSchedule, {
     onMutate: async (data) => {
+      const listKey = TASK_KEYS.list({ done: data.status === STATUSES.done })
+
       // Cancel related queries
-      await queryClient.cancelQueries({ queryKey: TASK_KEYS.list() })
+      await queryClient.cancelQueries({ queryKey: listKey })
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(data.id) })
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.boards() })
 
@@ -36,8 +38,8 @@ export function useTaskSchedule(task: Task) {
       queryClient.setQueryData(TASK_KEYS.detail(data.id), () => data)
 
       // Update task list
-      const previousTaskList = queryClient.getQueryData(TASK_KEYS.list())
-      queryClient.setQueryData(TASK_KEYS.list(), (old: Task[] = []) => {
+      const previousTaskList = queryClient.getQueryData(listKey)
+      queryClient.setQueryData(listKey, (old: Task[] = []) => {
         const i = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, i), data, ...old.slice(i + 1)].sort(sortTaskByDate)
       })
@@ -60,7 +62,7 @@ export function useTaskSchedule(task: Task) {
 
     onError: (_err, item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
-      queryClient.setQueryData(TASK_KEYS.list(), context?.previousTaskList)
+      queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(
         TASK_KEYS.board({ type: task.scheduleType, date: todayDate }),
         context?.prevPreviousBoardList
@@ -70,7 +72,7 @@ export function useTaskSchedule(task: Task) {
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(TASK_KEYS.list())
+      queryClient.invalidateQueries(TASK_KEYS.list({ done: variables.status === STATUSES.done }))
       queryClient.invalidateQueries(TASK_KEYS.board({ type: variables.scheduleType, date: todayDate }))
       queryClient.invalidateQueries(TASK_KEYS.board({ type: task.scheduleType, date: todayDate }))
     },

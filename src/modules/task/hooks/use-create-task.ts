@@ -31,7 +31,7 @@ export function useCreateTask() {
   const { mutate } = useMutation(createTask, {
     onMutate: async (data) => {
       // Cancel list queries
-      await queryClient.cancelQueries({ queryKey: TASK_KEYS.list() })
+      await queryClient.cancelQueries({ queryKey: TASK_KEYS.list({ done: false }) })
       if (data.date != null && data.scheduleType != null) {
         await queryClient.cancelQueries(TASK_KEYS.board({ type: data.scheduleType, date: data.date }))
       }
@@ -39,9 +39,13 @@ export function useCreateTask() {
       // Update item
       queryClient.setQueryData(TASK_KEYS.detail(id), () => data)
       // Update task list
-      const previousTaskList = queryClient.getQueryData(TASK_KEYS.list())
-      queryClient.setQueryData(TASK_KEYS.list(), (old: Task[] = []) => [...old, data])
+      const previousTaskList = queryClient.getQueryData(TASK_KEYS.list({ done: false }))
+      queryClient.setQueryData(TASK_KEYS.list({ done: false }), (old: Task[] = []) => [...old, data])
+
+      let previousTaskBoard: Task[] = []
       if (data.date != null && data.scheduleType != null) {
+        previousTaskBoard =
+          queryClient.getQueryData(TASK_KEYS.board({ type: data.scheduleType, date: data.date })) || []
         queryClient.setQueryData(TASK_KEYS.board({ type: data.scheduleType, date: data.date }), (old: Task[] = []) => [
           ...old,
           data,
@@ -49,16 +53,22 @@ export function useCreateTask() {
       }
 
       navigate(`d/task/${id}`)
-      return { previousTaskList }
+      return { previousTaskList, previousTaskBoard }
     },
-    onError: (_err, _item, context) => {
+    onError: (_err, item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(id), null)
-      queryClient.setQueryData(TASK_KEYS.list(), context?.previousTaskList)
+      queryClient.setQueryData(TASK_KEYS.list({ done: false }), context?.previousTaskList)
+      if (item.date != null && item.scheduleType != null) {
+        queryClient.setQueryData(
+          TASK_KEYS.board({ type: item.scheduleType, date: item.date }),
+          context?.previousTaskBoard
+        )
+      }
       navigate(mainPath)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.list())
+      queryClient.invalidateQueries(TASK_KEYS.list({ done: false }))
     },
   })
 

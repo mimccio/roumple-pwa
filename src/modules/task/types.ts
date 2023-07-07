@@ -18,3 +18,5 @@ export interface Task {
   newChecklistItem?: TaskChecklistItem
   checkedItemIds: string[]
 }
+
+export type SortType = 'DATE' | 'PRIORITY' | 'NAME'

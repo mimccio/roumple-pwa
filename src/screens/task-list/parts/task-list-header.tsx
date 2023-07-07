@@ -6,13 +6,16 @@ import { Tooltip } from '&/common/components/tooltip'
 import { Header } from '&/common/components/layouts'
 import { CategoryBtn } from '&/common/components/buttons'
 import { CreateTaskModale } from '&/modules/task/components'
+import { TasksMenu } from './tasks-menu'
+import { SortType } from '&/modules/task/types'
 
 interface Props {
   showDone: boolean
   handleDoneChange: () => void
+  handleSortChange: (sortType: SortType) => void
 }
 
-export function TaskListHeader({ showDone, handleDoneChange }: Props) {
+export function TaskListHeader({ showDone, handleDoneChange, handleSortChange }: Props) {
   const [createIsOpen, setCreateIsOpen] = useState(false)
 
   return (
@@ -22,8 +25,9 @@ export function TaskListHeader({ showDone, handleDoneChange }: Props) {
         <h1 className="ml-2 text-gray-500">Tasks</h1>
       </div>
       <div className="flex gap-2">
+        <TasksMenu handleSortChange={handleSortChange} />
         <Tooltip message="create task">
-          <button className="group rounded-md p-1" onClick={() => setCreateIsOpen(true)}>
+          <button className="group  rounded-md p-1" onClick={() => setCreateIsOpen(true)}>
             <PlusIcon width={24} className="text-gray-500 transition-colors group-hover:text-gray-600" />
           </button>
         </Tooltip>

@@ -1,5 +1,6 @@
 import { compareAsc } from 'date-fns'
-import { Task } from '../types'
+import { SortType, Task } from '../types'
+import { SORT_TYPES } from '../constants'
 
 export const sortTaskByDate = (a: Task, b: Task) => {
   if (a.date == null) return 1
@@ -15,8 +16,26 @@ export const sortTaskByDate = (a: Task, b: Task) => {
   }
 }
 
-type SortType = 'DATE' | 'PRIORITY' | 'NAME'
+export const sortTaskByPriority = (a: Task, b: Task) => {
+  if (a.priority === b.priority) {
+    if (a.name.toLowerCase() === b.name.toLowerCase()) return compareAsc(new Date(b.created_at), new Date(a.created_at))
+    return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+  } else {
+    return b.priority - a.priority
+  }
+}
+
+export const sortTaskByName = (a: Task, b: Task) => {
+  if (a.name.toLowerCase() === b.name.toLowerCase()) {
+    if (b.priority === a.priority) return compareAsc(new Date(b.created_at), new Date(a.created_at))
+    return b.priority - a.priority
+  } else {
+    return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+  }
+}
 
 export const sortTask = (sortType: SortType) => {
-  if (sortType === 'DATE') return sortTaskByDate
+  if (sortType === SORT_TYPES.date) return sortTaskByDate
+  if (sortType === SORT_TYPES.priority) return sortTaskByPriority
+  if (sortType === SORT_TYPES.name) return sortTaskByName
 }

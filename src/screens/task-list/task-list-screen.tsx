@@ -9,11 +9,11 @@ import { TaskListHeader } from './parts/task-list-header'
 import { EmptyScreen } from '&/common/components/empty-screen'
 
 export function TaskListScreen() {
-  const { taskList, showStatus, showDone, handleDoneChange } = useTaskList()
+  const { taskList, showStatus, showDone, handleDoneChange, handleSortChange } = useTaskList()
 
   return (
     <>
-      <TaskListHeader showDone={showDone} handleDoneChange={handleDoneChange} />
+      <TaskListHeader showDone={showDone} handleDoneChange={handleDoneChange} handleSortChange={handleSortChange} />
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
