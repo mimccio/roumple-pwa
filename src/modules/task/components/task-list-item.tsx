@@ -42,10 +42,11 @@ export function TaskListItem({ task }: Props) {
             )}
           >
             <p className="truncate font-semibold text-gray-700">{task.name}</p>
-            <p className="flex gap-4 text-xs font-semibold text-gray-500">
-              <span className={cl(!task.category?.name && 'text-gray-300')}>
+            <p className="flex gap-x-2 text-xs  text-gray-500">
+              <span className={cl('font-semibold', !task.category?.name && 'text-gray-300')}>
                 {task.category?.name || 'no category'}
               </span>
+              {dateText && <span className="text-gray-300">-</span>}
               <span>{dateText}</span>
             </p>
           </div>
