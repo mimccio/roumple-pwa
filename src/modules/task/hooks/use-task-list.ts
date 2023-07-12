@@ -5,11 +5,11 @@ import { useAtom } from 'jotai'
 import { useShow } from '&/common/hooks'
 import { categoryAtom } from '&/modules/category/atoms'
 
+import type { SortType } from '../types'
 import { TASK_KEYS } from '../constants'
-import { fetchTaskList } from '../queries'
-import { sortTask } from '../utils'
-import { SortType } from '../types'
 import { sortTypeAtom } from '../atoms'
+import { sortTask } from '../utils'
+import { fetchTaskList } from '../queries'
 
 export function useTaskList() {
   const [category] = useAtom(categoryAtom)
