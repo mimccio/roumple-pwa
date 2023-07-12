@@ -11,8 +11,6 @@ export function useMutateTaskStatus(task: Task) {
   const queryClient = useQueryClient()
   const date = startOfToday()
 
-  // TODO: sort
-
   const { mutate } = useMutation(editTaskStatus, {
     onMutate: async (data) => {
       // Cancel related queries
