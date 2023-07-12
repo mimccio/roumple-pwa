@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Routine, ScheduleType, UpdateCheckedListParams, UpdateStatusParams } from '../types'
+import type { ScheduleType } from '&/common/types'
+import type { Routine, UpdateCheckedListParams, UpdateStatusParams } from '../types'
 import { BOARD, ROUTINE } from '../constants'
 import { upsertRoutineAction } from '../mutations'
 import { STATUSES } from '&/common/constants'

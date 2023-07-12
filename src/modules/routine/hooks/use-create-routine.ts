@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
@@ -9,7 +10,6 @@ import { Routine, ScheduleType } from '../types'
 import { BOARD, LIST, ROUTINE, SCHEDULE_TYPES } from '../constants'
 import { categoryAtom } from '&/modules/category/atoms'
 import { getTodayDate } from '&/common/utils'
-import { useState } from 'react'
 import { Category } from '&/modules/category/types'
 
 export function useCreateRoutine() {

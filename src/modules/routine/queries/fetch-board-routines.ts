@@ -2,7 +2,9 @@ import { format, getDay, lastDayOfWeek, startOfWeek, lastDayOfMonth, getWeek, ge
 
 import { db } from '&/db'
 import { DATE_FORMAT } from '&/common/constants'
-import type { Routine, ScheduleType } from '../types'
+import type { ScheduleType } from '&/common/types'
+
+import type { Routine } from '../types'
 import { SCHEDULE_TYPES } from '../constants'
 
 interface Params {

@@ -1,20 +1,13 @@
-import { cl } from '&/common/utils'
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
-import { useBoardRoutineCount } from '&/modules/routine/hooks/use-board-routine-count'
 import { NavLink } from 'react-router-dom'
+import { cl } from '&/common/utils'
+import { useBoardCount } from '&/modules/board/hooks'
 
 interface Props {
   close: () => void
 }
 
 export function BoardNav({ close }: Props) {
-  const dailyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.daily })
-  const weeklyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.weekly })
-  const monthlyQuery = useBoardRoutineCount({ type: SCHEDULE_TYPES.monthly })
-
-  const todayNum = dailyQuery.count && dailyQuery.count > 0 ? dailyQuery.count : null
-  const weekNum = weeklyQuery.count && weeklyQuery.count > 0 ? weeklyQuery.count : null
-  const monthNum = monthlyQuery.count && monthlyQuery.count > 0 ? monthlyQuery.count : null
+  const { todayNum, weekNum, monthNum } = useBoardCount()
 
   return (
     <nav className="gap-2 border-b py-4">

@@ -1,10 +1,11 @@
 import { format, startOfWeek } from 'date-fns'
 
 import { db } from '&/db'
+import type { ScheduleType } from '&/common/types'
 import { DATE_FORMAT } from '&/common/constants'
 import { getUserId } from '&/modules/utils'
 import { DAILY, MONTHLY, WEEKLY } from '&/modules/routine/constants'
-import { Routine, RoutineStatuses, ScheduleType } from '../types'
+import { Routine, RoutineStatuses } from '../types'
 
 interface Params {
   actionId?: number

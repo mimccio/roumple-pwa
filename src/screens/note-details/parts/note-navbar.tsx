@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { DetailsNavbar } from '&/common/components/layouts'
 import { BackNavBtn, CloseNavBtn } from '&/common/components/buttons'
 import { ItemMenu } from '&/common/components/menus'
-import { ConfirmDeleteModale } from '&/common/components/confirm-delete-modale'
+import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-modale'
 
 import type { Note } from '&/modules/note/types'
 import { useDeleteNote } from '&/modules/note/hooks'
@@ -15,19 +15,28 @@ interface Props {
 }
 
 export function NoteNavbar({ note }: Props) {
-  const { routineId } = useParams()
+  const { routineId, taskId } = useParams()
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const { onDelete } = useDeleteNote()
   const handleDelete = () => onDelete(note)
   const mainPath = useMainPath()
-  const routineUrl = `${mainPath}/d/routine/${routineId}`
+
+  const getBackUrl = () => {
+    if (routineId) return `${mainPath}/d/routine/${routineId}`
+    if (taskId) return `${mainPath}/d/task/${taskId}`
+    return null
+  }
+
+  const backUrl = getBackUrl()
 
   return (
     <DetailsNavbar>
-      <div>
+      <h4 className="text-sm font-semibold text-gray-500">Note</h4>
+      <div className="flex gap-x-2">
         <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} withCopyLink />
+
+        {backUrl ? <BackNavBtn to={backUrl} /> : <CloseNavBtn />}
       </div>
-      <div>{routineId ? <BackNavBtn to={routineUrl} /> : <CloseNavBtn />}</div>
       <ConfirmDeleteModale
         isOpen={deleteModaleIsOpen}
         onDelete={handleDelete}

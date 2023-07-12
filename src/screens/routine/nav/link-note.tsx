@@ -29,7 +29,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
   const onSearch = (evt: FormEvent<HTMLElement>) => {
     evt.preventDefault()
     onSearchSubmit(searchText)
-    setSearchText('')
+    // setSearchText('')
   }
 
   const onSelect = (note: Note) => onCreate(note)
@@ -62,6 +62,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
       </form>
       <div className="flex flex-1 flex-col gap-y-2">
         {isLoading && <ListSkeletonSmall />}
+        {!notes?.length && <p className="text-xs text-gray-300">No notes to show</p>}
         {notes?.map((note) => (
           <button
             onClick={() => onSelect(note)}

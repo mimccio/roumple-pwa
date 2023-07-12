@@ -8,7 +8,7 @@ import { FolderMenu } from './folder-menu'
 import { cl } from '&/common/utils'
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { useDeleteNoteFolder } from '&/modules/note-folder/hooks'
-import { ConfirmDeleteModale } from '&/common/components/confirm-delete-modale'
+import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-modale'
 
 interface Props {
   folder: NoteFolder

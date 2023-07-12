@@ -1,3 +1,24 @@
+export const TW_COLOR_TEXT_200 = {
+  gray: 'text-gray-200',
+  red: 'text-red-200',
+  orange: 'text-orange-200',
+  amber: 'text-amber-200',
+  yellow: 'text-yellow-200',
+  lime: 'text-lime-200',
+  green: 'text-green-200',
+  emerald: 'text-emerald-200',
+  teal: 'text-teal-200',
+  cyan: 'text-cyan-200',
+  sky: 'text-sky-200',
+  blue: 'text-blue-200',
+  indigo: 'text-indigo-200',
+  violet: 'text-violet-200',
+  purple: 'text-purple-200',
+  fuchsia: 'text-fuchsia-200',
+  pink: 'text-pink-200',
+  rose: 'text-rose-200',
+}
+
 export const TW_COLOR_TEXT_400 = {
   gray: 'text-gray-400',
   red: 'text-red-400',

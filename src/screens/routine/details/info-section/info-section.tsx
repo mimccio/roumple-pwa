@@ -1,5 +1,5 @@
 import { CreatedAt } from '&/common/components/display/created-at'
-import { StatusSelector } from '&/common/components/inputs/status-selector'
+import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
 import type { Routine } from '&/modules/routine/types'
 import { Priority, RoutineCategory, RoutineSchedule } from './parts'
 
@@ -12,7 +12,7 @@ export function InfoSection({ routine, date }: Props) {
   return (
     <section className="flex flex-col border-b bg-gray-100 p-4">
       <div className="-mx-1 mb-6 flex items-center justify-between">
-        <StatusSelector routine={routine} date={date} />
+        <RoutineStatusSelector routine={routine} date={date} />
         <Priority routine={routine} />
       </div>
 

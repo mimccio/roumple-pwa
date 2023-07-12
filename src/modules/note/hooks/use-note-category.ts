@@ -12,6 +12,8 @@ import { editNoteCategory } from '../mutations'
 import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
 import { NoteFolder } from '&/modules/note-folder/types'
 
+// TODO!: use setQueriesData
+
 export function useNoteCategory(note: Note) {
   const queryClient = useQueryClient()
   const { categoryList, isLoading, error } = useCategories()

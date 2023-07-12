@@ -1,21 +1,20 @@
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { ListSkeleton } from '&/common/components/list-skeleton'
-import { RoutineActionListItem } from '&/screens/board/components'
-import { useUpsertAction, useBoardRoutines } from '&/modules/routine/hooks/'
 import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 
-import { MainError } from '../errors'
+import { MainError, OfflineError } from '../errors'
 import { Header } from './components/header'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
 import { PeriodList } from './period-list'
+import { useBoardList } from '&/modules/board/hooks'
+import { ListItem } from './components/list-item'
 
 const type = SCHEDULE_TYPES.weekly
 
 export function Week() {
-  const { routines, isLoading, date, handleShowDone, showDone, isEmpty, isError, showPeriod, handleShowPeriod } =
-    useBoardRoutines({ type })
-  const { handleUpdateStatus } = useUpsertAction({ type, date })
+  const { showStatus, list, handleShowDone, showDone, showPeriod, handleShowPeriod, handleUpdateRoutineStatus } =
+    useBoardList({ type })
 
   return (
     <>
@@ -28,17 +27,21 @@ export function Week() {
         type={type}
       />
       <ContentLayout>
-        {isError && <MainError />}
-        {isEmpty && !showDone && <EmptyTodo />}
-        {isEmpty && showDone && <EmptyDone />}
+        {showStatus.error && <MainError />}
+        {showStatus.offline && <OfflineError />}
+        {showStatus.empty && !showDone && <EmptyTodo />}
+        {showStatus.empty && showDone && <EmptyDone />}
 
         <div className="flex flex-col gap-4 px-2">
-          {isLoading && <ListSkeleton />}
-          {!showPeriod &&
-            routines?.map((routine) => (
-              <RoutineActionListItem key={routine.id} routine={routine} handleUpdateStatus={handleUpdateStatus} />
+          {showStatus.loading && <ListSkeleton />}
+          {showStatus.data &&
+            !showPeriod &&
+            list?.map((item) => (
+              <ListItem key={item.id} item={item} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
             ))}
-          {showPeriod && <PeriodList type={type} routines={routines} handleUpdateStatus={handleUpdateStatus} />}
+          {showStatus.data && showPeriod && (
+            <PeriodList type={type} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
+          )}
         </div>
       </ContentLayout>
     </>
