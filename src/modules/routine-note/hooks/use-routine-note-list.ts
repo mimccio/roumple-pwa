@@ -12,7 +12,5 @@ export function useRoutineNoteList() {
     enabled: Boolean(routineId),
   })
 
-  const notes = data?.map((routineNote) => routineNote.note)
-
-  return { notes, isLoading, error }
+  return { routineNotes: data, isLoading, error }
 }

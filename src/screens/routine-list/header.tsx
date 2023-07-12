@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAtom } from 'jotai'
-import { TagIcon, PlusCircleIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid'
+import { TagIcon, PlusIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid'
 import { ArchiveBoxIcon as ArchiveBoxOutlineIcon, ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
 
 import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
@@ -34,7 +34,7 @@ export function Header({ handleShowArchived, archived }: Props) {
       <div className="flex gap-1">
         <Tooltip message="create routine">
           <button className="group p-2" onClick={() => setNewRoutineModaleIsOpen(true)}>
-            <PlusCircleIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-500" />
+            <PlusIcon width={24} className="text-gray-400 transition-colors group-hover:text-gray-500" />
           </button>
         </Tooltip>
         <Tooltip message={archived ? 'show active' : 'show archived'}>

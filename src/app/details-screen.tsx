@@ -6,7 +6,7 @@ import { FatalError, NotFoundDetails } from '&/screens/errors'
 import { EmptyItem } from '&/screens/empty-item'
 import { SettingsDetails } from '&/screens/settings/settings-details'
 import { CategoryDetailsScreen } from '&/screens/categories/category-details-screen'
-import { RoutineScreen } from '&/screens/routine'
+import { RoutineDetailsScreen } from '&/screens/routine-details'
 import { NoteDetailsScreen } from '&/screens/note-details'
 import { TaskDetailsScreen } from '&/screens/task-details'
 
@@ -24,7 +24,7 @@ export function DetailsScreen() {
     >
       <ErrorBoundary fallback={<FatalError />}>
         <Routes>
-          <Route path=":nav/d/routine/:routineId/*" element={<RoutineScreen />} />
+          <Route path=":nav/d/routine/:routineId/*" element={<RoutineDetailsScreen />} />
 
           <Route path=":nav/d/routine/:routineId/note/:noteId/*" element={<NoteDetailsScreen />} />
           <Route path=":nav/:folderId/d/note/:noteId/*" element={<NoteDetailsScreen />} />

@@ -8,18 +8,18 @@ import type { Routine } from '&/modules/routine/types'
 import { LinkNote } from './link-note'
 
 interface Props {
-  routine: Routine
+  routine?: Routine
+  isLoading: boolean
 }
 
-export function RoutineNavbar({ routine }: Props) {
+export function RoutineNavbar({ routine, isLoading }: Props) {
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const [linkSelectorIsOpen, setLinkSelectorIsOpen] = useState(false)
 
   const { onDeleteRoutine } = useDeleteRoutine()
   const { handleArchiveRoutine } = useArchiveRoutine()
 
-  const onDelete = () => onDeleteRoutine(routine)
-  const onArchive = () => handleArchiveRoutine(routine)
+  const onArchive = routine ? () => handleArchiveRoutine(routine) : undefined
 
   return (
     <DetailsNavbar>
@@ -29,16 +29,19 @@ export function RoutineNavbar({ routine }: Props) {
           onDelete={() => setDeleteModaleIsOpen(true)}
           onArchive={onArchive}
           onLinkNote={() => setLinkSelectorIsOpen(true)}
+          isLoading={isLoading}
         />
         <CloseNavBtn />
       </div>
-      <ConfirmDeleteModale
-        isOpen={deleteModaleIsOpen}
-        onDelete={onDelete}
-        close={() => setDeleteModaleIsOpen(false)}
-        title="Delete Routine"
-        description="Are you sure you want to delete this routine? This action cannot be undone."
-      />
+      {routine && (
+        <ConfirmDeleteModale
+          isOpen={deleteModaleIsOpen}
+          onDelete={() => onDeleteRoutine(routine)}
+          close={() => setDeleteModaleIsOpen(false)}
+          title="Delete Routine"
+          description="Are you sure you want to delete this routine? This action cannot be undone."
+        />
+      )}
       <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} />
     </DetailsNavbar>
   )
