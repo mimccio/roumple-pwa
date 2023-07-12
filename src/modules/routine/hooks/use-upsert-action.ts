@@ -49,8 +49,13 @@ export function useUpsertAction({ type, date }: Params) {
   })
 
   const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) => {
-    if (routine.actions?.[0]?.status === status) return
-    mutate({ routine, actionId, status, type, date, checkedList: routine.actions?.[0]?.checked_list })
+    const prevStatus = routine.actions?.[0]?.status
+    const prevCheckedList = routine.actions?.[0]?.checked_list
+
+    if (prevStatus === status && (prevStatus !== STATUSES.todo || !prevCheckedList?.length)) return
+
+    const checkedList = status === STATUSES.todo ? [] : prevCheckedList
+    mutate({ routine, actionId, status, type, date, checkedList })
   }
 
   const handleSelectChecklistItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
@@ -69,7 +74,6 @@ export function useUpsertAction({ type, date }: Params) {
     let status = action?.status
 
     if (newList.length === routine.checklist?.length) {
-      // TODO: verify that every items match
       status = STATUSES.done
     } else if (newList.length && action?.status !== STATUSES.done && index === -1) {
       status = STATUSES.inProgress
