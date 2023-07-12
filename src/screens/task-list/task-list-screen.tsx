@@ -1,29 +1,49 @@
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
 import { ListSkeleton } from '&/common/components/list-skeleton'
-
+import { EmptyScreen } from '&/common/components/empty-screen'
+import { EmptyMainContent } from '&/common/components/empty-main-content'
+import workflowImg from '&/assets/illustrations/workflow.png'
 import successImg from '&/assets/illustrations/success.png'
+
 import { useTaskList } from '&/modules/task/hooks'
-import { TaskListItem } from '&/modules/task/components'
+import { CreateTaskModale, TaskListItem } from '&/modules/task/components'
 import { MainError, OfflineError } from '../errors'
 import { TaskListHeader } from './parts/task-list-header'
-import { EmptyScreen } from '&/common/components/empty-screen'
 
 export function TaskListScreen() {
-  const { taskList, showStatus, showDone, handleDoneChange, handleSortChange } = useTaskList()
+  const {
+    createIsOpen,
+    handleDoneChange,
+    handleSortChange,
+    onCloseCreate,
+    onOpenCreate,
+    showDone,
+    showStatus,
+    taskList,
+  } = useTaskList()
 
   return (
     <>
-      <TaskListHeader showDone={showDone} handleDoneChange={handleDoneChange} handleSortChange={handleSortChange} />
+      <TaskListHeader
+        showDone={showDone}
+        handleDoneChange={handleDoneChange}
+        handleSortChange={handleSortChange}
+        onCreate={onOpenCreate}
+      />
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
-        {showStatus.empty && <EmptyScreen opacity text="No done task" image={successImg} />}
+        {showStatus.empty && showDone && <EmptyScreen opacity text="No done task" image={successImg} />}
+        {showStatus.empty && !showDone && (
+          <EmptyMainContent onClick={onOpenCreate} text="Create a new task +" image={workflowImg} />
+        )}
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
           {showStatus.data && taskList?.map((task) => <TaskListItem key={task.id} task={task}></TaskListItem>)}
         </MainListLayout>
       </ContentLayout>
+      <CreateTaskModale isOpen={createIsOpen} close={onCloseCreate} />
     </>
   )
 }

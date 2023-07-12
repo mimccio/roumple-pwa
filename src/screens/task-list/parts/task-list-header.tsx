@@ -1,23 +1,20 @@
-import { useState } from 'react'
 import { CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { CheckCircleIcon, CheckBadgeIcon as CheckBadgeOutlineIcon } from '@heroicons/react/24/outline'
 
 import { Tooltip } from '&/common/components/tooltip'
 import { Header } from '&/common/components/layouts'
 import { CategoryBtn } from '&/common/components/buttons'
-import { CreateTaskModale } from '&/modules/task/components'
+import type { SortType } from '&/modules/task/types'
 import { TasksMenu } from './tasks-menu'
-import { SortType } from '&/modules/task/types'
 
 interface Props {
   showDone: boolean
+  onCreate: () => void
   handleDoneChange: () => void
   handleSortChange: (sortType: SortType) => void
 }
 
-export function TaskListHeader({ showDone, handleDoneChange, handleSortChange }: Props) {
-  const [createIsOpen, setCreateIsOpen] = useState(false)
-
+export function TaskListHeader({ showDone, handleDoneChange, handleSortChange, onCreate }: Props) {
   return (
     <Header>
       <div className="flex h-full items-center text-xl font-bold leading-6">
@@ -27,7 +24,7 @@ export function TaskListHeader({ showDone, handleDoneChange, handleSortChange }:
       <div className="flex gap-2">
         <TasksMenu handleSortChange={handleSortChange} />
         <Tooltip message="create task">
-          <button className="group  rounded-md p-1" onClick={() => setCreateIsOpen(true)}>
+          <button className="group  rounded-md p-1" onClick={onCreate}>
             <PlusIcon width={24} className="text-gray-500 transition-colors group-hover:text-gray-600" />
           </button>
         </Tooltip>
@@ -47,7 +44,6 @@ export function TaskListHeader({ showDone, handleDoneChange, handleSortChange }:
 
         <CategoryBtn />
       </div>
-      <CreateTaskModale isOpen={createIsOpen} close={() => setCreateIsOpen(false)} />
     </Header>
   )
 }
