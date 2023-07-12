@@ -1,11 +1,9 @@
 import { STATUSES } from '&/common/constants'
-import { Task } from '../types'
-
-import { editTaskCheckedItemIds } from '../mutations'
-import { useMutateTask } from '.'
+import type { Task } from '../types'
+import { useMutateTaskStatus } from './use-mutate-task-status'
 
 export function useCheckItem(task: Task) {
-  const { mutate } = useMutateTask(editTaskCheckedItemIds)
+  const { mutate } = useMutateTaskStatus(task)
 
   const onCheckItem = (checklistItemId: string) => {
     // Check item
