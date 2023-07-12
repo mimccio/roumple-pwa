@@ -39,11 +39,11 @@ export function useTaskStatus(task: Task) {
       // Update not done task list
       const previousNotDoneTaskList = queryClient.getQueriesData(TASK_KEYS.list({ done: false }))
       queryClient.setQueryData(TASK_KEYS.list({ done: false }), (old: Task[] = []) => {
+        const i = old.findIndex((item) => item.id === data.id)
         if (data.status !== STATUSES.done) {
-          return task.status !== data.status ? [...old, data] : old
+          return i >= 0 ? [...old.slice(0, i), data, ...old.slice(i + 1)] : [...old, data]
         } else {
-          const i = old.findIndex((item) => item.id === data.id)
-          return [...old.slice(0, i), ...old.slice(i + 1)]
+          return i >= 0 ? [...old.slice(0, i), ...old.slice(i + 1)] : old
         }
       })
 
