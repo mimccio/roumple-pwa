@@ -1,13 +1,19 @@
-export const ROUTINE = 'ROUTINE'
-export const LIST = 'LIST'
-export const BOARD = 'ROUTINE'
+import { format } from 'date-fns'
+import type { ScheduleType } from '&/common/types'
+import { DATE_FORMAT } from '&/common/constants'
 
-export const DAILY = 'DAILY'
-export const WEEKLY = 'WEEKLY'
-export const MONTHLY = 'MONTHLY'
+interface BoardOptions {
+  type: ScheduleType
+  date: Date
+}
 
-export const SCHEDULE_TYPES = {
-  daily: DAILY as 'DAILY',
-  weekly: WEEKLY as 'WEEKLY',
-  monthly: MONTHLY as 'MONTHLY',
+export const ROUTINE_KEYS = {
+  all: ['ROUTINE'] as const,
+  lists: () => [...ROUTINE_KEYS.all, 'LIST'] as const,
+  list: ({ archived }: { archived: boolean }) => [...ROUTINE_KEYS.lists(), { archived }] as const,
+  boards: () => [...ROUTINE_KEYS.all, 'BOARD'] as const,
+  board: ({ type, date }: BoardOptions) =>
+    [...ROUTINE_KEYS.boards(), { type, date: format(date, DATE_FORMAT) }] as const,
+  details: () => [...ROUTINE_KEYS.all, 'DETAIL'] as const,
+  detail: (id?: string) => [...ROUTINE_KEYS.details(), id] as const,
 }

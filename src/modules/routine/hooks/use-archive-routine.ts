@@ -1,60 +1,66 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { archiveRoutine } from '../mutations/archive-routine'
-import { BOARD, LIST, ROUTINE } from '../constants'
-import { Routine } from '../types'
-import { sortRoutines } from '../utils'
+import { startOfToday } from 'date-fns'
 import { toast } from 'react-hot-toast'
-import { getTodayDate } from '&/common/utils'
+
+import type { Routine } from '../types'
+import { ROUTINE_KEYS } from '../constants'
+import { archiveRoutine } from '../mutations'
 
 export function useArchiveRoutine() {
   const queryClient = useQueryClient()
-  const date = getTodayDate()
+  const date = startOfToday()
 
   const { mutate } = useMutation(archiveRoutine, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
-      queryClient.setQueryData([ROUTINE, data.id], () => data)
+      // ✖️ Cancel related queries
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
 
-      const previousArchivedRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: true }])
-      const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: false }])
+      // ⛳ Update Item
+      queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), data)
 
-      queryClient.setQueryData([ROUTINE, LIST, { archived: true }], (old: Routine[] = []) => {
+      // 🗄️ Update Archived list
+      const previousArchivedRoutineList = queryClient.getQueryData(ROUTINE_KEYS.list({ archived: true }))
+      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: true }), (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         if (routineIndex >= 0) return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
-        return [...old, data].sort(sortRoutines)
+        return [...old, data]
       })
 
-      queryClient.setQueryData([ROUTINE, LIST, { archived: false }], (old: Routine[] = []) => {
+      // 🗃️ Update NOT Archived list
+      const previousRoutineList = queryClient.getQueryData(ROUTINE_KEYS.list({ archived: false }))
+      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: false }), (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         if (routineIndex >= 0) return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
-        return [...old, data].sort(sortRoutines)
+        return [...old, data]
       })
 
-      const previousBoardRoutineList = queryClient.getQueryData([ROUTINE, BOARD, { type: data.type, date }])
-      queryClient.setQueryData([ROUTINE, BOARD, { type: data.type, date }], (old: Routine[] = []) => {
+      // 🏫 Update Bard list
+      const previousBoardRoutineList = queryClient.getQueryData(ROUTINE_KEYS.board({ date, type: data.type }))
+      queryClient.setQueryData(ROUTINE_KEYS.board({ date, type: data.type }), (old: Routine[] = []) => {
         if (data.archived) {
           const routineIndex = old.findIndex((item) => item.id === data.id)
-          return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)].sort(sortRoutines)
+          return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
         }
-        return [...old, data].sort(sortRoutines)
+        return [...old, data]
       })
 
       return { previousArchivedRoutineList, previousRoutineList, previousBoardRoutineList }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE, item.id], item)
-      queryClient.setQueryData([ROUTINE, LIST, { archived: false }], context?.previousRoutineList)
-      queryClient.setQueryData([ROUTINE, LIST, { archived: true }], context?.previousArchivedRoutineList)
-      queryClient.setQueryData([ROUTINE, BOARD, { type: item.type, date }], context?.previousBoardRoutineList)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: false }), context?.previousRoutineList)
+      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: true }), context?.previousArchivedRoutineList)
+      queryClient.setQueryData(ROUTINE_KEYS.board({ date, type: item.type }), context?.previousBoardRoutineList)
       toast.error("Archive didn't work")
     },
 
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([ROUTINE, variables.id])
-      queryClient.invalidateQueries([ROUTINE, LIST, { archived: false }])
-      queryClient.invalidateQueries([ROUTINE, LIST, { archived: true }])
-      queryClient.invalidateQueries([ROUTINE, BOARD, { type: variables.type, date }])
+      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
+      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: false }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: true }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ date, type: variables.type }))
     },
   })
 

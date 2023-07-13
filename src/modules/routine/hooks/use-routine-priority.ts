@@ -1,50 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { toast } from 'react-hot-toast'
-
 import type { Routine } from '../types'
-import { BOARD, LIST, ROUTINE } from '../constants'
-import { sortRoutines } from '../utils'
 import { editRoutinePriority } from '../mutations'
-import { getTodayDate } from '&/common/utils'
+import { useMutateRoutine } from './use-mutate-routine'
 
 export function useRoutinePriority(routine: Routine) {
-  const queryClient = useQueryClient()
-  const date = getTodayDate()
-
-  const { mutate } = useMutation(editRoutinePriority, {
-    onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE], exact: false })
-
-      queryClient.setQueryData([ROUTINE, data.id], () => data)
-
-      const previousRoutineList = queryClient.getQueryData([ROUTINE, LIST, { archived: data.archived }])
-      const previousBoardRoutines = queryClient.getQueryData([ROUTINE, BOARD, { date, type: data.type }])
-
-      queryClient.setQueryData([ROUTINE, LIST, { archived: data.archived }], (old: Routine[] = []) => {
-        const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)].sort(sortRoutines)
-      })
-
-      queryClient.setQueryData([ROUTINE, BOARD, { date, type: data.type }], (old: Routine[] = []) => {
-        const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), data, ...old.slice(routineIndex + 1)].sort(sortRoutines)
-      })
-
-      return { previousRoutineList, previousBoardRoutines }
-    },
-
-    onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE, item.id], item)
-      queryClient.setQueryData([ROUTINE, LIST, { archived: item.archived }], context?.previousRoutineList)
-      queryClient.setQueryData([ROUTINE, BOARD, { date, type: item.type }], context?.previousBoardRoutines)
-      toast.error("Modification didn't work")
-    },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([ROUTINE, variables.id])
-      queryClient.invalidateQueries([ROUTINE, LIST, { archived: variables.archived }])
-      queryClient.invalidateQueries([ROUTINE, BOARD, { date, type: variables.type }])
-    },
-  })
+  const { mutate } = useMutateRoutine(editRoutinePriority)
 
   const onSelect = (priority: number) => mutate({ ...routine, priority })
 

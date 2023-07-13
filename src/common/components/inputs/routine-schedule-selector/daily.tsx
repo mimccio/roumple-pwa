@@ -1,9 +1,9 @@
 import type { FormEvent } from 'react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import type { ScheduleType } from '&/modules/routine/types'
-import { DAILY } from '&/modules/routine/constants'
 import { DayCircle } from './day-circle'
 import { PeriodItem } from './period-item'
 
@@ -22,10 +22,10 @@ interface Props {
 }
 
 export function Daily({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
-  const isSelected = type === DAILY
+  const isSelected = type === SCHEDULE_TYPES.daily
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
-    handlePeriodChange({ scheduleType: DAILY, period: Number(evt.currentTarget.value) })
+    handlePeriodChange({ scheduleType: SCHEDULE_TYPES.daily, period: Number(evt.currentTarget.value) })
   }
 
   return (
@@ -97,7 +97,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && period === 1}
             handleChange={onPeriodChange}
             id="morning"
-            type={DAILY}
+            type={SCHEDULE_TYPES.daily}
             value={1}
           >
             in the morning
@@ -106,7 +106,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && period === 2}
             handleChange={onPeriodChange}
             id="lunch"
-            type={DAILY}
+            type={SCHEDULE_TYPES.daily}
             value={2}
           >
             during lunch time
@@ -115,7 +115,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && (period === 3 || period === 0)}
             handleChange={onPeriodChange}
             id="day"
-            type={DAILY}
+            type={SCHEDULE_TYPES.daily}
             value={3}
           >
             during the day
@@ -124,7 +124,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && period === 4}
             handleChange={onPeriodChange}
             id="evening"
-            type={DAILY}
+            type={SCHEDULE_TYPES.daily}
             value={4}
           >
             in the evening

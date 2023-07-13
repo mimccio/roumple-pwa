@@ -30,6 +30,7 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
           onArchive={onArchive}
           onLinkNote={() => setLinkSelectorIsOpen(true)}
           isLoading={isLoading}
+          isArchived={routine?.archived}
         />
         <CloseNavBtn />
       </div>

@@ -2,7 +2,7 @@ import type { FormEvent } from 'react'
 
 import { cl } from '&/common/utils'
 import type { ScheduleType } from '&/modules/routine/types'
-import { DAILY } from '&/modules/routine/constants'
+import { SCHEDULE_TYPES } from '&/common/constants'
 
 interface Props {
   day: string
@@ -15,7 +15,7 @@ interface Props {
 export function DayCircle({ day, isSelected, handleChange, value, disabled }: Props) {
   const onChange = (evt: FormEvent<HTMLInputElement>) => {
     evt.preventDefault()
-    handleChange({ scheduleType: DAILY, recurrenceNum: value })
+    handleChange({ scheduleType: SCHEDULE_TYPES.daily, recurrenceNum: value })
   }
 
   return (

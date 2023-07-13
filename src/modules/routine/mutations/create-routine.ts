@@ -16,23 +16,19 @@ export const createRoutine = async ({
 }: Routine) => {
   const userId = await getUserId()
 
-  const { data, error } = await db
-    .from('routine')
-    .insert({
-      id,
-      name,
-      user_id: userId,
-      created_at,
-      priority,
-      type,
-      daily_recurrence,
-      weekly_recurrence,
-      monthly_recurrence,
-      period,
-      category_id: category?.id,
-    })
-    .select('id, name, created_at, priority, daily_recurrence, type, period, weekly_recurrence, monthly_recurrence')
-    .single()
+  const { error } = await db.from('routine').insert({
+    id,
+    name,
+    user_id: userId,
+    created_at,
+    priority,
+    type,
+    daily_recurrence,
+    weekly_recurrence,
+    monthly_recurrence,
+    period,
+    category_id: category?.id,
+  })
+
   if (error) throw error
-  return data
 }

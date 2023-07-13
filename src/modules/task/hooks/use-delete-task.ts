@@ -51,8 +51,6 @@ export function useDeleteTask() {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(TASK_KEYS.board({ type: item.scheduleType, date }), context?.previousTaskBoard)
-
-      navigate(`${mainPath}/${item.id}`)
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {

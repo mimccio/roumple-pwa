@@ -3,23 +3,25 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
-import { useOutsideClick } from '&/common/hooks'
 import { Routine } from '&/modules/routine/types'
-import { ROUTINE } from '&/modules/routine/constants'
-import { editRoutineChecklistItem } from '../mutations/edit-routine-checklist-item'
-import { RoutineChecklistItem } from '../types'
+import { ROUTINE_KEYS } from '&/modules/routine/constants'
+import { useOutsideClick } from '&/common/hooks'
+import type { RoutineChecklistItem } from '../types'
+import { editRoutineChecklistItem } from '../mutations'
 
 export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
   const queryClient = useQueryClient()
   const ref = useRef<HTMLFormElement>(null)
+  const routineKey = ROUTINE_KEYS.detail(checklistItem.routine_id)
 
   const { mutate } = useMutation(editRoutineChecklistItem, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE, checklistItem.routine_id] })
+      // ✖️ Cancel related queries
+      await queryClient.cancelQueries({ queryKey: routineKey })
 
-      const previousRoutine = queryClient.getQueryData([ROUTINE, checklistItem.routine_id])
-
-      queryClient.setQueryData([ROUTINE, checklistItem.routine_id], (old?: Routine) => {
+      // ⛳ Update Item
+      const previousRoutine = queryClient.getQueryData(routineKey)
+      queryClient.setQueryData(routineKey, (old?: Routine) => {
         if (!old) return
         const oldChecklist = old.checklist || []
         const itemIndex = old.checklist?.findIndex((item) => item.id === data.id)
@@ -34,11 +36,11 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
     },
 
     onError: (_err, _item, context) => {
-      queryClient.setQueryData([ROUTINE, checklistItem.routine_id], context?.previousRoutine)
+      queryClient.setQueryData(routineKey, context?.previousRoutine)
       toast.error("Modification didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([ROUTINE, checklistItem.routine_id])
+      queryClient.invalidateQueries(routineKey)
     },
   })
 

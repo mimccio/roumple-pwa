@@ -1,11 +1,12 @@
 import groupBy from 'lodash/groupBy'
+
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { Disclosure } from '&/common/components/disclosure'
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 import { Routine, ScheduleType, UpdateStatusParams } from '&/modules/routine/types'
 import { getPeriodText } from '&/modules/routine/utils'
-import { RoutineActionListItem } from './components'
 import { Task } from '&/modules/task/types'
 import { TaskListItem } from '&/modules/task/components'
+import { RoutineActionListItem } from './components'
 
 interface Props {
   list?: (Routine | Task)[]

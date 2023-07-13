@@ -7,32 +7,37 @@ import { v4 as uuidv4 } from 'uuid'
 import { useOutsideClick } from '&/common/hooks'
 import { createRoutineChecklistItem } from '../mutations/create-routine-checklist-item'
 import { Routine } from '&/modules/routine/types'
-import { ROUTINE } from '&/modules/routine/constants'
+import { ROUTINE_KEYS } from '&/modules/routine/constants'
 
 export function useCreateChecklistItem(routine: Routine) {
   const queryClient = useQueryClient()
   const id = uuidv4()
   const ref = useRef<HTMLFormElement>(null)
+  const routineKey = ROUTINE_KEYS.detail(routine.id)
 
   const { mutate } = useMutation(createRoutineChecklistItem, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE, routine.id] })
+      // ✖️ Cancel related queries
+      await queryClient.cancelQueries({ queryKey: routineKey })
 
-      queryClient.setQueryData([ROUTINE, routine.id], () => {
+      // ⛳ Update Item
+      const previousRoutine = queryClient.getQueryData(routineKey)
+      queryClient.setQueryData(routineKey, () => {
         const newChecklistItem = { id, name: data.name }
         return {
           ...data.routine,
           checklist: data.routine.checklist ? [...data.routine.checklist, newChecklistItem] : [newChecklistItem],
         }
       })
+      return { previousRoutine }
     },
 
-    onError: () => {
-      queryClient.setQueryData([ROUTINE, routine.id], routine)
+    onError: (_err, _item, context) => {
+      queryClient.setQueryData(routineKey, context?.previousRoutine)
       toast.error("Creation didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([ROUTINE, routine.id])
+      queryClient.invalidateQueries(routineKey)
     },
   })
 

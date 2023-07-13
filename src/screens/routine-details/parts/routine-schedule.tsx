@@ -3,16 +3,16 @@ import { Popover, Transition } from '@headlessui/react'
 import { ClockIcon } from '@heroicons/react/24/solid'
 import { ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
 
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import type { Routine } from '&/modules/routine/types'
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 import { getIsScheduled, getPeriodText, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
 import { useSchedule } from '&/modules/routine/hooks/use-schedule'
 
 interface Props {
   routine: Routine
-  date: number
+  date: Date
 }
 
 export function RoutineSchedule({ routine, date }: Props) {

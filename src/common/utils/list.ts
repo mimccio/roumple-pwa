@@ -14,3 +14,9 @@ export const sortItems = (a: Item, b: Item) => {
     return b.priority - a.priority
   }
 }
+
+// const removeItem = (list, item) => {
+//   const routineIndex = list.findIndex((x) => x.id === item.id)
+//   if (routineIndex >= 0) return [...list.slice(0, routineIndex), ...list.slice(routineIndex + 1)]
+//   return [...list, item]
+// }

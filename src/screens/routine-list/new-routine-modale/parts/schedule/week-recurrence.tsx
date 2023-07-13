@@ -1,7 +1,8 @@
 import type { FormEvent } from 'react'
-import type { ScheduleType } from '&/modules/routine/types'
+
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
-import { WEEKLY } from '&/modules/routine/constants'
+import type { ScheduleType } from '&/modules/routine/types'
 
 interface Props {
   children: string
@@ -14,7 +15,7 @@ interface Props {
 export function WeekRecurrence({ children, isSelected, handleChange, value, disabled }: Props) {
   const onChange = (evt: FormEvent<HTMLInputElement>) => {
     evt.preventDefault()
-    handleChange({ scheduleType: WEEKLY, recurrenceNum: value })
+    handleChange({ scheduleType: SCHEDULE_TYPES.weekly, recurrenceNum: value })
   }
 
   return (

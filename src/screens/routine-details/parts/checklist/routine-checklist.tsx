@@ -1,5 +1,6 @@
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { useDeleteChecklistItem } from '&/modules/routine-checklist-item/hooks/use-delete-checklist-item'
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
+
 import { useUpsertAction } from '&/modules/routine/hooks'
 import { Routine } from '&/modules/routine/types'
 import { ChecklistItem } from './checklist-item'
@@ -7,7 +8,7 @@ import { NewChecklistItem } from './new-checklist-item'
 
 interface Props {
   routine: Routine
-  date: number
+  date: Date
 }
 
 export function RoutineChecklist({ routine, date }: Props) {
@@ -28,7 +29,7 @@ export function RoutineChecklist({ routine, date }: Props) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl flex-1 p-4 2xl:mt-4">
+    <div className="w-full max-w-2xl flex-1 px-4 2xl:mt-4">
       <div className="flex flex-col">
         <h4 className="font-bold uppercase text-gray-400">Checklist</h4>
         <p className="text-xs text-gray-300">checklist will automatically reset {getText()}</p>

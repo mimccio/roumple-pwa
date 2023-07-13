@@ -2,11 +2,11 @@ import { db } from '&/db'
 import { Routine } from '../types'
 
 interface IParams {
-  queryKey: [key: string, routineId?: string]
+  queryKey: readonly ['ROUTINE', 'DETAIL', string | undefined]
 }
 
 export const fetchRoutineById = async ({ queryKey }: IParams) => {
-  const [, routineId] = queryKey
+  const [, , routineId] = queryKey
 
   if (!routineId) throw new Error('routine id is missing')
 

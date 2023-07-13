@@ -1,8 +1,8 @@
 import type { FormEvent } from 'react'
 
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import type { ScheduleType } from '&/modules/routine/types'
-import { MONTHLY } from '&/modules/routine/constants'
 
 interface Props {
   disabled: boolean
@@ -15,7 +15,7 @@ interface Props {
 export function MonthCircle({ month, isSelected, handleChange, value, disabled }: Props) {
   const onChange = (evt: FormEvent<HTMLInputElement>) => {
     evt.preventDefault()
-    handleChange({ scheduleType: MONTHLY, recurrenceNum: value })
+    handleChange({ scheduleType: SCHEDULE_TYPES.monthly, recurrenceNum: value })
   }
 
   return (

@@ -1,10 +1,10 @@
 import type { FormEvent } from 'react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import type { ScheduleType } from '&/modules/routine/types'
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
+import type { ScheduleType } from '&/modules/routine/types'
 import { PeriodItem } from './period-item'
-import { WEEKLY } from '&/modules/routine/constants'
 import { WeekRecurrence } from './week-recurrence'
 
 interface Props {
@@ -22,10 +22,10 @@ interface Props {
 }
 
 export function Weekly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
-  const isSelected = type === WEEKLY
+  const isSelected = type === SCHEDULE_TYPES.weekly
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
-    handlePeriodChange({ scheduleType: WEEKLY, period: Number(evt.currentTarget.value) })
+    handlePeriodChange({ scheduleType: SCHEDULE_TYPES.weekly, period: Number(evt.currentTarget.value) })
   }
 
   return (
@@ -64,7 +64,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             checked={isSelected && period === 1}
             handleChange={onPeriodChange}
             id="week"
-            type={WEEKLY}
+            type={SCHEDULE_TYPES.weekly}
             value={1}
           >
             during the week
@@ -73,7 +73,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             checked={isSelected && period === 2}
             handleChange={onPeriodChange}
             id="weekend"
-            type={WEEKLY}
+            type={SCHEDULE_TYPES.weekly}
             value={2}
           >
             in the weekend

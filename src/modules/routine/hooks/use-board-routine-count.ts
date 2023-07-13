@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import { startOfToday } from 'date-fns'
 
 import { STATUSES } from '&/common/constants'
-import { getTodayDate } from '&/common/utils'
-
 import type { ScheduleType } from '../types'
-import { BOARD, ROUTINE } from '../constants'
+import { ROUTINE_KEYS } from '../constants'
 import { fetchBoardRoutines } from '../queries'
 
 interface Params {
@@ -12,8 +11,8 @@ interface Params {
 }
 
 export function useBoardRoutineCount({ type }: Params) {
-  const date = getTodayDate()
-  const { data, isLoading } = useQuery([ROUTINE, BOARD, { date, type }], fetchBoardRoutines)
+  const date = startOfToday()
+  const { data, isLoading } = useQuery(ROUTINE_KEYS.board({ date, type }), fetchBoardRoutines)
 
   const count = data?.filter((routine) => routine.actions?.[0]?.status !== STATUSES.done).length
 

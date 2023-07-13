@@ -3,7 +3,7 @@ import { JSONContent } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
 import type { Routine } from '../types'
-import { ROUTINE } from '../constants'
+import { ROUTINE_KEYS } from '../constants'
 import { editRoutineDescription } from '../mutations'
 
 export function useEditRoutineDescription(routine: Routine) {
@@ -11,15 +11,17 @@ export function useEditRoutineDescription(routine: Routine) {
 
   const { mutate } = useMutation(editRoutineDescription, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE, data.id] })
-      queryClient.setQueryData([ROUTINE, data.id], { ...routine, description: data.description })
+      // ✖️ Cancel related queries
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      // ⛳ Update Item
+      queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), { ...routine, description: data.description })
     },
     onError: (_err, item) => {
-      queryClient.setQueryData([ROUTINE, item.id], item)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
       toast.error("Modification didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([ROUTINE, variables.id])
+      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
     },
   })
 

@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
-import { ArchiveBoxIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { LinkIcon } from '@heroicons/react/24/solid'
 
 import { MenuBtn } from './menu-btn'
@@ -14,9 +14,17 @@ interface Props {
   onLinkNote?: () => void
   withCopyLink?: boolean
   isLoading?: boolean
+  isArchived?: boolean
 }
 
-export function ItemMenu({ onDelete, onArchive, onLinkNote, withCopyLink = false, isLoading = false }: Props) {
+export function ItemMenu({
+  onDelete,
+  onArchive,
+  onLinkNote,
+  withCopyLink = false,
+  isLoading = false,
+  isArchived,
+}: Props) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -47,8 +55,8 @@ export function ItemMenu({ onDelete, onArchive, onLinkNote, withCopyLink = false
               </MenuBtn>
             )}
             {onArchive && (
-              <MenuBtn Icon={ArchiveBoxIcon} handleClick={onArchive}>
-                Archive
+              <MenuBtn Icon={isArchived ? ArchiveBoxXMarkIcon : ArchiveBoxIcon} handleClick={onArchive}>
+                {isArchived ? 'Unarchive' : 'Archive'}
               </MenuBtn>
             )}
             {onDelete && (

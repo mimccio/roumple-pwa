@@ -1,5 +1,5 @@
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
-import { useRoutine } from '&/modules/routine/hooks'
+import { useDetailRoutine } from '&/modules/routine/hooks'
 
 import { NotFoundDetails, OfflineError } from '../errors'
 import { RoutineNavbar } from './nav'
@@ -18,7 +18,7 @@ import {
 } from './parts'
 
 export function RoutineDetailsScreen() {
-  const { routine, isPaused, isLoading, date } = useRoutine()
+  const { routine, isPaused, isLoading, date } = useDetailRoutine()
 
   if (!routine && isPaused) return <OfflineError />
   if (!routine && !isLoading) return <NotFoundDetails />
@@ -32,7 +32,10 @@ export function RoutineDetailsScreen() {
         <>
           <DetailInfoSection>
             <div className="-mx-1 mb-6 flex items-center justify-between">
-              <RoutineStatusSelector routine={routine} date={date} />
+              <div className="flex items-center gap-x-4">
+                <RoutineStatusSelector routine={routine} date={date} />
+                {routine.archived && <p className="font-bold uppercase text-gray-400">Archived</p>}
+              </div>
               <Priority routine={routine} />
             </div>
 

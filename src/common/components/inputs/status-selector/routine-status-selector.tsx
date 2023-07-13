@@ -7,7 +7,7 @@ import { TodoBtn, InProgressBtn, DoneBtn } from './parts'
 
 interface Props {
   routine: Routine
-  date: number
+  date: Date
 }
 
 export function RoutineStatusSelector({ routine, date }: Props) {

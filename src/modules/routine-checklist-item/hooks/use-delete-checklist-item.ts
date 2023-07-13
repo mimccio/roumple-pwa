@@ -2,17 +2,21 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { Routine } from '&/modules/routine/types'
-import { ROUTINE } from '&/modules/routine/constants'
+import { ROUTINE_KEYS } from '&/modules/routine/constants'
 import { deletedRoutineChecklistItem } from '../mutations'
 
 export function useDeleteChecklistItem(routine: Routine) {
   const queryClient = useQueryClient()
+  const routineKey = ROUTINE_KEYS.detail(routine.id)
 
   const { mutate } = useMutation(deletedRoutineChecklistItem, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE, routine.id] })
+      // ✖️ Cancel related queries
+      await queryClient.cancelQueries({ queryKey: routineKey })
 
-      queryClient.setQueryData([ROUTINE, routine.id], (old?: Routine) => {
+      // ⛳ Update Item
+      const previousRoutine = queryClient.getQueryData(routineKey)
+      queryClient.setQueryData(routineKey, (old?: Routine) => {
         if (!old) return
         const oldChecklist = old.checklist || []
         const itemIndex = old.checklist?.findIndex((item) => item.id === data)
@@ -22,14 +26,16 @@ export function useDeleteChecklistItem(routine: Routine) {
 
         return { ...old, checklist: newChecklist }
       })
+      return { previousRoutine }
     },
 
-    onError: () => {
-      queryClient.setQueryData([ROUTINE, routine.id], routine)
+    onError: (_err, _item, context) => {
+      queryClient.setQueryData(routineKey, context?.previousRoutine)
+
       toast.error("Delete didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([ROUTINE, routine.id])
+      queryClient.invalidateQueries(routineKey)
     },
   })
 

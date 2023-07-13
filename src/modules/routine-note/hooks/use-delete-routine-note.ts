@@ -24,11 +24,11 @@ export function useDeleteRoutineNote() {
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE_NOTE_LIST, { routineId }], context?.previousTaskNoteList)
+      queryClient.setQueryData([ROUTINE_NOTE_LIST, { routineId: item.id }], context?.previousTaskNoteList)
       toast.error("Delete didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([ROUTINE_NOTE_LIST, { routineId }])
+      queryClient.invalidateQueries([ROUTINE_NOTE_LIST, { routineId: variables.id }])
     },
   })
 

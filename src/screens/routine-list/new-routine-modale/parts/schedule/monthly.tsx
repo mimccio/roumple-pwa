@@ -1,9 +1,9 @@
 import type { FormEvent } from 'react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import type { ScheduleType } from '&/modules/routine/types'
-import { MONTHLY } from '&/modules/routine/constants'
 import { PeriodItem } from './period-item'
 import { MonthCircle } from './month-circle'
 
@@ -24,10 +24,10 @@ interface Props {
 const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 
 export function Monthly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
-  const isSelected = type === MONTHLY
+  const isSelected = type === SCHEDULE_TYPES.monthly
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
-    handlePeriodChange({ scheduleType: MONTHLY, period: Number(evt.currentTarget.value) })
+    handlePeriodChange({ scheduleType: SCHEDULE_TYPES.monthly, period: Number(evt.currentTarget.value) })
   }
 
   return (
@@ -60,7 +60,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             checked={isSelected && period === 1}
             handleChange={onPeriodChange}
             id="start"
-            type={MONTHLY}
+            type={SCHEDULE_TYPES.monthly}
             value={1}
           >
             at the start of the month
@@ -69,7 +69,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             checked={isSelected && (period === 2 || period === 0)}
             handleChange={onPeriodChange}
             id="month"
-            type={MONTHLY}
+            type={SCHEDULE_TYPES.monthly}
             value={2}
           >
             during the month
@@ -78,7 +78,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             checked={isSelected && period === 3}
             handleChange={onPeriodChange}
             id="end"
-            type={MONTHLY}
+            type={SCHEDULE_TYPES.monthly}
             value={3}
           >
             at the end of the month

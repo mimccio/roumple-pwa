@@ -2,7 +2,13 @@ import { db } from '&/db'
 import { Routine } from '../types'
 
 interface FetchRoutineParams {
-  queryKey: [key: string, list: string, options: { archived: boolean }]
+  queryKey: readonly [
+    'ROUTINE',
+    'LIST',
+    {
+      readonly archived: boolean
+    }
+  ]
 }
 
 export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {

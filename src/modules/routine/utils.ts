@@ -1,9 +1,8 @@
 import { compareAsc, getDay, getMonth, getWeek } from 'date-fns'
 
-import { STATUSES } from '&/common/constants'
+import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
 import type { Category } from '../category/types'
 import type { Routine, ScheduleType } from './types'
-import { SCHEDULE_TYPES } from './constants'
 
 export const sortRoutines = (a: Routine, b: Routine) => {
   if (a.priority === b.priority) {
@@ -58,7 +57,7 @@ export const getScheduleTypeLightColor = (type: ScheduleType) => {
   return 'text-indigo-300 group-hover:text-indigo-400'
 }
 
-export const getIsScheduled = ({ routine, date }: { routine: Routine; date: number }) => {
+export const getIsScheduled = ({ routine, date }: { routine: Routine; date: Date }) => {
   if (routine.type === SCHEDULE_TYPES.daily) return routine.daily_recurrence.includes(getDay(date))
   if (routine.type === SCHEDULE_TYPES.weekly) return routine.weekly_recurrence.includes(getWeek(date) % 2)
   if (routine.type === SCHEDULE_TYPES.monthly) return routine.monthly_recurrence.includes(getMonth(date))

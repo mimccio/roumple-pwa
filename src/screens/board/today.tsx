@@ -1,6 +1,6 @@
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { ListSkeleton } from '&/common/components/list-skeleton'
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 import { useBoardList } from '&/modules/board/hooks'
 
 import { MainError, OfflineError } from '../errors'

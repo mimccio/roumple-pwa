@@ -1,7 +1,8 @@
 import type { FormEvent } from 'react'
-import type { ScheduleType } from '&/modules/routine/types'
-import { MONTHLY, WEEKLY } from '&/modules/routine/constants'
+
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
+import type { ScheduleType } from '&/modules/routine/types'
 
 interface Props {
   checked: boolean
@@ -14,8 +15,8 @@ interface Props {
 
 export function PeriodItem({ children, value, id, checked, handleChange, type }: Props) {
   const getAccentColor = () => {
-    if (type === WEEKLY) return 'accent-sky-600'
-    if (type === MONTHLY) return 'accent-purple-500'
+    if (type === SCHEDULE_TYPES.weekly) return 'accent-sky-600'
+    if (type === SCHEDULE_TYPES.monthly) return 'accent-purple-500'
     return 'accent-indigo-500'
   }
 

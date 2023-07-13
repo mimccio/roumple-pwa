@@ -2,14 +2,13 @@ import { format, startOfWeek } from 'date-fns'
 
 import { db } from '&/db'
 import type { ScheduleType } from '&/common/types'
-import { DATE_FORMAT } from '&/common/constants'
+import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
 import { getUserId } from '&/modules/utils'
-import { DAILY, MONTHLY, WEEKLY } from '&/modules/routine/constants'
-import { Routine, RoutineStatuses } from '../types'
+import type { Routine, RoutineStatuses } from '../types'
 
 interface Params {
   actionId?: number
-  date: number
+  date: Date
   routine: Routine
   status: RoutineStatuses
   type: ScheduleType
@@ -20,9 +19,9 @@ export const upsertRoutineAction = async ({ status, actionId, type, date, routin
   const userId = await getUserId()
 
   const getDate = () => {
-    if (type === MONTHLY) return format(date, 'yyyy-MM-01')
-    if (type === WEEKLY) return format(startOfWeek(date), DATE_FORMAT)
-    if (type === DAILY) return format(date, DATE_FORMAT)
+    if (type === SCHEDULE_TYPES.monthly) return format(date, 'yyyy-MM-01')
+    if (type === SCHEDULE_TYPES.weekly) return format(startOfWeek(date), DATE_FORMAT)
+    if (type === SCHEDULE_TYPES.daily) return format(date, DATE_FORMAT)
   }
 
   const action = {

@@ -1,35 +1,31 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
-import { LIST, ROUTINE } from '../constants'
+import { ROUTINE_KEYS } from '../constants'
 import { fetchRoutines } from '../queries'
 import { categoryAtom } from '&/modules/category/atoms'
-import { Routine } from '../types'
+
+import { useShow } from '&/common/hooks'
+import { sortRoutines } from '../utils'
 
 export function useRoutineList() {
   const [archived, setArchived] = useState(false)
   const [category] = useAtom(categoryAtom)
-  const [routines, setRoutines] = useState<Routine[]>()
+  const [createIsOpen, setCreateIsOpen] = useState(false)
 
-  const { data, isLoading: queryIsLoading, error, isPaused } = useQuery([ROUTINE, LIST, { archived }], fetchRoutines)
+  const { data, isLoading, error, isPaused } = useQuery(ROUTINE_KEYS.list({ archived }), fetchRoutines)
 
-  useEffect(() => {
-    if (category && data) {
-      setRoutines(
-        data?.filter((routine) => routine.category_id === category.id || routine.category?.id === category.id)
-      )
-    } else {
-      setRoutines(data)
-    }
-  }, [data, category])
+  const routineList = category?.id
+    ? data?.filter((task) => task.category?.id === category.id).sort(sortRoutines)
+    : data
+    ? data.sort(sortRoutines)
+    : []
 
+  const showStatus = useShow({ data, isLoading, error, isPaused })
   const handleShowArchived = () => setArchived((prevState) => !prevState)
+  const onOpenCreate = () => setCreateIsOpen(true)
+  const onCloseCreate = () => setCreateIsOpen(false)
 
-  const isLoading = queryIsLoading && !data && !isPaused
-  const isError = Boolean(error)
-  const isEmpty = !error && !routines?.length && !isLoading
-  const isOfflineEmpty = !data && isPaused
-
-  return { routines, isLoading, handleShowArchived, archived, isEmpty, isError, isOfflineEmpty }
+  return { routineList, showStatus, handleShowArchived, archived, onOpenCreate, onCloseCreate, createIsOpen }
 }

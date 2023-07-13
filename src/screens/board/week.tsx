@@ -1,14 +1,14 @@
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { ListSkeleton } from '&/common/components/list-skeleton'
-import { SCHEDULE_TYPES } from '&/modules/routine/constants'
 
+import { useBoardList } from '&/modules/board/hooks'
 import { MainError, OfflineError } from '../errors'
 import { Header } from './components/header'
+import { ListItem } from './components/list-item'
+import { PeriodList } from './period-list'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
-import { PeriodList } from './period-list'
-import { useBoardList } from '&/modules/board/hooks'
-import { ListItem } from './components/list-item'
 
 const type = SCHEDULE_TYPES.weekly
 

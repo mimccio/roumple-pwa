@@ -17,6 +17,7 @@ export const TASK_KEYS = {
   detail: (id?: string) => [...TASK_KEYS.details(), id] as const,
 }
 
+// TODO?: move to common to use also for routines
 export const DATE = 'DATE'
 export const PRIORITY = 'PRIORITY'
 export const NAME = 'NAME'

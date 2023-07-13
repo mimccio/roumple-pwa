@@ -1,18 +1,17 @@
 import { format, getDay, lastDayOfWeek, startOfWeek, lastDayOfMonth, getWeek, getMonth } from 'date-fns'
 
 import { db } from '&/db'
-import { DATE_FORMAT } from '&/common/constants'
+import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
 import type { ScheduleType } from '&/common/types'
-
 import type { Routine } from '../types'
-import { SCHEDULE_TYPES } from '../constants'
 
 interface Params {
-  queryKey: [key: string, list: string, options: { date: number; type: ScheduleType }]
+  queryKey: readonly ['ROUTINE', 'BOARD', { readonly type: ScheduleType; readonly date: string }]
 }
 
 export const fetchBoardRoutines = async ({ queryKey }: Params) => {
-  const [, , { date, type }] = queryKey
+  const [, , { date: dateString, type }] = queryKey
+  const date = new Date(dateString)
 
   let query = db
     .from('routine')
