@@ -1,38 +1,41 @@
-import { useParams } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import type { Note } from '&/modules/note/types'
 import type { RoutineNote } from '../types'
-import { ROUTINE_NOTE_LIST } from '../constants'
+import { ROUTINE_NOTE_KEYS } from '../constants'
 import { deleteRoutineNote } from '../mutations'
 
 export function useDeleteRoutineNote() {
-  const { routineId } = useParams()
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(deleteRoutineNote, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: [ROUTINE_NOTE_LIST, { routineId }] })
+      // 🗝️ Keys
+      const listKey = ROUTINE_NOTE_KEYS.list({ routineId: data.routineId })
 
-      const previousTaskNoteList = queryClient.getQueryData([ROUTINE_NOTE_LIST, { routineId }])
-      queryClient.setQueryData([ROUTINE_NOTE_LIST, { routineId }], (old: Note[] = []) => {
-        const taskNoteIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, taskNoteIndex), ...old.slice(taskNoteIndex + 1)]
+      // ✖️ Cancel related queries
+      await queryClient.cancelQueries({ queryKey: listKey })
+
+      // 🗃️ Update List
+      const prevTaskNoteList = queryClient.getQueryData(listKey)
+      queryClient.setQueryData(listKey, (old: Note[] = []) => {
+        const i = old.findIndex((item) => item.id === data.id)
+        return [...old.slice(0, i), ...old.slice(i + 1)]
       })
-      return { previousTaskNoteList }
+      return { prevTaskNoteList }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData([ROUTINE_NOTE_LIST, { routineId: item.id }], context?.previousTaskNoteList)
+      queryClient.setQueryData(ROUTINE_NOTE_KEYS.list({ routineId: item.routineId }), context?.prevTaskNoteList)
       toast.error("Delete didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries([ROUTINE_NOTE_LIST, { routineId: variables.id }])
+      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.list({ routineId: variables.routineId }))
     },
   })
 
-  const onDelete = (taskNote: RoutineNote) => mutate(taskNote)
+  const onDelete = (routineNote: RoutineNote) => mutate(routineNote)
 
   return { onDelete }
 }
