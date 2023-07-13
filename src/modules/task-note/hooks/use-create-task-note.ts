@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import { v5 as uuidv5 } from 'uuid'
 
 import type { Note } from '&/modules/note/types'
 import type { TaskNote } from '../types'
@@ -30,15 +31,18 @@ export function useCreateTaskNote() {
   })
 
   const onCreate = (note: Note) => {
-    if (taskId) {
-      const id = `${taskId}-${note.id}`
-      const previousTaskNoteList = queryClient.getQueryData(TASK_NOTES_KEYS.list({ taskId })) as TaskNote[]
-      const index = previousTaskNoteList.findIndex((item) => item.id === id)
-      if (index >= 0) {
-        toast.success('Note is already linked')
-      } else {
-        mutate({ id, taskId, note, noteId: note.id })
-      }
+    if (!taskId) {
+      toast.error('Error when linking note')
+      return
+    }
+
+    const id = uuidv5(note.id, taskId)
+    const previousTaskNoteList = queryClient.getQueryData(TASK_NOTES_KEYS.list({ taskId })) as TaskNote[]
+    const index = previousTaskNoteList.findIndex((item) => item.id === id)
+    if (index >= 0) {
+      toast.success('Note is already linked')
+    } else {
+      mutate({ id, taskId, note, noteId: note.id })
     }
   }
 
