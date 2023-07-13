@@ -1,12 +1,11 @@
+import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
+import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+import { CreatedAt } from '&/common/components/display/created-at'
 import { useDetailRoutine } from '&/modules/routine/hooks'
-
 import { NotFoundDetails, OfflineError } from '../errors'
 import { RoutineNavbar } from './nav'
 
-import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
-import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
-import { CreatedAt } from '&/common/components/display/created-at'
 import {
   Priority,
   RoutineCategory,
