@@ -18,9 +18,9 @@ export const TASK_KEYS = {
 }
 
 // TODO?: move to common to use also for routines
-export const DATE = 'DATE'
-export const PRIORITY = 'PRIORITY'
-export const NAME = 'NAME'
+const DATE = 'DATE'
+const PRIORITY = 'PRIORITY'
+const NAME = 'NAME'
 
 export const SORT_TYPES = {
   date: DATE as 'DATE',
