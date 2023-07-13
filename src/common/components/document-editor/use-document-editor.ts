@@ -52,7 +52,6 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
   }
 
   const editor = useEditor({
-    autofocus: 'end',
     extensions: [
       CustomDocument,
       StarterKit.configure({
