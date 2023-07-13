@@ -1,9 +1,9 @@
 import { useCreateRoutine } from '&/modules/routine/hooks'
+import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import { ActionSection } from './action-section'
 import { Category } from './category'
 import { Priority } from './priority'
 import { RoutineName } from './routine-name'
-import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 
 interface Props {
   close: () => void

@@ -5,12 +5,12 @@ import { EmptyMainContent } from '&/common/components/empty-main-content'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineList } from '&/modules/routine/hooks'
+import { CreateRoutineModale } from '&/modules/routine/components/create-routine-modale'
 
 import { MainError, OfflineError } from '../errors'
 import { Header } from './header'
 import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
-import { NewRoutineModale } from './new-routine-modale'
 
 export function RoutineList() {
   const { routineList, showStatus, handleShowArchived, archived, onOpenCreate, onCloseCreate, createIsOpen } =
@@ -18,7 +18,7 @@ export function RoutineList() {
 
   return (
     <>
-      <Header handleShowArchived={handleShowArchived} archived={archived} onOpenNewRoutineModale={onOpenCreate} />
+      <Header handleShowArchived={handleShowArchived} archived={archived} onCreate={onOpenCreate} />
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
@@ -32,7 +32,7 @@ export function RoutineList() {
           {showStatus.data && routineList?.map((routine) => <Item key={routine.id} routine={routine as Routine} />)}
         </MainListLayout>
       </ContentLayout>
-      <NewRoutineModale isOpen={createIsOpen} close={onCloseCreate} />
+      <CreateRoutineModale isOpen={createIsOpen} close={onCloseCreate} />
     </>
   )
 }
