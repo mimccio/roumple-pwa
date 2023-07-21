@@ -1,20 +1,21 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { FolderOpenIcon } from '@heroicons/react/24/outline'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid'
-
-import { useEditNoteFolder } from '&/modules/note-folder/hooks/use-edit-note-folder'
-import { NoteFolder } from '&/modules/note-folder/types'
-import { FolderMenu } from './folder-menu'
-import { cl } from '&/common/utils'
 import { CheckIcon } from '@heroicons/react/24/solid'
-import { useDeleteNoteFolder } from '&/modules/note-folder/hooks'
+
+import { cl } from '&/common/utils'
 import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-modale'
+import type { NoteFolder } from '&/modules/note-folder/types'
+import { useEditNoteFolder, useDeleteNoteFolder } from '&/modules/note-folder/hooks'
+import { FolderMenu } from './folder-menu'
 
 interface Props {
   folder: NoteFolder
 }
 
 export function FolderTitle({ folder }: Props) {
+  const { t } = useTranslation('note')
   const { register, errors, submit, ref, name, onRename, isEditing } = useEditNoteFolder(folder)
   const { onDelete, isOpen, openDeleteModale, closeDeleteModale } = useDeleteNoteFolder(folder)
 
@@ -63,8 +64,8 @@ export function FolderTitle({ folder }: Props) {
         isOpen={isOpen}
         close={closeDeleteModale}
         onDelete={onDelete}
-        title="Delete folder"
-        description="Are you sure you want to delete this folder and all notes inside? This can't be undone."
+        title={t('deleteFolder')}
+        description={t('confirmDeleteFolder')}
       />
     </div>
   )

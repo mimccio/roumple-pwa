@@ -1,0 +1,8 @@
+{
+  "linkedTo": "Liée à",
+  "deleteNote": "Supprime la note",
+  "confirmDeleteNote": "Êtes-vous sûr de vouloir supprimer cette note ? Cette action est irréversible.",
+  "deleteFolder": "Supprimer le dossier",
+  "confirmDeleteFolder": "Êtes-vous sûr de vouloir supprimer ce dossier ? Cette action est irréversible",
+  "inbox": "Boite de reception"
+}

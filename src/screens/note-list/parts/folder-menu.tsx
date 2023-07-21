@@ -1,9 +1,10 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
-import { cl } from '&/common/utils'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { PencilIcon } from '@heroicons/react/24/solid'
+import { cl } from '&/common/utils'
 
 interface Props {
   onDelete?: () => void
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function FolderMenu({ onDelete, onRename }: Props) {
+  const { t } = useTranslation('action')
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -41,7 +43,7 @@ export function FolderMenu({ onDelete, onRename }: Props) {
                     'block px-4 py-1 text-xs'
                   )}
                 >
-                  <PencilIcon height={12} className="text-gray-300" /> Rename
+                  <PencilIcon height={12} className="text-gray-300" /> {t('rename', { ns: 'action' })}
                 </button>
               )}
             </Menu.Item>
@@ -58,7 +60,7 @@ export function FolderMenu({ onDelete, onRename }: Props) {
                     'block px-4 py-1 text-xs'
                   )}
                 >
-                  <TrashIcon height={12} className="text-red-300" /> Delete
+                  <TrashIcon height={12} className="text-red-300" /> {t('delete', { ns: 'action' })}
                 </button>
               )}
             </Menu.Item>

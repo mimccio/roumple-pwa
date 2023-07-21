@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { DetailsNavbar } from '&/common/components/layouts'
 import { BackNavBtn, CloseNavBtn } from '&/common/components/buttons'
@@ -16,6 +17,7 @@ interface Props {
 
 export function NoteNavbar({ note }: Props) {
   const { routineId, taskId } = useParams()
+  const { t } = useTranslation(['common', 'note'])
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const { onDelete } = useDeleteNote()
   const handleDelete = () => onDelete(note)
@@ -31,7 +33,7 @@ export function NoteNavbar({ note }: Props) {
 
   return (
     <DetailsNavbar>
-      <h4 className="text-sm font-semibold text-gray-500">Note</h4>
+      <h4 className="text-sm font-semibold text-gray-500">{t('note', { ns: 'common' })}</h4>
       <div className="flex gap-x-2">
         <ItemMenu onDelete={() => setDeleteModaleIsOpen(true)} withCopyLink />
 
@@ -41,8 +43,8 @@ export function NoteNavbar({ note }: Props) {
         isOpen={deleteModaleIsOpen}
         onDelete={handleDelete}
         close={() => setDeleteModaleIsOpen(false)}
-        title="Delete Note"
-        description="Are you sure you want to delete this note? This action cannot be undone."
+        title={t('deleteNote', { ns: 'note' })}
+        description={t('confirmDeleteNote', { ns: 'note' })}
       />
     </DetailsNavbar>
   )
