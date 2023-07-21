@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Navigate, Route, createRoutesFromElements } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient } from '@tanstack/react-query'
@@ -11,8 +12,10 @@ import { editCategory } from '&/modules/category/mutations'
 import { CATEGORY_LIST } from '&/modules/category/constants'
 import { Login } from '&/screens/login'
 
+import './i18n'
 import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
+import { Fallback } from './fallback'
 import './styles.css'
 
 const persister = createSyncStoragePersister({
@@ -68,8 +71,10 @@ export function App() {
         })
       }}
     >
-      <RouterProvider router={router} />
-      <Toaster position="bottom-center" />
+      <Suspense fallback={<Fallback />}>
+        <RouterProvider router={router} />
+        <Toaster position="bottom-center" />
+      </Suspense>
       <ReactQueryDevtools />
     </PersistQueryClientProvider>
   )
