@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { useCategories } from '&/modules/category/hooks'
@@ -7,6 +9,7 @@ import { CategoryItem } from './category-item'
 import { NewCategory } from './new-category'
 
 export function Categories() {
+  const { t } = useTranslation('category')
   const { categoryList, isLoading, error } = useCategories()
 
   return (
@@ -22,7 +25,7 @@ export function Categories() {
             </div>
 
             <div className="flex flex-col gap-2 px-4">
-              <p className="mb-2 text-sm font-semibold text-gray-400">Category list</p>
+              <p className="mb-2 text-sm font-semibold text-gray-400">{t('categoryList')}</p>
               {isLoading && <ListSkeleton />}
 
               {categoryList?.map((category) => (

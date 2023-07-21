@@ -1,5 +1,6 @@
-import { useCreateCategory } from '&/modules/category/hooks'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
+import { useCreateCategory } from '&/modules/category/hooks'
 import { LabelButton } from './label-button'
 import { cl } from '&/common/utils'
 
@@ -8,11 +9,12 @@ interface Props {
 }
 
 export function NewCategory({ disabled }: Props) {
+  const { t } = useTranslation('category')
   const { register, errors, submit, handleColorChange, ref, name, color } = useCreateCategory()
 
   return (
     <div className="px-4">
-      <p className="mb-2 text-sm font-semibold text-gray-400">New category</p>
+      <p className="mb-2 text-sm font-semibold text-gray-400">{t('newCategory')}</p>
 
       <div className="flex items-center gap-4">
         <LabelButton handleColorChange={handleColorChange} color={color} />
