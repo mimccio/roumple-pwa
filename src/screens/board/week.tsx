@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { ContentLayout } from '&/common/components/layouts/content-layout'
 import { ListSkeleton } from '&/common/components/list-skeleton'
@@ -13,6 +15,7 @@ import { EmptyDone } from './empty-done'
 const type = SCHEDULE_TYPES.weekly
 
 export function Week() {
+  const { t } = useTranslation('schedule')
   const { showStatus, list, handleShowDone, showDone, showPeriod, handleShowPeriod, handleUpdateRoutineStatus } =
     useBoardList({ type })
 
@@ -23,7 +26,7 @@ export function Week() {
         handleShowPeriod={handleShowPeriod}
         showDone={showDone}
         showPeriod={showPeriod}
-        title={<h1 className="text-sky-700">This week</h1>}
+        title={<h1 className="text-sky-700">{t('thisWeek')}</h1>}
         type={type}
       />
       <ContentLayout>

@@ -1,5 +1,23 @@
 {
   "today": "Aujourd'hui",
   "thisWeek": "Cette semaine",
-  "thisMonth": "Ce mois"
+  "thisMonth": "Ce mois",
+
+  "period": {
+    "day": {
+      "morning": "Durant la matinée",
+      "lunchTime": "Entre midi et 2",
+      "duringDay": "Durant la journée",
+      "evening": "Dans la soirée"
+    },
+    "week": {
+      "duringWeek": "Durant la semaine",
+      "weekend": "Dans le weekend"
+    },
+    "month": {
+      "start": "Au début du mois",
+      "duringMonth": "Durant le mois",
+      "end": "A la fin du mois"
+    }
+  }
 }

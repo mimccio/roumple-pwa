@@ -1,10 +1,11 @@
 import groupBy from 'lodash/groupBy'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { usePeriodText } from '&/common/hooks'
 import { Disclosure } from '&/common/components/disclosure'
-import { Routine, ScheduleType, UpdateStatusParams } from '&/modules/routine/types'
-import { getPeriodText } from '&/modules/routine/utils'
-import { Task } from '&/modules/task/types'
+
+import type { Routine, ScheduleType, UpdateStatusParams } from '&/modules/routine/types'
+import type { Task } from '&/modules/task/types'
 import { TaskListItem } from '&/modules/task/components'
 import { RoutineActionListItem } from './components'
 
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export function PeriodList({ type, list = [], handleUpdateStatus }: Props) {
+  const { getPeriodText } = usePeriodText()
+
   const items = Object.entries(groupBy(list, 'period'))
 
   let color = 'indigo' as 'indigo' | 'sky' | 'purple'

@@ -4,10 +4,11 @@ import { ClockIcon } from '@heroicons/react/24/solid'
 import { ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { usePeriodText } from '&/common/hooks'
 import { cl } from '&/common/utils'
 import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import type { Routine } from '&/modules/routine/types'
-import { getIsScheduled, getPeriodText, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
+import { getIsScheduled, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
 import { useSchedule } from '&/modules/routine/hooks/use-schedule'
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export function RoutineSchedule({ routine, date }: Props) {
+  const { getPeriodText } = usePeriodText()
   const periodText = getPeriodText({ type: routine.type, period: routine.period })
   const scheduleColor = getScheduleTypeColor(routine.type)
   const isScheduledColor = getScheduleTypeLightColor(routine.type)
