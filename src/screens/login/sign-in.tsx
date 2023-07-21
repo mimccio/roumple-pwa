@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function SignIn({ isLoading, handleLogin, email, handleEmailChange }: Props) {
+  const { t } = useTranslation(['action', 'login'])
   const websiteUrl = import.meta.env.VITE_SITE_URL
 
   if (isLoading)
@@ -22,7 +24,7 @@ export function SignIn({ isLoading, handleLogin, email, handleEmailChange }: Pro
         enterFrom="opacity-0 -translate-y-full"
         enterTo="opacity-100 translate-y-0"
       >
-        Sending magic link...
+        {t('sendingMagicLink', { ns: 'login' })}
       </Transition>
     )
 
@@ -40,8 +42,8 @@ export function SignIn({ isLoading, handleLogin, email, handleEmailChange }: Pro
       leaveTo="opacity-0 -translate-y-full"
       onSubmit={handleLogin}
     >
-      <h2 className="text-xl font-semibold">Sign in with magic link</h2>
-      <p className="mb-4 mt-2 text-base">by entering your email below</p>
+      <h2 className="text-xl font-semibold">{t('signInWithMagicLink', { ns: 'login' })}</h2>
+      <p className="mb-4 mt-2 text-base">{t('byEnteringEmailBelow', { ns: 'login' })}</p>
       <input
         id="email"
         type="email"
@@ -55,10 +57,10 @@ export function SignIn({ isLoading, handleLogin, email, handleEmailChange }: Pro
           className="flex h-8 items-center rounded-lg px-4 text-gray-400 transition-colors duration-300 hover:text-gray-500"
           href={websiteUrl}
         >
-          Cancel
+          {t('cancel', { ns: 'action' })}
         </a>
         <button className="ml-8 h-8 rounded-lg bg-indigo-400 px-4 font-semibold text-white transition-colors duration-300 hover:bg-indigo-500">
-          Submit
+          {t('submit', { ns: 'action' })}
         </button>
       </div>
     </Transition>

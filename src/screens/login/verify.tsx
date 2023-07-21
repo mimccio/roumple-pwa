@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import OTPInput from 'react-otp-input'
 import { Link } from 'react-router-dom'
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export function Verify({ handleVerify, code, handleOptChange, verifyIsLoading }: Props) {
+  const { t } = useTranslation(['action', 'login'])
+
   return (
     <Transition
       as="form"
@@ -26,7 +29,7 @@ export function Verify({ handleVerify, code, handleOptChange, verifyIsLoading }:
       leaveTo="opacity-0 -translate-y-full"
       onSubmit={handleVerify}
     >
-      <p className="mt-2 text-base">Click the link in the email or enter the code below</p>
+      <p className="mt-2 text-base">{t('verifyEmail', { ns: 'login' })}</p>
 
       <div className="my-12 flex justify-center">
         <OTPInput
@@ -53,13 +56,13 @@ export function Verify({ handleVerify, code, handleOptChange, verifyIsLoading }:
             verifyIsLoading ? 'pointer-events-none text-gray-300' : ':hover:text-gray-500 text-gray-400'
           )}
         >
-          Cancel
+          {t('cancel', { ns: 'action' })}
         </Link>
         <button
           disabled={verifyIsLoading}
           className="ml-8 h-8 rounded-lg bg-indigo-400 px-4 font-semibold text-white transition-colors duration-300 enabled:hover:bg-indigo-500 disabled:animate-pulse disabled:bg-gray-300"
         >
-          Submit
+          {t('submit', { ns: 'action' })}
         </button>
       </div>
     </Transition>
