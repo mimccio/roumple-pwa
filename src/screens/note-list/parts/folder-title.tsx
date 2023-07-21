@@ -28,7 +28,7 @@ export function FolderTitle({ folder }: Props) {
               autoFocus
               id="new-folder-element"
               className="h-8 w-full rounded-md border border-transparent px-2 text-sm outline-none transition-colors hover:bg-gray-50 focus:bg-gray-100"
-              placeholder="New folder"
+              placeholder={t('newFolder')}
               {...register('name', {
                 required: { value: true, message: 'required' },
                 maxLength: { value: 50, message: 'max 50' },

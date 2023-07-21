@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 import { FolderIcon, TagIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function NoteListItem({ note }: Props) {
+  const { t } = useTranslation('common')
   const createdAt = note.created_at ? format(new Date(note.created_at), 'dd/MM/yy') : null
   const iconColor = note.category ? getTwColor('text', note.category?.color, 500) : 'text-gray-300'
 
@@ -44,7 +46,7 @@ export function NoteListItem({ note }: Props) {
                 <span className="flex items-center gap-1">
                   <TagIcon width={12} className="text-gray-300" />
                   <span className={cl(!note.category?.name && 'text-gray-300')}>
-                    {note.category?.name || 'no category'}
+                    {note.category?.name || t('noCategory')}
                   </span>
                 </span>
 

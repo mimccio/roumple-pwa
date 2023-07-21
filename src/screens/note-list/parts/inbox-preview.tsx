@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { InboxIcon } from '@heroicons/react/24/solid'
 
 import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
@@ -8,6 +9,7 @@ import { InboxPreviewItem } from './inbox-preview-item'
 const LIMIT = 5
 
 export function InboxPreview() {
+  const { t } = useTranslation('note')
   const { noteList, show } = useNoteList(LIMIT)
 
   return (
@@ -16,7 +18,7 @@ export function InboxPreview() {
         to="/notes/inbox"
         className="flex items-center gap-x-4 p-2 text-gray-400 transition-colors hover:text-gray-500"
       >
-        <InboxIcon width={20} /> <span className="font-bold ">Inbox</span>
+        <InboxIcon width={20} /> <span className="font-bold ">{t('inbox')}</span>
       </Link>
       <div className="ml-0 flex flex-col gap-y-1 font-normal">
         {show.loading && <ListSkeletonSmall count={1} />}
@@ -29,10 +31,10 @@ export function InboxPreview() {
           to="/notes/inbox"
           className="ml-8 mt-4 flex items-center justify-start gap-x-4 rounded-md p-2 text-xs font-semibold text-gray-400"
         >
-          See more...
+          {t('seeMore')}.
         </Link>
       )}
-      {noteList?.length === 0 && <p className="px-2 py-1 text-gray-300">empty</p>}
+      {noteList?.length === 0 && <p className="px-2 py-1 text-gray-300">{t('empty')}</p>}
     </div>
   )
 }

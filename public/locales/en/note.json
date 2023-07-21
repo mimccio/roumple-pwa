@@ -4,5 +4,10 @@
   "confirmDeleteNote": "Are you sure you want to delete this note? This action cannot be undone.",
   "deleteFolder": "Delete Folder",
   "confirmDeleteFolder": "Are you sure you want to delete this folder? This action cannot be undone.",
-  "inbox": "Inbox"
+  "inbox": "Inbox",
+  "empty": "empty",
+  "seeMore": "See more...",
+  "emptyFolder": "Empty folder",
+  "newFolder": "New folder",
+  "createNote": "create note"
 }
