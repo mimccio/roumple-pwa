@@ -1,3 +1,8 @@
 {
-  "anErrorOcurred": "Une erreur est survenue"
+  "anErrorOcurred": "Une erreur est survenue",
+  "backHome": "Retourner à l'accueil",
+  "notFound": "Pas trouvé",
+  "offlineNoData": "Hors ligne, aucune data à afficher",
+  "pageDoenstExists": "Oooops ! Cette page n'existe pas",
+  "sorryErrorOcurred": "Désolé, une erreur est survenue 😞"
 }

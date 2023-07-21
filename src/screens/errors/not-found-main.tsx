@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import error404Img from '&/assets/illustrations/error-404.png'
 import { EmptyScreen } from '&/common/components/empty-screen'
 
 export function NotFoundMain() {
-  return <EmptyScreen text="Oooops ! This page does not exist" image={error404Img} />
+  const { t } = useTranslation('error')
+  return <EmptyScreen text={t('pageDoenstExists')} image={error404Img} />
 }
