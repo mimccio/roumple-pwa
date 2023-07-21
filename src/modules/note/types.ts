@@ -11,6 +11,7 @@ export interface Note {
   category?: Category | null
   folder?: NoteFolder | null
   routineNotes?: RoutineNote[]
+  deletedCategory?: Category
 }
 
 export type NoteListQueryKey = readonly ['NOTE', 'LIST', { readonly folderId: string | undefined }]

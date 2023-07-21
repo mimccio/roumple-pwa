@@ -28,6 +28,7 @@ export interface Routine {
   category_id: string | null
   category: Category | null
   checklist?: RoutineChecklistItem[]
+  deletedCategory?: Category
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>

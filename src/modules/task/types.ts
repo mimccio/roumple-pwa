@@ -17,6 +17,7 @@ export interface Task {
   checklist: TaskChecklistItem[]
   newChecklistItem?: TaskChecklistItem
   checkedItemIds: string[]
+  deletedCategory?: Category
 }
 
 export type SortType = 'DATE' | 'PRIORITY' | 'NAME'
