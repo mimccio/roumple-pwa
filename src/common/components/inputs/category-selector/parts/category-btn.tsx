@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Listbox } from '@headlessui/react'
 import { TagIcon } from '@heroicons/react/24/solid'
 
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function CategoryBtn({ isLoading, isError, category }: Props) {
+  const { t } = useTranslation(['common', 'error'])
   const color = category?.color ? TW_COLOR_TEXT_500[category.color] : 'text-gray-300'
 
   return (
@@ -31,7 +33,8 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
             category?.id ? 'text-gray-500 group-hover:text-gray-600' : 'text-gray-300 group-hover:text-gray-400'
           )}
         >
-          {category?.name || (isLoading ? '' : isError ? 'Error' : 'no category')}
+          {category?.name ||
+            (isLoading ? '' : isError ? t('error', { ns: 'error' }) : t('noCategory', { ns: 'common' }))}
         </span>
       </span>
     </Listbox.Button>

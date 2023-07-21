@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Listbox, Transition } from '@headlessui/react'
 
 import type { Category } from '&/modules/category/types'
@@ -14,11 +15,13 @@ interface Props {
 }
 
 export function CategorySelector({ category, categoryList, isLoading, isError, onSelect }: Props) {
+  const { t } = useTranslation('common')
+
   return (
     <div className="w-full">
       <Listbox
         disabled={isLoading || isError}
-        value={category || { id: null, name: 'no category' }}
+        value={category || { id: null, name: t('noCategory') }}
         onChange={onSelect}
       >
         {({ open }) => (
@@ -35,7 +38,7 @@ export function CategorySelector({ category, categoryList, isLoading, isError, o
               leaveTo="transform opacity-0 scale-95"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full max-w-lg overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <CategoryOption category={{ id: null, name: 'no category' }} selected={category?.id == null} />
+                <CategoryOption category={{ id: null, name: t('noCategory') }} selected={category?.id == null} />
 
                 {categoryList?.map((categoryItem) => (
                   <CategoryOption

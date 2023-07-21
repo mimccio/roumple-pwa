@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon } from '@heroicons/react/24/outline'
@@ -25,6 +26,8 @@ export function ItemMenu({
   isLoading = false,
   isArchived,
 }: Props) {
+  const { t } = useTranslation('action')
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -61,7 +64,7 @@ export function ItemMenu({
             )}
             {onDelete && (
               <MenuBtn color={TW_COLOR_TEXT_400.red} Icon={TrashIcon} handleClick={onDelete}>
-                Delete
+                {t('delete')}
               </MenuBtn>
             )}
           </div>

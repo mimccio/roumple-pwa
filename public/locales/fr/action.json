@@ -2,5 +2,6 @@
   "cancel": "Annuler",
   "delete": "Supprimer",
   "rename": "Renommer",
-  "submit": "Valider"
+  "submit": "Valider",
+  "copyUrl": "Copier l'url"
 }

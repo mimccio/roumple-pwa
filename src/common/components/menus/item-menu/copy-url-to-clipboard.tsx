@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { ClipboardIcon } from '@heroicons/react/24/outline'
 import { MenuBtn } from './menu-btn'
 
 export function CopyUrlToClipboard() {
+  const { t } = useTranslation('action')
+
   const onCopyUrl = async () => {
     const currentUrl = window.location.href
     if ('clipboard' in navigator) {
@@ -13,7 +16,7 @@ export function CopyUrlToClipboard() {
 
   return (
     <MenuBtn Icon={ClipboardIcon} handleClick={onCopyUrl}>
-      Copy url
+      {t('copyUrl')}
     </MenuBtn>
   )
 }
