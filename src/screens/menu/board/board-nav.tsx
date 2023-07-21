@@ -1,4 +1,6 @@
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import { cl } from '&/common/utils'
 import { useBoardCount } from '&/modules/board/hooks'
 
@@ -7,6 +9,7 @@ interface Props {
 }
 
 export function BoardNav({ close }: Props) {
+  const { t } = useTranslation('schedule')
   const { todayNum, weekNum, monthNum } = useBoardCount()
 
   return (
@@ -23,7 +26,7 @@ export function BoardNav({ close }: Props) {
       >
         {({ isActive }) => (
           <>
-            <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Today</span>
+            <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>{t('today')}</span>
             <span className={cl('text-sm', isActive ? 'text-indigo-500' : 'text-indigo-400')}>{todayNum}</span>
           </>
         )}
@@ -40,7 +43,7 @@ export function BoardNav({ close }: Props) {
       >
         {({ isActive }) => (
           <>
-            <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>This week</span>
+            <span className={cl('text-sky-700', isActive ? 'font-bold' : 'font-semibold')}>{t('thisWeek')}</span>
             <span className={cl('text-sm', isActive ? 'text-sky-500' : 'text-sky-400')}>{weekNum}</span>
           </>
         )}
@@ -57,28 +60,11 @@ export function BoardNav({ close }: Props) {
       >
         {({ isActive }) => (
           <>
-            <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>This month</span>
+            <span className={cl('text-purple-700', isActive ? 'font-bold' : 'font-semibold')}>{t('thisMonth')}</span>
             <span className={cl('text-sm', isActive ? 'text-purple-500' : 'text-purple-400')}>{monthNum}</span>
           </>
         )}
       </NavLink>
-      {/* <NavLink
-        onClick={close}
-        className={({ isActive }) =>
-          cl(
-            'flex h-10 w-full items-center justify-between rounded-lg px-4 text-sm transition-colors lg:text-base',
-            isActive ? 'bg-indigo-100' : 'hover:bg-indigo-50'
-          )
-        }
-        to="tomorrow"
-      >
-        {({ isActive }) => (
-          <>
-            <span className={cl('text-indigo-700', isActive ? 'font-bold' : 'font-semibold')}>Tomorrow</span>
-            <span className={cl(isActive ? 'text-indigo-500' : 'text-indigo-400')}>3</span>
-          </>
-        )}
-      </NavLink> */}
     </nav>
   )
 }
