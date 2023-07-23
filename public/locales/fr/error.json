@@ -7,5 +7,6 @@
   "sorryErrorOcurred": "Désolé, une erreur est survenue 😞",
   "error": "Erreur",
   "maxChars": "{{maxChars}} characters max",
-  "required": "requis"
+  "required": "requis",
+  "emptyName": "Le nom ne peux pas être vide"
 }

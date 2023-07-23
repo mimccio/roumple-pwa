@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom'
-import { Tooltip } from '../tooltip'
+import { useTranslation } from 'react-i18next'
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
+import { Tooltip } from '../tooltip'
 
 interface Props {
   to: string
 }
 
 export function BackNavBtn({ to }: Props) {
+  const { t } = useTranslation('action')
   return (
-    <Tooltip message="back">
+    <Tooltip message={t('back')}>
       <Link
         to={to}
         className="group flex h-8 w-8 items-center justify-center rounded-md border border-transparent transition-colors hover:border-gray-200"

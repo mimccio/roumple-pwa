@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import type { JSONContent } from '@tiptap/react'
 import { useEditor } from '@tiptap/react'
@@ -22,6 +23,8 @@ interface Params {
 }
 
 export function useDocumentEditor({ submit, content, id, forceTitle, placeholder = 'description' }: Params) {
+  const { t } = useTranslation('common')
+
   const navigate = useNavigate()
   const [refreshLink, setRefreshLink] = useState(0)
   const CustomDocument = forceTitle ? Document.extend({ content: 'heading block*' }) : Document
@@ -73,7 +76,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
         emptyEditorClass: 'is-editor-empty',
         placeholder: ({ node, pos }) => {
           if (pos > 0) return ''
-          if (node.type.name === 'heading' && forceTitle) return 'title'
+          if (node.type.name === 'heading' && forceTitle) return t('title')
           return placeholder
         },
       }),

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { RefObject, ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Editor } from '@tiptap/react'
 import { Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function LinkInput({ editor, isOpen, onClose, popperRef }: Props) {
+  const { t } = useTranslation('common')
   const [url, setUrl] = useState<string>(editor.getAttributes('link').href || '')
 
   // Use clipboard text as default (works only on chrome)
@@ -61,7 +63,7 @@ export function LinkInput({ editor, isOpen, onClose, popperRef }: Props) {
       <div ref={popperRef} className="w-full">
         <form className="flex w-full flex-col gap-1" onSubmit={handleSubmit}>
           <label htmlFor="new-folder-element" className="ml-2 text-sm text-gray-400">
-            Link url
+            {t('linkUrl')}
           </label>
           <div className="flex items-center gap-x-2">
             <input

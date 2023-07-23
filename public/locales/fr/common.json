@@ -14,5 +14,7 @@
   "checklist": "Checklist",
   "newChecklist": "Nouvel item",
   "name": "Nom",
-  "none": "Aucune"
+  "none": "Aucune",
+  "title": "titre",
+  "linkUrl": "Lien url"
 }

@@ -14,5 +14,7 @@
   "checklist": "Checklist",
   "newChecklist": "New checklist element",
   "name": "Name",
-  "none": "None"
+  "none": "None",
+  "title": "title",
+  "linkUrl": "Link url"
 }
