@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import workflowImg from '&/assets/illustrations/workflow.png'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
@@ -13,6 +14,7 @@ import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
 
 export function RoutineList() {
+  const { t } = useTranslation('routine')
   const { routineList, showStatus, handleShowArchived, archived, onOpenCreate, onCloseCreate, createIsOpen } =
     useRoutineList()
 
@@ -23,7 +25,7 @@ export function RoutineList() {
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
         {showStatus.empty && !archived && (
-          <EmptyMainContent onClick={onOpenCreate} text="Create a new routine +" image={workflowImg} />
+          <EmptyMainContent onClick={onOpenCreate} text={t('createNewRoutine')} image={workflowImg} />
         )}
         {showStatus.empty && archived && <EmptyArchived />}
 

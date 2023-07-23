@@ -9,5 +9,7 @@
   "linkNote": "Link note",
   "openOptions": "Open options",
   "archive": "Archive",
-  "unArchive": "Unarchive"
+  "unArchive": "Unarchive",
+  "showActive": "show active",
+  "showArchived": "show archived"
 }

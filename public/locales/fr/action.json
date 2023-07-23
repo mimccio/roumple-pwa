@@ -9,5 +9,7 @@
   "linkNote": "Associer note",
   "openOptions": "Afficher les options",
   "archive": "Archiver",
-  "unArchive": "désarchiver"
+  "unArchive": "désarchiver",
+  "showActive": "afficher actif",
+  "showArchived": "afficher archivé"
 }

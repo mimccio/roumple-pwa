@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useAtom } from 'jotai'
 import { TagIcon, PlusIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid'
 import { ArchiveBoxIcon as ArchiveBoxOutlineIcon, ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function Header({ handleShowArchived, archived, onCreate }: Props) {
+  const { t } = useTranslation(['common', 'routine', 'action'])
   const [category, setCategory] = useAtom(categoryAtom)
 
   return (
@@ -26,15 +28,15 @@ export function Header({ handleShowArchived, archived, onCreate }: Props) {
       <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">
         <ArrowPathRoundedSquareIcon width={20} className="text-gray-400" />
 
-        <h1 className="ml-2">Routines</h1>
+        <h1 className="ml-2">{t('routines', { ns: 'common' })}</h1>
       </div>
       <div className="flex gap-1">
-        <Tooltip message="create routine">
+        <Tooltip message={t('createRoutine', { ns: 'routine' })}>
           <button className="group p-2" onClick={onCreate}>
             <PlusIcon width={24} className="text-gray-400 transition-colors group-hover:text-gray-500" />
           </button>
         </Tooltip>
-        <Tooltip message={archived ? 'show active' : 'show archived'}>
+        <Tooltip message={archived ? t('showActive', { ns: 'action' }) : t('showArchived', { ns: 'action' })}>
           <button onClick={handleShowArchived} className="group p-2">
             {archived && (
               <ArchiveBoxIcon width={20} className="text-emerald-400 transition-colors group-hover:text-emerald-500" />

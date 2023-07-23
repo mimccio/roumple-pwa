@@ -1,5 +1,8 @@
 {
   "deleteRoutine": "Supprime la Routine",
   "confirmDeleteRoutine": "Êtes-vous sûr de vouloir supprimer cette routine ? Cette action est irréversible.",
-  "checklistWillReset": "La checklist sera automatiquement réinitialisée"
+  "checklistWillReset": "La checklist sera automatiquement réinitialisée",
+  "noArchivedRoutine": "Aucune routine archivée",
+  "createNewRoutine": "Créer une nouvelle routine +",
+  "createRoutine": "créer routine"
 }
