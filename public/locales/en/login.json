@@ -2,5 +2,6 @@
   "sendingMagicLink": "Sending magic link...",
   "signInWithMagicLink": "Sign in with magic link",
   "byEnteringEmailBelow": "by entering your email below",
-  "verifyEmail": "Click the link in the email or enter the code below"
+  "verifyEmail": "Click the link in the email or enter the code below",
+  "logout": "Logout"
 }

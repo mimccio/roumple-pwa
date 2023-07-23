@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import sciencesImg from '&/assets/illustrations/sciences.png'
 import { EmptyScreen } from '&/common/components/empty-screen'
 
 export function SettingsDetails() {
-  return <EmptyScreen opacity text="Settings" image={sciencesImg} />
+  const { t } = useTranslation('common')
+  return <EmptyScreen opacity text={t('settings')} image={sciencesImg} />
 }
