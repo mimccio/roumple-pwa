@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { DetailsNavbar } from '&/common/components/layouts'
 import { CloseNavBtn } from '&/common/components/buttons'
 import { ItemMenu } from '&/common/components/menus'
@@ -14,12 +15,14 @@ interface Props {
 }
 
 export function TaskNavbar({ task, isLoading }: Props) {
+  const { t } = useTranslation('common')
+
   const { onDelete, isOpen, open, close } = useDeleteTask()
   const [linkSelectorIsOpen, setLinkSelectorIsOpen] = useState(false)
 
   return (
     <DetailsNavbar>
-      <h4 className="text-sm font-semibold text-gray-500">Task</h4>
+      <h4 className="text-sm font-semibold text-gray-500">{t('task')}</h4>
       <div className="flex gap-x-2">
         <ItemMenu onDelete={open} withCopyLink isLoading={isLoading} onLinkNote={() => setLinkSelectorIsOpen(true)} />
         <CloseNavBtn />

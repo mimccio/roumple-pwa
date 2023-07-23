@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
+  const { t } = useTranslation('schedule')
+
   const handlePeriodChange = (evt: FormEvent<HTMLInputElement>) => {
     onSelectPeriod({ scheduleType: SCHEDULE_TYPES.monthly, period: Number(evt.currentTarget.value) })
   }
@@ -35,7 +38,7 @@ export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.monthly}
             value={1}
           >
-            at the start of the month
+            {t('period.month.start')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 2}
@@ -44,7 +47,7 @@ export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.monthly}
             value={2}
           >
-            during the month
+            {t('period.month.duringMonth')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 3}
@@ -53,7 +56,7 @@ export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.monthly}
             value={3}
           >
-            at the end of the month
+            {t('period.month.end')}
           </PeriodItem>
         </div>
       </div>

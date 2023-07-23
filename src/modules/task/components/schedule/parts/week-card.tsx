@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 import type { ScheduleType } from '&/common/types'
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export function WeekCard({ period, onSelectPeriod, isSelected }: Props) {
+  const { t } = useTranslation('schedule')
+
   const handlePeriodChange = (evt: FormEvent<HTMLInputElement>) => {
     onSelectPeriod({ scheduleType: SCHEDULE_TYPES.weekly, period: Number(evt.currentTarget.value) })
   }
@@ -35,7 +38,7 @@ export function WeekCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.weekly}
             value={1}
           >
-            in the week
+            {t('period.week.duringWeek')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 2}
@@ -44,7 +47,7 @@ export function WeekCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.weekly}
             value={2}
           >
-            in the weekend
+            {t('period.week.weekend')}
           </PeriodItem>
         </div>
       </div>

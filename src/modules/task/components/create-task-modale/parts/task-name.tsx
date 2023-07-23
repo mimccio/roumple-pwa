@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { NameEditor } from '&/common/components/inputs/name-editor'
 
 interface Props {
@@ -7,15 +8,16 @@ interface Props {
 }
 
 export function TaskName({ name, onChange, setCharNum }: Props) {
+  const { t } = useTranslation(['common', 'task'])
   return (
     <div>
-      <span className="text-sm font-bold text-gray-400">Name</span>
+      <span className="text-sm font-bold text-gray-400">{t('name', { ns: 'common' })}</span>
       <div className="rounded-lg border p-2">
         <NameEditor
           name={name}
           id={'new-task-name'}
           submit={onChange}
-          placeholder="Enter task name"
+          placeholder={t('enterTaskName', { ns: 'task' })}
           autofocus
           setCharNum={setCharNum}
         />

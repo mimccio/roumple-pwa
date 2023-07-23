@@ -1,4 +1,5 @@
 import { useRef, useState, ChangeEvent, FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export function LinkNote({ isOpen = true, close }: Props) {
+  const { t } = useTranslation(['action', 'note'])
   const ref = useRef<HTMLFormElement>(null)
   const [searchText, setSearchText] = useState<string>('')
   const { notes, isLoading, onSearchSubmit } = useSearchNote()
@@ -53,7 +55,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
           className="w-full rounded-md bg-gray-100 px-2 py-2 text-gray-600 outline-none placeholder:text-sm"
           value={searchText}
           onChange={handleTextChange}
-          placeholder="search note"
+          placeholder={t('searchNote', { ns: 'note' })}
         />
         <button
           className="flex items-center justify-center rounded-md bg-gray-100 p-2 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-500"
@@ -78,7 +80,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
       </div>
       <div className="items-self-end">
         <button onClick={close} className="rounded-md border px-2 py-1 text-xs text-gray-500">
-          close
+          {t('close', { ns: 'action' })}
         </button>
       </div>
     </Transition>

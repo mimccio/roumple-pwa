@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 import { startOfToday } from 'date-fns'
 
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function TaskSchedule({ scheduleType, period, onSelectDate, date, onSelectPeriod }: Props) {
+  const { t } = useTranslation('schedule')
   const [showPreciseSchedule, setShowPreciseSchedule] = useState(Boolean(date))
 
   const setSchedule = () => {
@@ -40,13 +42,13 @@ export function TaskSchedule({ scheduleType, period, onSelectDate, date, onSelec
   return (
     <div className="flex flex-col gap-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-bold text-gray-400">Schedule</span>
+        <span className="text-sm font-bold text-gray-400">{t('schedule')}</span>
 
         <button onClick={toggleSchedule} className="p-1">
           <CalendarDaysIcon height={20} className="text-gray-500 transition-colors hover:text-gray-600" />
         </button>
       </div>
-      {!showPreciseSchedule && <p className="text-sm text-gray-500">No schedule</p>}
+      {!showPreciseSchedule && <p className="text-sm text-gray-500">{t('noSchedule')}</p>}
       {showPreciseSchedule && date && (
         <>
           <div className="mb-4">

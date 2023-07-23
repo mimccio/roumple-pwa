@@ -1,17 +1,20 @@
 import { Link } from 'react-router-dom'
-import { Tooltip } from '../tooltip'
+import { useTranslation } from 'react-i18next'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+
 import { useMainPath } from '&/common/hooks'
+import { Tooltip } from '../tooltip'
 
 interface Props {
   to?: string
 }
 
 export function CloseNavBtn({ to }: Props) {
+  const { t } = useTranslation('action')
   const mainPath = useMainPath()
 
   return (
-    <Tooltip message="close">
+    <Tooltip message={t('close')}>
       <Link
         to={to || mainPath}
         className="group flex h-8 w-8 items-center justify-center rounded-md border border-transparent transition-colors hover:border-gray-200"

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { CheckCircleIcon, CheckBadgeIcon as CheckBadgeOutlineIcon } from '@heroicons/react/24/outline'
 
@@ -15,21 +16,22 @@ interface Props {
 }
 
 export function TaskListHeader({ showDone, handleDoneChange, handleSortChange, onCreate }: Props) {
+  const { t } = useTranslation(['common', 'task', 'action'])
   return (
     <Header>
       <div className="flex h-full items-center text-xl font-bold leading-6">
         <CheckCircleIcon width={20} className="text-gray-400" />
-        <h1 className="ml-2 text-gray-500">Tasks</h1>
+        <h1 className="ml-2 text-gray-500">{t('tasks', { ns: 'common' })}</h1>
       </div>
       <div className="flex gap-2">
         <TasksMenu handleSortChange={handleSortChange} />
-        <Tooltip message="create task">
+        <Tooltip message={t('createTask', { ns: 'task' })}>
           <button className="group  rounded-md p-1" onClick={onCreate}>
             <PlusIcon width={24} className="text-gray-500 transition-colors group-hover:text-gray-600" />
           </button>
         </Tooltip>
 
-        <Tooltip message={showDone ? 'show to do' : 'show done'}>
+        <Tooltip message={showDone ? t('showTodo', { ns: 'action' }) : t('showDone', { ns: 'action' })}>
           <button onClick={handleDoneChange} className="group p-2">
             {showDone ? (
               <CheckBadgeIcon width={24} className="text-green-500 transition-colors group-hover:text-gray-300" />

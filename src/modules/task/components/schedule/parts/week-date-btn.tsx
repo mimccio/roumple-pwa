@@ -5,7 +5,7 @@ import { Popover, Transition } from '@headlessui/react'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { WeekCalendar } from '&/common/components/calendars'
-import { getWeekDateText } from '&/modules/task/utils'
+import { useDateText } from '&/modules/task/hooks'
 import { CalendarBtn } from './calendar-btn'
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 
 export function WeekDateBtn({ date, onSelectDate }: Props) {
   const dateToFormat = new Date(date)
+  const { getWeekDateText } = useDateText()
 
   return (
     <div className="flex justify-center gap-x-2">
@@ -27,7 +28,7 @@ export function WeekDateBtn({ date, onSelectDate }: Props) {
       </button>
 
       <Popover className="relative">
-        <Popover.Button className="w-44 rounded-md bg-sky-500 px-4 py-1 text-sm font-semibold text-white transition-colors hover:bg-sky-600">
+        <Popover.Button className="w-44 rounded-md bg-sky-500 px-4 py-1 text-sm font-semibold lowercase text-white transition-colors hover:bg-sky-600">
           {getWeekDateText(dateToFormat)}
         </Popover.Button>
 

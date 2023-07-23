@@ -4,8 +4,7 @@ import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
 import { cl, getScheduleTypeBg, getScheduleTypeColor, isPassed } from '&/common/utils'
 import type { Task } from '&/modules/task/types'
-import { getDateText } from '&/modules/task/utils'
-import { useTaskSchedule } from '&/modules/task/hooks'
+import { useDateText, useTaskSchedule } from '&/modules/task/hooks'
 import { TaskSchedule } from '&/modules/task/components'
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 
 export function Schedule({ task }: Props) {
   const { onSelectPeriod, onSelectDate, onSubmit, scheduleType, period, date, reset } = useTaskSchedule(task)
-  const text = getDateText(task)
+  const { getDateText } = useDateText()
 
   const scheduleColor = isPassed({ date, scheduleType }) ? 'text-red-400' : getScheduleTypeColor(task.scheduleType)
   const btnBg = getScheduleTypeBg(scheduleType)
@@ -25,7 +24,7 @@ export function Schedule({ task }: Props) {
         <div className="group flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="flex items-center gap-2">
             <CalendarDaysIcon height={18} className={scheduleColor} />
-            <span className="font-semibold text-gray-500">{text}</span>
+            <span className="font-semibold text-gray-500">{getDateText(task)}</span>
           </p>
         </div>
       </Popover.Button>

@@ -1,4 +1,7 @@
 {
+  "schedule": "Programmation",
+  "noSchedule": "Pas programmé",
+
   "today": "Aujourd'hui",
   "thisWeek": "Cette semaine",
   "thisMonth": "Ce mois",
@@ -20,10 +23,10 @@
     "month": {
       "start": "Au début du mois",
       "duringMonth": "Durant le mois",
-      "end": "A la fin du mois"
+      "end": "À la fin du mois"
     }
   },
-
+  "week": "semaine ",
   "scheduledFor": "Programmé pour",
   "notScheduledFor": "Pas programmé pour"
 }

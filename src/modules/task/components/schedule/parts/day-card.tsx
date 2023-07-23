@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 import type { ScheduleType } from '&/common/types'
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
+  const { t } = useTranslation('schedule')
+
   const handlePeriodChange = (evt: FormEvent<HTMLInputElement>) => {
     onSelectPeriod({ scheduleType: SCHEDULE_TYPES.daily, period: Number(evt.currentTarget.value) })
   }
@@ -37,7 +40,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.daily}
             value={1}
           >
-            in the morning
+            {t('period.day.morning')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 2}
@@ -46,7 +49,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.daily}
             value={2}
           >
-            during lunch time
+            {t('period.day.lunchTime')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && (period === 3 || period === 0)}
@@ -55,7 +58,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.daily}
             value={3}
           >
-            during the day
+            {t('period.day.duringDay')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 4}
@@ -64,7 +67,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             type={SCHEDULE_TYPES.daily}
             value={4}
           >
-            in the evening
+            {t('period.day.evening')}
           </PeriodItem>
         </div>
       </div>

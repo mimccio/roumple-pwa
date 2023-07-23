@@ -4,9 +4,9 @@ import { isToday, addDays, subDays } from 'date-fns'
 import { Popover, Transition } from '@headlessui/react'
 
 import { DayCalendar } from '&/common/components/calendars'
-import { getDayDateText } from '&/modules/task/utils'
-import { CalendarBtn } from './calendar-btn'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { useDateText } from '&/modules/task/hooks'
+import { CalendarBtn } from './calendar-btn'
 
 interface Props {
   date: Date
@@ -15,6 +15,7 @@ interface Props {
 
 export function DayDateBtn({ date, onSelectDate }: Props) {
   const dateToFormat = new Date(date)
+  const { getDayDateText } = useDateText()
 
   return (
     <div className="flex justify-center gap-x-2">
@@ -27,7 +28,7 @@ export function DayDateBtn({ date, onSelectDate }: Props) {
       </button>
 
       <Popover className="relative">
-        <Popover.Button className="w-28 rounded-md bg-indigo-500 px-4 py-1 text-sm font-semibold text-white transition-colors hover:bg-indigo-600">
+        <Popover.Button className="w-28 rounded-md bg-indigo-500 px-4 py-1 text-sm font-semibold lowercase text-white transition-colors hover:bg-indigo-600">
           {getDayDateText(dateToFormat)}
         </Popover.Button>
 

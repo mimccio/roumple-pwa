@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function NewChecklistItem({ task }: Props) {
+  const { t } = useTranslation(['common', 'error'])
   const { register, errors, submit, ref, name } = useCreateChecklistItem(task)
 
   return (
@@ -25,9 +27,9 @@ export function NewChecklistItem({ task }: Props) {
           <input
             id="new-checklist-element"
             className="h-8 w-full rounded-md border border-transparent px-2 text-sm outline-none transition-colors hover:bg-gray-50 focus:bg-gray-100"
-            placeholder="New checklist element"
+            placeholder={t('newChecklist', { ns: 'common' })}
             {...register('name', {
-              required: { value: true, message: 'required' },
+              required: { value: true, message: t('required', { ns: 'error' }) },
               maxLength: { value: 50, message: 'max 50' },
             })}
           />

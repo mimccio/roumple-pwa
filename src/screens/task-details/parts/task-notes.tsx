@@ -1,17 +1,19 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
 import { useTaskNoteList, useDeleteTaskNote } from '&/modules/task-note/hooks'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
 export function TaskNotes() {
+  const { t } = useTranslation('common')
   const { taskNotes } = useTaskNoteList()
   const { onDelete } = useDeleteTaskNote()
 
   if (!taskNotes?.length) return null
   return (
     <div className="flex flex-col gap-y-2 border-t border-gray-100 p-4">
-      <h4 className="font-bold uppercase text-gray-400 ">Notes</h4>
+      <h4 className="font-bold uppercase text-gray-400 ">{t('notes')}</h4>
 
       <div className="flex flex-col gap-y-2">
         {taskNotes.map((taskNote) => (

@@ -1,4 +1,7 @@
 {
+  "schedule": "Schedule",
+  "noSchedule": "No schedule",
+
   "today": "Today",
   "thisWeek": "This week",
   "thisMonth": "This month",
@@ -24,6 +27,7 @@
     }
   },
 
+  "week": "week ",
   "scheduledFor": "Scheduled for",
   "notScheduledFor": "Not scheduled for"
 }

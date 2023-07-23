@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { Task } from '&/modules/task/types'
 import { useCheckItem } from '&/modules/task/hooks'
 import { useDeleteChecklistItem } from '&/modules/task-checklist-item/hooks'
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function TaskChecklist({ task }: Props) {
+  const { t } = useTranslation('common')
   const { onDelete } = useDeleteChecklistItem(task)
   const { onCheckItem, onRemoveItemId } = useCheckItem(task)
 
@@ -20,7 +22,7 @@ export function TaskChecklist({ task }: Props) {
   return (
     <div className="w-full max-w-2xl flex-1 px-4 2xl:mt-4">
       <div className="flex flex-col">
-        <h4 className="font-bold uppercase text-gray-400">Checklist</h4>
+        <h4 className="font-bold uppercase text-gray-400">{t('checklist')}</h4>
       </div>
 
       <div className="mt-4 flex flex-col gap-2">

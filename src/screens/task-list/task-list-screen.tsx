@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { EmptyScreen } from '&/common/components/empty-screen'
@@ -11,6 +12,7 @@ import { MainError, OfflineError } from '../errors'
 import { TaskListHeader } from './parts/task-list-header'
 
 export function TaskListScreen() {
+  const { t } = useTranslation('task')
   const {
     createIsOpen,
     handleDoneChange,
@@ -33,9 +35,9 @@ export function TaskListScreen() {
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
-        {showStatus.empty && showDone && <EmptyScreen opacity text="No done task" image={successImg} />}
+        {showStatus.empty && showDone && <EmptyScreen opacity text={t('noDoneTask')} image={successImg} />}
         {showStatus.empty && !showDone && (
-          <EmptyMainContent onClick={onOpenCreate} text="Create a new task +" image={workflowImg} />
+          <EmptyMainContent onClick={onOpenCreate} text={t('createNewTask')} image={workflowImg} />
         )}
 
         <MainListLayout>

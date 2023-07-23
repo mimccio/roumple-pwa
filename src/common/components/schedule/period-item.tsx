@@ -32,7 +32,7 @@ export function PeriodItem({ children, value, id, checked, handleChange, type }:
         id={id}
         type="radio"
       />
-      <label className="cursor-pointer pl-4 text-gray-700 transition-colors hover:text-gray-800" htmlFor={id}>
+      <label className="cursor-pointer pl-4 lowercase text-gray-700 transition-colors hover:text-gray-800" htmlFor={id}>
         {children}
       </label>
     </li>

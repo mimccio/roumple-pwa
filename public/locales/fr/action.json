@@ -11,5 +11,11 @@
   "archive": "Archiver",
   "unArchive": "désarchiver",
   "showActive": "afficher actif",
-  "showArchived": "afficher archivé"
+  "showArchived": "afficher archivé",
+  "showTodo": "afficher à faire",
+  "showDone": "afficher terminées",
+  "sortByDate": "Trier par date",
+  "sortByName": "Trier par nom",
+  "sortByPriority": "Trier par priorité",
+  "clearDone": "Réinitialiser terminées"
 }

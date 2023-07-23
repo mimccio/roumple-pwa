@@ -2,14 +2,17 @@
   "all": "Tout",
   "routine": "Routine",
   "routines": "Routines",
-  "task": "Tache",
-  "tasks": "Taches",
+  "task": "Tâche",
+  "tasks": "Tâches",
   "note": "Note",
   "notes": "Notes",
+  "category": "Catégorie",
   "categories": "Categories",
   "settings": "Paramètres",
   "noCategory": "Aucune catégorie",
   "archived": "Archivé",
   "checklist": "Checklist",
-  "newChecklist": "Nouvel item"
+  "newChecklist": "Nouvel item",
+  "name": "Nom",
+  "none": "Aucune"
 }

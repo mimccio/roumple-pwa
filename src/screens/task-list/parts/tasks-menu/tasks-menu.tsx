@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Menu, Transition } from '@headlessui/react'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { AdjustmentsVerticalIcon, CheckIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid'
@@ -16,13 +17,14 @@ interface Props {
 }
 
 export function TasksMenu({ handleSortChange }: Props) {
+  const { t } = useTranslation(['action', 'task'])
   const [sortType] = useAtom(sortTypeAtom)
   const { open, close, isOpen, onDelete } = useDeleteAllDoneTasks()
 
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button className="flex h-full items-center justify-center rounded-md p-1 text-gray-400 transition-colors  hover:text-gray-500 focus:outline-none disabled:cursor-wait">
-        <span className="sr-only">Open options</span>
+        <span className="sr-only">{t('openOptions', { ns: 'action' })}</span>
         <EllipsisHorizontalIcon width={24} aria-hidden="true" />
       </Menu.Button>
 
@@ -38,19 +40,19 @@ export function TasksMenu({ handleSortChange }: Props) {
         <Menu.Items className="absolute -left-20 z-10 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1 ">
             <MenuBtn Icon={AdjustmentsVerticalIcon} handleClick={() => handleSortChange(SORT_TYPES.date)}>
-              Sort by date
+              {t('sortByDate', { ns: 'action' })}
               {sortType === SORT_TYPES.date && <CheckIcon height={20} className="text-green-500" />}
             </MenuBtn>
             <MenuBtn Icon={AdjustmentsVerticalIcon} handleClick={() => handleSortChange(SORT_TYPES.priority)}>
-              Sort by priority
+              {t('sortByPriority', { ns: 'action' })}
               {sortType === SORT_TYPES.priority && <CheckIcon height={20} className="text-green-500" />}
             </MenuBtn>
             <MenuBtn Icon={AdjustmentsVerticalIcon} handleClick={() => handleSortChange(SORT_TYPES.name)}>
-              Sort by name
+              {t('sortByName', { ns: 'action' })}
               {sortType === SORT_TYPES.name && <CheckIcon height={20} className="text-green-500" />}
             </MenuBtn>
             <MenuBtn Icon={TrashIcon} handleClick={open}>
-              Clear done
+              {t('clearDone', { ns: 'action' })}
             </MenuBtn>
           </div>
         </Menu.Items>
@@ -59,8 +61,8 @@ export function TasksMenu({ handleSortChange }: Props) {
         isOpen={isOpen}
         close={close}
         onDelete={onDelete}
-        title="Clear Done tasks"
-        description="Are you sure you want to delete all done tasks? This action cannot be undone."
+        title={t('clearDoneTasks', { ns: 'task' })}
+        description={t('confirmDeleteAllDoneTasks', { ns: 'task' })}
       />
     </Menu>
   )

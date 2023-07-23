@@ -2,7 +2,7 @@ import { addMonths, isThisMonth, subMonths } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { getDateText } from '&/modules/task/utils'
+import { useDateText } from '&/modules/task/hooks'
 
 interface Props {
   date: Date
@@ -10,6 +10,8 @@ interface Props {
 }
 
 export function MonthDateBtn({ date, onSelectDate }: Props) {
+  const { getDateText } = useDateText()
+
   return (
     <div className="flex justify-center gap-x-2">
       <button
@@ -19,7 +21,7 @@ export function MonthDateBtn({ date, onSelectDate }: Props) {
       >
         <ChevronLeftIcon height={16} />
       </button>
-      <p className="flex w-40 justify-center rounded-md bg-purple-500 px-4 py-1 text-sm font-semibold text-white">
+      <p className="flex w-40 justify-center rounded-md bg-purple-500 px-4 py-1 text-sm font-semibold lowercase text-white">
         {getDateText({ scheduleType: SCHEDULE_TYPES.monthly, date })}
       </p>
       <button

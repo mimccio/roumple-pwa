@@ -1,14 +1,15 @@
 {
-  "linkedTo": "Liée à",
-  "deleteNote": "Supprime la note",
-  "confirmDeleteNote": "Êtes-vous sûr de vouloir supprimer cette note ? Cette action est irréversible.",
-  "deleteFolder": "Supprimer le dossier",
   "confirmDeleteFolder": "Êtes-vous sûr de vouloir supprimer ce dossier ? Cette action est irréversible",
-  "inbox": "Boite de reception",
-  "empty": "vide",
-  "seeMore": "Voir plus...",
-  "emptyFolder": "Dossier vide",
-  "newFolder": "Nouveau dossier",
+  "confirmDeleteNote": "Êtes-vous sûr de vouloir supprimer cette note ? Cette action est irréversible.",
   "createNote": "créer une note",
-  "noNoteToShow": "Aucune note à afficher"
+  "deleteFolder": "Supprimer le dossier",
+  "deleteNote": "Supprime la note",
+  "empty": "vide",
+  "emptyFolder": "Dossier vide",
+  "inbox": "Boite de reception",
+  "linkedTo": "Liée à",
+  "newFolder": "Nouveau dossier",
+  "noNoteToShow": "Aucune note à afficher",
+  "searchNote": "chercher une note",
+  "seeMore": "Voir plus..."
 }

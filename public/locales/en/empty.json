@@ -1,1 +1,5 @@
-{ "emptyDone": "Nothing done yet", "emptyTodo": "All done" }
+{
+  "emptyDone": "Nothing done yet",
+  "emptyTodo": "All done",
+  "selectItemToViewDetails": "Select an item to view the details"
+}

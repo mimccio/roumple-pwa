@@ -1,5 +1,6 @@
 {
   "all": "All",
+  "category": "Category",
   "categories": "Categories",
   "note": "Note",
   "notes": "Notes",
@@ -11,5 +12,7 @@
   "noCategory": "No category",
   "archived": "Archived",
   "checklist": "Checklist",
-  "newChecklist": "New checklist element"
+  "newChecklist": "New checklist element",
+  "name": "Name",
+  "none": "None"
 }

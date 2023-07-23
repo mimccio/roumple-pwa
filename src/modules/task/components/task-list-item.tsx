@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { SquareDoneButton } from '&/common/components/buttons/square-done-button'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl, getTwColor } from '&/common/utils'
@@ -11,13 +12,14 @@ interface Props {
 }
 
 export function TaskListItem({ task }: Props) {
+  const { t } = useTranslation('schedule')
   const { onSelect } = useTaskStatus(task)
   const categoryBg = task.category?.color ? getTwColor('bg', task.category.color, 500) : 'bg-gray-300'
 
   const getDateText = () => {
     if (!task.date) return null
     if (task.scheduleType === SCHEDULE_TYPES.daily) return format(new Date(task.date), 'dd MMM yyyy')
-    if (task.scheduleType === SCHEDULE_TYPES.weekly) return 'week ' + getWeek(new Date(task.date))
+    if (task.scheduleType === SCHEDULE_TYPES.weekly) return t('week') + getWeek(new Date(task.date))
     if (task.scheduleType === SCHEDULE_TYPES.monthly) return format(new Date(task.date), 'MMMM yyyy')
   }
 
