@@ -1,4 +1,5 @@
 import { useEffect, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useEditor, EditorContent } from '@tiptap/react'
 import { Extension } from '@tiptap/core'
 import Document from '@tiptap/extension-document'
@@ -25,6 +26,7 @@ const DisableEnter = Extension.create({
 })
 
 export function RoutineName({ routine }: Props) {
+  const { t } = useTranslation('error')
   const { submit } = useEditRoutineName(routine)
   const editor = useEditor({
     extensions: [Document, Text, Paragraph, DisableEnter, CharacterCount.configure({ limit: NAME_MAX_CHARS })],
@@ -63,7 +65,9 @@ export function RoutineName({ routine }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <p className="absolute bottom-0 right-0 z-10 text-xs text-red-400">max {NAME_MAX_CHARS} characters</p>
+        <p className="absolute bottom-0 right-0 z-10 text-xs text-red-400">
+          {t('maxChars', { maxChars: NAME_MAX_CHARS })}
+        </p>
       </Transition>
     </div>
   )

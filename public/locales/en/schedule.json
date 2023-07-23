@@ -2,6 +2,10 @@
   "today": "Today",
   "thisWeek": "This week",
   "thisMonth": "This month",
+  "tomorrow": "tomorrow",
+  "nextWeek": "next week",
+  "nextMonth": "next month",
+
   "period": {
     "day": {
       "morning": "In the morning",
@@ -18,5 +22,8 @@
       "duringMonth": "During the month",
       "end": "At the end of the month"
     }
-  }
+  },
+
+  "scheduledFor": "Scheduled for",
+  "notScheduledFor": "Not scheduled for"
 }

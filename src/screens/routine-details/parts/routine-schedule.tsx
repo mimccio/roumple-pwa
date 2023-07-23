@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Popover, Transition } from '@headlessui/react'
 import { ClockIcon } from '@heroicons/react/24/solid'
 import { ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function RoutineSchedule({ routine, date }: Props) {
+  const { t } = useTranslation(['common', 'action', 'schedule'])
   const { getPeriodText } = usePeriodText()
   const periodText = getPeriodText({ type: routine.type, period: routine.period })
   const scheduleColor = getScheduleTypeColor(routine.type)
@@ -34,9 +36,9 @@ export function RoutineSchedule({ routine, date }: Props) {
   } = useSchedule({ routine, date })
 
   const getIsScheduledText = () => {
-    if (routine.type === SCHEDULE_TYPES.monthly) return 'this month'
-    if (routine.type === SCHEDULE_TYPES.weekly) return 'this week'
-    return 'today'
+    if (routine.type === SCHEDULE_TYPES.monthly) return t('thisMonth', { ns: 'schedule' })
+    if (routine.type === SCHEDULE_TYPES.weekly) return t('thisWeek', { ns: 'schedule' })
+    return t('today', { ns: 'schedule' })
   }
   const scheduledText = getIsScheduledText()
 
@@ -56,11 +58,13 @@ export function RoutineSchedule({ routine, date }: Props) {
           </p>
           {!isScheduled && (
             <p className="text-sm text-gray-300 transition-colors group-hover:text-gray-400">
-              Not scheduled for {scheduledText}
+              {t('notScheduledFor', { ns: 'schedule' })} {scheduledText}
             </p>
           )}
           {isScheduled && (
-            <p className={cl('ml-2 text-sm transition-colors', isScheduledColor)}>Scheduled for {scheduledText}</p>
+            <p className={cl('ml-2 text-sm transition-colors', isScheduledColor)}>
+              {t('scheduledFor', { ns: 'schedule' })} {scheduledText}
+            </p>
           )}
         </div>
       </Popover.Button>
@@ -95,14 +99,14 @@ export function RoutineSchedule({ routine, date }: Props) {
                     close()
                   }}
                 >
-                  Save
+                  {t('save', { ns: 'action' })}
                 </button>
                 <button
                   type="button"
                   className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
                   onClick={() => close()}
                 >
-                  Cancel
+                  {t('cancel', { ns: 'action' })}
                 </button>
               </div>
             </div>

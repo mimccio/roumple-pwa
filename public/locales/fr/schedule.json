@@ -2,6 +2,9 @@
   "today": "Aujourd'hui",
   "thisWeek": "Cette semaine",
   "thisMonth": "Ce mois",
+  "tomorrow": "demain",
+  "nextWeek": "la semaine prochaine",
+  "nextMonth": "le mois prochain",
 
   "period": {
     "day": {
@@ -19,5 +22,8 @@
       "duringMonth": "Durant le mois",
       "end": "A la fin du mois"
     }
-  }
+  },
+
+  "scheduledFor": "Programmé pour",
+  "notScheduledFor": "Pas programmé pour"
 }

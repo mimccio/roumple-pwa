@@ -9,5 +9,6 @@
   "seeMore": "Voir plus...",
   "emptyFolder": "Dossier vide",
   "newFolder": "Nouveau dossier",
-  "createNote": "créer une note"
+  "createNote": "créer une note",
+  "noNoteToShow": "Aucune note à afficher"
 }

@@ -1,14 +1,16 @@
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
+import { PlusIcon } from '@heroicons/react/24/solid'
 import { cl } from '&/common/utils'
 import type { Routine } from '&/modules/routine/types'
 import { useCreateChecklistItem } from '&/modules/routine-checklist-item/hooks'
-import { PlusIcon } from '@heroicons/react/24/solid'
 
 interface Props {
   routine: Routine
 }
 
 export function NewChecklistItem({ routine }: Props) {
+  const { t } = useTranslation('common')
   const { register, errors, submit, ref, name } = useCreateChecklistItem(routine)
 
   return (
@@ -24,7 +26,7 @@ export function NewChecklistItem({ routine }: Props) {
           <input
             id="new-checklist-element"
             className="h-8 w-full rounded-md border border-transparent px-2 text-sm outline-none transition-colors hover:bg-gray-50 focus:bg-gray-100"
-            placeholder="New checklist element"
+            placeholder={t('newChecklist')}
             {...register('name', {
               required: { value: true, message: 'required' },
               maxLength: { value: 50, message: 'max 50' },

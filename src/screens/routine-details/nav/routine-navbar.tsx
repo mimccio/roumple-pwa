@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { DetailsNavbar } from '&/common/components/layouts'
 import { CloseNavBtn } from '&/common/components/buttons'
 import { ItemMenu } from '&/common/components/menus'
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export function RoutineNavbar({ routine, isLoading }: Props) {
+  const { t } = useTranslation(['common', 'routine'])
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const [linkSelectorIsOpen, setLinkSelectorIsOpen] = useState(false)
 
@@ -23,7 +26,7 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
 
   return (
     <DetailsNavbar>
-      <h4 className="text-sm font-semibold text-gray-500">Routine</h4>
+      <h4 className="text-sm font-semibold text-gray-500">{t('routine', { ns: 'common' })}</h4>
       <div className="flex gap-x-2">
         <ItemMenu
           onDelete={() => setDeleteModaleIsOpen(true)}
@@ -39,8 +42,8 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
           isOpen={deleteModaleIsOpen}
           onDelete={() => onDeleteRoutine(routine)}
           close={() => setDeleteModaleIsOpen(false)}
-          title="Delete Routine"
-          description="Are you sure you want to delete this routine? This action cannot be undone."
+          title={t('deleteRoutine', { ns: 'routine' })}
+          description={t('confirmDeleteRoutine', { ns: 'routine' })}
         />
       )}
       <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} />

@@ -1,18 +1,19 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
 import { useRoutineNoteList, useDeleteRoutineNote } from '&/modules/routine-note/hooks'
 
 export function RoutineNotes() {
+  const { t } = useTranslation('common')
   const { routineNotes } = useRoutineNoteList()
-
   const { onDelete } = useDeleteRoutineNote()
 
   if (!routineNotes?.length) return null
   return (
     <div className="flex flex-col gap-y-2 border-t border-gray-100 p-4">
-      <h4 className="font-bold uppercase text-gray-400 ">Notes</h4>
+      <h4 className="font-bold uppercase text-gray-400 ">{t('notes')}</h4>
 
       <div className="flex flex-col gap-y-2">
         {routineNotes.map((note) => (

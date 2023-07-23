@@ -8,5 +8,8 @@
   "notes": "Notes",
   "categories": "Categories",
   "settings": "Paramètres",
-  "noCategory": "Aucune catégorie"
+  "noCategory": "Aucune catégorie",
+  "archived": "Archivé",
+  "checklist": "Checklist",
+  "newChecklist": "Nouvel item"
 }

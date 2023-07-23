@@ -3,5 +3,7 @@
   "delete": "Supprimer",
   "rename": "Renommer",
   "submit": "Valider",
-  "copyUrl": "Copier l'url"
+  "copyUrl": "Copier l'url",
+  "close": "fermer",
+  "save": "Sauvegarder"
 }

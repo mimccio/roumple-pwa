@@ -8,5 +8,8 @@
   "settings": "Settings",
   "task": "Task",
   "tasks": "Tasks",
-  "noCategory": "No category"
+  "noCategory": "No category",
+  "archived": "Archived",
+  "checklist": "Checklist",
+  "newChecklist": "New checklist element"
 }

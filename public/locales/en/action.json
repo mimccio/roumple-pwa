@@ -3,5 +3,7 @@
   "delete": "Delete",
   "rename": "Rename",
   "submit": "Submit",
-  "copyUrl": "Copy url"
+  "copyUrl": "Copy url",
+  "close": "close",
+  "save": "Save"
 }

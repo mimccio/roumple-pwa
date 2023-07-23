@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
 import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
@@ -17,6 +19,7 @@ import {
 } from './parts'
 
 export function RoutineDetailsScreen() {
+  const { t } = useTranslation('common')
   const { routine, isPaused, isLoading, date } = useDetailRoutine()
 
   if (!routine && isPaused) return <OfflineError />
@@ -33,7 +36,7 @@ export function RoutineDetailsScreen() {
             <div className="-mx-1 mb-6 flex items-center justify-between">
               <div className="flex items-center gap-x-4">
                 <RoutineStatusSelector routine={routine} date={date} />
-                {routine.archived && <p className="font-bold uppercase text-gray-400">Archived</p>}
+                {routine.archived && <p className="font-bold uppercase text-gray-400">{t('archived')}</p>}
               </div>
               <Priority routine={routine} />
             </div>
