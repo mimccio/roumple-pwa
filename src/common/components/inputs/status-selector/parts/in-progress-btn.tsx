@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { ChartBarIcon } from '@heroicons/react/24/solid'
 import { cl } from '&/common/utils'
 import { Tooltip } from '&/common/components/tooltip'
@@ -8,8 +9,9 @@ interface Props {
 }
 
 export function InProgressBtn({ handleClick, isSelected }: Props) {
+  const { t } = useTranslation('status')
   return (
-    <Tooltip message="in progress">
+    <Tooltip message={t('inProgress')}>
       <button
         className={cl(
           'group flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-gray-50',

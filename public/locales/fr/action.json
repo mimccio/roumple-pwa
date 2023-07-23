@@ -5,5 +5,9 @@
   "submit": "Valider",
   "copyUrl": "Copier l'url",
   "close": "fermer",
-  "save": "Sauvegarder"
+  "save": "Sauvegarder",
+  "linkNote": "Associer note",
+  "openOptions": "Afficher les options",
+  "archive": "Archiver",
+  "unArchive": "désarchiver"
 }

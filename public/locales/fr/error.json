@@ -6,5 +6,6 @@
   "pageDoenstExists": "Oooops ! Cette page n'existe pas",
   "sorryErrorOcurred": "Désolé, une erreur est survenue 😞",
   "error": "Erreur",
-  "maxChars": "{{maxChars}} characters max"
+  "maxChars": "{{maxChars}} characters max",
+  "required": "requis"
 }

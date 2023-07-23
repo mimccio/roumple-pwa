@@ -5,5 +5,9 @@
   "submit": "Submit",
   "copyUrl": "Copy url",
   "close": "close",
-  "save": "Save"
+  "save": "Save",
+  "linkNote": "Link note",
+  "openOptions": "Open options",
+  "archive": "Archive",
+  "unArchive": "Unarchive"
 }

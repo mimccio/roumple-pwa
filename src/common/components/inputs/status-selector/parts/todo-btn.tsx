@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { ArrowUturnLeftIcon } from '@heroicons/react/20/solid'
 
 import { cl } from '&/common/utils'
@@ -9,8 +10,10 @@ interface Props {
 }
 
 export function TodoBtn({ handleClick, isSelected }: Props) {
+  const { t } = useTranslation('status')
+
   return (
-    <Tooltip message="reset">
+    <Tooltip message={t('reset')} position="start">
       <button
         className={cl(
           'group flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-gray-50',

@@ -35,7 +35,7 @@ export function ItemMenu({
           disabled={isLoading}
           className="flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-gray-400 transition-colors hover:border-gray-200 hover:text-gray-500 focus:outline-none disabled:cursor-wait"
         >
-          <span className="sr-only">Open options</span>
+          <span className="sr-only">{t('openOptions')}</span>
           <EllipsisHorizontalIcon className="h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -54,12 +54,12 @@ export function ItemMenu({
             {withCopyLink && <CopyUrlToClipboard />}
             {onLinkNote && (
               <MenuBtn Icon={LinkIcon} handleClick={onLinkNote}>
-                Link note
+                {t('linkNote')}
               </MenuBtn>
             )}
             {onArchive && (
               <MenuBtn Icon={isArchived ? ArchiveBoxXMarkIcon : ArchiveBoxIcon} handleClick={onArchive}>
-                {isArchived ? 'Unarchive' : 'Archive'}
+                {isArchived ? t('unArchive') : t('archive')}
               </MenuBtn>
             )}
             {onDelete && (

@@ -12,5 +12,5 @@ i18next
     fallbackLng: 'en',
     // cache: { enabled: true },
     fallbackNS: 'common',
-    ns: ['common', 'action', 'category', 'empty', 'error', 'login', 'schedule', 'note', 'routine'],
+    ns: ['common', 'action', 'category', 'empty', 'error', 'login', 'schedule', 'note', 'routine', 'status'],
   })
