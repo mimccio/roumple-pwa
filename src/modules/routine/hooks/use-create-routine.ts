@@ -16,7 +16,7 @@ import { createRoutine } from '../mutations'
 export function useCreateRoutine() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const [globalCategory] = useAtom(categoryAtom)
+  const [globalCategory, setGlobalCategory] = useAtom(categoryAtom)
   const [name, setName] = useState('')
   const [charNum, setCharNum] = useState(0)
   const [currentType, setType] = useState<ScheduleType>(SCHEDULE_TYPES.daily)
@@ -63,6 +63,14 @@ export function useCreateRoutine() {
     },
   })
 
+  const reset = () => {
+    setName('')
+    setPriority(0)
+    if (category?.id !== globalCategory?.id) setGlobalCategory(null)
+    setType(SCHEDULE_TYPES.daily)
+    setPeriod(3)
+  }
+
   const onCreateRoutine = () => {
     if (charNum === 0) return
     mutate({
@@ -80,6 +88,7 @@ export function useCreateRoutine() {
       category_id: category?.id || null,
       created_at: new Date(),
     })
+    reset()
   }
 
   const handlePeriodChange = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
@@ -143,5 +152,6 @@ export function useCreateRoutine() {
     category,
     setCharNum,
     charNum,
+    reset,
   }
 }

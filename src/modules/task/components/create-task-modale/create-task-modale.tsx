@@ -12,21 +12,21 @@ interface Props {
 
 export function CreateTaskModale({ isOpen, close }: Props) {
   const {
-    handleNameChange,
-    setCharNum,
-    onSelectCategory,
-    onCreateTask,
-    name,
-    charNum,
     category,
+    charNum,
+    date,
+    handleNameChange,
+    name,
+    onCreateTask,
+    onSelectCategory,
+    onSelectDate,
+    onSelectPeriod,
     onSelectPriority,
+    period,
     priority,
     reset,
     scheduleType,
-    period,
-    date,
-    onSelectDate,
-    onSelectPeriod,
+    setCharNum,
   } = useCreateTask()
 
   const onClose = () => {

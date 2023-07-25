@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon, TagIcon } from '@heroicons/react/20/solid'
 
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function Category({ category, onSelect }: Props) {
+  const { t } = useTranslation(['common', 'error'])
   const { categoryList, isLoading, error } = useCategories()
 
   return (
@@ -19,7 +21,7 @@ export function Category({ category, onSelect }: Props) {
       <Listbox disabled={isLoading || Boolean(error)} value={category} onChange={onSelect}>
         {({ open }) => (
           <>
-            <Listbox.Label className="block text-sm font-bold leading-6 text-gray-400">Category</Listbox.Label>
+            <Listbox.Label className="block text-sm font-bold leading-6 text-gray-400">{t('category')}</Listbox.Label>
             <div className="relative mt-2">
               <Listbox.Button
                 className={cl(
@@ -36,7 +38,8 @@ export function Category({ category, onSelect }: Props) {
                   />
 
                   <span className="ml-3 block truncate font-semibold text-gray-600">
-                    {category?.name || (isLoading ? '' : error ? 'Error' : 'None')}
+                    {category?.name ||
+                      (isLoading ? '' : error ? t('error', { ns: 'error' }) : t('none', { ns: 'common' }))}
                   </span>
                 </span>
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

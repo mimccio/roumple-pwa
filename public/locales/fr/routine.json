@@ -4,5 +4,6 @@
   "checklistWillReset": "La checklist sera automatiquement réinitialisée",
   "noArchivedRoutine": "Aucune routine archivée",
   "createNewRoutine": "Créer une nouvelle routine +",
-  "createRoutine": "créer routine"
+  "createRoutine": "créer routine",
+  "enterRoutineName": "Entrer le nom de la routine"
 }
