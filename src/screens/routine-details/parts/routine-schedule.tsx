@@ -57,12 +57,12 @@ export function RoutineSchedule({ routine, date }: Props) {
             </span>
           </p>
           {!isScheduled && (
-            <p className="text-sm text-gray-300 transition-colors group-hover:text-gray-400">
+            <p className="text-sm lowercase text-gray-300 transition-colors group-hover:text-gray-400">
               {t('notScheduledFor', { ns: 'schedule' })} {scheduledText}
             </p>
           )}
           {isScheduled && (
-            <p className={cl('ml-2 text-sm transition-colors', isScheduledColor)}>
+            <p className={cl('ml-2 text-sm lowercase transition-colors', isScheduledColor)}>
               {t('scheduledFor', { ns: 'schedule' })} {scheduledText}
             </p>
           )}
