@@ -29,5 +29,6 @@
 
   "week": "week ",
   "scheduledFor": "Scheduled for",
-  "notScheduledFor": "Not scheduled for"
+  "notScheduledFor": "Not scheduled for",
+  "createdOn": "created on"
 }

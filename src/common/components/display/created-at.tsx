@@ -1,4 +1,6 @@
-import { cl } from '&/common/utils'
+import { useTranslation } from 'react-i18next'
+
+import { cl, getDateFnsLocale } from '&/common/utils'
 import { format } from 'date-fns'
 
 interface Props {
@@ -6,11 +8,12 @@ interface Props {
 }
 
 export function CreatedAt({ createdAt }: Props) {
-  const displayedDate = createdAt ? format(new Date(createdAt), 'd MMMM yyyy') : null
+  const { t } = useTranslation('schedule')
+  const displayedDate = createdAt ? format(new Date(createdAt), 'd MMMM yyyy', { locale: getDateFnsLocale() }) : null
 
   return (
     <p className={cl('text-right text-xs text-gray-300', !displayedDate && 'opacity-0')}>
-      created the <span>{displayedDate}</span>
+      {t('createdOn')} {displayedDate}
     </p>
   )
 }

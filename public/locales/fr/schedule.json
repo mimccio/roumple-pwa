@@ -28,5 +28,6 @@
   },
   "week": "semaine ",
   "scheduledFor": "Programmé pour",
-  "notScheduledFor": "Pas programmé pour"
+  "notScheduledFor": "Pas programmé pour",
+  "createdOn": "créé le"
 }
