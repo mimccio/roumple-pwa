@@ -12,10 +12,13 @@ interface Props {
 export function WeekCalendar({ date, onSelectDate }: Props) {
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth } = useCalendar()
 
-  const weeks = eachWeekOfInterval({
-    start: startOfWeek(firstDayCurrentMonth),
-    end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
-  })
+  const weeks = eachWeekOfInterval(
+    {
+      start: startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 }),
+      end: endOfWeek(endOfMonth(firstDayCurrentMonth), { weekStartsOn: 1 }),
+    },
+    { weekStartsOn: 1 }
+  )
 
   return (
     <div className="flex w-80 flex-col gap-y-4">

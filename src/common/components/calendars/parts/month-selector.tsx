@@ -1,5 +1,6 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { format } from 'date-fns'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { getDateFnsLocale } from '&/common/utils'
 
 interface Props {
   onPreviousMonth: () => void
@@ -14,7 +15,9 @@ export function MonthSelector({ onPreviousMonth, onNextMonth, currentMonth }: Pr
         <span className="sr-only">Previous month</span>
         <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
       </button>
-      <h2 className="text-sm font-semibold text-gray-600">{format(currentMonth, 'MMM yyyy')}</h2>
+      <h2 className="text-sm font-semibold capitalize text-gray-600">
+        {format(currentMonth, 'MMMM yyyy', { locale: getDateFnsLocale() })}
+      </h2>
       <button type="button" onClick={onNextMonth} className="p-1 text-gray-400 hover:text-gray-500">
         <span className="sr-only">Next month</span>
         <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />

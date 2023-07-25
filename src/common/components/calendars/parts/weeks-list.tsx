@@ -16,7 +16,7 @@ export function WeeksList({ weeks, onSelectDay, selectedDay, firstDayCurrentMont
   return (
     <div className=" text-sm">
       {weeks.map((day, dayIdx) => (
-        <div key={day.toString()} className={cl(dayIdx === 0 && colStartClasses[getDay(day)], 'py-2')}>
+        <div key={day.toString()} className={cl(dayIdx === 0 && colStartClasses[getDay(day) - 1], 'py-2')}>
           <button
             type="button"
             onClick={() => onSelectDay(day)}

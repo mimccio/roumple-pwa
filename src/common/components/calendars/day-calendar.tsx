@@ -11,8 +11,8 @@ export function DayCalendar({ date, onSelectDate }: Props) {
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth } = useCalendar()
 
   const days = eachDayOfInterval({
-    start: startOfWeek(firstDayCurrentMonth),
-    end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
+    start: startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 }),
+    end: endOfWeek(endOfMonth(firstDayCurrentMonth), { weekStartsOn: 1 }),
   })
 
   return (
