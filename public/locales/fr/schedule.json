@@ -8,8 +8,12 @@
   "tomorrow": "demain",
   "nextWeek": "la semaine prochaine",
   "nextMonth": "le mois prochain",
+  "daily": "Quotidien",
+  "weekly": "Par Semaine",
+  "monthly": "Mensuel",
 
   "period": {
+    "title": "Période",
     "day": {
       "morning": "Durant la matinée",
       "lunchTime": "Entre midi et 2",
@@ -29,5 +33,8 @@
   "week": "semaine ",
   "scheduledFor": "Programmé pour",
   "notScheduledFor": "Pas programmé pour",
-  "createdOn": "créé le"
+  "createdOn": "créé le",
+  "days": { "1": "l", "2": "m", "3": "m", "4": "j", "5": "v", "6": "s", "7": "d" },
+  "odd": "impair",
+  "even": "pair"
 }

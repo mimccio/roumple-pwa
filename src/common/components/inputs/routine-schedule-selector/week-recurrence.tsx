@@ -21,7 +21,7 @@ export function WeekRecurrence({ children, isSelected, handleChange, value, disa
   return (
     <label
       className={cl(
-        'flex h-5 w-11 items-center justify-center rounded-md text-xs font-semibold transition-colors enabled:cursor-pointer',
+        'flex h-5 w-12 items-center justify-center rounded-md text-xs font-semibold transition-colors enabled:cursor-pointer',
         isSelected
           ? 'bg-sky-500 text-white hover:bg-sky-400'
           : 'border-2 border-gray-400 text-gray-400 enabled:hover:border-sky-400 enabled:hover:text-sky-400',

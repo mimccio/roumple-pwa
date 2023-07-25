@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { ScheduleType } from '&/modules/routine/types'
 import { Daily } from './daily'
 import { Weekly } from './weekly'
@@ -28,9 +29,10 @@ export function RoutineScheduleSelector({
   monthlyRecurrence,
   weeklyRecurrence,
 }: Props) {
+  const { t } = useTranslation('schedule')
   return (
     <div className="">
-      <p className="mb-2 text-sm font-bold text-gray-400">Schedule</p>
+      <p className="mb-2 text-sm font-bold text-gray-400">{t('schedule')}</p>
       <div className="flex flex-col gap-4">
         <Daily
           handlePeriodChange={handlePeriodChange}

@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export function Weekly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
+  const { t } = useTranslation('schedule')
   const isSelected = type === SCHEDULE_TYPES.weekly
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
@@ -37,7 +39,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
     >
       {isSelected && <CheckIcon width={80} className="absolute bottom-4 right-4 text-sky-200" />}
       <div className="grid grid-cols-6">
-        <h4 className="col-span-2 text-sm font-bold text-sky-700 ">Weekly</h4>
+        <h4 className="col-span-2 text-sm font-bold text-sky-700 ">{t('weekly')}</h4>
         <div className="col-span-4 flex gap-2">
           <WeekRecurrence
             handleChange={handleRecurrenceChange}
@@ -45,7 +47,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             value={1}
             disabled={!isSelected}
           >
-            odd
+            {t('odd')}
           </WeekRecurrence>
           <WeekRecurrence
             handleChange={handleRecurrenceChange}
@@ -53,12 +55,12 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             value={0}
             disabled={!isSelected}
           >
-            even
+            {t('even')}
           </WeekRecurrence>
         </div>
       </div>
       <div className="z-10 mt-4 grid grid-cols-6">
-        <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">Period</h5>
+        <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">{t('period.title')}</h5>
         <div className="col-span-4">
           <PeriodItem
             checked={isSelected && period === 1}
@@ -67,7 +69,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             type={SCHEDULE_TYPES.weekly}
             value={1}
           >
-            during the week
+            {t('period.week.duringWeek')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 2}
@@ -76,7 +78,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             type={SCHEDULE_TYPES.weekly}
             value={2}
           >
-            in the weekend
+            {t('period.week.weekend')}
           </PeriodItem>
         </div>
       </div>

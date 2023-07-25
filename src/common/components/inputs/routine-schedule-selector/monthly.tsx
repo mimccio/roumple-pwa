@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 import { cl } from '&/common/utils'
@@ -24,6 +25,7 @@ interface Props {
 const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 
 export function Monthly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
+  const { t } = useTranslation('schedule')
   const isSelected = type === SCHEDULE_TYPES.monthly
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
@@ -39,7 +41,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
     >
       {isSelected && <CheckIcon width={80} className="absolute bottom-4 right-4 z-0 text-purple-200" />}
       <div className="grid grid-cols-6">
-        <h4 className="col-span-2 text-sm font-bold text-purple-700 ">Monthly</h4>
+        <h4 className="col-span-2 text-sm font-bold text-purple-700 ">{t('monthly')}</h4>
         <div className="col-span-4 flex flex-wrap gap-1">
           {months.map((month, index) => (
             <MonthCircle
@@ -54,7 +56,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
         </div>
       </div>
       <div className="mt-4 grid grid-cols-6">
-        <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">Period</h5>
+        <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">{t('period.title')}</h5>
         <div className="z-10 col-span-4">
           <PeriodItem
             checked={isSelected && period === 1}
@@ -63,7 +65,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             type={SCHEDULE_TYPES.monthly}
             value={1}
           >
-            at the start of the month
+            {t('period.month.start')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && (period === 2 || period === 0)}
@@ -72,7 +74,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             type={SCHEDULE_TYPES.monthly}
             value={2}
           >
-            during the month
+            {t('period.month.duringMonth')}
           </PeriodItem>
           <PeriodItem
             checked={isSelected && period === 3}
@@ -81,7 +83,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             type={SCHEDULE_TYPES.monthly}
             value={3}
           >
-            at the end of the month
+            {t('period.month.end')}
           </PeriodItem>
         </div>
       </div>
