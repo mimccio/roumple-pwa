@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { SquareDoneButton } from '&/common/components/buttons/square-done-button'
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl, getTwColor } from '&/common/utils'
+import { cl, getDateFnsLocale, getTwColor } from '&/common/utils'
 import { useTaskStatus } from '&/modules/task/hooks'
 import { Task } from '&/modules/task/types'
 import { format, getWeek } from 'date-fns'
@@ -18,9 +18,11 @@ export function TaskListItem({ task }: Props) {
 
   const getDateText = () => {
     if (!task.date) return null
-    if (task.scheduleType === SCHEDULE_TYPES.daily) return format(new Date(task.date), 'dd MMM yyyy')
+    if (task.scheduleType === SCHEDULE_TYPES.daily)
+      return format(new Date(task.date), 'dd MMM yyyy', { locale: getDateFnsLocale() })
     if (task.scheduleType === SCHEDULE_TYPES.weekly) return t('week') + getWeek(new Date(task.date))
-    if (task.scheduleType === SCHEDULE_TYPES.monthly) return format(new Date(task.date), 'MMMM yyyy')
+    if (task.scheduleType === SCHEDULE_TYPES.monthly)
+      return format(new Date(task.date), 'MMMM yyyy', { locale: getDateFnsLocale() })
   }
 
   const dateText = getDateText()
