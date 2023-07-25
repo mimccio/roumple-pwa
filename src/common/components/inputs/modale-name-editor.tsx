@@ -24,7 +24,7 @@ const DisableEnter = Extension.create({
   },
 })
 
-export function NameEditor({ id, name, submit, placeholder = '', autofocus, setCharNum }: Props) {
+export function ModaleNameEditor({ id, name, submit, placeholder = '', autofocus, setCharNum }: Props) {
   const editor = useEditor({
     autofocus,
     extensions: [

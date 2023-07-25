@@ -70,7 +70,7 @@ export function NameEditor({ name, id, submit }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <p className="absolute bottom-0 right-0 z-10 text-xs text-red-400">
+        <p className="absolute bottom-0 right-0 z-10 pr-2 text-xs text-red-400">
           {t('maxChars', { maxChars: NAME_MAX_CHARS })}
         </p>
       </Transition>
