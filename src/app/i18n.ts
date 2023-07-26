@@ -10,6 +10,7 @@ i18next
   .init({
     load: 'languageOnly',
     fallbackLng: 'en',
+    debug: import.meta.env.MODE === 'development',
     // cache: { enabled: true },
     fallbackNS: 'common',
     ns: [
