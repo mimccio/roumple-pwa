@@ -33,7 +33,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
   return (
     <div
       className={cl(
-        'relative rounded-lg border-2 p-4 transition-colors',
+        'relative rounded-lg border-2 p-2 transition-colors md:p-4',
         isSelected ? 'border-transparent bg-indigo-100 shadow-md shadow-indigo-200' : 'border-indigo-200'
       )}
     >
@@ -92,7 +92,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
           />
         </div>
       </div>
-      <div className="z-10 mt-4 grid grid-cols-6">
+      <div className="relative z-10 mt-4 grid grid-cols-6">
         <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">{t('period.title')}</h5>
         <div className="col-span-4">
           <PeriodItem

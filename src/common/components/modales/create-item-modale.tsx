@@ -28,7 +28,7 @@ export function CreateItemModale({ isOpen, close, children, onSave, disabled }: 
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-2 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-start justify-center p-2 text-center md:items-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -38,7 +38,7 @@ export function CreateItemModale({ isOpen, close, children, onSave, disabled }: 
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative flex transform flex-col gap-y-4 rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 md:max-w-2xl md:px-8">
+              <Dialog.Panel className="relative my-8 flex w-full max-w-lg transform flex-col gap-y-4 rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:p-6 md:max-w-2xl md:px-8">
                 {children}
                 <ActionSection close={close} onSubmit={onSave} disabled={disabled} />
               </Dialog.Panel>

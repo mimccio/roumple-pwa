@@ -1,8 +1,8 @@
 import { CreateItemModale } from '&/common/components/modales'
 import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import { ModalePrioritySelector } from '&/common/components/inputs/modale-priority-selector'
+import { ModaleCategorySelector } from '&/common/components/inputs/modale-category-selector'
 import { useCreateRoutine } from '&/modules/routine/hooks'
-import { Category } from './parts/category'
 import { RoutineName } from './parts/routine-name'
 
 interface Props {
@@ -48,7 +48,7 @@ export function CreateRoutineModale({ isOpen, close }: Props) {
         monthlyRecurrence={monthlyRecurrence}
         weeklyRecurrence={weeklyRecurrence}
       />
-      <Category category={category} onSelect={onSelectCategory} />
+      <ModaleCategorySelector category={category} onSelect={onSelectCategory} />
       <ModalePrioritySelector priority={priority} onSelect={onSelectPriority} />
     </CreateItemModale>
   )

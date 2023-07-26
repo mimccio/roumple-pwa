@@ -33,7 +33,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
   return (
     <div
       className={cl(
-        'relative rounded-lg border-2 p-4 transition-colors',
+        'relative rounded-lg border-2 p-2 transition-colors md:p-4',
         isSelected ? 'border-transparent bg-sky-100  shadow-md shadow-sky-200' : 'border-sky-200'
       )}
     >
@@ -59,7 +59,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
           </WeekRecurrence>
         </div>
       </div>
-      <div className="z-10 mt-4 grid grid-cols-6">
+      <div className="relative z-10 mt-4 grid grid-cols-6">
         <h5 className="col-span-2 mr-20 text-sm font-semibold text-gray-700">{t('period.title')}</h5>
         <div className="col-span-4">
           <PeriodItem

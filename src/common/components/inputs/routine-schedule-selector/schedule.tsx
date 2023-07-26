@@ -33,7 +33,7 @@ export function RoutineScheduleSelector({
   return (
     <div className="">
       <p className="mb-2 text-sm font-bold text-gray-400">{t('schedule')}</p>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-y-2 md:gap-y-4">
         <Daily
           handlePeriodChange={handlePeriodChange}
           handleRecurrenceChange={handleRecurrenceChange}

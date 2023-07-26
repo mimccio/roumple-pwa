@@ -42,7 +42,7 @@ export function ModaleNameEditor({ id, name, submit, placeholder = '', autofocus
     editorProps: {
       attributes: {
         class:
-          'prose prose-sm sm:prose prose-gray text-lg font-semibold transition-colors rounded-lg lg:prose-lg xl:prose-xl mx-auto focus:outline-none ',
+          'prose prose-sm sm:prose prose-gray font-semibold transition-colors rounded-lg mx-auto focus:outline-none ',
       },
     },
   })

@@ -13,7 +13,7 @@ export function ModalePrioritySelector({ priority, onSelect }: Props) {
   return (
     <div className="w-full">
       <p className="mb-2 text-sm font-bold text-gray-400">{t('priority')}</p>
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-1 sm:gap-2 md:gap-4">
         <button className="flex gap-2 p-2" onClick={() => onSelect(0)}>
           {!priority ? (
             <FlagIcon className="text-gray-400" width={20} />
