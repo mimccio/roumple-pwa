@@ -7,14 +7,18 @@ import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
 import { cl } from '&/common/utils'
 import { Tooltip } from '&/common/components/tooltip'
 import { categoryAtom } from '&/modules/category/atoms'
+import { RoutinesMenu } from './routines-menu'
+import { SortType } from '&/modules/routine/types'
 
 interface Props {
   archived: boolean
   onCreate: () => void
   handleShowArchived: () => void
+  handleSortChange: (sortType: SortType) => void
+  handleGroupBySchedule: () => void
 }
 
-export function Header({ handleShowArchived, archived, onCreate }: Props) {
+export function Header({ handleShowArchived, archived, onCreate, handleSortChange, handleGroupBySchedule }: Props) {
   const { t } = useTranslation(['common', 'routine', 'action'])
   const [category, setCategory] = useAtom(categoryAtom)
 
@@ -31,6 +35,8 @@ export function Header({ handleShowArchived, archived, onCreate }: Props) {
         <h1 className="ml-2">{t('routines', { ns: 'common' })}</h1>
       </div>
       <div className="flex gap-1">
+        <RoutinesMenu handleSortChange={handleSortChange} handleGroupBySchedule={handleGroupBySchedule} />
+
         <Tooltip message={t('createRoutine', { ns: 'routine' })}>
           <button className="group p-2" onClick={onCreate}>
             <PlusIcon width={24} className="text-gray-400 transition-colors group-hover:text-gray-500" />

@@ -12,15 +12,32 @@ import { MainError, OfflineError } from '../errors'
 import { Header } from './header'
 import { Item } from './item'
 import { EmptyArchived } from './empty-archived'
+import { GroupedByScheduleRoutineList } from './grouped-by-schedule-routine-list'
 
 export function RoutineList() {
   const { t } = useTranslation('routine')
-  const { routineList, showStatus, handleShowArchived, archived, onOpenCreate, onCloseCreate, createIsOpen } =
-    useRoutineList()
+  const {
+    archived,
+    createIsOpen,
+    handleGroupBySchedule,
+    handleShowArchived,
+    handleSortChange,
+    onCloseCreate,
+    onOpenCreate,
+    routineList,
+    showStatus,
+    isGroupedBySchedule,
+  } = useRoutineList()
 
   return (
     <>
-      <Header handleShowArchived={handleShowArchived} archived={archived} onCreate={onOpenCreate} />
+      <Header
+        archived={archived}
+        handleGroupBySchedule={handleGroupBySchedule}
+        handleShowArchived={handleShowArchived}
+        handleSortChange={handleSortChange}
+        onCreate={onOpenCreate}
+      />
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
@@ -31,7 +48,12 @@ export function RoutineList() {
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-          {showStatus.data && routineList?.map((routine) => <Item key={routine.id} routine={routine as Routine} />)}
+
+          {showStatus.data && isGroupedBySchedule ? (
+            <GroupedByScheduleRoutineList list={routineList} />
+          ) : (
+            routineList?.map((routine) => <Item key={routine.id} routine={routine as Routine} />)
+          )}
         </MainListLayout>
       </ContentLayout>
       <CreateRoutineModale isOpen={createIsOpen} close={onCloseCreate} />

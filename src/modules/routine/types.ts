@@ -43,3 +43,5 @@ export interface UpdateCheckedListParams {
   routine: Routine
   checklistItemId: string
 }
+
+export type SortType = 'PRIORITY' | 'NAME'

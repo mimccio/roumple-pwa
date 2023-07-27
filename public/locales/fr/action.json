@@ -17,5 +17,7 @@
   "sortByDate": "Trier par date",
   "sortByName": "Trier par nom",
   "sortByPriority": "Trier par priorité",
+  "groupBySchedule": "Grouper par programmation",
+  "unGroupBySchedule": "Dégrouper",
   "clearDone": "Réinitialiser terminées"
 }

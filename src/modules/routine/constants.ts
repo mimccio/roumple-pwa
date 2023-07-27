@@ -17,3 +17,11 @@ export const ROUTINE_KEYS = {
   details: () => [...ROUTINE_KEYS.all, 'DETAIL'] as const,
   detail: (id?: string) => [...ROUTINE_KEYS.details(), id] as const,
 }
+
+const PRIORITY = 'PRIORITY'
+const NAME = 'NAME'
+
+export const SORT_TYPES = {
+  priority: PRIORITY as 'PRIORITY',
+  name: NAME as 'NAME',
+}

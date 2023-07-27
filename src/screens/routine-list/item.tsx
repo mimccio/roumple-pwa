@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { cl } from '&/common/utils'
 import { RoutineItem } from '&/modules/routine/types'
 import { getScheduleTypeColor } from '&/modules/routine/utils'
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export function Item({ routine }: Props) {
+  const { t } = useTranslation('schedule')
+
   const getPriorityColor = () => {
     if (routine.priority === 1) return 'text-blue-500'
     if (routine.priority === 2) return 'text-orange-500'
@@ -42,7 +45,7 @@ export function Item({ routine }: Props) {
           >
             <p className="truncate font-semibold text-gray-700">{routine.name}</p>
             <div className="flex gap-2 text-xs font-semibold text-gray-500">
-              <p className={`opacity-75 ${typeColor}`}>{routine.type.toLocaleLowerCase()}</p>
+              <p className={`lowercase opacity-75 ${typeColor}`}>{t(routine.type.toLocaleLowerCase())}</p>
               <p>{routine.category?.name && routine.category.name}</p>
             </div>
           </div>

@@ -17,6 +17,8 @@
   "sortByDate": "Sort by date",
   "sortByName": "Sort by name",
   "sortByPriority": "Sort by priority",
+  "groupBySchedule": "Group by schedule",
+  "unGroupBySchedule": "Ungroup by schedule",
   "clearDone": "Clear done",
   "back": "back"
 }
