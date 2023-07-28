@@ -20,7 +20,7 @@ export function TaskListItem({ task }: Props) {
     if (!task.date) return null
     if (task.scheduleType === SCHEDULE_TYPES.daily)
       return format(new Date(task.date), 'dd MMM yyyy', { locale: getDateFnsLocale() })
-    if (task.scheduleType === SCHEDULE_TYPES.weekly) return t('week') + getWeek(new Date(task.date))
+    if (task.scheduleType === SCHEDULE_TYPES.weekly) return t('week') + ' ' + getWeek(new Date(task.date))
     if (task.scheduleType === SCHEDULE_TYPES.monthly)
       return format(new Date(task.date), 'MMMM yyyy', { locale: getDateFnsLocale() })
   }

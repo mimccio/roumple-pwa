@@ -24,3 +24,9 @@ export const getScheduleTypeLightColor = (type: ScheduleType) => {
   if (type === SCHEDULE_TYPES.monthly) return 'text-purple-300 group-hover:text-purple-400'
   return 'text-indigo-300 group-hover:text-indigo-400'
 }
+
+export const getOccurrenceBg = (type: ScheduleType) => {
+  if (type === SCHEDULE_TYPES.weekly) return 'bg-sky-100'
+  if (type === SCHEDULE_TYPES.monthly) return 'bg-purple-100'
+  return 'bg-indigo-100'
+}

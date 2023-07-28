@@ -4,6 +4,7 @@ import { ModalePrioritySelector } from '&/common/components/inputs/modale-priori
 import { ModaleCategorySelector } from '&/common/components/inputs/modale-category-selector'
 import { useCreateRoutine } from '&/modules/routine/hooks'
 import { RoutineName } from './parts/routine-name'
+import { Occurrence } from './parts/occurrence'
 
 interface Props {
   isOpen: boolean
@@ -29,6 +30,8 @@ export function CreateRoutineModale({ isOpen, close }: Props) {
     reset,
     setCharNum,
     weeklyRecurrence,
+    occurrence,
+    handleOccurrenceChange,
   } = useCreateRoutine()
 
   const onClose = () => {
@@ -48,6 +51,7 @@ export function CreateRoutineModale({ isOpen, close }: Props) {
         monthlyRecurrence={monthlyRecurrence}
         weeklyRecurrence={weeklyRecurrence}
       />
+      <Occurrence occurrence={occurrence} handleOccurrenceChange={handleOccurrenceChange} type={currentType} />
       <ModaleCategorySelector category={category} onSelect={onSelectCategory} />
       <ModalePrioritySelector priority={priority} onSelect={onSelectPriority} />
     </CreateItemModale>

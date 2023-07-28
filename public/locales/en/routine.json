@@ -5,5 +5,8 @@
   "noArchivedRoutine": "No archived routine",
   "createNewRoutine": "Create a new routine +",
   "createRoutine": "create routine",
-  "enterRoutineName": "Enter routine name"
+  "enterRoutineName": "Enter routine name",
+  "occurrence": "Occurrence",
+  "time-per_one": "time per ",
+  "time-per_other": "times per "
 }

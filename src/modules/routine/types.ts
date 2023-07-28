@@ -10,6 +10,7 @@ interface RoutineAction {
   routine_id: string
   status: RoutineStatuses
   checked_list?: string[]
+  doneOccurrence: number
 }
 
 export interface Routine {
@@ -24,11 +25,12 @@ export interface Routine {
   weekly_recurrence: number[]
   monthly_recurrence: number[]
   type: ScheduleType
-  actions: Pick<RoutineAction, 'id' | 'date' | 'status' | 'checked_list'>[]
-  category_id: string | null
+  actions: Pick<RoutineAction, 'id' | 'date' | 'status' | 'checked_list' | 'doneOccurrence'>[]
+  category_id?: string | null
   category: Category | null
   checklist?: RoutineChecklistItem[]
   deletedCategory?: Category
+  occurrence: number
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>

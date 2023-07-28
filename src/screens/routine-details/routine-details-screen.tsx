@@ -17,6 +17,7 @@ import {
   RoutineNotes,
   RoutineSchedule,
 } from './parts'
+import { Occurrence } from './parts/occurrence'
 
 export function RoutineDetailsScreen() {
   const { t } = useTranslation('common')
@@ -33,7 +34,7 @@ export function RoutineDetailsScreen() {
       {routine && (
         <>
           <DetailInfoSection>
-            <div className="-mx-1 mb-6 flex items-center justify-between">
+            <div className="-mx-1 mb-4 flex items-center justify-between">
               <div className="flex items-center gap-x-4">
                 <RoutineStatusSelector routine={routine} date={date} />
                 {routine.archived && <p className="font-bold uppercase text-gray-400">{t('archived')}</p>}
@@ -41,6 +42,7 @@ export function RoutineDetailsScreen() {
               <Priority routine={routine} />
             </div>
 
+            <Occurrence routine={routine} />
             <RoutineSchedule routine={routine} date={date} />
             <RoutineCategory routine={routine} />
             <CreatedAt createdAt={routine.created_at} />

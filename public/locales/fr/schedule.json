@@ -11,6 +11,9 @@
   "daily": "Quotidien",
   "weekly": "Hebdomadaire",
   "monthly": "Mensuel",
+  "day": "jour",
+  "week": "semaine",
+  "month": "mois",
 
   "period": {
     "title": "Période",
@@ -30,7 +33,7 @@
       "end": "À la fin du mois"
     }
   },
-  "week": "semaine ",
+
   "scheduledFor": "Programmé pour",
   "notScheduledFor": "Pas programmé pour",
   "createdOn": "créé le",

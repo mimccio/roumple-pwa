@@ -25,7 +25,14 @@ export function useUpsertAction({ type, date }: Params) {
 
       const newRoutine = {
         ...data.routine,
-        actions: [{ ...data.routine.actions?.[0], status: data.status, checked_list: data.checkedList }],
+        actions: [
+          {
+            ...data.routine.actions?.[0],
+            status: data.status,
+            checked_list: data.checkedList,
+            doneOccurrence: data.doneOccurrence,
+          },
+        ],
       }
 
       // ⛳ Update Item
@@ -55,18 +62,31 @@ export function useUpsertAction({ type, date }: Params) {
 
   const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) => {
     const prevStatus = routine.actions?.[0]?.status
+    const prevDoneOccurrence = routine.actions?.[0]?.doneOccurrence
     const prevCheckedList = routine.actions?.[0]?.checked_list
+    let newStatus = status
+    let newDoneOccurrence = prevDoneOccurrence
 
-    if (prevStatus === status && (prevStatus !== STATUSES.todo || !prevCheckedList?.length)) return
+    if (status === STATUSES.todo && prevDoneOccurrence > 0) {
+      newDoneOccurrence = prevDoneOccurrence - 1
+    }
 
-    const checkedList = status === STATUSES.todo ? [] : prevCheckedList
-    mutate({ routine, actionId, status, type, date, checkedList })
+    if (status === STATUSES.done && routine.occurrence > prevDoneOccurrence) {
+      newDoneOccurrence = prevDoneOccurrence + 1
+      newDoneOccurrence === routine.occurrence ? STATUSES.done : (newStatus = STATUSES.todo)
+    }
+
+    if (prevStatus === status && (prevStatus !== STATUSES.todo || !prevCheckedList?.length) && prevDoneOccurrence < 1)
+      return
+
+    const checkedList = newStatus === STATUSES.todo ? [] : prevCheckedList
+    mutate({ routine, actionId, status: newStatus, type, date, checkedList, doneOccurrence: newDoneOccurrence })
   }
 
   const handleSelectChecklistItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
     const action = routine.actions?.[0]
     const checkedList = action?.checked_list || []
-
+    const prevDoneOccurrence = routine.actions?.[0]?.doneOccurrence
     const index = checkedList.findIndex((id) => id === checklistItemId)
 
     let newList: string[] = []
@@ -84,7 +104,32 @@ export function useUpsertAction({ type, date }: Params) {
       status = STATUSES.inProgress
     }
 
-    mutate({ routine, actionId: action?.id, type, date, status, checkedList: newList })
+    let newStatus = status
+    let newDoneOccurrence = prevDoneOccurrence
+
+    if (status === STATUSES.todo && prevDoneOccurrence > 0) {
+      newDoneOccurrence = prevDoneOccurrence - 1
+    }
+
+    const reset = () => {
+      newStatus = STATUSES.todo
+      newList = []
+    }
+
+    if (status === STATUSES.done && routine.occurrence > prevDoneOccurrence) {
+      newDoneOccurrence = prevDoneOccurrence + 1
+      newDoneOccurrence === routine.occurrence ? STATUSES.done : reset()
+    }
+
+    mutate({
+      routine,
+      actionId: action?.id,
+      type,
+      date,
+      status: newStatus,
+      checkedList: newList,
+      doneOccurrence: newDoneOccurrence,
+    })
   }
 
   const handleDeleteCheckedItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
@@ -95,7 +140,15 @@ export function useUpsertAction({ type, date }: Params) {
     if (index >= 0) {
       newList = [...checkedList.slice(0, index), ...checkedList.slice(index + 1)]
     }
-    mutate({ routine, actionId: action?.id, type, date, status: action?.status, checkedList: newList })
+    mutate({
+      routine,
+      actionId: action?.id,
+      type,
+      date,
+      status: action?.status,
+      checkedList: newList,
+      doneOccurrence: action.doneOccurrence,
+    })
   }
 
   return { handleUpdateStatus, handleSelectChecklistItem, handleDeleteCheckedItem }

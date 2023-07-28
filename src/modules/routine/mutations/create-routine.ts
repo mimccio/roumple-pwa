@@ -13,6 +13,7 @@ export const createRoutine = async ({
   period,
   category,
   priority,
+  occurrence,
 }: Routine) => {
   const userId = await getUserId()
 
@@ -28,6 +29,7 @@ export const createRoutine = async ({
     monthly_recurrence,
     period,
     category_id: category?.id,
+    occurrence,
   })
 
   if (error) throw error

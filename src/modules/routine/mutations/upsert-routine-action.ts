@@ -13,9 +13,18 @@ interface Params {
   status: RoutineStatuses
   type: ScheduleType
   checkedList?: string[]
+  doneOccurrence: number
 }
 
-export const upsertRoutineAction = async ({ status, actionId, type, date, routine, checkedList }: Params) => {
+export const upsertRoutineAction = async ({
+  status,
+  actionId,
+  type,
+  date,
+  routine,
+  checkedList,
+  doneOccurrence,
+}: Params) => {
   const userId = await getUserId()
 
   const getDate = () => {
@@ -31,6 +40,7 @@ export const upsertRoutineAction = async ({ status, actionId, type, date, routin
     user_id: userId,
     status,
     checked_list: checkedList,
+    done_occurrence: doneOccurrence,
   }
 
   const { error, data } = await db.from('routine_action').upsert(action).select('*').single()
