@@ -17,7 +17,7 @@ export const fetchRoutines = async ({ queryKey }: FetchRoutineParams) => {
   const { data, error } = await db
     .from('routine')
     .select(
-      'id, created_at, name, priority, description, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, occurrence, category_id, category(id, name, color)'
+      'id, created_at, name, priority, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, category(id, name, color)'
     )
     .eq('archived', archived)
     .order('priority', { ascending: false })

@@ -18,6 +18,13 @@ export const ROUTINE_KEYS = {
   detail: (id?: string) => [...ROUTINE_KEYS.details(), id] as const,
 }
 
+export const ACTION_KEYS = {
+  all: ['ACTION'] as const,
+  routines: () => [...ACTION_KEYS.all, 'ROUTINE'] as const,
+  routine: ({ routineId, date }: { routineId?: string; date: Date }) =>
+    [...ACTION_KEYS.routines(), routineId, date] as const,
+}
+
 const PRIORITY = 'PRIORITY'
 const NAME = 'NAME'
 

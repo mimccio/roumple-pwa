@@ -4,24 +4,26 @@ import { SCHEDULE_TYPES } from '&/common/constants'
 import { useDeleteChecklistItem } from '&/modules/routine-checklist-item/hooks/use-delete-checklist-item'
 
 import { useUpsertAction } from '&/modules/routine/hooks'
-import { Routine } from '&/modules/routine/types'
+import { Routine, RoutineAction } from '&/modules/routine/types'
 import { ChecklistItem } from './checklist-item'
 import { NewChecklistItem } from './new-checklist-item'
 
 interface Props {
   routine: Routine
   date: Date
+  action?: RoutineAction
 }
 
-export function RoutineChecklist({ routine, date }: Props) {
+export function RoutineChecklist({ routine, date, action }: Props) {
   const { t } = useTranslation(['common', 'routine', 'schedule'])
   const { onDelete } = useDeleteChecklistItem(routine)
   const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({ type: routine.type, date })
 
-  const onSelectChecklistItem = (checklistItemId: string) => handleSelectChecklistItem({ routine, checklistItemId })
+  const onSelectChecklistItem = (checklistItemId: string) =>
+    handleSelectChecklistItem({ routine, checklistItemId, action })
 
   const handleDelete = (checklistItemId: string) => {
-    handleDeleteCheckedItem({ routine, checklistItemId })
+    handleDeleteCheckedItem({ routine, action, checklistItemId })
     onDelete(checklistItemId)
   }
 
@@ -47,7 +49,7 @@ export function RoutineChecklist({ routine, date }: Props) {
             key={checklistItem.id}
             onDelete={handleDelete}
             onSelect={onSelectChecklistItem}
-            isChecked={routine.actions?.[0]?.checked_list?.includes(checklistItem.id)}
+            isChecked={action?.checkedList?.includes(checklistItem.id)}
           />
         ))}
         <NewChecklistItem routine={routine} />

@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import { v5 as uuidv5 } from 'uuid'
 
 import type { ScheduleType } from '&/common/types'
 import type { Routine, UpdateCheckedListParams, UpdateStatusParams } from '../types'
-import { ROUTINE_KEYS } from '../constants'
+import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { upsertRoutineAction } from '../mutations'
-import { STATUSES } from '&/common/constants'
+import { DATE_FORMAT, STATUSES } from '&/common/constants'
+import { format } from 'date-fns'
 
 interface Params {
   type: ScheduleType
@@ -20,30 +22,28 @@ export function useUpsertAction({ type, date }: Params) {
   const { mutate } = useMutation(upsertRoutineAction, {
     onMutate: async (data) => {
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.routine.id) })
+      await queryClient.cancelQueries({ queryKey: ACTION_KEYS.routine({ routineId: data.routine.id, date }) })
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
+      await queryClient.cancelQueries(boardKey)
 
-      const newRoutine = {
-        ...data.routine,
-        actions: [
-          {
-            ...data.routine.actions?.[0],
-            status: data.status,
-            checked_list: data.checkedList,
-            doneOccurrence: data.doneOccurrence,
-          },
-        ],
+      const newAction = {
+        id: data.actionId || uuidv5(format(date, DATE_FORMAT), data.routine.id),
+        date,
+        status: data.status,
+        doneOccurrence: data.doneOccurrence,
+        checkedList: data.checkedList,
       }
 
       // ⛳ Update Item
-      queryClient.setQueryData(ROUTINE_KEYS.detail(data.routine.id), newRoutine)
+      queryClient.setQueryData(ACTION_KEYS.routine({ routineId: data.routine.id, date }), newAction)
 
       // 🏫 Update Routine Board
       const previousList = queryClient.getQueryData(boardKey)
       queryClient.setQueryData<Routine[]>(boardKey, (old) => {
         if (!old) return
         const index = old.findIndex((item) => item.id === data.routine.id)
-        if (index >= 0) return [...old.slice(0, index), newRoutine, ...old.slice(index + 1)]
+        if (index >= 0)
+          return [...old.slice(0, index), { ...data.routine, actions: [newAction] }, ...old.slice(index + 1)]
         return old
       })
 
@@ -60,10 +60,10 @@ export function useUpsertAction({ type, date }: Params) {
     },
   })
 
-  const handleUpdateStatus = ({ routine, actionId, status }: UpdateStatusParams) => {
-    const prevStatus = routine.actions?.[0]?.status
-    const prevDoneOccurrence = routine.actions?.[0]?.doneOccurrence
-    const prevCheckedList = routine.actions?.[0]?.checked_list
+  const handleUpdateStatus = ({ routine, status, action }: UpdateStatusParams) => {
+    const prevStatus = action?.status
+    const prevDoneOccurrence = action?.doneOccurrence || 0
+    const prevCheckedList = action?.checkedList
     let newStatus = status
     let newDoneOccurrence = prevDoneOccurrence
 
@@ -80,13 +80,12 @@ export function useUpsertAction({ type, date }: Params) {
       return
 
     const checkedList = newStatus === STATUSES.todo ? [] : prevCheckedList
-    mutate({ routine, actionId, status: newStatus, type, date, checkedList, doneOccurrence: newDoneOccurrence })
+    mutate({ routine, status: newStatus, date, checkedList, doneOccurrence: newDoneOccurrence, actionId: action?.id })
   }
 
-  const handleSelectChecklistItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
-    const action = routine.actions?.[0]
-    const checkedList = action?.checked_list || []
-    const prevDoneOccurrence = routine.actions?.[0]?.doneOccurrence
+  const handleSelectChecklistItem = ({ routine, action, checklistItemId }: UpdateCheckedListParams) => {
+    const checkedList = action?.checkedList || []
+    const prevDoneOccurrence = action?.doneOccurrence || 0
     const index = checkedList.findIndex((id) => id === checklistItemId)
 
     let newList: string[] = []
@@ -96,7 +95,7 @@ export function useUpsertAction({ type, date }: Params) {
       newList = [...checkedList, checklistItemId]
     }
 
-    let status = action?.status
+    let status = action?.status || STATUSES.todo
 
     if (newList.length === routine.checklist?.length) {
       status = STATUSES.done
@@ -124,7 +123,6 @@ export function useUpsertAction({ type, date }: Params) {
     mutate({
       routine,
       actionId: action?.id,
-      type,
       date,
       status: newStatus,
       checkedList: newList,
@@ -132,9 +130,8 @@ export function useUpsertAction({ type, date }: Params) {
     })
   }
 
-  const handleDeleteCheckedItem = ({ routine, checklistItemId }: UpdateCheckedListParams) => {
-    const action = routine.actions?.[0]
-    const checkedList = action?.checked_list || []
+  const handleDeleteCheckedItem = ({ routine, action, checklistItemId }: UpdateCheckedListParams) => {
+    const checkedList = action?.checkedList || []
     const index = checkedList.findIndex((id) => id === checklistItemId)
     let newList: string[] = []
     if (index >= 0) {
@@ -143,11 +140,10 @@ export function useUpsertAction({ type, date }: Params) {
     mutate({
       routine,
       actionId: action?.id,
-      type,
       date,
-      status: action?.status,
+      status: action?.status || STATUSES.todo,
       checkedList: newList,
-      doneOccurrence: action.doneOccurrence,
+      doneOccurrence: action?.doneOccurrence || 0,
     })
   }
 

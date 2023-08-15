@@ -7,7 +7,7 @@ import type { Routine, UpdateStatusParams } from '&/modules/routine/types'
 
 interface Props {
   routine: Routine
-  handleUpdateStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
+  handleUpdateStatus: ({ routine, action, status }: UpdateStatusParams) => void
 }
 
 export function DoneButton({ handleUpdateStatus, routine }: Props) {
@@ -25,7 +25,7 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
     evt.preventDefault()
     evt.stopPropagation()
     const status = action?.status === STATUSES.done ? STATUSES.todo : STATUSES.done
-    handleUpdateStatus({ routine, actionId: action?.id, status })
+    handleUpdateStatus({ routine, action, status })
   }
 
   return (

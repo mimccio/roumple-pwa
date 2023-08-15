@@ -6,11 +6,11 @@ import { DoneButton } from './done-button'
 
 interface Props {
   routine: Routine
-  handleUpdateStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
+  handleUpdateStatus: ({ routine, action, status }: UpdateStatusParams) => void
 }
 
 export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {
-  const doneOccurrence = routine.actions[0]?.doneOccurrence || 0
+  const doneOccurrence = routine.actions?.[0]?.doneOccurrence || 0
 
   return (
     <NavLink

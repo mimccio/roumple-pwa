@@ -8,6 +8,7 @@ import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-
 import { useArchiveRoutine, useDeleteRoutine } from '&/modules/routine/hooks'
 import type { Routine } from '&/modules/routine/types'
 import { LinkNote } from './link-note'
+import { ActivityBtn } from './activity-btn'
 
 interface Props {
   routine?: Routine
@@ -35,6 +36,7 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
           isLoading={isLoading}
           isArchived={routine?.archived}
         />
+        <ActivityBtn />
         <CloseNavBtn />
       </div>
       {routine && (

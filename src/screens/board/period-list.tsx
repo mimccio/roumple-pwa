@@ -12,7 +12,7 @@ import { RoutineActionListItem } from './components'
 interface Props {
   list?: (Routine | Task)[]
   type: ScheduleType
-  handleUpdateStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
+  handleUpdateStatus: ({ routine, action, status }: UpdateStatusParams) => void
 }
 
 export function PeriodList({ type, list = [], handleUpdateStatus }: Props) {

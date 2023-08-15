@@ -9,9 +9,9 @@ export function usePeriodText() {
   const getPeriodText = ({ type, period }: { type: ScheduleType; period: number }) => {
     if (type === SCHEDULE_TYPES.daily) {
       if (period === 1) return t('period.day.morning')
-      if (period === 2) return t('period.day.morning')
-      if (period === 3 || period === 0) return t('period.day.morning')
-      if (period === 4) return t('period.day.morning')
+      if (period === 2) return t('period.day.lunchTime')
+      if (period === 3 || period === 0) return t('period.day.duringDay')
+      if (period === 4) return t('period.day.evening')
     }
 
     if (type === SCHEDULE_TYPES.weekly) {
