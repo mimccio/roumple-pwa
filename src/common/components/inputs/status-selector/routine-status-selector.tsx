@@ -14,6 +14,7 @@ interface Props {
 export function RoutineStatusSelector({ routine, date, action, isLoading }: Props) {
   const { handleUpdateStatus } = useUpsertAction({ type: routine.type, date })
   const handleSelectStatus = (status: Status) => handleUpdateStatus({ routine, status, action })
+  const showCheck = routine.occurrence <= 1 || routine.occurrence - (action?.doneOccurrence || 0) <= 1
 
   if (isLoading) {
     return (
@@ -35,7 +36,11 @@ export function RoutineStatusSelector({ routine, date, action, isLoading }: Prop
         handleClick={() => handleSelectStatus(STATUSES.inProgress)}
         isSelected={action?.status === STATUSES.inProgress}
       />
-      <DoneBtn handleClick={() => handleSelectStatus(STATUSES.done)} isSelected={action?.status === STATUSES.done} />
+      <DoneBtn
+        showCheck={showCheck}
+        handleClick={() => handleSelectStatus(STATUSES.done)}
+        isSelected={action?.status === STATUSES.done}
+      />
     </div>
   )
 }

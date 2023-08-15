@@ -20,5 +20,6 @@
   "groupBySchedule": "Grouper par programmation",
   "unGroupBySchedule": "Dégrouper",
   "clearDone": "Réinitialiser terminées",
-  "editOccurrence": "Modifier l'occurrence"
+  "editOccurrence": "Modifier l'occurrence",
+  "selectDate": "selection de la date"
 }

@@ -6,9 +6,10 @@ import { Tooltip } from '&/common/components/tooltip'
 interface Props {
   handleClick: () => void
   isSelected: boolean
+  showCheck: boolean
 }
 
-export function DoneBtn({ handleClick, isSelected }: Props) {
+export function DoneBtn({ handleClick, isSelected, showCheck }: Props) {
   const { t } = useTranslation('status')
   return (
     <Tooltip message={t('done')}>
@@ -27,11 +28,26 @@ export function DoneBtn({ handleClick, isSelected }: Props) {
             isSelected ? 'border-white' : 'border-gray-400 group-hover:border-gray-100'
           )}
         >
-          <CheckIcon
-            width={18}
-            height={18}
-            className={cl('transition-colors ', isSelected ? 'text-white' : 'text-gray-400 group-hover:text-gray-100')}
-          />
+          {showCheck && (
+            <CheckIcon
+              width={18}
+              height={18}
+              className={cl(
+                'transition-colors ',
+                isSelected ? 'text-white' : 'text-gray-400 group-hover:text-gray-100'
+              )}
+            />
+          )}
+          {!showCheck && (
+            <span
+              className={cl(
+                'text text-xs font-semibold transition-colors',
+                isSelected ? 'text-white' : 'text-gray-400 group-hover:text-gray-100'
+              )}
+            >
+              +1
+            </span>
+          )}
         </div>
       </button>
     </Tooltip>
