@@ -9,6 +9,7 @@ import { useArchiveRoutine, useDeleteRoutine } from '&/modules/routine/hooks'
 import type { Routine } from '&/modules/routine/types'
 import { LinkNote } from './link-note'
 import { ActivityBtn } from './activity-btn'
+import { EditOccurrence } from '.'
 
 interface Props {
   routine?: Routine
@@ -19,6 +20,7 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
   const { t } = useTranslation(['common', 'routine'])
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const [linkSelectorIsOpen, setLinkSelectorIsOpen] = useState(false)
+  const [editOccurrenceIsOpen, setEditOccurrenceIsOpen] = useState(false)
 
   const { onDeleteRoutine } = useDeleteRoutine()
   const { handleArchiveRoutine } = useArchiveRoutine()
@@ -29,26 +31,38 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
     <DetailsNavbar>
       <h4 className="text-sm font-semibold text-gray-500">{t('routine', { ns: 'common' })}</h4>
       <div className="flex gap-x-2">
-        <ItemMenu
-          onDelete={() => setDeleteModaleIsOpen(true)}
-          onArchive={onArchive}
-          onLinkNote={() => setLinkSelectorIsOpen(true)}
-          isLoading={isLoading}
-          isArchived={routine?.archived}
-        />
-        <ActivityBtn />
+        {routine && (
+          <>
+            <ItemMenu
+              onDelete={() => setDeleteModaleIsOpen(true)}
+              onArchive={onArchive}
+              onLinkNote={() => setLinkSelectorIsOpen(true)}
+              isLoading={isLoading}
+              isArchived={routine?.archived}
+              onEditOccurrence={() => setEditOccurrenceIsOpen(true)}
+            />
+            <ActivityBtn />
+          </>
+        )}
         <CloseNavBtn />
       </div>
       {routine && (
-        <ConfirmDeleteModale
-          isOpen={deleteModaleIsOpen}
-          onDelete={() => onDeleteRoutine(routine)}
-          close={() => setDeleteModaleIsOpen(false)}
-          title={t('deleteRoutine', { ns: 'routine' })}
-          description={t('confirmDeleteRoutine', { ns: 'routine' })}
-        />
+        <>
+          <ConfirmDeleteModale
+            isOpen={deleteModaleIsOpen}
+            onDelete={() => onDeleteRoutine(routine)}
+            close={() => setDeleteModaleIsOpen(false)}
+            title={t('deleteRoutine', { ns: 'routine' })}
+            description={t('confirmDeleteRoutine', { ns: 'routine' })}
+          />
+          <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} />
+          <EditOccurrence
+            routine={routine}
+            isOpen={editOccurrenceIsOpen}
+            close={() => setEditOccurrenceIsOpen(false)}
+          />
+        </>
       )}
-      <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} />
     </DetailsNavbar>
   )
 }

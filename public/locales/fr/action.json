@@ -19,5 +19,6 @@
   "sortByPriority": "Trier par priorité",
   "groupBySchedule": "Grouper par programmation",
   "unGroupBySchedule": "Dégrouper",
-  "clearDone": "Réinitialiser terminées"
+  "clearDone": "Réinitialiser terminées",
+  "editOccurrence": "Modifier l'occurrence"
 }

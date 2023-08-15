@@ -27,18 +27,12 @@ export function Occurrence({ routine, action }: Props) {
     return 'text-indigo-600 group-hover:text-indigo-700'
   }
 
-  // TODO: don't show when occurrence = 1
+  if (routine.occurrence <= 1) return null
 
   return (
     <Popover className="relative">
-      <Popover.Button>
-        <div className="group flex items-center gap-x-2 py-1.5">
-          <p className="text-lg font-bold text-gray-500 transition-colors group-hover:text-gray-600">
-            <span>
-              {action?.doneOccurrence || 0} / {routine.occurrence}
-            </span>
-          </p>
-        </div>
+      <Popover.Button className="text-lg font-bold text-gray-500 transition-colors group-hover:text-gray-600">
+        {action?.doneOccurrence || 0} / {routine.occurrence}
       </Popover.Button>
 
       <Transition
@@ -50,7 +44,7 @@ export function Occurrence({ routine, action }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute z-10 w-full max-w-lg rounded-lg bg-white p-4 shadow-md">
+        <Popover.Panel className="absolute z-10 w-max max-w-lg rounded-lg bg-white p-4 shadow-md">
           {({ close }) => (
             <div>
               <div>
