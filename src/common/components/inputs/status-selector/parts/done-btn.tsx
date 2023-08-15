@@ -6,7 +6,7 @@ import { Tooltip } from '&/common/components/tooltip'
 interface Props {
   handleClick: () => void
   isSelected: boolean
-  showCheck: boolean
+  showCheck?: boolean
 }
 
 export function DoneBtn({ handleClick, isSelected, showCheck }: Props) {
