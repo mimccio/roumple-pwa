@@ -40,14 +40,16 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
   const dateText = getDateText({ date, scheduleType: scheduleType })
 
   const getTextColor = () => {
-    if (!isCurrentDate) return 'text-gray-600 hover:text-gray-800'
+    if (isCurrentDate) return 'text-gray-500'
     if (scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-600 hover:text-sky-800'
     if (scheduleType === SCHEDULE_TYPES.monthly) return 'text-purple-600 hover:text-purple-800'
     return 'text-indigo-600 hover:text-indigo-800'
   }
 
+  const goToCurrentDate = () => handleDateChange(startOfToday())
+
   return (
-    <div className="flex justify-center gap-x-2">
+    <div className="-mt-1 flex justify-between gap-x-2">
       <button
         onClick={onPreviousClick}
         className="text-gray-500 transition-colors hover:text-gray-700 disabled:text-gray-300"
@@ -55,7 +57,13 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
       >
         <ChevronLeftIcon width={16} />
       </button>
-      <button className={cl('text-xs transition-colors', getTextColor())}>{dateText}</button>
+      <button
+        onClick={goToCurrentDate}
+        disabled={isCurrentDate}
+        className={cl('text-xs transition-colors', getTextColor())}
+      >
+        {dateText}
+      </button>
       <button
         onClick={onNexClick}
         className=" text-gray-500 transition-colors hover:text-gray-700 disabled:text-gray-300"

@@ -32,7 +32,7 @@ export function RoutineDetails({ routine, action, date, handleDateChange, action
     <>
       <DetailInfoSection>
         <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.type} />
-        <div className="-mx-1 mb-4 flex items-center justify-between">
+        <div className="-mx-1 mb-4 mt-2 flex items-center justify-between">
           <div className="flex items-center gap-x-4">
             <RoutineStatusSelector routine={routine} action={action} date={date} isLoading={actionIsLoading} />
             {!actionIsLoading && <Occurrence routine={routine} action={action} />}
