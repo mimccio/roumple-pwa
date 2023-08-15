@@ -7,21 +7,28 @@ import { RoutineNavbar } from './nav'
 import { RoutineActivity } from './routine-activity'
 import { RoutineDetails } from './routine-details'
 
+// TODO: handle isPaused for action => what to do ?
+
 export function RoutineDetailsScreen() {
   const { activity } = useParams()
-  const { routine, isPaused, isLoading, date, handleDateChange, action } = useRoutineDetail()
+  const { routine, isPaused, routineIsLoading, actionIsLoading, date, handleDateChange, action } = useRoutineDetail()
 
   if (!routine && isPaused) return <OfflineError />
-  if (!routine && !isLoading) return <NotFoundDetails />
+  if (!routine && !routineIsLoading) return <NotFoundDetails />
 
   return (
     <>
-      <RoutineNavbar routine={routine} isLoading={isLoading} />
-      {isLoading && <DetailsLoadingPage />}
-
+      <RoutineNavbar routine={routine} isLoading={routineIsLoading} />
+      {routineIsLoading && <DetailsLoadingPage />}
       {routine && activity && <RoutineActivity />}
       {routine && !activity && (
-        <RoutineDetails routine={routine} action={action} date={date} handleDateChange={handleDateChange} />
+        <RoutineDetails
+          routine={routine}
+          action={action}
+          date={date}
+          handleDateChange={handleDateChange}
+          actionIsLoading={actionIsLoading}
+        />
       )}
     </>
   )

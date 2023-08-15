@@ -1,12 +1,12 @@
+import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ArrowPathRoundedSquareIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { Popover, Transition } from '@headlessui/react'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { useOccurrenceTypeText } from '&/common/hooks'
-import { cl, getScheduleTypeColor } from '&/common/utils'
+import { cl } from '&/common/utils'
 import type { RoutineAction, Routine } from '&/modules/routine/types'
-import { Popover, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
 import { useEditOccurrence } from '&/modules/routine/hooks'
 import { getOccurrenceBg } from '&/modules/routine/utils'
 
@@ -18,7 +18,6 @@ interface Props {
 export function Occurrence({ routine, action }: Props) {
   const { t } = useTranslation(['routine', 'action'])
   const typeText = useOccurrenceTypeText(routine.type)
-  const scheduleColor = getScheduleTypeColor(routine.type)
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
   const inputBg = getOccurrenceBg(routine.type)
 
@@ -28,13 +27,13 @@ export function Occurrence({ routine, action }: Props) {
     return 'text-indigo-600 group-hover:text-indigo-700'
   }
 
+  // TODO: don't show when occurrence = 1
+
   return (
     <Popover className="relative">
       <Popover.Button>
         <div className="group flex items-center gap-x-2 py-1.5">
-          <ArrowPathRoundedSquareIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
-          <p className="font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
-            <span>{t('occurrence', { ns: 'routine' })}: </span>
+          <p className="text-lg font-bold text-gray-500 transition-colors group-hover:text-gray-600">
             <span>
               {action?.doneOccurrence || 0} / {routine.occurrence}
             </span>

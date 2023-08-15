@@ -12,9 +12,10 @@ interface Props {
   routine: Routine
   date: Date
   action?: RoutineAction
+  isLoading: boolean
 }
 
-export function RoutineChecklist({ routine, date, action }: Props) {
+export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
   const { t } = useTranslation(['common', 'routine', 'schedule'])
   const { onDelete } = useDeleteChecklistItem(routine)
   const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({ type: routine.type, date })
@@ -50,6 +51,7 @@ export function RoutineChecklist({ routine, date, action }: Props) {
             onDelete={handleDelete}
             onSelect={onSelectChecklistItem}
             isChecked={action?.checkedList?.includes(checklistItem.id)}
+            isLoading={isLoading}
           />
         ))}
         <NewChecklistItem routine={routine} />

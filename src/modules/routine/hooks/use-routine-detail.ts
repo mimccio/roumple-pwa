@@ -22,7 +22,6 @@ export function useRoutineDetail() {
   return {
     date,
     handleDateChange: (date: Date) => setDate(date),
-    isLoading: routineQuery.isLoading || actionQuery.isLoading,
     isPaused: routineQuery.isPaused || actionQuery.isPaused,
     routine: routineQuery.data,
     action: actionQuery.data,
