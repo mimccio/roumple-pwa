@@ -18,7 +18,12 @@ export function RoutineDetailsScreen() {
 
   return (
     <>
-      <RoutineNavbar routine={routineQuery.data} isLoading={routineQuery.isLoading} />
+      <RoutineNavbar
+        routine={routineQuery.data}
+        isLoading={routineQuery.isLoading}
+        date={date}
+        handleDateChange={handleDateChange}
+      />
       {routineQuery.isLoading && <DetailsLoadingPage />}
       {routineQuery.data && activity && <RoutineActivity />}
       {routineQuery.data && !activity && (

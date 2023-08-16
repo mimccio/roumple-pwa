@@ -3,10 +3,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { isToday, addDays, subDays } from 'date-fns'
 import { Popover, Transition } from '@headlessui/react'
 
-import { DayCalendar } from '&/common/components/calendars'
+import { CalendarBtn, DayCalendar } from '&/common/components/calendars'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { useDateText } from '&/modules/task/hooks'
-import { CalendarBtn } from './calendar-btn'
 
 interface Props {
   date: Date

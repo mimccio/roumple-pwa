@@ -19,6 +19,7 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
   const getDisabledPreview = () => {
     if (scheduleType === SCHEDULE_TYPES.daily) {
       const days = differenceInDays(startOfToday(), date)
+      // TODO?: handle better limit => go to first day of month
       return days > 62 // ~ 2 months
     }
     if (scheduleType === SCHEDULE_TYPES.weekly) {

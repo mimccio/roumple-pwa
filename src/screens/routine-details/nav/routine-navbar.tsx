@@ -9,14 +9,17 @@ import { useArchiveRoutine, useDeleteRoutine } from '&/modules/routine/hooks'
 import type { Routine } from '&/modules/routine/types'
 import { LinkNote } from './link-note'
 import { ActivityBtn } from './activity-btn'
-import { EditOccurrence } from '.'
+import { EditOccurrence } from './edit-occurrence'
+import { SelectDateBtn } from './select-date-btn'
 
 interface Props {
   routine?: Routine
   isLoading: boolean
+  date: Date
+  handleDateChange: (date: Date) => void
 }
 
-export function RoutineNavbar({ routine, isLoading }: Props) {
+export function RoutineNavbar({ routine, isLoading, date, handleDateChange }: Props) {
   const { t } = useTranslation(['common', 'routine'])
   const [deleteModaleIsOpen, setDeleteModaleIsOpen] = useState(false)
   const [linkSelectorIsOpen, setLinkSelectorIsOpen] = useState(false)
@@ -41,6 +44,7 @@ export function RoutineNavbar({ routine, isLoading }: Props) {
               isArchived={routine?.archived}
               onEditOccurrence={() => setEditOccurrenceIsOpen(true)}
             />
+            <SelectDateBtn date={date} handleDateChange={handleDateChange} scheduleType={routine.type} />
             <ActivityBtn />
           </>
         )}
