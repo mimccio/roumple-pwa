@@ -1,4 +1,4 @@
-import { add, startOfToday, sub } from 'date-fns'
+import { add, differenceInDays, differenceInMonths, differenceInWeeks, startOfToday, sub } from 'date-fns'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -17,7 +17,18 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
   const { getDateText } = useActionDateText()
 
   const getDisabledPreview = () => {
-    // TODO: disable if it's to old
+    if (scheduleType === SCHEDULE_TYPES.daily) {
+      const days = differenceInDays(startOfToday(), date)
+      return days > 62 // ~ 2 months
+    }
+    if (scheduleType === SCHEDULE_TYPES.weekly) {
+      const weeks = differenceInWeeks(startOfToday(), date)
+      return weeks > 25 // ~ 5 months
+    }
+    if (scheduleType === SCHEDULE_TYPES.monthly) {
+      const months = differenceInMonths(startOfToday(), date)
+      return months > 10
+    }
     return false
   }
 
