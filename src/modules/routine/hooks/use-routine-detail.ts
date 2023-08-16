@@ -10,7 +10,6 @@ export function useRoutineDetail() {
   const { routineId } = useParams()
   const [date, setDate] = useState(startOfToday())
 
-  // TODO!: loading state
   // TODO?: initial data
 
   const routineQuery = useQuery(ROUTINE_KEYS.detail(routineId), fetchRoutineById, {
@@ -22,10 +21,7 @@ export function useRoutineDetail() {
   return {
     date,
     handleDateChange: (date: Date) => setDate(date),
-    isPaused: routineQuery.isPaused || actionQuery.isPaused,
-    routine: routineQuery.data,
-    action: actionQuery.data,
-    routineIsLoading: routineQuery.isLoading,
-    actionIsLoading: actionQuery.isLoading,
+    routineQuery,
+    actionQuery,
   }
 }

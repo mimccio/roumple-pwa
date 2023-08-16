@@ -26,5 +26,6 @@ i18next
       'schedule',
       'status',
       'task',
+      'message',
     ],
   })

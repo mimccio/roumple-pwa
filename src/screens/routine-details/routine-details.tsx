@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
 import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
@@ -16,6 +17,8 @@ import {
   Occurrence,
   RoutineDate,
 } from './parts'
+import { OfflineError } from '../errors'
+import { getIsCurrentDate } from '&/modules/routine/utils'
 
 interface Props {
   routine: Routine
@@ -23,10 +26,23 @@ interface Props {
   actionIsLoading: boolean
   date: Date
   handleDateChange: (date: Date) => void
+  actionQuery: UseQueryResult<RoutineAction, unknown>
 }
 
-export function RoutineDetails({ routine, action, date, handleDateChange, actionIsLoading }: Props) {
+export function RoutineDetails({ routine, action, date, handleDateChange, actionIsLoading, actionQuery }: Props) {
   const { t } = useTranslation('common')
+  const isCurrentDate = getIsCurrentDate({ scheduleType: routine.type, date })
+
+  if (!actionQuery.data && actionQuery.isPaused && !isCurrentDate) {
+    return (
+      <>
+        <DetailInfoSection>
+          <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.type} />
+        </DetailInfoSection>
+        <OfflineError />
+      </>
+    )
+  }
 
   return (
     <>
