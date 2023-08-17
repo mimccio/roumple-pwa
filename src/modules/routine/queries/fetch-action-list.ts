@@ -7,7 +7,7 @@ export const fetchActionList = async (routineId: string, scheduleType: ScheduleT
   const date = startOfToday()
 
   const getOldestDate = () => {
-    // if (scheduleType === SCHEDULE_TYPES.monthly) return startOfMonth(subMonths(date, 1))
+    if (scheduleType === SCHEDULE_TYPES.monthly) return startOfMonth(subMonths(date, 12))
     // if (scheduleType === SCHEDULE_TYPES.weekly) return startOfMonth(subMonths(date, 1))
 
     return startOfMonth(subMonths(date, 1))

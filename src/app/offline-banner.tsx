@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { WifiIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { SignalSlashIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 export function OfflineBanner() {
   const { t } = useTranslation('message')
@@ -29,7 +29,7 @@ export function OfflineBanner() {
     return (
       <div className="relative flex w-full flex-1 items-center justify-between gap-x-2 bg-yellow-300 px-2 font-semibold text-gray-600 sm:px-3">
         <span className="p-2">
-          <WifiIcon width={20} />
+          <SignalSlashIcon width={20} />
         </span>
         <span className="py-1">{t('offlineDataNotUpToDate')}</span>
         <button className="p-2 transition-colors hover:text-gray-500" onClick={() => setShowOfflineBanner(false)}>

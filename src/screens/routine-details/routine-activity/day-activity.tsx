@@ -1,7 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { eachDayOfInterval, lastDayOfMonth, startOfMonth, subMonths } from 'date-fns'
 
-import { useMainPath } from '&/common/hooks'
 import { RoutineAction } from '&/modules/routine/types'
 import { DayActivityBoard } from './day-activity-board'
 
@@ -10,12 +9,11 @@ interface Props {
   occurrence: number
   handleDateChange: (date: Date) => void
   recurrence: number[]
+  url: string
 }
 
-export function DayActivity({ actions, occurrence, handleDateChange, recurrence }: Props) {
+export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url }: Props) {
   const navigate = useNavigate()
-  const { routineId } = useParams()
-  const mainPath = useMainPath()
 
   const today = new Date()
   const prevMonth = subMonths(today, 1)
@@ -34,7 +32,7 @@ export function DayActivity({ actions, occurrence, handleDateChange, recurrence 
 
   const onDayClick = (date: Date) => {
     handleDateChange(date)
-    navigate(`${mainPath}/d/routine/${routineId}`)
+    navigate(url)
   }
 
   return (

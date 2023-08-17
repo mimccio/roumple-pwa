@@ -9,6 +9,9 @@ import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity
 import { Routine } from '&/modules/routine/types'
 import { DayActivity } from './day-activity'
 import { FatalError, OfflineError } from '&/screens/errors'
+import { MonthActivity } from './month-activity'
+import { useMainPath } from '&/common/hooks'
+import { SignalSlashIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   routine: Routine
@@ -17,7 +20,9 @@ interface Props {
 
 export function RoutineActivity({ routine, handleDateChange }: Props) {
   const { t } = useTranslation('message')
+  const mainPath = useMainPath()
   const { actions, isLoading, isError, isPaused } = useRoutineActivity(routine)
+  const url = `${mainPath}/d/routine/${routine.id}`
 
   if (isError) return <FatalError />
   if (!actions && isPaused) return <OfflineError />
@@ -28,6 +33,17 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
         <h4 className="mb-4 p-4 text-center font-bold text-gray-500">{t('activity')}</h4>
         {routine.type === SCHEDULE_TYPES.daily && (
           <DayActivity
+            url={url}
+            actions={actions}
+            occurrence={routine.occurrence}
+            handleDateChange={handleDateChange}
+            recurrence={routine.daily_recurrence}
+          />
+        )}
+
+        {routine.type === SCHEDULE_TYPES.monthly && (
+          <MonthActivity
+            url={url}
             actions={actions}
             occurrence={routine.occurrence}
             handleDateChange={handleDateChange}
@@ -53,7 +69,11 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           />
           <p className="text-gray-400">{t('loadingDataNotUpToDate')}</p>
         </Transition>
-        {isPaused && <p className="mt-12 px-4 text-center text-gray-400">{t('offlineDataNotUpToDate')}</p>}
+        {isPaused && (
+          <p className="mt-12 flex items-center justify-center gap-x-2 px-4 text-center text-gray-400">
+            <SignalSlashIcon width={18} /> {t('offlineDataNotUpToDate')}
+          </p>
+        )}
       </div>
     )
   }
