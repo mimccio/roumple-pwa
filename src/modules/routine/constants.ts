@@ -20,9 +20,11 @@ export const ROUTINE_KEYS = {
 
 export const ACTION_KEYS = {
   all: ['ACTION'] as const,
-  routines: () => [...ACTION_KEYS.all, 'ROUTINE'] as const,
-  routine: ({ routineId, date }: { routineId?: string; date: Date }) =>
-    [...ACTION_KEYS.routines(), routineId, date] as const,
+  details: () => [...ACTION_KEYS.all, 'DETAIL'] as const,
+  detail: ({ routineId, date }: { routineId?: string; date: Date }) =>
+    [...ACTION_KEYS.details(), routineId, date] as const,
+  lists: () => [...ACTION_KEYS.all, 'LIST'] as const,
+  list: (routineId: string) => [...ACTION_KEYS.details(), routineId] as const,
 }
 
 const PRIORITY = 'PRIORITY'

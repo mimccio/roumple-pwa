@@ -7,6 +7,7 @@ import type { ScheduleType } from '&/common/types'
 import { Tooltip } from '&/common/components/tooltip'
 import { CalendarBtn, DayCalendar, WeekCalendar } from '&/common/components/calendars'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { useParams } from 'react-router-dom'
 
 interface Props {
   date: Date
@@ -16,15 +17,19 @@ interface Props {
 
 export function SelectDateBtn({ handleDateChange, date, scheduleType }: Props) {
   const { t } = useTranslation('action')
+  const { activity } = useParams()
 
   if (scheduleType === SCHEDULE_TYPES.monthly) return null
 
   return (
     <div>
       <Popover>
-        <Tooltip message={t('selectDate')}>
-          <Popover.Button className="group flex h-8 w-8 items-center justify-center rounded-md border border-transparent transition-colors hover:border-gray-200">
-            <CalendarDaysIcon className="h-5 w-5  text-gray-400 group-hover:text-gray-500" />
+        <Tooltip disabled={Boolean(activity)} message={t('selectDate')}>
+          <Popover.Button
+            disabled={Boolean(activity)}
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-transparent transition-colors enabled:text-gray-400 enabled:hover:border-gray-200 enabled:hover:text-gray-500 disabled:text-gray-200"
+          >
+            <CalendarDaysIcon className="h-5 w-5 " />
           </Popover.Button>
         </Tooltip>
 

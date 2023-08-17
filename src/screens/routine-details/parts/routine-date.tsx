@@ -1,4 +1,4 @@
-import { add, differenceInDays, differenceInMonths, differenceInWeeks, startOfToday, sub } from 'date-fns'
+import { add, compareAsc, differenceInDays, differenceInMonths, differenceInWeeks, startOfToday, sub } from 'date-fns'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -15,19 +15,20 @@ interface Props {
 
 export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
   const { getDateText } = useActionDateText()
+  const today = startOfToday()
 
   const getDisabledPreview = () => {
     if (scheduleType === SCHEDULE_TYPES.daily) {
-      const days = differenceInDays(startOfToday(), date)
+      const days = differenceInDays(today, date)
       // TODO?: handle better limit => go to first day of month
       return days > 62 // ~ 2 months
     }
     if (scheduleType === SCHEDULE_TYPES.weekly) {
-      const weeks = differenceInWeeks(startOfToday(), date)
+      const weeks = differenceInWeeks(today, date)
       return weeks > 25 // ~ 5 months
     }
     if (scheduleType === SCHEDULE_TYPES.monthly) {
-      const months = differenceInMonths(startOfToday(), date)
+      const months = differenceInMonths(today, date)
       return months > 10
     }
     return false
@@ -35,6 +36,7 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
 
   const isCurrentDate = getIsCurrentDate({ scheduleType, date })
   const previousIsDisabled = getDisabledPreview()
+  const isFuture = compareAsc(date, today) >= 0
 
   const duration = { months: 0, weeks: 0, days: 0 }
   if (scheduleType === SCHEDULE_TYPES.daily) duration.days = 1
@@ -42,7 +44,7 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
   if (scheduleType === SCHEDULE_TYPES.monthly) duration.months = 1
 
   const onPreviousClick = () => !previousIsDisabled && handleDateChange(sub(date, duration))
-  const onNexClick = () => !isCurrentDate && handleDateChange(add(date, duration))
+  const onNexClick = () => !isFuture && handleDateChange(add(date, duration))
 
   const dateText = getDateText({ date, scheduleType: scheduleType })
 
@@ -53,7 +55,7 @@ export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
     return 'text-indigo-600 hover:text-indigo-800'
   }
 
-  const goToCurrentDate = () => handleDateChange(startOfToday())
+  const goToCurrentDate = () => handleDateChange(today)
 
   return (
     <div className="-mt-1 flex justify-between gap-x-2">

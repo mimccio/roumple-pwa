@@ -16,7 +16,7 @@ export function useRoutineDetail() {
     enabled: Boolean(routineId),
   })
 
-  const actionQuery = useQuery(ACTION_KEYS.routine({ routineId, date }), fetchRoutineAction)
+  const actionQuery = useQuery(ACTION_KEYS.detail({ routineId, date }), fetchRoutineAction)
 
   return {
     date,

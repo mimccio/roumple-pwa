@@ -25,7 +25,9 @@ export function RoutineDetailsScreen() {
         handleDateChange={handleDateChange}
       />
       {routineQuery.isLoading && <DetailsLoadingPage />}
-      {routineQuery.data && activity && <RoutineActivity />}
+      {routineQuery.data && activity && (
+        <RoutineActivity routine={routineQuery.data} handleDateChange={handleDateChange} />
+      )}
       {routineQuery.data && !activity && (
         <RoutineDetails
           routine={routineQuery.data}

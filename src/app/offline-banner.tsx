@@ -31,7 +31,7 @@ export function OfflineBanner() {
         <span className="p-2">
           <WifiIcon width={20} />
         </span>
-        <span className="py-1">{t('offlineBanner')}</span>
+        <span className="py-1">{t('offlineDataNotUpToDate')}</span>
         <button className="p-2 transition-colors hover:text-gray-500" onClick={() => setShowOfflineBanner(false)}>
           <XMarkIcon width={20} />
         </button>

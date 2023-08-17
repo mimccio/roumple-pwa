@@ -4,7 +4,7 @@ import { DATE_FORMAT } from '&/common/constants'
 import type { RoutineAction } from '../types'
 
 interface IParams {
-  queryKey: readonly ['ACTION', 'ROUTINE', string | undefined, Date]
+  queryKey: readonly ['ACTION', 'DETAIL', string | undefined, Date]
 }
 
 export const fetchRoutineAction = async ({ queryKey }: IParams) => {

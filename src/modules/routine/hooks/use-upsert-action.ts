@@ -22,7 +22,7 @@ export function useUpsertAction({ type, date }: Params) {
   const { mutate } = useMutation(upsertRoutineAction, {
     onMutate: async (data) => {
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ACTION_KEYS.routine({ routineId: data.routine.id, date }) })
+      await queryClient.cancelQueries({ queryKey: ACTION_KEYS.detail({ routineId: data.routine.id, date }) })
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
       await queryClient.cancelQueries(boardKey)
 
@@ -35,7 +35,7 @@ export function useUpsertAction({ type, date }: Params) {
       }
 
       // ⛳ Update Item
-      queryClient.setQueryData(ACTION_KEYS.routine({ routineId: data.routine.id, date }), newAction)
+      queryClient.setQueryData(ACTION_KEYS.detail({ routineId: data.routine.id, date }), newAction)
 
       // 🏫 Update Routine Board
       const previousList = queryClient.getQueryData(boardKey)

@@ -1,3 +1,4 @@
 {
-  "offlineBanner": "Hors ligne, les données peuvent ne pas être à jour."
+  "offlineDataNotUpToDate": "Hors ligne, les données peuvent ne pas être à jour.",
+  "loadingDataNotUpToDate": "Chargement en cours, les données ne sont pas à jour..."
 }
