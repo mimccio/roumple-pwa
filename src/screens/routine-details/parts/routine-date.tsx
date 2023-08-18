@@ -1,9 +1,19 @@
-import { add, compareAsc, differenceInDays, differenceInMonths, differenceInWeeks, startOfToday, sub } from 'date-fns'
+import {
+  add,
+  compareAsc,
+  differenceInDays,
+  differenceInMonths,
+  differenceInWeeks,
+  startOfMonth,
+  startOfToday,
+  startOfWeek,
+  sub,
+} from 'date-fns'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
-import type { ScheduleType } from '&/modules/routine/types'
+import type { ScheduleType } from '&/common/types'
 import { useActionDateText } from '&/modules/routine/hooks'
 import { getIsCurrentDate } from '&/modules/routine/utils'
 
@@ -13,9 +23,16 @@ interface Props {
   handleDateChange: (date: Date) => void
 }
 
-export function RoutineDate({ scheduleType, date, handleDateChange }: Props) {
+export function RoutineDate({ scheduleType, date: dayDate, handleDateChange }: Props) {
   const { getDateText } = useActionDateText()
   const today = startOfToday()
+  const getDate = () => {
+    let date = dayDate
+    if (scheduleType === SCHEDULE_TYPES.monthly) date = startOfWeek(date, { weekStartsOn: 1 })
+    if (scheduleType === SCHEDULE_TYPES.weekly) date = startOfMonth(date)
+    return date
+  }
+  const date = getDate()
 
   const getDisabledPreview = () => {
     if (scheduleType === SCHEDULE_TYPES.daily) {

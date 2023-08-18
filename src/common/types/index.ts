@@ -1,3 +1,3 @@
 export * from './colors'
-export * from './statuses'
+export * from './status'
 export * from './schedule'

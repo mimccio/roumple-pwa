@@ -3,6 +3,8 @@ import type { ScheduleType, Status } from '&/common/types'
 import type { Category } from '../category/types'
 import { TaskChecklistItem } from '../task-checklist-item/types'
 
+export type TaskScheduleType = ScheduleType | null
+
 export interface Task {
   id: string
   name: string
@@ -12,7 +14,7 @@ export interface Task {
   priority: number
   status: Status
   period: number
-  scheduleType: ScheduleType
+  scheduleType: TaskScheduleType
   date: Date | null
   checklist: TaskChecklistItem[]
   newChecklistItem?: TaskChecklistItem

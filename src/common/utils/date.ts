@@ -13,7 +13,7 @@ const isBeforeToday = (date: Date) => (date ? isBefore(date, startOfToday()) : f
 const isBeforeThisWeek = (date: Date) => (date ? isBefore(date, startOfWeek(startOfToday())) : false)
 const isBeforeThisMonth = (date: Date) => (date ? isBefore(date, startOfMonth(startOfToday())) : false)
 
-export const isPassed = ({ date, scheduleType }: { date: Date | null; scheduleType: ScheduleType }) => {
+export const isPassed = ({ date, scheduleType }: { date: Date | null; scheduleType: ScheduleType | null }) => {
   if (!scheduleType || !date) return false
   if (scheduleType === SCHEDULE_TYPES.daily) return isBeforeToday(date)
   if (scheduleType === SCHEDULE_TYPES.weekly) return isBeforeThisWeek(date)

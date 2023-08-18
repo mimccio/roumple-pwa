@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 import { v5 as uuidv5 } from 'uuid'
+import { format } from 'date-fns'
 
 import type { ScheduleType } from '&/common/types'
+import { DATE_FORMAT, STATUSES } from '&/common/constants'
 import type { Routine, RoutineAction, UpdateCheckedListParams, UpdateStatusParams } from '../types'
 import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { upsertRoutineAction } from '../mutations'
-import { DATE_FORMAT, STATUSES } from '&/common/constants'
-import { format } from 'date-fns'
 
 interface Params {
   type: ScheduleType
@@ -16,15 +16,16 @@ interface Params {
 
 export function useUpsertAction({ type, date }: Params) {
   const queryClient = useQueryClient()
-
   const boardKey = ROUTINE_KEYS.board({ type, date })
 
   const { mutate } = useMutation(upsertRoutineAction, {
     onMutate: async (data) => {
+      const actionKey = ACTION_KEYS.detail({ routineId: data.routine.id, scheduleType: type, date })
+
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ACTION_KEYS.detail({ routineId: data.routine.id, date }) })
+      await queryClient.cancelQueries({ queryKey: actionKey })
       await queryClient.cancelQueries({ queryKey: ACTION_KEYS.list(data.routine.id) })
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
+      // await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
       await queryClient.cancelQueries(boardKey)
 
       const newAction = {
@@ -33,10 +34,12 @@ export function useUpsertAction({ type, date }: Params) {
         status: data.status,
         doneOccurrence: data.doneOccurrence,
         checkedList: data.checkedList,
+        scheduleType: data.routine.type,
       }
 
-      // ⛳ Update Item
-      queryClient.setQueryData(ACTION_KEYS.detail({ routineId: data.routine.id, date }), newAction)
+      // ⛳ Update Action item
+      const previousAction = queryClient.getQueryData(actionKey)
+      queryClient.setQueryData(actionKey, newAction)
 
       // Update Action list
       const previousActionList = queryClient.getQueryData(ACTION_KEYS.list(data.routine.id))
@@ -57,19 +60,26 @@ export function useUpsertAction({ type, date }: Params) {
         return old
       })
 
-      return { previousList, previousActionList }
+      return { previousList, previousActionList, previousAction }
     },
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.routine.id), item.routine)
+      // queryClient.setQueryData(ROUTINE_KEYS.detail(item.routine.id), item.routine)
       queryClient.setQueryData(boardKey, context?.previousList)
       queryClient.setQueryData(ACTION_KEYS.list(item.routine.id), context?.previousActionList)
+      queryClient.setQueryData(
+        ACTION_KEYS.detail({ routineId: item.routine.id, scheduleType: type, date }),
+        context?.previousAction
+      )
 
       toast.error('Error on check routine')
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.routine.id) })
+      // queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.routine.id) })
       queryClient.invalidateQueries({ queryKey: boardKey })
       queryClient.invalidateQueries({ queryKey: ACTION_KEYS.list(variables.routine.id) })
+      queryClient.invalidateQueries({
+        queryKey: ACTION_KEYS.detail({ routineId: variables.routine.id, scheduleType: type, date }),
+      })
     },
   })
 

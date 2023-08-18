@@ -70,8 +70,11 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           <p className="text-gray-400">{t('loadingDataNotUpToDate')}</p>
         </Transition>
         {isPaused && (
-          <p className="mt-12 flex items-center justify-center gap-x-2 px-4 text-center text-gray-400">
-            <SignalSlashIcon width={18} /> {t('offlineDataNotUpToDate')}
+          <p className="mt-12 flex items-start justify-center gap-x-1 px-4 text-center text-gray-400">
+            <span className="flex h-6 items-center">
+              <SignalSlashIcon width={18} />
+            </span>
+            {t('offlineDataNotUpToDate')}
           </p>
         )}
       </div>

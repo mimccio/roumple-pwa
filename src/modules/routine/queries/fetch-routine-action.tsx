@@ -1,22 +1,27 @@
-import { format } from 'date-fns'
 import { db } from '&/db'
-import { DATE_FORMAT } from '&/common/constants'
+import type { ScheduleType } from '&/common/types'
 import type { RoutineAction } from '../types'
 
 interface IParams {
-  queryKey: readonly ['ACTION', 'DETAIL', string | undefined, Date]
+  queryKey: readonly [
+    'ACTION',
+    'DETAIL',
+    string | undefined,
+    { readonly scheduleType?: ScheduleType; readonly date: string }
+  ]
 }
 
 export const fetchRoutineAction = async ({ queryKey }: IParams) => {
-  const [, , routineId, date] = queryKey
-
+  const [, , routineId, { scheduleType, date }] = queryKey
   if (!routineId) throw new Error('routine id is missing')
+  if (!scheduleType) throw new Error('schedule type id is missing')
 
   const { data, error } = await db
     .from('routine_action')
-    .select('id, status, date, checkedList: checked_list, doneOccurrence:done_occurrence')
+    .select('id, status, date, checkedList: checked_list, doneOccurrence:done_occurrence, scheduleType: schedule_type')
     .eq('routine_id', routineId)
-    .eq('date', format(new Date(date), DATE_FORMAT))
+    .eq('schedule_type', scheduleType)
+    .eq('date', date)
     .limit(1)
     .maybeSingle()
 

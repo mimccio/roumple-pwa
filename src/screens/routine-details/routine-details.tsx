@@ -26,7 +26,7 @@ interface Props {
   actionIsLoading: boolean
   date: Date
   handleDateChange: (date: Date) => void
-  actionQuery: UseQueryResult<RoutineAction, unknown>
+  actionQuery: UseQueryResult<RoutineAction | undefined, unknown>
 }
 
 export function RoutineDetails({ routine, action, date, handleDateChange, actionIsLoading, actionQuery }: Props) {

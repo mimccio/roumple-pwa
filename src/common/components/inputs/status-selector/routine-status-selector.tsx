@@ -1,8 +1,9 @@
 import type { Status } from '&/common/types'
-import { STATUSES } from '&/common/constants'
+import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
 import { useUpsertAction } from '&/modules/routine/hooks'
 import type { RoutineAction, Routine } from '&/modules/routine/types'
 import { TodoBtn, InProgressBtn, DoneBtn, LoadingButton } from './parts'
+import { startOfMonth, startOfWeek } from 'date-fns'
 
 interface Props {
   routine: Routine
@@ -11,7 +12,15 @@ interface Props {
   isLoading: boolean
 }
 
-export function RoutineStatusSelector({ routine, date, action, isLoading }: Props) {
+export function RoutineStatusSelector({ routine, date: dayDate, action, isLoading }: Props) {
+  const getDate = () => {
+    let date = dayDate
+    if (routine.type === SCHEDULE_TYPES.monthly) date = startOfMonth(date)
+    if (routine.type === SCHEDULE_TYPES.weekly) date = startOfWeek(date, { weekStartsOn: 1 })
+    return date
+  }
+  const date = getDate()
+
   const { handleUpdateStatus } = useUpsertAction({ type: routine.type, date })
   const handleSelectStatus = (status: Status) => handleUpdateStatus({ routine, status, action })
   const showCheck = routine.occurrence <= 1 || routine.occurrence - (action?.doneOccurrence || 0) <= 1

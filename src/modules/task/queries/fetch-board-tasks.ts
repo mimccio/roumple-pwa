@@ -1,12 +1,11 @@
 import { format, lastDayOfWeek, lastDayOfMonth } from 'date-fns'
 
 import { db } from '&/db'
-import type { ScheduleType } from '&/common/types'
 import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
-import type { Task } from '../types'
+import type { Task, TaskScheduleType } from '../types'
 
 interface Params {
-  queryKey: readonly ['TASK', 'BOARD', { date: string; type: ScheduleType }]
+  queryKey: readonly ['TASK', 'BOARD', { date: string; type: TaskScheduleType }]
 }
 
 export const fetchBoardTasks = async ({ queryKey }: Params) => {

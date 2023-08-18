@@ -1,9 +1,9 @@
 import { DATE_FORMAT } from '&/common/constants'
-import { ScheduleType } from '&/common/types'
 import { format } from 'date-fns'
+import type { TaskScheduleType } from './types'
 
 interface BoardOptions {
-  type: ScheduleType
+  type: TaskScheduleType
   date: Date
 }
 

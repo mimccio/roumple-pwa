@@ -5,7 +5,7 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import { PeriodItem } from '&/common/components/schedule'
-import type { ScheduleType } from '&/modules/routine/types'
+import type { ScheduleType } from '&/common/types'
 
 interface Props {
   period: number

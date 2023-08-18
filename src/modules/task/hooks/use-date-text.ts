@@ -14,8 +14,8 @@ import {
   startOfWeek,
 } from 'date-fns'
 
-import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import type { TaskScheduleType } from '../types'
 
 export function useDateText() {
   const { t } = useTranslation('schedule')
@@ -40,7 +40,7 @@ export function useDateText() {
     return format(date, 'MMMM yyyy')
   }
 
-  const getDateText = ({ date, scheduleType }: { date: Date | null; scheduleType: ScheduleType }) => {
+  const getDateText = ({ date, scheduleType }: { date: Date | null; scheduleType: TaskScheduleType }) => {
     if (!date) return t('noSchedule')
     const dateToFormat = new Date(date)
     if (scheduleType === SCHEDULE_TYPES.daily) return getDayDateText(dateToFormat)

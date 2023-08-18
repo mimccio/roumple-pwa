@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import type { ScheduleType } from '&/modules/routine/types'
+import type { ScheduleType } from '&/common/types'
 import { Daily } from './daily'
 import { Weekly } from './weekly'
 import { Monthly } from './monthly'

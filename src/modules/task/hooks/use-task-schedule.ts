@@ -3,10 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek } from 'date-fns'
 import { toast } from 'react-hot-toast'
 
-import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
-
-import type { Task } from '../types'
+import type { Task, TaskScheduleType } from '../types'
 import { sortTaskByDate } from '../utils'
 import { TASK_KEYS } from '../constants'
 import { editTaskSchedule } from '../mutations'
@@ -18,7 +16,7 @@ export function useTaskSchedule(task: Task) {
   const [date, setDate] = useState(task.date ? new Date(task.date) : null)
   const todayDate = startOfToday()
 
-  const onSelectPeriod = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
+  const onSelectPeriod = ({ scheduleType, period }: { scheduleType: TaskScheduleType; period: number }) => {
     setScheduleType(scheduleType)
     setPeriod(period)
   }
