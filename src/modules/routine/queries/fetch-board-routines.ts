@@ -22,6 +22,7 @@ export const fetchBoardRoutines = async ({ queryKey }: Params) => {
     .eq('type', type)
     .order('priority', { ascending: false })
     .order('name', { ascending: true })
+    .limit(1, { foreignTable: 'routine_action' })
 
   if (type === SCHEDULE_TYPES.daily) {
     query = query.eq('routine_action.date', format(date, DATE_FORMAT)).contains('daily_recurrence', [getDay(date)])

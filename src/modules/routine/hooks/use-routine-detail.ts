@@ -13,12 +13,30 @@ export function useRoutineDetail() {
   const queryClient = useQueryClient()
   const [date, setDate] = useState(startOfToday())
 
+  // TODO: initial data
+
+  // const routines = queryClient.getQueryData<Routine[]>(ROUTINE_KEYS.list({ archived: false }))
+  // const routine = routines?.find((item) => item.id === routineId)
+  // console.log('routine :', routine)
+
+  // const boardRoutines = queryClient.getQueriesData<Routine[]>(ROUTINE_KEYS.boards())
+
+  // const bla = boardRoutines.map((hello) => {
+  //   const blou = hello[0][2] as { date: Date }
+  //   if (isSameDay(new Date(blou), date))
+  //   console.log('blou :', blou.date)
+  //   console.log('hello[1] :', hello[1])
+  //   return hello
+  // })
+
+  // console.log('boardRoutines :', boardRoutines)
+
   const routineQuery = useQuery(ROUTINE_KEYS.detail(routineId), fetchRoutineById, {
     enabled: Boolean(routineId),
     initialDataUpdatedAt: () => queryClient.getQueryState(ROUTINE_KEYS.list({ archived: false }))?.dataUpdatedAt,
     initialData: () => {
-      const routine = queryClient.getQueryData<Routine[]>(ROUTINE_KEYS.list({ archived: false }))
-      return routine?.find((item) => item.id === routineId)
+      const routines = queryClient.getQueryData<Routine[]>(ROUTINE_KEYS.list({ archived: false }))
+      return routines?.find((item) => item.id === routineId)
     },
   })
 

@@ -1,17 +1,18 @@
 import { useTranslation } from 'react-i18next'
 import { RingLoader } from 'react-spinners'
 import { Transition } from '@headlessui/react'
-
-import { DetailsLoadingPage } from '&/common/components/details-loading-page'
-import { SCHEDULE_TYPES, SPINNER_COLOR } from '&/common/constants'
-import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity'
-
-import { Routine } from '&/modules/routine/types'
-import { DayActivity } from './day-activity'
-import { FatalError, OfflineError } from '&/screens/errors'
-import { MonthActivity } from './month-activity'
-import { useMainPath } from '&/common/hooks'
 import { SignalSlashIcon } from '@heroicons/react/24/outline'
+
+import { SCHEDULE_TYPES, SPINNER_COLOR } from '&/common/constants'
+import { useMainPath } from '&/common/hooks'
+import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+
+import type { Routine } from '&/modules/routine/types'
+import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity'
+import { FatalError, OfflineError } from '&/screens/errors'
+import { DayActivity } from './day-activity'
+import { WeekActivity } from './week-activity'
+import { MonthActivity } from './month-activity'
 
 interface Props {
   routine: Routine
@@ -33,6 +34,16 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
         <h4 className="mb-4 p-4 text-center font-bold text-gray-500">{t('activity')}</h4>
         {routine.type === SCHEDULE_TYPES.daily && (
           <DayActivity
+            url={url}
+            actions={actions}
+            occurrence={routine.occurrence}
+            handleDateChange={handleDateChange}
+            recurrence={routine.daily_recurrence}
+          />
+        )}
+
+        {routine.type === SCHEDULE_TYPES.weekly && (
+          <WeekActivity
             url={url}
             actions={actions}
             occurrence={routine.occurrence}

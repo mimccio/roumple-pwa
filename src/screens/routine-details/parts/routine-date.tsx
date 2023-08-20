@@ -28,8 +28,8 @@ export function RoutineDate({ scheduleType, date: dayDate, handleDateChange }: P
   const today = startOfToday()
   const getDate = () => {
     let date = dayDate
-    if (scheduleType === SCHEDULE_TYPES.monthly) date = startOfWeek(date, { weekStartsOn: 1 })
-    if (scheduleType === SCHEDULE_TYPES.weekly) date = startOfMonth(date)
+    if (scheduleType === SCHEDULE_TYPES.weekly) date = startOfWeek(date, { weekStartsOn: 1 })
+    if (scheduleType === SCHEDULE_TYPES.monthly) date = startOfMonth(date)
     return date
   }
   const date = getDate()

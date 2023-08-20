@@ -15,6 +15,9 @@ interface Params {
   showDone: boolean
 }
 
+// TODO: remove old queries
+// queryClient.removeQueries({ queryKey: QUERY_KEY });
+
 export function useBoardRoutines({ type, showDone }: Params) {
   const date = startOfToday()
 

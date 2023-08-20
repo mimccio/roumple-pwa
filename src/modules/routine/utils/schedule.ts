@@ -21,7 +21,13 @@ export const getIsScheduled = ({ routine, date }: { routine: Routine; date: Date
 
 export const getIsCurrentDate = ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => {
   if (scheduleType === SCHEDULE_TYPES.daily && isSameDay(date, startOfToday())) return true
-  if (scheduleType === SCHEDULE_TYPES.weekly && isSameWeek(date, startOfToday())) return true
+  if (
+    scheduleType === SCHEDULE_TYPES.weekly &&
+    isSameWeek(date, startOfToday(), {
+      weekStartsOn: 1,
+    })
+  )
+    return true
   if (scheduleType === SCHEDULE_TYPES.monthly && isSameMonth(date, startOfToday())) return true
 }
 

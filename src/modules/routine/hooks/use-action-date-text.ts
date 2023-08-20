@@ -11,8 +11,8 @@ export function useActionDateText() {
   const getDayDateText = (date: Date) => format(date, 'EEEE dd MMM yyyy', { locale: getDateFnsLocale() })
 
   const getWeekDateText = (date: Date) => {
-    const start = format(startOfWeek(date), 'dd MMM')
-    const end = format(endOfWeek(date), 'dd MMM yy')
+    const start = format(startOfWeek(date, { weekStartsOn: 1 }), 'dd MMM')
+    const end = format(endOfWeek(date, { weekStartsOn: 1 }), 'dd MMM yy')
     return `${start} - ${end}`
   }
 
