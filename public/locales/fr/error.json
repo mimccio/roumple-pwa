@@ -1,0 +1,12 @@
+{
+  "anErrorOcurred": "Une erreur est survenue",
+  "backHome": "Retourner à l'accueil",
+  "notFound": "Pas trouvé",
+  "offlineNoData": "Hors ligne, aucune data à afficher",
+  "pageDoenstExists": "Oooops ! Cette page n'existe pas",
+  "sorryErrorOcurred": "Désolé, une erreur est survenue 😞",
+  "error": "Erreur",
+  "maxChars": "{{maxChars}} characters max",
+  "required": "requis",
+  "emptyName": "Le nom ne peux pas être vide"
+}

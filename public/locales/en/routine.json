@@ -1,0 +1,12 @@
+{
+  "deleteRoutine": "Delete Routine",
+  "confirmDeleteRoutine": "Are you sure you want to delete this routine? This action cannot be undone.",
+  "checklistWillReset": "checklist will automatically reset",
+  "noArchivedRoutine": "No archived routine",
+  "createNewRoutine": "Create a new routine +",
+  "createRoutine": "create routine",
+  "enterRoutineName": "Enter routine name",
+  "occurrence": "Occurrence",
+  "time-per_one": "time per ",
+  "time-per_other": "times per "
+}

@@ -1,0 +1,21 @@
+{
+  "all": "Tout",
+  "routine": "Routine",
+  "routines": "Routines",
+  "task": "Tâche",
+  "tasks": "Tâches",
+  "note": "Note",
+  "notes": "Notes",
+  "category": "Catégorie",
+  "categories": "Categories",
+  "settings": "Paramètres",
+  "noCategory": "Aucune catégorie",
+  "archived": "Archivé",
+  "checklist": "Checklist",
+  "newChecklist": "Nouvel item",
+  "name": "Nom",
+  "none": "Aucune",
+  "title": "titre",
+  "linkUrl": "Lien url",
+  "activity": "Activité"
+}
