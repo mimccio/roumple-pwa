@@ -5,7 +5,7 @@ import { useMutateRoutine } from './use-mutate-routine'
 
 export function useEditOccurrence(routine: Routine) {
   const { mutate } = useMutateRoutine(editRoutineOccurrence)
-  const [occurrence, setOccurrence] = useState(routine.occurrence)
+  const [occurrence, setOccurrence] = useState(routine.occurrence || 0)
 
   const submit = () => mutate({ ...routine, occurrence })
 
