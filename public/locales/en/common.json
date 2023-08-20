@@ -16,5 +16,6 @@
   "name": "Name",
   "none": "None",
   "title": "title",
-  "linkUrl": "Link url"
+  "linkUrl": "Link url",
+  "activity": "Activity"
 }

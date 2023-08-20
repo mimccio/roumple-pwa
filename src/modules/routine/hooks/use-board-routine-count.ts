@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { startOfToday } from 'date-fns'
 
+import type { ScheduleType } from '&/common/types'
 import { STATUSES } from '&/common/constants'
-import type { ScheduleType } from '../types'
 import { ROUTINE_KEYS } from '../constants'
 import { fetchBoardRoutines } from '../queries'
 

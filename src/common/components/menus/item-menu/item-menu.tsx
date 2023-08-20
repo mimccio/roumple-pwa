@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { LinkIcon } from '@heroicons/react/24/solid'
+import { ArrowPathRoundedSquareIcon, LinkIcon } from '@heroicons/react/24/solid'
 
 import { MenuBtn } from './menu-btn'
 import { CopyUrlToClipboard } from './copy-url-to-clipboard'
@@ -13,6 +13,8 @@ interface Props {
   onDelete?: () => void
   onArchive?: () => void
   onLinkNote?: () => void
+  onEditOccurrence?: () => void
+
   withCopyLink?: boolean
   isLoading?: boolean
   isArchived?: boolean
@@ -25,6 +27,7 @@ export function ItemMenu({
   withCopyLink = false,
   isLoading = false,
   isArchived,
+  onEditOccurrence,
 }: Props) {
   const { t } = useTranslation('action')
 
@@ -55,6 +58,11 @@ export function ItemMenu({
             {onLinkNote && (
               <MenuBtn Icon={LinkIcon} handleClick={onLinkNote}>
                 {t('linkNote')}
+              </MenuBtn>
+            )}
+            {onEditOccurrence && (
+              <MenuBtn Icon={ArrowPathRoundedSquareIcon} handleClick={onEditOccurrence}>
+                {t('editOccurrence')}
               </MenuBtn>
             )}
             {onArchive && (

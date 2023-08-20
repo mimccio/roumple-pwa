@@ -4,9 +4,8 @@ import { addWeeks, subWeeks, isThisWeek } from 'date-fns'
 import { Popover, Transition } from '@headlessui/react'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { WeekCalendar } from '&/common/components/calendars'
+import { CalendarBtn, WeekCalendar } from '&/common/components/calendars'
 import { useDateText } from '&/modules/task/hooks'
-import { CalendarBtn } from './calendar-btn'
 
 interface Props {
   date: Date

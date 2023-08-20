@@ -6,10 +6,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 import { startOfToday } from 'date-fns'
 
+import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import type { Category } from '&/modules/category/types'
 import { categoryAtom } from '&/modules/category/atoms'
-import type { Routine, ScheduleType } from '../types'
+import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'
 import { createRoutine } from '../mutations'
 
@@ -26,6 +27,7 @@ export function useCreateRoutine() {
   const [monthlyRecurrence, setMonthlyRecurrence] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
   const [priority, setPriority] = useState(0)
   const [category, setCategory] = useState(globalCategory)
+  const [occurrence, setOccurrence] = useState(1)
   const id = uuidv4()
   const date = startOfToday()
 
@@ -69,6 +71,7 @@ export function useCreateRoutine() {
     if (category?.id !== globalCategory?.id) setGlobalCategory(null)
     setType(SCHEDULE_TYPES.daily)
     setPeriod(3)
+    setOccurrence(1)
   }
 
   const onCreateRoutine = () => {
@@ -87,6 +90,7 @@ export function useCreateRoutine() {
       category: category,
       category_id: category?.id || null,
       created_at: new Date(),
+      occurrence,
     })
     reset()
   }
@@ -135,6 +139,8 @@ export function useCreateRoutine() {
 
   const onSelectCategory = (category: Category) => setCategory(category)
 
+  const handleOccurrenceChange = (newOccurrence: number) => setOccurrence(newOccurrence)
+
   return {
     currentPeriod,
     currentType,
@@ -153,5 +159,7 @@ export function useCreateRoutine() {
     setCharNum,
     charNum,
     reset,
+    occurrence,
+    handleOccurrenceChange,
   }
 }

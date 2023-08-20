@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl } from '&/common/utils'
-import type { ScheduleType } from '&/modules/routine/types'
+import type { ScheduleType } from '&/common/types'
 import { PeriodItem } from './period-item'
 import { WeekRecurrence } from './week-recurrence'
 

@@ -1,58 +1,42 @@
-import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
 
-import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
-import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
-import { CreatedAt } from '&/common/components/display/created-at'
-import { useDetailRoutine } from '&/modules/routine/hooks'
+import { useRoutineDetail } from '&/modules/routine/hooks'
 import { NotFoundDetails, OfflineError } from '../errors'
 import { RoutineNavbar } from './nav'
+import { RoutineActivity } from './routine-activity'
+import { RoutineDetails } from './routine-details'
 
-import {
-  Priority,
-  RoutineCategory,
-  RoutineChecklist,
-  RoutineDescription,
-  RoutineName,
-  RoutineNotes,
-  RoutineSchedule,
-} from './parts'
+// TODO: handle isPaused for action => what to do ?
 
 export function RoutineDetailsScreen() {
-  const { t } = useTranslation('common')
-  const { routine, isPaused, isLoading, date } = useDetailRoutine()
+  const { activity } = useParams()
+  const { date, handleDateChange, routineQuery, actionQuery } = useRoutineDetail()
 
-  if (!routine && isPaused) return <OfflineError />
-  if (!routine && !isLoading) return <NotFoundDetails />
+  if (!routineQuery.data && routineQuery.isPaused) return <OfflineError />
+  if (!routineQuery.data && !routineQuery.isLoading) return <NotFoundDetails />
 
   return (
     <>
-      <RoutineNavbar routine={routine} isLoading={isLoading} />
-      {isLoading && <DetailsLoadingPage />}
-
-      {routine && (
-        <>
-          <DetailInfoSection>
-            <div className="-mx-1 mb-6 flex items-center justify-between">
-              <div className="flex items-center gap-x-4">
-                <RoutineStatusSelector routine={routine} date={date} />
-                {routine.archived && <p className="font-bold uppercase text-gray-400">{t('archived')}</p>}
-              </div>
-              <Priority routine={routine} />
-            </div>
-
-            <RoutineSchedule routine={routine} date={date} />
-            <RoutineCategory routine={routine} />
-            <CreatedAt createdAt={routine.created_at} />
-          </DetailInfoSection>
-
-          <DetailContentSection>
-            <RoutineName routine={routine} />
-            <RoutineDescription routine={routine} />
-            <RoutineChecklist routine={routine} date={date} />
-            <RoutineNotes />
-          </DetailContentSection>
-        </>
+      <RoutineNavbar
+        routine={routineQuery.data}
+        isLoading={routineQuery.isLoading}
+        date={date}
+        handleDateChange={handleDateChange}
+      />
+      {routineQuery.isLoading && <DetailsLoadingPage />}
+      {routineQuery.data && activity && (
+        <RoutineActivity routine={routineQuery.data} handleDateChange={handleDateChange} />
+      )}
+      {routineQuery.data && !activity && (
+        <RoutineDetails
+          routine={routineQuery.data}
+          action={actionQuery.data}
+          date={date}
+          handleDateChange={handleDateChange}
+          actionIsLoading={actionQuery.isLoading}
+          actionQuery={actionQuery}
+        />
       )}
     </>
   )

@@ -1,1 +1,1 @@
-export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY' | null
+export type ScheduleType = 'DAILY' | 'WEEKLY' | 'MONTHLY'

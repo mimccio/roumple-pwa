@@ -5,12 +5,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 import { toast } from 'react-hot-toast'
 
-import type { ScheduleType } from '&/common/types'
 import { STATUSES } from '&/common/constants'
 import { useMainPath } from '&/common/hooks'
 import type { Category } from '&/modules/category/types'
 import { categoryAtom } from '&/modules/category/atoms'
-import type { Task } from '../types'
+import type { Task, TaskScheduleType } from '../types'
 import { TASK_KEYS } from '../constants'
 import { createTask } from '../mutations'
 
@@ -25,7 +24,7 @@ export function useCreateTask() {
   const [category, setCategory] = useState(globalCategory)
   const [priority, setPriority] = useState(0)
   const [date, setDate] = useState<Date | null>(null)
-  const [scheduleType, setScheduleType] = useState<ScheduleType>(null)
+  const [scheduleType, setScheduleType] = useState<TaskScheduleType>(null)
   const [period, setPeriod] = useState(0)
 
   const { mutate } = useMutation(createTask, {
@@ -103,7 +102,7 @@ export function useCreateTask() {
   const onSelectCategory = (category: Category) => setCategory(category)
   const onSelectPriority = (priority: number) => setPriority(priority)
   const onSelectDate = (date: Date | null) => setDate(date)
-  const onSelectPeriod = ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => {
+  const onSelectPeriod = ({ scheduleType, period }: { scheduleType: TaskScheduleType; period: number }) => {
     setScheduleType(scheduleType)
     setPeriod(period)
   }

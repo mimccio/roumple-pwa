@@ -24,7 +24,7 @@ export function DetailsScreen() {
     >
       <ErrorBoundary fallback={<FatalError />}>
         <Routes>
-          <Route path=":nav/d/routine/:routineId/*" element={<RoutineDetailsScreen />} />
+          <Route path=":nav/d/routine/:routineId/:activity?/*" element={<RoutineDetailsScreen />} />
 
           <Route path=":nav/d/routine/:routineId/note/:noteId/*" element={<NoteDetailsScreen />} />
           <Route path=":nav/:folderId/d/note/:noteId/*" element={<NoteDetailsScreen />} />

@@ -45,7 +45,7 @@ export function RoutineSchedule({ routine, date }: Props) {
   return (
     <Popover className="relative">
       <Popover.Button>
-        <div className="group flex flex-wrap items-center gap-x-4 gap-y-1">
+        <div className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-1.5">
           <p className="flex items-center gap-2">
             {isScheduled ? (
               <ClockIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />

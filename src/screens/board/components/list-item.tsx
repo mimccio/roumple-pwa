@@ -5,7 +5,7 @@ import { RoutineActionListItem } from '.'
 
 interface Props {
   item: Task | Routine
-  handleUpdateRoutineStatus: ({ routine, actionId, status }: UpdateStatusParams) => void
+  handleUpdateRoutineStatus: ({ routine, action, status }: UpdateStatusParams) => void
 }
 
 export function ListItem({ item, handleUpdateRoutineStatus }: Props) {

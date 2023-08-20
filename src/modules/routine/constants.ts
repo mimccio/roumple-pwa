@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import type { ScheduleType } from '&/common/types'
 import { DATE_FORMAT } from '&/common/constants'
+import { getScheduleFormattedDate } from './utils'
 
 interface BoardOptions {
   type: ScheduleType
@@ -16,6 +17,19 @@ export const ROUTINE_KEYS = {
     [...ROUTINE_KEYS.boards(), { type, date: format(date, DATE_FORMAT) }] as const,
   details: () => [...ROUTINE_KEYS.all, 'DETAIL'] as const,
   detail: (id?: string) => [...ROUTINE_KEYS.details(), id] as const,
+}
+
+export const ACTION_KEYS = {
+  all: ['ACTION'] as const,
+  lists: () => [...ACTION_KEYS.all, 'LIST'] as const,
+  list: (routineId: string) => [...ACTION_KEYS.details(), routineId] as const,
+  details: () => [...ACTION_KEYS.all, 'DETAIL'] as const,
+  detail: ({ routineId, date, scheduleType }: { routineId?: string; date: Date; scheduleType?: ScheduleType }) =>
+    [
+      ...ACTION_KEYS.details(),
+      routineId,
+      { scheduleType, date: getScheduleFormattedDate({ scheduleType, date }) },
+    ] as const,
 }
 
 const PRIORITY = 'PRIORITY'

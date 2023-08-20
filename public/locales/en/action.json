@@ -20,5 +20,7 @@
   "groupBySchedule": "Group by schedule",
   "unGroupBySchedule": "Ungroup by schedule",
   "clearDone": "Clear done",
-  "back": "back"
+  "back": "back",
+  "editOccurrence": "Edit occurrence",
+  "selectDate": "select date"
 }

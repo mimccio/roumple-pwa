@@ -5,5 +5,5 @@ interface Props {
 }
 
 export function DetailInfoSection({ children }: Props) {
-  return <section className="flex flex-col border-b bg-gray-100 p-4">{children}</section>
+  return <section className="flex flex-col gap-y-1 border-b bg-gray-100 p-4">{children}</section>
 }

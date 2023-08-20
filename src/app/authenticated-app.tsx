@@ -6,14 +6,16 @@ import { AppError } from '&/screens/errors'
 import { Menu, MenuButton } from '&/screens/menu'
 import { DetailsScreen } from './details-screen'
 import { MainScreen } from './main-screen'
+import { OfflineBanner } from './offline-banner'
 
 export function AuthenticatedApp() {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   const toggleMenu = () => setMenuIsOpen((prevState) => !prevState)
 
   return (
-    <div className="relative flex min-h-screen w-full overflow-hidden bg-white text-gray-800">
-      <ErrorBoundary fallback={<AppError />}>
+    <ErrorBoundary fallback={<AppError />}>
+      <OfflineBanner />
+      <div className="relative flex min-h-screen overflow-hidden bg-white text-gray-800">
         <Menu close={toggleMenu} isOpen={menuIsOpen} />
         <MenuButton isOpen={menuIsOpen} toggle={toggleMenu} />
         <FetchingSpinner />
@@ -22,7 +24,7 @@ export function AuthenticatedApp() {
           <MainScreen />
           <DetailsScreen />
         </div>
-      </ErrorBoundary>
-    </div>
+      </div>
+    </ErrorBoundary>
   )
 }

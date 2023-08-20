@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 import { startOfToday } from 'date-fns'
 
-import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { TaskScheduleType } from '../../types'
 import { DayCard, MonthCard, WeekCard, DayDateBtn, WeekDateBtn, MonthDateBtn } from './parts'
 
 interface Props {
-  scheduleType: ScheduleType
+  scheduleType: TaskScheduleType
   period: number
   onSelectDate: (date: Date | null) => void
   date: Date | null
-  onSelectPeriod: ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => void
+  onSelectPeriod: ({ scheduleType, period }: { scheduleType: TaskScheduleType; period: number }) => void
 }
 
 export function TaskSchedule({ scheduleType, period, onSelectDate, date, onSelectPeriod }: Props) {

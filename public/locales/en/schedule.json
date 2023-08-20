@@ -8,6 +8,9 @@
   "tomorrow": "tomorrow",
   "nextWeek": "next week",
   "nextMonth": "next month",
+  "day": "day",
+  "week": "week",
+  "month": "month",
 
   "daily": "Daily",
   "weekly": "Weekly",
@@ -32,7 +35,6 @@
     }
   },
 
-  "week": "week ",
   "scheduledFor": "Scheduled for",
   "notScheduledFor": "Not scheduled for",
   "createdOn": "created on",
