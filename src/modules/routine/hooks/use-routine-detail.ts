@@ -5,31 +5,25 @@ import { isSameDay, startOfToday } from 'date-fns'
 
 import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { fetchRoutineById, fetchRoutineAction } from '../queries'
-import { Routine, RoutineAction } from '../types'
-import { getScheduleFormattedDate } from '../utils'
+import { Routine } from '../types'
 
 export function useRoutineDetail() {
   const { routineId } = useParams()
   const queryClient = useQueryClient()
   const [date, setDate] = useState(startOfToday())
 
-  // TODO: initial data
-
-  // const routines = queryClient.getQueryData<Routine[]>(ROUTINE_KEYS.list({ archived: false }))
-  // const routine = routines?.find((item) => item.id === routineId)
-  // console.log('routine :', routine)
-
-  // const boardRoutines = queryClient.getQueriesData<Routine[]>(ROUTINE_KEYS.boards())
-
-  // const bla = boardRoutines.map((hello) => {
-  //   const blou = hello[0][2] as { date: Date }
-  //   if (isSameDay(new Date(blou), date))
-  //   console.log('blou :', blou.date)
-  //   console.log('hello[1] :', hello[1])
-  //   return hello
-  // })
-
-  // console.log('boardRoutines :', boardRoutines)
+  const getBoardAction = () => {
+    let boardAction
+    queryClient.getQueriesData<Routine[]>(ROUTINE_KEYS.boards()).forEach((query) => {
+      const queryOptions = query[0][2] as { date: Date }
+      const queryDate = queryOptions.date
+      if (isSameDay(new Date(queryDate), date)) {
+        const action = query[1]?.find((item) => item.id === routineId)?.actions?.[0]
+        if (action) boardAction = action
+      }
+    })
+    return boardAction
+  }
 
   const routineQuery = useQuery(ROUTINE_KEYS.detail(routineId), fetchRoutineById, {
     enabled: Boolean(routineId),
@@ -46,15 +40,7 @@ export function useRoutineDetail() {
     enabled: Boolean(scheduleType),
     initialDataUpdatedAt: () =>
       routineId ? queryClient.getQueryState(ACTION_KEYS.list(routineId))?.dataUpdatedAt : undefined,
-    initialData: () => {
-      const actionList = routineId ? queryClient.getQueryData<RoutineAction[]>(ACTION_KEYS.list(routineId)) : []
-
-      return actionList?.find(
-        (item) =>
-          item.scheduleType === scheduleType &&
-          isSameDay(new Date(item.date), new Date(getScheduleFormattedDate({ scheduleType, date })))
-      )
-    },
+    initialData: getBoardAction,
   })
 
   return {
