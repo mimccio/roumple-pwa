@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
-import { startOfToday } from 'date-fns'
+import { compareDesc, startOfToday } from 'date-fns'
 
 import type { ScheduleType } from '&/common/types'
 import { useShow } from '&/common/hooks'
@@ -15,14 +15,20 @@ interface Params {
   showDone: boolean
 }
 
-// TODO: remove old queries
-// queryClient.removeQueries({ queryKey: QUERY_KEY });
-
 export function useBoardRoutines({ type, showDone }: Params) {
+  const queryClient = useQueryClient()
   const date = startOfToday()
-
   const [category] = useAtom(categoryAtom)
   const { data, isLoading, error, isPaused } = useQuery(ROUTINE_KEYS.board({ date, type }), fetchBoardRoutines)
+
+  queryClient.removeQueries({
+    queryKey: ROUTINE_KEYS.boards(),
+    type: 'inactive',
+    predicate: (query) => {
+      const queryOptions = query.queryKey[2] as { date: Date }
+      return Boolean(compareDesc(new Date(queryOptions.date), date))
+    },
+  })
 
   const routines = data?.filter((routine) => filterRoutines({ routine, category, showDone }))
 
