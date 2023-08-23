@@ -8,5 +8,6 @@
   "enterRoutineName": "Enter routine name",
   "occurrence": "Occurrence",
   "time-per_one": "time per ",
-  "time-per_other": "times per "
+  "time-per_other": "times per ",
+  "noRoutine": "No routine"
 }

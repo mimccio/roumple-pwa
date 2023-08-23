@@ -19,6 +19,27 @@ export const TW_COLOR_BG_100 = {
   rose: 'bg-rose-100',
 }
 
+export const TW_COLOR_BG_200_HOVER = {
+  gray: 'hover:bg-gray-200',
+  red: 'hover:bg-red-200',
+  orange: 'hover:bg-orange-200',
+  amber: 'hover:bg-amber-200',
+  yellow: 'hover:bg-yellow-200',
+  lime: 'hover:bg-lime-200',
+  green: 'hover:bg-green-200',
+  emerald: 'hover:bg-emerald-200',
+  teal: 'hover:bg-teal-200',
+  cyan: 'hover:bg-cyan-200',
+  sky: 'hover:bg-sky-200',
+  blue: 'hover:bg-blue-200',
+  indigo: 'hover:bg-indigo-200',
+  violet: 'hover:bg-violet-200',
+  purple: 'hover:bg-purple-200',
+  fuchsia: 'hover:bg-fuchsia-200',
+  pink: 'hover:bg-pink-200',
+  rose: 'hover:bg-rose-200',
+}
+
 export const TW_COLOR_BG_400 = {
   gray: 'bg-gray-400',
   red: 'bg-red-400',

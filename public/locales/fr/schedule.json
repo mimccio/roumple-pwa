@@ -37,7 +37,7 @@
   "scheduledFor": "Programmé pour",
   "notScheduledFor": "Pas programmé pour",
   "createdOn": "créé le",
-  "days": { "1": "l", "2": "m", "3": "m", "4": "j", "5": "v", "6": "s", "7": "d" },
+  "days": { "1": "lun", "2": "mar", "3": "mer", "4": "jeu", "5": "ven", "6": "sam", "7": "dim" },
   "odd": "impair",
   "even": "pair"
 }

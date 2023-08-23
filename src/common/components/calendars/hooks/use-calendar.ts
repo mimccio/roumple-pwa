@@ -3,7 +3,6 @@ import { add, format, parse, startOfToday, sub } from 'date-fns'
 
 export function useCalendar() {
   const today = startOfToday()
-
   const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
   const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
@@ -17,10 +16,16 @@ export function useCalendar() {
     setCurrentMonth(format(firstDayOfNextMonth, 'MMM-yyyy'))
   }
 
+  function onThisMonth() {
+    setCurrentMonth(format(today, 'MMM-yyyy'))
+  }
+
   return {
     currentMonth,
     firstDayCurrentMonth,
     onNextMonth,
     onPreviousMonth,
+    onThisMonth,
+    today,
   }
 }

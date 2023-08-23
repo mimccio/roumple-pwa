@@ -12,7 +12,7 @@ export function EmptyScreen({ image, text, opacity }: Props) {
     <Transition
       appear
       show
-      className="flex h-full flex-col items-center justify-center pt-14"
+      className="flex h-full w-full flex-col items-center justify-center pt-14"
       enter="transition-opacity duration-1000"
       enterFrom="opacity-0"
       enterTo="opacity-100"

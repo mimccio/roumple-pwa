@@ -29,7 +29,7 @@ export function DayCircle({ day, isSelected, handleChange, value, disabled }: Pr
       )}
     >
       <input className="hidden" type="checkbox" checked={isSelected} onChange={onChange} disabled={disabled} />
-      {day}
+      {day.slice(0, 1)}
     </label>
   )
 }
