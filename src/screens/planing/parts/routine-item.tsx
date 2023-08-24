@@ -20,7 +20,7 @@ export function RoutineLargeItem({ id, name, color = 'gray', date }: Props) {
         to={url}
         state={{ date }}
         className={cl(
-          'block w-full truncate rounded-sm px-0.5 text-xs font-medium text-gray-700 transition-colors hover:text-gray-900',
+          'block w-full truncate rounded-sm px-0.5 text-left text-xs font-medium text-gray-700 transition-colors hover:text-gray-900',
           bg,
           TW_COLOR_BG_200_HOVER[color]
         )}

@@ -1,10 +1,11 @@
-import { compareAsc, getDate, getDay, isSameMonth, isToday } from 'date-fns'
+import { getDate, isSameMonth, isToday } from 'date-fns'
 import { cl } from '&/common/utils'
 import type { Routine } from '&/modules/routine/types'
 import { RoutineLargeItem } from './routine-item'
 import { DotItem } from './dot-item'
 import { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { getDailyScheduledRoutines } from '../utils/get-scheduled-routines'
 
 interface Props {
   days: Date[]
@@ -14,11 +15,6 @@ interface Props {
 }
 
 export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props) {
-  const getDailyScheduledRoutines = (day: Date) =>
-    dailyRoutines
-      .filter((r) => compareAsc(day, new Date(r.created_at)) >= 0 && r.daily_recurrence.includes(getDay(day)))
-      .sort((a, b) => b.priority - a.priority)
-
   return (
     <div className="flex w-full flex-1  bg-gray-200 text-xs text-gray-700">
       {/* large screen */}
@@ -42,7 +38,7 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props)
             </time>
 
             <ol className="mb-2 mt-2 flex flex-col gap-y-1">
-              {getDailyScheduledRoutines(day).map((routine) => (
+              {getDailyScheduledRoutines({ date: day, routines: dailyRoutines }).map((routine) => (
                 <RoutineLargeItem
                   key={routine.id}
                   name={routine.name}
@@ -59,7 +55,7 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props)
       {/* small screen */}
       <div className="isolate grid w-full grid-cols-7 gap-px lg:hidden">
         {days.map((day) => {
-          const routines = getDailyScheduledRoutines(day)
+          const routines = getDailyScheduledRoutines({ date: day, routines: dailyRoutines })
           return (
             <button
               key={day.toString()}

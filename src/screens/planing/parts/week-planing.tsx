@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { compareAsc, eachWeekOfInterval, endOfMonth, endOfWeek, getWeek, isThisWeek, startOfWeek } from 'date-fns'
+import { eachWeekOfInterval, endOfMonth, endOfWeek, getWeek, isThisWeek, startOfWeek } from 'date-fns'
 import { cl } from '&/common/utils'
 import type { Routine } from '&/modules/routine/types'
 import { RoutineLargeItem } from './routine-item'
 import { DotItem } from './dot-item'
 import { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { getWeeklyScheduledRoutines } from '../utils/get-scheduled-routines'
 
 interface Props {
   firstDayCurrentMonth: Date
@@ -23,14 +24,6 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
     },
     { weekStartsOn: 1 }
   )
-
-  const getWeeklyScheduledRoutines = (week: Date) =>
-    weeklyRoutines
-      .filter(
-        (r) =>
-          compareAsc(week, startOfWeek(new Date(r.created_at))) >= 0 && r.daily_recurrence.includes(getWeek(week) % 2)
-      )
-      .sort((a, b) => b.priority - a.priority)
 
   return (
     <div className=" ml-1  lg:flex lg:flex-col">
@@ -58,7 +51,7 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
             </time>
 
             <ol className="mb-2 mt-2 flex flex-col gap-y-1">
-              {getWeeklyScheduledRoutines(week).map((routine) => (
+              {getWeeklyScheduledRoutines({ date: week, routines: weeklyRoutines }).map((routine) => (
                 <RoutineLargeItem
                   key={routine.id}
                   name={routine.name}
@@ -75,7 +68,7 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
       {/* small screen */}
       <div className="isolate flex w-full flex-col gap-px lg:hidden">
         {weeks.map((week) => {
-          const routines = getWeeklyScheduledRoutines(week)
+          const routines = getWeeklyScheduledRoutines({ date: week, routines: weeklyRoutines })
           return (
             <button
               key={week.toString()}

@@ -17,14 +17,17 @@ import { WeekPlaning } from './parts/week-planing'
 import { MonthPlaning } from './parts/month-planing'
 import { PlaningHeader } from './parts/planing-header'
 import { ScheduleType } from '&/common/types'
+import { PlaningModale } from './parts/planing-modale'
 
 export function PlaningScreen() {
   const { t } = useTranslation('routine')
   const { routineList, showStatus } = useRoutineList()
-  const [selected, setSelected] = useState({})
+  const [selected, setSelected] = useState<{ date: Date; type: ScheduleType }>()
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth, onThisMonth, today } = useCalendar()
 
-  console.log('selected :', selected) // TODO: create modale to show list of selected date
+  if (showStatus.error) return <MainError />
+  if (showStatus.offline) return <OfflineError />
+  if (showStatus.empty) return <EmptyScreen opacity text={t('noRoutine')} image={orderCompletedImg} />
 
   const onSelect = ({ type, date }: { type: ScheduleType; date: Date }) => setSelected({ type, date })
 
@@ -43,9 +46,12 @@ export function PlaningScreen() {
     end: endOfWeek(endOfMonth(firstDayCurrentMonth), { weekStartsOn: 1 }),
   })
 
-  if (showStatus.error) return <MainError />
-  if (showStatus.offline) return <OfflineError />
-  if (showStatus.empty) return <EmptyScreen opacity text={t('noRoutine')} image={orderCompletedImg} />
+  const getSelectedRoutines = () => {
+    if (selected?.type === SCHEDULE_TYPES.daily) return dailyRoutines
+    if (selected?.type === SCHEDULE_TYPES.weekly) return weeklyRoutines
+    if (selected?.type === SCHEDULE_TYPES.monthly) return monthlyRoutines
+    return []
+  }
 
   return (
     <div className="mb-4 w-full  p-2 lg:flex lg:flex-col">
@@ -64,6 +70,12 @@ export function PlaningScreen() {
         <WeekPlaning firstDayCurrentMonth={firstDayCurrentMonth} weeklyRoutines={weeklyRoutines} onSelect={onSelect} />
       </div>
       <MonthPlaning firstDayCurrentMonth={firstDayCurrentMonth} monthlyRoutines={monthlyRoutines} onSelect={onSelect} />
+      <PlaningModale
+        date={selected?.date}
+        scheduleType={selected?.type}
+        onClose={() => setSelected(undefined)}
+        routines={getSelectedRoutines()}
+      />
     </div>
   )
 }
