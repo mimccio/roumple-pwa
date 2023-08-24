@@ -36,9 +36,9 @@ export function PlaningScreen() {
   const monthlyRoutines = [] as Routine[]
 
   routineList.forEach((r) => {
+    if (r.scheduleType === SCHEDULE_TYPES.daily) dailyRoutines.push(r)
     if (r.scheduleType === SCHEDULE_TYPES.weekly) weeklyRoutines.push(r)
     if (r.scheduleType === SCHEDULE_TYPES.monthly) monthlyRoutines.push(r)
-    dailyRoutines.push(r)
   })
 
   const dailyTasks = [] as Task[]
