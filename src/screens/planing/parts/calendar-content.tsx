@@ -19,37 +19,48 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props)
     <div className="flex w-full flex-1  bg-gray-200 text-xs text-gray-700">
       {/* large screen */}
       <div className="hidden w-full lg:grid lg:grid-cols-7 lg:gap-px">
-        {days.map((day) => (
-          <div
-            key={day.toString()}
-            className={cl(
-              isSameMonth(day, today) ? 'bg-white' : 'bg-gray-50 text-gray-500',
-              'rounded-in relative max-h-[250px] overflow-x-hidden overflow-y-scroll px-1 py-1'
-            )}
-          >
-            <time
-              dateTime={day.toString()}
+        {days.map((day) => {
+          const routines = getDailyScheduledRoutines({ date: day, routines: dailyRoutines })
+          return (
+            <div
+              key={day.toString()}
               className={cl(
-                'flex h-6 w-6 items-center justify-center rounded-full font-semibold',
-                isToday(day) ? ' bg-indigo-600 font-semibold text-white' : 'text-indigo-700'
+                isSameMonth(day, today) ? 'bg-white' : 'bg-gray-50 text-gray-500',
+                'rounded-in relative h-44  px-1 py-1'
               )}
             >
-              {getDate(day)}
-            </time>
+              <time
+                dateTime={day.toString()}
+                className={cl(
+                  'flex h-6 w-6 items-center justify-center rounded-full font-semibold',
+                  isToday(day) ? ' bg-indigo-600 font-semibold text-white' : 'text-indigo-700'
+                )}
+              >
+                {getDate(day)}
+              </time>
 
-            <ol className="mb-2 mt-2 flex flex-col gap-y-1">
-              {getDailyScheduledRoutines({ date: day, routines: dailyRoutines }).map((routine) => (
-                <RoutineLargeItem
-                  key={routine.id}
-                  name={routine.name}
-                  id={routine.id}
-                  color={routine.category?.color}
-                  date={day}
-                />
-              ))}
-            </ol>
-          </div>
-        ))}
+              <ol className="mb-2 mt-2 flex flex-col gap-y-1">
+                {routines.slice(0, 5).map((routine) => (
+                  <RoutineLargeItem
+                    key={routine.id}
+                    name={routine.name}
+                    id={routine.id}
+                    color={routine.category?.color}
+                    date={day}
+                  />
+                ))}
+              </ol>
+              {routines.length > 5 && (
+                <button
+                  onClick={() => onSelect({ type: SCHEDULE_TYPES.daily, date: day })}
+                  className="mt-2 w-full rounded-sm border text-gray-500 transition-colors hover:text-gray-700"
+                >
+                  see more
+                </button>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       {/* small screen */}

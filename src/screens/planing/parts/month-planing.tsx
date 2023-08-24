@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { ScheduleType } from '&/common/types'
 import { cl, getTwBgColor } from '&/common/utils'
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { TW_COLOR_BG_200_HOVER } from '&/common/constants/tw-colors'
+import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
 import type { Routine } from '&/modules/routine/types'
 import { getMonthlyScheduledRoutines } from '../utils/get-scheduled-routines'
 import { DotItem } from './dot-item'
@@ -22,20 +22,24 @@ export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect }
     <div className="mt-2 flex w-full rounded-md border">
       <div className=" px-4  py-2 text-center text-xs capitalize leading-6 text-gray-500">{t('month')}</div>
       <ol className="hidden flex-wrap gap-2 border-l px-2 py-2 lg:flex">
-        {getMonthlyScheduledRoutines({ date: firstDayCurrentMonth, routines: monthlyRoutines }).map((routine) => (
-          <li className="max-w-[200px] truncate" key={routine.id}>
-            <Link
-              to={`/routines/d/routine/${routine.id}`}
-              className={cl(
-                'block w-full truncate rounded-sm px-2 py-1 text-xs font-medium text-gray-700 transition-colors hover:text-gray-900',
-                getTwBgColor(100, routine.category?.color || 'gray'),
-                TW_COLOR_BG_200_HOVER[routine.category?.color || 'gray']
-              )}
-            >
-              {routine.name}
-            </Link>
-          </li>
-        ))}
+        {getMonthlyScheduledRoutines({ date: firstDayCurrentMonth, routines: monthlyRoutines }).map((routine) => {
+          const color = routine.category?.color
+          return (
+            <li className="max-w-[200px] truncate" key={routine.id}>
+              <Link
+                to={`/routines/d/routine/${routine.id}`}
+                className={cl(
+                  'block w-full truncate rounded-sm px-2 py-1 text-xs font-medium transition-colors ',
+                  color ? 'text-white' : 'text-gray-700 ',
+                  color ? getTwBgColor(500, color) : 'bg-gray-100',
+                  color ? TW_COLOR_BG_600_HOVER[color] : 'hover:bg-gray-200'
+                )}
+              >
+                {routine.name}
+              </Link>
+            </li>
+          )
+        })}
       </ol>
 
       <button

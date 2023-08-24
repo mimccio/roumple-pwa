@@ -7,7 +7,7 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 
 import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { TW_COLOR_BG_200_HOVER } from '&/common/constants/tw-colors'
+import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
 import { cl, getDateFnsLocale, getTwBgColor } from '&/common/utils'
 import type { Routine } from '&/modules/routine/types'
 import { getScheduledRoutines } from '../utils/get-scheduled-routines'
@@ -75,16 +75,17 @@ export function PlaningModale({ scheduleType, date, onClose, routines }: Props) 
                 <ol className="mb-2 mt-2 flex flex-col gap-y-1 overflow-y-scroll">
                   {date &&
                     getScheduledRoutines({ routines, date, type: scheduleType }).map((routine) => {
-                      const color = routine.category?.color || 'gray'
+                      const color = routine.category?.color
                       return (
                         <li key={routine.id}>
                           <Link
                             to={`/routines/d/routine/${routine.id}`}
                             state={{ date }}
                             className={cl(
-                              'block w-full truncate rounded-sm px-2 py-1 text-left text-sm font-medium text-gray-700 transition-colors hover:text-gray-900',
-                              getTwBgColor(100, color),
-                              TW_COLOR_BG_200_HOVER[color]
+                              'block w-full truncate rounded-sm px-2 py-1 text-left text-sm font-medium  transition-colors ',
+                              color ? 'text-white' : 'text-gray-700 ',
+                              color ? getTwBgColor(500, color) : 'bg-gray-100',
+                              color ? TW_COLOR_BG_600_HOVER[color] : 'hover:bg-gray-200'
                             )}
                           >
                             {routine.name}

@@ -35,34 +35,46 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
 
       {/* big screen */}
       <div className="hidden grow flex-col lg:flex">
-        {weeks.map((week) => (
-          <div
-            key={week.toString()}
-            className="rounded-in relative flex max-h-[250px]  flex-1 grow flex-col overflow-y-scroll border border-t-0 bg-white  px-1 py-1"
-          >
-            <time
-              dateTime={week.toString()}
-              className={cl(
-                'flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold',
-                isThisWeek(week) ? ' bg-sky-600  font-semibold text-white' : 'text-sky-700'
-              )}
-            >
-              {getWeek(week)}
-            </time>
+        {weeks.map((week) => {
+          const routines = getWeeklyScheduledRoutines({ date: week, routines: weeklyRoutines })
 
-            <ol className="mb-2 mt-2 flex flex-col gap-y-1">
-              {getWeeklyScheduledRoutines({ date: week, routines: weeklyRoutines }).map((routine) => (
-                <RoutineLargeItem
-                  key={routine.id}
-                  name={routine.name}
-                  id={routine.id}
-                  color={routine.category?.color}
-                  date={week}
-                />
-              ))}
-            </ol>
-          </div>
-        ))}
+          return (
+            <div
+              key={week.toString()}
+              className="rounded-in relative flex max-h-[250px]  flex-1 grow flex-col overflow-y-scroll border border-t-0 bg-white  px-1 py-1"
+            >
+              <time
+                dateTime={week.toString()}
+                className={cl(
+                  'flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold',
+                  isThisWeek(week) ? ' bg-sky-600  font-semibold text-white' : 'text-sky-700'
+                )}
+              >
+                {getWeek(week)}
+              </time>
+
+              <ol className="mb-2 mt-2 flex flex-col gap-y-1">
+                {routines.slice(0, 5).map((routine) => (
+                  <RoutineLargeItem
+                    key={routine.id}
+                    name={routine.name}
+                    id={routine.id}
+                    color={routine.category?.color}
+                    date={week}
+                  />
+                ))}
+              </ol>
+              {routines.length > 5 && (
+                <button
+                  onClick={() => onSelect({ type: SCHEDULE_TYPES.weekly, date: week })}
+                  className="mt-2 w-full rounded-sm border text-gray-500 transition-colors hover:text-gray-700"
+                >
+                  see more
+                </button>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       {/* small screen */}
