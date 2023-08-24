@@ -32,9 +32,9 @@ export function useCreateRoutine() {
   const date = startOfToday()
 
   const listKey = ROUTINE_KEYS.list({ archived: false })
-  const boardKey = ROUTINE_KEYS.board({ scheduleType: SCHEDULE_TYPES.daily, date })
   const { mutate } = useMutation(createRoutine, {
     onMutate: async (data) => {
+      const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: listKey })
       await queryClient.cancelQueries({ queryKey: boardKey })
@@ -52,16 +52,19 @@ export function useCreateRoutine() {
       navigate(`d/routine/${id}`)
       return { previousRoutineList, previousBoardList }
     },
-    onError: (_err, _item, context) => {
+    onError: (_err, item, context) => {
       queryClient.setQueryData(ROUTINE_KEYS.detail(id), undefined)
       queryClient.setQueryData(listKey, context?.previousRoutineList)
-      queryClient.setQueryData(boardKey, context?.previousBoardList)
+      queryClient.setQueryData(
+        ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
+        context?.previousBoardList
+      )
       toast.error("Creation didn't work")
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(id))
       queryClient.invalidateQueries(listKey)
-      queryClient.invalidateQueries(boardKey)
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
     },
   })
 
