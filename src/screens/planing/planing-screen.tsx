@@ -1,11 +1,8 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { eachDayOfInterval, endOfMonth, endOfWeek, startOfWeek } from 'date-fns'
 
-import orderCompletedImg from '&/assets/illustrations/order-completed.png'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { useCalendar } from '&/common/components/calendars/hooks'
-import { EmptyScreen } from '&/common/components/empty-screen'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineList } from '&/modules/routine/hooks'
@@ -18,16 +15,18 @@ import { MonthPlaning } from './parts/month-planing'
 import { PlaningHeader } from './parts/planing-header'
 import { ScheduleType } from '&/common/types'
 import { PlaningModale } from './parts/planing-modale'
+import { useTaskList } from '&/modules/task/hooks'
+import { Task } from '&/modules/task/types'
 
 export function PlaningScreen() {
-  const { t } = useTranslation('routine')
-  const { routineList, showStatus } = useRoutineList()
+  const { routineList, showStatus: routineStatus } = useRoutineList()
+  const { taskList, showStatus: taskStatus } = useTaskList()
+
   const [selected, setSelected] = useState<{ date: Date; type: ScheduleType }>()
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth, onThisMonth, today } = useCalendar()
 
-  if (showStatus.error) return <MainError />
-  if (showStatus.offline) return <OfflineError />
-  if (showStatus.empty) return <EmptyScreen opacity text={t('noRoutine')} image={orderCompletedImg} />
+  if (routineStatus.error || taskStatus.error) return <MainError />
+  if (routineStatus.offline || taskStatus.offline) return <OfflineError />
 
   const onSelect = ({ type, date }: { type: ScheduleType; date: Date }) => setSelected({ type, date })
 
@@ -41,6 +40,16 @@ export function PlaningScreen() {
     dailyRoutines.push(r)
   })
 
+  const dailyTasks = [] as Task[]
+  const weeklyTasks = [] as Task[]
+  const monthlyTasks = [] as Task[]
+
+  taskList?.forEach((task) => {
+    if (task.scheduleType === SCHEDULE_TYPES.daily) dailyTasks.push(task)
+    if (task.scheduleType === SCHEDULE_TYPES.weekly) weeklyTasks.push(task)
+    if (task.scheduleType === SCHEDULE_TYPES.monthly) monthlyTasks.push(task)
+  })
+
   const days = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 }),
     end: endOfWeek(endOfMonth(firstDayCurrentMonth), { weekStartsOn: 1 }),
@@ -50,6 +59,13 @@ export function PlaningScreen() {
     if (selected?.type === SCHEDULE_TYPES.daily) return dailyRoutines
     if (selected?.type === SCHEDULE_TYPES.weekly) return weeklyRoutines
     if (selected?.type === SCHEDULE_TYPES.monthly) return monthlyRoutines
+    return []
+  }
+
+  const getSelectedTasks = () => {
+    if (selected?.type === SCHEDULE_TYPES.daily) return dailyTasks
+    if (selected?.type === SCHEDULE_TYPES.weekly) return weeklyTasks
+    if (selected?.type === SCHEDULE_TYPES.monthly) return monthlyTasks
     return []
   }
 
@@ -65,16 +81,33 @@ export function PlaningScreen() {
       <div className="grid grid-cols-8 ">
         <div className="col-span-7 rounded-t-md  border lg:flex lg:flex-col ">
           <DaysHeader />
-          <CalendarContent days={days} dailyRoutines={dailyRoutines} today={today} onSelect={onSelect} />
+          <CalendarContent
+            days={days}
+            dailyRoutines={dailyRoutines}
+            today={today}
+            onSelect={onSelect}
+            dailyTasks={dailyTasks}
+          />
         </div>
-        <WeekPlaning firstDayCurrentMonth={firstDayCurrentMonth} weeklyRoutines={weeklyRoutines} onSelect={onSelect} />
+        <WeekPlaning
+          firstDayCurrentMonth={firstDayCurrentMonth}
+          weeklyRoutines={weeklyRoutines}
+          onSelect={onSelect}
+          weeklyTasks={weeklyTasks}
+        />
       </div>
-      <MonthPlaning firstDayCurrentMonth={firstDayCurrentMonth} monthlyRoutines={monthlyRoutines} onSelect={onSelect} />
+      <MonthPlaning
+        firstDayCurrentMonth={firstDayCurrentMonth}
+        monthlyRoutines={monthlyRoutines}
+        onSelect={onSelect}
+        monthlyTasks={monthlyTasks}
+      />
       <PlaningModale
         date={selected?.date}
         scheduleType={selected?.type}
         onClose={() => setSelected(undefined)}
         routines={getSelectedRoutines()}
+        tasks={getSelectedTasks()}
       />
     </div>
   )

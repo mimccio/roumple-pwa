@@ -19,27 +19,6 @@ export const TW_COLOR_BG_100 = {
   rose: 'bg-rose-100',
 }
 
-export const TW_COLOR_BG_600_HOVER = {
-  gray: 'hover:bg-gray-600',
-  red: 'hover:bg-red-600',
-  orange: 'hover:bg-orange-600',
-  amber: 'hover:bg-amber-600',
-  yellow: 'hover:bg-yellow-600',
-  lime: 'hover:bg-lime-600',
-  green: 'hover:bg-green-600',
-  emerald: 'hover:bg-emerald-600',
-  teal: 'hover:bg-teal-600',
-  cyan: 'hover:bg-cyan-600',
-  sky: 'hover:bg-sky-600',
-  blue: 'hover:bg-blue-600',
-  indigo: 'hover:bg-indigo-600',
-  violet: 'hover:bg-violet-600',
-  purple: 'hover:bg-purple-600',
-  fuchsia: 'hover:bg-fuchsia-600',
-  pink: 'hover:bg-pink-600',
-  rose: 'hover:bg-rose-600',
-}
-
 export const TW_COLOR_BG_400 = {
   gray: 'bg-gray-400',
   red: 'bg-red-400',
@@ -101,4 +80,25 @@ export const TW_COLOR_BG_700 = {
   fuchsia: 'bg-fuchsia-700',
   pink: 'bg-pink-700',
   rose: 'bg-rose-700',
+}
+
+export const TW_COLOR_BG_600_HOVER = {
+  gray: 'hover:bg-gray-600',
+  red: 'hover:bg-red-600',
+  orange: 'hover:bg-orange-600',
+  amber: 'hover:bg-amber-600',
+  yellow: 'hover:bg-yellow-600',
+  lime: 'hover:bg-lime-600',
+  green: 'hover:bg-green-600',
+  emerald: 'hover:bg-emerald-600',
+  teal: 'hover:bg-teal-600',
+  cyan: 'hover:bg-cyan-600',
+  sky: 'hover:bg-sky-600',
+  blue: 'hover:bg-blue-600',
+  indigo: 'hover:bg-indigo-600',
+  violet: 'hover:bg-violet-600',
+  purple: 'hover:bg-purple-600',
+  fuchsia: 'hover:bg-fuchsia-600',
+  pink: 'hover:bg-pink-600',
+  rose: 'hover:bg-rose-600',
 }

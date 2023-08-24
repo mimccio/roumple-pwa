@@ -5,29 +5,39 @@ import type { ScheduleType } from '&/common/types'
 import { cl, getTwBgColor } from '&/common/utils'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
+
 import type { Routine } from '&/modules/routine/types'
-import { getMonthlyScheduledRoutines } from '../utils/get-scheduled-routines'
+import type { Task } from '&/modules/task/types'
+import { mergeTaskAndRoutines, getUrl } from '../utils'
 import { DotItem } from './dot-item'
 
 interface Props {
   firstDayCurrentMonth: Date
   monthlyRoutines: Routine[]
+  monthlyTasks: Task[]
   onSelect: ({ type, date }: { type: ScheduleType; date: Date }) => void
 }
 
-export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect }: Props) {
+export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect, monthlyTasks }: Props) {
   const { t } = useTranslation('schedule')
+
+  const items = mergeTaskAndRoutines({
+    routines: monthlyRoutines,
+    tasks: monthlyTasks,
+    date: firstDayCurrentMonth,
+    type: SCHEDULE_TYPES.monthly,
+  })
 
   return (
     <div className="mt-2 flex w-full rounded-md border">
       <div className=" px-4  py-2 text-center text-xs capitalize leading-6 text-gray-500">{t('month')}</div>
       <ol className="hidden flex-wrap gap-2 border-l px-2 py-2 lg:flex">
-        {getMonthlyScheduledRoutines({ date: firstDayCurrentMonth, routines: monthlyRoutines }).map((routine) => {
-          const color = routine.category?.color
+        {items.map((item) => {
+          const color = item.category?.color
           return (
-            <li className="max-w-[200px] truncate" key={routine.id}>
+            <li className="max-w-[200px] truncate" key={item.id}>
               <Link
-                to={`/routines/d/routine/${routine.id}`}
+                to={getUrl(item)}
                 className={cl(
                   'block w-full truncate rounded-sm px-2 py-1 text-xs font-medium transition-colors ',
                   color ? 'text-white' : 'text-gray-700 ',
@@ -35,7 +45,7 @@ export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect }
                   color ? TW_COLOR_BG_600_HOVER[color] : 'hover:bg-gray-200'
                 )}
               >
-                {routine.name}
+                {item.name}
               </Link>
             </li>
           )
@@ -47,8 +57,8 @@ export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect }
         onClick={() => onSelect({ type: SCHEDULE_TYPES.monthly, date: firstDayCurrentMonth })}
       >
         <ol className="flex flex-wrap gap-1">
-          {getMonthlyScheduledRoutines({ date: firstDayCurrentMonth, routines: monthlyRoutines }).map((routine) => (
-            <DotItem key={routine.id} color={routine.category?.color} />
+          {items.map((item) => (
+            <DotItem key={item.id} color={item.category?.color} />
           ))}
         </ol>
       </button>

@@ -8,6 +8,5 @@
   "enterRoutineName": "Entrer le nom de la routine",
   "occurrence": "Occurrence",
   "time-per_one": "fois par ",
-  "time-per_other": "fois par ",
-  "noRoutine": "Aucune routine"
+  "time-per_other": "fois par "
 }

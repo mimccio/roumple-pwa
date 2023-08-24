@@ -9,17 +9,21 @@ import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
 import { cl, getDateFnsLocale, getTwBgColor } from '&/common/utils'
+
 import type { Routine } from '&/modules/routine/types'
-import { getScheduledRoutines } from '../utils/get-scheduled-routines'
+import type { Task } from '&/modules/task/types'
+import { mergeTaskAndRoutines } from '../utils/get-scheduled-items'
+import { getUrl } from '../utils/get-url'
 
 interface Props {
   scheduleType?: ScheduleType
   date?: Date
   onClose: () => void
   routines: Routine[]
+  tasks: Task[]
 }
 
-export function PlaningModale({ scheduleType, date, onClose, routines }: Props) {
+export function PlaningModale({ scheduleType, date, onClose, routines, tasks }: Props) {
   const { t } = useTranslation('schedule')
 
   const getDateText = () => {
@@ -32,6 +36,16 @@ export function PlaningModale({ scheduleType, date, onClose, routines }: Props) 
   }
 
   const dateText = getDateText()
+
+  const items =
+    date && scheduleType
+      ? mergeTaskAndRoutines({
+          routines,
+          tasks,
+          date,
+          type: scheduleType,
+        })
+      : []
 
   return (
     <Transition.Root show={Boolean(date)} as={Fragment}>
@@ -73,26 +87,25 @@ export function PlaningModale({ scheduleType, date, onClose, routines }: Props) 
                 </div>
 
                 <ol className="mb-2 mt-2 flex flex-col gap-y-1 overflow-y-scroll">
-                  {date &&
-                    getScheduledRoutines({ routines, date, type: scheduleType }).map((routine) => {
-                      const color = routine.category?.color
-                      return (
-                        <li key={routine.id}>
-                          <Link
-                            to={`/routines/d/routine/${routine.id}`}
-                            state={{ date }}
-                            className={cl(
-                              'block w-full truncate rounded-sm px-2 py-1 text-left text-sm font-medium  transition-colors ',
-                              color ? 'text-white' : 'text-gray-700 ',
-                              color ? getTwBgColor(500, color) : 'bg-gray-100',
-                              color ? TW_COLOR_BG_600_HOVER[color] : 'hover:bg-gray-200'
-                            )}
-                          >
-                            {routine.name}
-                          </Link>
-                        </li>
-                      )
-                    })}
+                  {items.map((item) => {
+                    const color = item.category?.color
+                    return (
+                      <li key={item.id}>
+                        <Link
+                          to={getUrl(item)}
+                          state={{ date }}
+                          className={cl(
+                            'block w-full truncate rounded-sm px-2 py-1 text-left text-sm font-medium  transition-colors ',
+                            color ? 'text-white' : 'text-gray-700 ',
+                            color ? getTwBgColor(500, color) : 'bg-gray-100',
+                            color ? TW_COLOR_BG_600_HOVER[color] : 'hover:bg-gray-200'
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                    )
+                  })}
                 </ol>
               </Dialog.Panel>
             </Transition.Child>

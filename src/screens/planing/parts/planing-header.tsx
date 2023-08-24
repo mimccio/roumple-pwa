@@ -1,13 +1,14 @@
-import { cl } from '&/common/utils'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { format, isSameMonth } from 'date-fns'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+
+import { cl, getDateFnsLocale } from '&/common/utils'
 
 interface Props {
   date: Date
-  onPreviousMonth: () => void
-  onNextMonth: () => void
-  onThisMonth: () => void
   today: Date
+  onPreviousMonth: () => void
+  onThisMonth: () => void
+  onNextMonth: () => void
 }
 
 export function PlaningHeader({ date, onPreviousMonth, onNextMonth, today, onThisMonth }: Props) {
@@ -31,7 +32,7 @@ export function PlaningHeader({ date, onPreviousMonth, onNextMonth, today, onThi
           isSameMonth(date, today) ? 'text-gray-500' : 'text-purple-700 hover:text-purple-500'
         )}
       >
-        {format(date, 'MMMM yyyy')}
+        {format(date, 'MMMM yyyy', { locale: getDateFnsLocale() })}
       </button>
 
       <button

@@ -1,20 +1,25 @@
 import { useTranslation } from 'react-i18next'
 import { eachWeekOfInterval, endOfMonth, endOfWeek, getWeek, isThisWeek, startOfWeek } from 'date-fns'
-import { cl } from '&/common/utils'
-import type { Routine } from '&/modules/routine/types'
-import { RoutineLargeItem } from './routine-item'
-import { DotItem } from './dot-item'
-import { ScheduleType } from '&/common/types'
+
+import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { getWeeklyScheduledRoutines } from '../utils/get-scheduled-routines'
+import { cl } from '&/common/utils'
+
+import type { Routine } from '&/modules/routine/types'
+import type { Task } from '&/modules/task/types'
+
+import { mergeTaskAndRoutines } from '../utils'
+import { PlaningItem } from './planing-item'
+import { DotItem } from './dot-item'
 
 interface Props {
   firstDayCurrentMonth: Date
   weeklyRoutines: Routine[]
+  weeklyTasks: Task[]
   onSelect: ({ type, date }: { type: ScheduleType; date: Date }) => void
 }
 
-export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: Props) {
+export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, weeklyTasks }: Props) {
   const { t } = useTranslation('schedule')
 
   const weeks = eachWeekOfInterval(
@@ -36,7 +41,12 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
       {/* big screen */}
       <div className="hidden grow flex-col lg:flex">
         {weeks.map((week) => {
-          const routines = getWeeklyScheduledRoutines({ date: week, routines: weeklyRoutines })
+          const items = mergeTaskAndRoutines({
+            routines: weeklyRoutines,
+            tasks: weeklyTasks,
+            date: week,
+            type: SCHEDULE_TYPES.weekly,
+          })
 
           return (
             <div
@@ -54,17 +64,11 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
               </time>
 
               <ol className="mb-2 mt-2 flex flex-col gap-y-1">
-                {routines.slice(0, 5).map((routine) => (
-                  <RoutineLargeItem
-                    key={routine.id}
-                    name={routine.name}
-                    id={routine.id}
-                    color={routine.category?.color}
-                    date={week}
-                  />
+                {items.slice(0, 5).map((item) => (
+                  <PlaningItem key={item.id} name={item.name} id={item.id} color={item.category?.color} date={week} />
                 ))}
               </ol>
-              {routines.length > 5 && (
+              {items.length > 5 && (
                 <button
                   onClick={() => onSelect({ type: SCHEDULE_TYPES.weekly, date: week })}
                   className="mt-2 w-full rounded-sm border text-gray-500 transition-colors hover:text-gray-700"
@@ -80,7 +84,12 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
       {/* small screen */}
       <div className="isolate flex w-full flex-col gap-px lg:hidden">
         {weeks.map((week) => {
-          const routines = getWeeklyScheduledRoutines({ date: week, routines: weeklyRoutines })
+          const items = mergeTaskAndRoutines({
+            routines: weeklyRoutines,
+            tasks: weeklyTasks,
+            date: week,
+            type: SCHEDULE_TYPES.weekly,
+          })
           return (
             <button
               key={week.toString()}
@@ -93,11 +102,11 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect }: 
               <time dateTime={week.toString()} className={cl('ml-auto text-xs')}>
                 {getWeek(week)}
               </time>
-              <span className="sr-only">{routines.length} events</span>
-              {routines.length > 0 && (
+
+              {items.length > 0 && (
                 <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
-                  {routines.map((routine) => (
-                    <DotItem key={routine.id} color={routine.category?.color} />
+                  {items.map((item) => (
+                    <DotItem key={item.id} color={item.category?.color} />
                   ))}
                 </span>
               )}

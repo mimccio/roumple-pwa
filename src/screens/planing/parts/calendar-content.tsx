@@ -1,26 +1,36 @@
 import { getDate, isSameMonth, isToday } from 'date-fns'
-import { cl } from '&/common/utils'
-import type { Routine } from '&/modules/routine/types'
-import { RoutineLargeItem } from './routine-item'
-import { DotItem } from './dot-item'
-import { ScheduleType } from '&/common/types'
+
+import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { getDailyScheduledRoutines } from '../utils/get-scheduled-routines'
+import { cl } from '&/common/utils'
+
+import type { Routine } from '&/modules/routine/types'
+import type { Task } from '&/modules/task/types'
+
+import { mergeTaskAndRoutines } from '../utils/'
+import { PlaningItem } from './planing-item'
+import { DotItem } from './dot-item'
 
 interface Props {
   days: Date[]
   dailyRoutines: Routine[]
+  dailyTasks: Task[]
   today: Date
   onSelect: ({ type, date }: { type: ScheduleType; date: Date }) => void
 }
 
-export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props) {
+export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTasks }: Props) {
   return (
     <div className="flex w-full flex-1  bg-gray-200 text-xs text-gray-700">
       {/* large screen */}
       <div className="hidden w-full lg:grid lg:grid-cols-7 lg:gap-px">
         {days.map((day) => {
-          const routines = getDailyScheduledRoutines({ date: day, routines: dailyRoutines })
+          const items = mergeTaskAndRoutines({
+            routines: dailyRoutines,
+            tasks: dailyTasks,
+            date: day,
+            type: SCHEDULE_TYPES.daily,
+          })
           return (
             <div
               key={day.toString()}
@@ -40,17 +50,11 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props)
               </time>
 
               <ol className="mb-2 mt-2 flex flex-col gap-y-1">
-                {routines.slice(0, 5).map((routine) => (
-                  <RoutineLargeItem
-                    key={routine.id}
-                    name={routine.name}
-                    id={routine.id}
-                    color={routine.category?.color}
-                    date={day}
-                  />
+                {items.slice(0, 5).map((item) => (
+                  <PlaningItem key={item.id} name={item.name} id={item.id} color={item.category?.color} date={day} />
                 ))}
               </ol>
-              {routines.length > 5 && (
+              {items.length > 5 && (
                 <button
                   onClick={() => onSelect({ type: SCHEDULE_TYPES.daily, date: day })}
                   className="mt-2 w-full rounded-sm border text-gray-500 transition-colors hover:text-gray-700"
@@ -66,7 +70,12 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props)
       {/* small screen */}
       <div className="isolate grid w-full grid-cols-7 gap-px lg:hidden">
         {days.map((day) => {
-          const routines = getDailyScheduledRoutines({ date: day, routines: dailyRoutines })
+          const items = mergeTaskAndRoutines({
+            routines: dailyRoutines,
+            tasks: dailyTasks,
+            date: day,
+            type: SCHEDULE_TYPES.daily,
+          })
           return (
             <button
               key={day.toString()}
@@ -80,11 +89,11 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect }: Props)
               <time dateTime={day.toString()} className={cl('mb-2 ml-auto')}>
                 {getDate(day)}
               </time>
-              <span className="sr-only">{routines.length} events</span>
-              {routines.length > 0 && (
+              <span className="sr-only">{items.length} events</span>
+              {items.length > 0 && (
                 <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
-                  {routines.map((routine) => (
-                    <DotItem key={routine.id} color={routine.category?.color} />
+                  {items.map((item) => (
+                    <DotItem key={item.id} color={item.category?.color} />
                   ))}
                 </span>
               )}
