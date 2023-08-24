@@ -51,7 +51,7 @@ export function CreateRoutineModale({ isOpen, close }: Props) {
         monthlyRecurrence={monthlyRecurrence}
         weeklyRecurrence={weeklyRecurrence}
       />
-      <Occurrence occurrence={occurrence} handleOccurrenceChange={handleOccurrenceChange} type={currentType} />
+      <Occurrence occurrence={occurrence} handleOccurrenceChange={handleOccurrenceChange} scheduleType={currentType} />
       <ModaleCategorySelector category={category} onSelect={onSelectCategory} />
       <ModalePrioritySelector priority={priority} onSelect={onSelectPriority} />
     </CreateItemModale>

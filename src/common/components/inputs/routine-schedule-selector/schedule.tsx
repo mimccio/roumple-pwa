@@ -39,21 +39,21 @@ export function RoutineScheduleSelector({
           handleRecurrenceChange={handleRecurrenceChange}
           period={currentPeriod}
           recurrence={dailyRecurrence}
-          type={currentType}
+          scheduleType={currentType}
         />
         <Weekly
           handlePeriodChange={handlePeriodChange}
           handleRecurrenceChange={handleRecurrenceChange}
           period={currentPeriod}
           recurrence={weeklyRecurrence}
-          type={currentType}
+          scheduleType={currentType}
         />
         <Monthly
           handlePeriodChange={handlePeriodChange}
           handleRecurrenceChange={handleRecurrenceChange}
           period={currentPeriod}
           recurrence={monthlyRecurrence}
-          type={currentType}
+          scheduleType={currentType}
         />
       </div>
     </div>

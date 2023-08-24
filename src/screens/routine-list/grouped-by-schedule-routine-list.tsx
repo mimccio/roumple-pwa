@@ -13,7 +13,7 @@ interface Props {
 
 export function GroupedByScheduleRoutineList({ list = [] }: Props) {
   const { t } = useTranslation('schedule')
-  const items = Object.entries(groupBy(list, 'type')).sort((a, b) => {
+  const items = Object.entries(groupBy(list, 'scheduleType')).sort((a, b) => {
     if (a[0] === SCHEDULE_TYPES.daily) return -1
     if (a[0] === SCHEDULE_TYPES.weekly && b[0] === SCHEDULE_TYPES.daily) return 1
     if (a[0] === SCHEDULE_TYPES.weekly && b[0] === SCHEDULE_TYPES.monthly) return -1
@@ -21,10 +21,10 @@ export function GroupedByScheduleRoutineList({ list = [] }: Props) {
     return 1
   })
 
-  const getTypeColor = (type: string) => {
+  const getTypeColor = (scheduleType: string) => {
     let color = 'indigo' as 'indigo' | 'sky' | 'purple'
-    if (type === SCHEDULE_TYPES.weekly) color = 'sky'
-    if (type === SCHEDULE_TYPES.monthly) color = 'purple'
+    if (scheduleType === SCHEDULE_TYPES.weekly) color = 'sky'
+    if (scheduleType === SCHEDULE_TYPES.monthly) color = 'purple'
     return color
   }
 

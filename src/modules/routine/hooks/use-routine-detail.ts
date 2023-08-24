@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
-import { isSameDay, startOfToday } from 'date-fns'
+import { useLocation, useParams } from 'react-router-dom'
+import { compareAsc, isSameDay, startOfToday } from 'date-fns'
 
 import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { fetchRoutineById, fetchRoutineAction } from '../queries'
@@ -10,7 +10,16 @@ import { Routine } from '../types'
 export function useRoutineDetail() {
   const { routineId } = useParams()
   const queryClient = useQueryClient()
-  const [date, setDate] = useState(startOfToday())
+  const location = useLocation()
+
+  const getSelectedDate = () => {
+    const today = startOfToday()
+    if (!location.state?.date) return today
+    if (compareAsc(location.state.date, today) <= 0) return location.state.date
+    return today
+  }
+
+  const [date, setDate] = useState(getSelectedDate())
 
   const getBoardAction = () => {
     let boardAction
@@ -34,7 +43,7 @@ export function useRoutineDetail() {
     },
   })
 
-  const scheduleType = routineQuery.data?.type
+  const scheduleType = routineQuery.data?.scheduleType
 
   const actionQuery = useQuery(ACTION_KEYS.detail({ routineId, date, scheduleType }), fetchRoutineAction, {
     enabled: Boolean(scheduleType),

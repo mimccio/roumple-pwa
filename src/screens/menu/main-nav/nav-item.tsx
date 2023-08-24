@@ -24,7 +24,9 @@ export function NavItem({ to, name, Icon, close }: Props) {
       {({ isActive }) => (
         <>
           <Icon width={20} className={cl(isActive ? 'text-gray-500' : 'text-gray-400')} />
-          <span className={cl(isActive ? 'font-bold text-gray-700' : 'font-semibold text-gray-600')}>{name}</span>
+          <span className={cl('capitalize', isActive ? 'font-bold text-gray-700' : 'font-semibold  text-gray-600')}>
+            {name}
+          </span>
         </>
       )}
     </NavLink>

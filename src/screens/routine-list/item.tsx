@@ -18,7 +18,7 @@ export function Item({ routine }: Props) {
     return 'text-gray-400'
   }
 
-  const typeColor = getScheduleTypeColor(routine.type)
+  const typeColor = getScheduleTypeColor(routine.scheduleType)
 
   return (
     <NavLink
@@ -45,7 +45,7 @@ export function Item({ routine }: Props) {
           >
             <p className="truncate font-semibold text-gray-700">{routine.name}</p>
             <div className="flex gap-2 text-xs font-semibold text-gray-500">
-              <p className={`lowercase opacity-75 ${typeColor}`}>{t(routine.type.toLocaleLowerCase())}</p>
+              <p className={`lowercase opacity-75 ${typeColor}`}>{t(routine.scheduleType.toLocaleLowerCase())}</p>
               <p>{routine.category?.name && routine.category.name}</p>
             </div>
           </div>

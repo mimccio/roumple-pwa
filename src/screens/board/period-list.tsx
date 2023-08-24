@@ -12,24 +12,24 @@ import { RoutineActionListItem } from './components'
 
 interface Props {
   list?: (Routine | Task)[]
-  type: ScheduleType
+  scheduleType: ScheduleType
   handleUpdateStatus: ({ routine, action, status }: UpdateStatusParams) => void
 }
 
-export function PeriodList({ type, list = [], handleUpdateStatus }: Props) {
+export function PeriodList({ scheduleType, list = [], handleUpdateStatus }: Props) {
   const { getPeriodText } = usePeriodText()
 
   const items = Object.entries(groupBy(list, 'period'))
 
   let color = 'indigo' as 'indigo' | 'sky' | 'purple'
-  if (type === SCHEDULE_TYPES.weekly) color = 'sky'
-  if (type === SCHEDULE_TYPES.monthly) color = 'purple'
+  if (scheduleType === SCHEDULE_TYPES.weekly) color = 'sky'
+  if (scheduleType === SCHEDULE_TYPES.monthly) color = 'purple'
 
   return (
     <div className="flex flex-col gap-8">
       {items.map((group) => (
         <div key={group[0]}>
-          <Disclosure color={color} title={getPeriodText({ type, period: Number(group[0]) })}>
+          <Disclosure color={color} title={getPeriodText({ scheduleType, period: Number(group[0]) })}>
             {group[1].map((item) => {
               if (Object.prototype.hasOwnProperty.call(item, 'status')) {
                 return <TaskListItem key={item.id} task={item as Task} />

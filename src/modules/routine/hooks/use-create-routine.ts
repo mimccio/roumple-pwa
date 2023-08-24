@@ -32,7 +32,7 @@ export function useCreateRoutine() {
   const date = startOfToday()
 
   const listKey = ROUTINE_KEYS.list({ archived: false })
-  const boardKey = ROUTINE_KEYS.board({ type: SCHEDULE_TYPES.daily, date })
+  const boardKey = ROUTINE_KEYS.board({ scheduleType: SCHEDULE_TYPES.daily, date })
   const { mutate } = useMutation(createRoutine, {
     onMutate: async (data) => {
       // ✖️ Cancel related queries
@@ -81,7 +81,7 @@ export function useCreateRoutine() {
       name,
       archived: false,
       priority,
-      type: currentType,
+      scheduleType: currentType,
       daily_recurrence: dailyRecurrence,
       period: currentPeriod,
       weekly_recurrence: weeklyRecurrence,

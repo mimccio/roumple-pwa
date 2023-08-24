@@ -9,7 +9,7 @@ import { MonthCircle } from './month-circle'
 import { SCHEDULE_TYPES } from '&/common/constants'
 
 interface Props {
-  type: ScheduleType
+  scheduleType: ScheduleType
   recurrence: number[]
   period: number
   handlePeriodChange: ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => void
@@ -24,9 +24,9 @@ interface Props {
 
 const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 
-export function Monthly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
+export function Monthly({ recurrence, period, handlePeriodChange, scheduleType, handleRecurrenceChange }: Props) {
   const { t } = useTranslation('schedule')
-  const isSelected = type === SCHEDULE_TYPES.monthly
+  const isSelected = scheduleType === SCHEDULE_TYPES.monthly
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
     handlePeriodChange({ scheduleType: SCHEDULE_TYPES.monthly, period: Number(evt.currentTarget.value) })
@@ -62,7 +62,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             checked={isSelected && period === 1}
             handleChange={onPeriodChange}
             id="start"
-            type={SCHEDULE_TYPES.monthly}
+            scheduleType={SCHEDULE_TYPES.monthly}
             value={1}
           >
             {t('period.month.start')}
@@ -71,7 +71,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             checked={isSelected && (period === 2 || period === 0)}
             handleChange={onPeriodChange}
             id="month"
-            type={SCHEDULE_TYPES.monthly}
+            scheduleType={SCHEDULE_TYPES.monthly}
             value={2}
           >
             {t('period.month.duringMonth')}
@@ -80,7 +80,7 @@ export function Monthly({ recurrence, period, handlePeriodChange, type, handleRe
             checked={isSelected && period === 3}
             handleChange={onPeriodChange}
             id="end"
-            type={SCHEDULE_TYPES.monthly}
+            scheduleType={SCHEDULE_TYPES.monthly}
             value={3}
           >
             {t('period.month.end')}

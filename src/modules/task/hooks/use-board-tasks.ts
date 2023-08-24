@@ -10,15 +10,15 @@ import { filterTasks } from '../utils'
 import { fetchBoardTasks } from '../queries'
 
 interface Params {
-  type: ScheduleType
+  scheduleType: ScheduleType
   showDone: boolean
 }
 
-export function useBoardTasks({ type, showDone }: Params) {
+export function useBoardTasks({ scheduleType, showDone }: Params) {
   const queryClient = useQueryClient()
   const date = startOfToday()
   const [category] = useAtom(categoryAtom)
-  const { data, isLoading, error, isPaused } = useQuery(TASK_KEYS.board({ type, date }), fetchBoardTasks)
+  const { data, isLoading, error, isPaused } = useQuery(TASK_KEYS.board({ scheduleType, date }), fetchBoardTasks)
 
   queryClient.removeQueries({
     queryKey: TASK_KEYS.boards(),

@@ -35,7 +35,7 @@ export function WeekCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 1}
             handleChange={handlePeriodChange}
             id="week"
-            type={SCHEDULE_TYPES.weekly}
+            scheduleType={SCHEDULE_TYPES.weekly}
             value={1}
           >
             {t('period.week.duringWeek')}
@@ -44,7 +44,7 @@ export function WeekCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 2}
             handleChange={handlePeriodChange}
             id="weekend"
-            type={SCHEDULE_TYPES.weekly}
+            scheduleType={SCHEDULE_TYPES.weekly}
             value={2}
           >
             {t('period.week.weekend')}

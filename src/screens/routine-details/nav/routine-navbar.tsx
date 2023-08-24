@@ -44,7 +44,7 @@ export function RoutineNavbar({ routine, isLoading, date, handleDateChange }: Pr
               isArchived={routine?.archived}
               onEditOccurrence={() => setEditOccurrenceIsOpen(true)}
             />
-            <SelectDateBtn date={date} handleDateChange={handleDateChange} scheduleType={routine.type} />
+            <SelectDateBtn date={date} handleDateChange={handleDateChange} scheduleType={routine.scheduleType} />
             <ActivityBtn />
           </>
         )}

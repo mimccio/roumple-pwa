@@ -12,12 +12,12 @@ import { EmptyDone } from './empty-done'
 import { PeriodList } from './period-list'
 import { ListItem } from './components/list-item'
 
-const type = SCHEDULE_TYPES.daily
+const scheduleType = SCHEDULE_TYPES.daily
 
 export function Today() {
   const { t } = useTranslation('schedule')
   const { showStatus, list, handleShowDone, showDone, showPeriod, handleShowPeriod, handleUpdateRoutineStatus } =
-    useBoardList({ type })
+    useBoardList({ scheduleType })
 
   return (
     <>
@@ -27,7 +27,7 @@ export function Today() {
         showDone={showDone}
         showPeriod={showPeriod}
         title={<h1 className="text-indigo-700">{t('today')}</h1>}
-        type={type}
+        scheduleType={scheduleType}
       />
       <ContentLayout>
         {showStatus.error && <MainError />}
@@ -43,7 +43,7 @@ export function Today() {
               <ListItem key={item.id} item={item} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
             ))}
           {showStatus.data && showPeriod && (
-            <PeriodList type={type} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
+            <PeriodList scheduleType={scheduleType} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
           )}
         </div>
       </ContentLayout>

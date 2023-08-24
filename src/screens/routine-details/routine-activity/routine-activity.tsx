@@ -32,7 +32,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
     return (
       <div className="p-2">
         <h4 className="mb-4 p-4 text-center font-bold text-gray-500">{t('activity')}</h4>
-        {routine.type === SCHEDULE_TYPES.daily && (
+        {routine.scheduleType === SCHEDULE_TYPES.daily && (
           <DayActivity
             url={url}
             actions={actions}
@@ -42,7 +42,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           />
         )}
 
-        {routine.type === SCHEDULE_TYPES.weekly && (
+        {routine.scheduleType === SCHEDULE_TYPES.weekly && (
           <WeekActivity
             url={url}
             actions={actions}
@@ -52,7 +52,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           />
         )}
 
-        {routine.type === SCHEDULE_TYPES.monthly && (
+        {routine.scheduleType === SCHEDULE_TYPES.monthly && (
           <MonthActivity
             url={url}
             actions={actions}

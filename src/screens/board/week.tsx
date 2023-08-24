@@ -12,12 +12,12 @@ import { PeriodList } from './period-list'
 import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
 
-const type = SCHEDULE_TYPES.weekly
+const scheduleType = SCHEDULE_TYPES.weekly
 
 export function Week() {
   const { t } = useTranslation('schedule')
   const { showStatus, list, handleShowDone, showDone, showPeriod, handleShowPeriod, handleUpdateRoutineStatus } =
-    useBoardList({ type })
+    useBoardList({ scheduleType })
 
   return (
     <>
@@ -27,7 +27,7 @@ export function Week() {
         showDone={showDone}
         showPeriod={showPeriod}
         title={<h1 className="text-sky-700">{t('thisWeek')}</h1>}
-        type={type}
+        scheduleType={scheduleType}
       />
       <ContentLayout>
         {showStatus.error && <MainError />}
@@ -43,7 +43,7 @@ export function Week() {
               <ListItem key={item.id} item={item} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
             ))}
           {showStatus.data && showPeriod && (
-            <PeriodList type={type} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
+            <PeriodList scheduleType={scheduleType} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
           )}
         </div>
       </ContentLayout>

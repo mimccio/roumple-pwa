@@ -20,9 +20,9 @@ interface Props {
 export function RoutineSchedule({ routine, date }: Props) {
   const { t } = useTranslation(['common', 'action', 'schedule'])
   const { getPeriodText } = usePeriodText()
-  const periodText = getPeriodText({ type: routine.type, period: routine.period })
-  const scheduleColor = getScheduleTypeColor(routine.type)
-  const isScheduledColor = getScheduleTypeLightColor(routine.type)
+  const periodText = getPeriodText({ scheduleType: routine.scheduleType, period: routine.period })
+  const scheduleColor = getScheduleTypeColor(routine.scheduleType)
+  const isScheduledColor = getScheduleTypeLightColor(routine.scheduleType)
   const isScheduled = getIsScheduled({ routine, date })
   const {
     dailyRecurrence,
@@ -36,8 +36,8 @@ export function RoutineSchedule({ routine, date }: Props) {
   } = useSchedule({ routine, date })
 
   const getIsScheduledText = () => {
-    if (routine.type === SCHEDULE_TYPES.monthly) return t('thisMonth', { ns: 'schedule' })
-    if (routine.type === SCHEDULE_TYPES.weekly) return t('thisWeek', { ns: 'schedule' })
+    if (routine.scheduleType === SCHEDULE_TYPES.monthly) return t('thisMonth', { ns: 'schedule' })
+    if (routine.scheduleType === SCHEDULE_TYPES.weekly) return t('thisWeek', { ns: 'schedule' })
     return t('today', { ns: 'schedule' })
   }
   const scheduledText = getIsScheduledText()

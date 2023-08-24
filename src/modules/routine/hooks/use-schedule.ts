@@ -16,20 +16,20 @@ interface Params {
 
 export function useSchedule({ routine, date }: Params) {
   const queryClient = useQueryClient()
-  const [currentType, setType] = useState(routine.type)
+  const [currentType, setType] = useState(routine.scheduleType)
   const [currentPeriod, setPeriod] = useState(routine.period)
   const [dailyRecurrence, setDailyRecurrence] = useState(routine.daily_recurrence)
   const [weeklyRecurrence, setWeeklyRecurrence] = useState(routine.weekly_recurrence)
   const [monthlyRecurrence, setMonthlyRecurrence] = useState(routine.monthly_recurrence)
 
   useEffect(() => {
-    setType(routine.type)
+    setType(routine.scheduleType)
     setDailyRecurrence(routine.daily_recurrence)
     setWeeklyRecurrence(routine.weekly_recurrence)
     setMonthlyRecurrence(routine.monthly_recurrence)
   }, [routine])
 
-  const boardPrevTypeKey = ROUTINE_KEYS.board({ type: routine.type, date })
+  const boardPrevTypeKey = ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date })
   const { mutate } = useMutation(editRoutineSchedule, {
     onMutate: async (data) => {
       // ✖️ Cancel related queries
@@ -49,12 +49,12 @@ export function useSchedule({ routine, date }: Params) {
 
       // 🏫 Update Routine Board
       const isScheduled = getIsScheduled({ routine: data, date })
-      const boardNewTypeKey = ROUTINE_KEYS.board({ type: data.type, date })
+      const boardNewTypeKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
       const previousBoardPrevType = queryClient.getQueryData(boardPrevTypeKey)
       const previousNewPrevType = queryClient.getQueryData(boardNewTypeKey)
 
       // Type stays the same
-      if (data.type === routine.type && !data.archived) {
+      if (data.scheduleType === routine.scheduleType && !data.archived) {
         queryClient.setQueryData(boardNewTypeKey, (old: Routine[] = []) => {
           const i = old.findIndex((item) => item.id === data.id)
 
@@ -65,8 +65,8 @@ export function useSchedule({ routine, date }: Params) {
         })
       }
 
-      // New type
-      if (data.type !== routine.type && !data.archived) {
+      // New scheduleType
+      if (data.scheduleType !== routine.scheduleType && !data.archived) {
         queryClient.setQueryData(boardPrevTypeKey, (old: Routine[] = []) => {
           const i = old.findIndex((item) => item.id === data.id)
           return [...old.slice(0, i), ...old.slice(i + 1)]
@@ -84,14 +84,17 @@ export function useSchedule({ routine, date }: Params) {
       queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), routine)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
       queryClient.setQueryData(boardPrevTypeKey, context?.previousBoardPrevType)
-      queryClient.setQueryData(ROUTINE_KEYS.board({ type: item.type, date }), context?.previousNewPrevType)
+      queryClient.setQueryData(
+        ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
+        context?.previousNewPrevType
+      )
       toast.error("Schedule modification didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
       queryClient.invalidateQueries(boardPrevTypeKey)
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ type: variables.type, date }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
     },
   })
 
@@ -157,7 +160,7 @@ export function useSchedule({ routine, date }: Params) {
     mutate({
       ...routine,
       daily_recurrence: dailyRecurrence,
-      type: currentType,
+      scheduleType: currentType,
       period: currentPeriod,
       weekly_recurrence: weeklyRecurrence,
       monthly_recurrence: monthlyRecurrence,

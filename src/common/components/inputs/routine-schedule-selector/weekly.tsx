@@ -9,7 +9,7 @@ import { PeriodItem } from './period-item'
 import { WeekRecurrence } from './week-recurrence'
 
 interface Props {
-  type: ScheduleType
+  scheduleType: ScheduleType
   recurrence: number[]
   period: number
   handlePeriodChange: ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => void
@@ -22,9 +22,9 @@ interface Props {
   }) => void
 }
 
-export function Weekly({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
+export function Weekly({ recurrence, period, handlePeriodChange, scheduleType, handleRecurrenceChange }: Props) {
   const { t } = useTranslation('schedule')
-  const isSelected = type === SCHEDULE_TYPES.weekly
+  const isSelected = scheduleType === SCHEDULE_TYPES.weekly
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
     handlePeriodChange({ scheduleType: SCHEDULE_TYPES.weekly, period: Number(evt.currentTarget.value) })
@@ -66,7 +66,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             checked={isSelected && period === 1}
             handleChange={onPeriodChange}
             id="week"
-            type={SCHEDULE_TYPES.weekly}
+            scheduleType={SCHEDULE_TYPES.weekly}
             value={1}
           >
             {t('period.week.duringWeek')}
@@ -75,7 +75,7 @@ export function Weekly({ recurrence, period, handlePeriodChange, type, handleRec
             checked={isSelected && period === 2}
             handleChange={onPeriodChange}
             id="weekend"
-            type={SCHEDULE_TYPES.weekly}
+            scheduleType={SCHEDULE_TYPES.weekly}
             value={2}
           >
             {t('period.week.weekend')}

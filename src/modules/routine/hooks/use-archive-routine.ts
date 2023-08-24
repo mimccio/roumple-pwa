@@ -36,8 +36,10 @@ export function useArchiveRoutine() {
       })
 
       // 🏫 Update Bard list
-      const previousBoardRoutineList = queryClient.getQueryData(ROUTINE_KEYS.board({ date, type: data.type }))
-      queryClient.setQueryData(ROUTINE_KEYS.board({ date, type: data.type }), (old: Routine[] = []) => {
+      const previousBoardRoutineList = queryClient.getQueryData(
+        ROUTINE_KEYS.board({ date, scheduleType: data.scheduleType })
+      )
+      queryClient.setQueryData(ROUTINE_KEYS.board({ date, scheduleType: data.scheduleType }), (old: Routine[] = []) => {
         if (data.archived) {
           const routineIndex = old.findIndex((item) => item.id === data.id)
           return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
@@ -52,7 +54,10 @@ export function useArchiveRoutine() {
       queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: false }), context?.previousRoutineList)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: true }), context?.previousArchivedRoutineList)
-      queryClient.setQueryData(ROUTINE_KEYS.board({ date, type: item.type }), context?.previousBoardRoutineList)
+      queryClient.setQueryData(
+        ROUTINE_KEYS.board({ date, scheduleType: item.scheduleType }),
+        context?.previousBoardRoutineList
+      )
       toast.error("Archive didn't work")
     },
 
@@ -60,7 +65,7 @@ export function useArchiveRoutine() {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: false }))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: true }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ date, type: variables.type }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ date, scheduleType: variables.scheduleType }))
     },
   })
 

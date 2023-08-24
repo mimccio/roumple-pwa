@@ -14,9 +14,9 @@ import { DATE_FORMAT, MONTH_DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constan
 import type { Routine } from '../types'
 
 export const getIsScheduled = ({ routine, date }: { routine: Routine; date: Date }) => {
-  if (routine.type === SCHEDULE_TYPES.daily) return routine.daily_recurrence.includes(getDay(date))
-  if (routine.type === SCHEDULE_TYPES.weekly) return routine.weekly_recurrence.includes(getWeek(date) % 2)
-  if (routine.type === SCHEDULE_TYPES.monthly) return routine.monthly_recurrence.includes(getMonth(date))
+  if (routine.scheduleType === SCHEDULE_TYPES.daily) return routine.daily_recurrence.includes(getDay(date))
+  if (routine.scheduleType === SCHEDULE_TYPES.weekly) return routine.weekly_recurrence.includes(getWeek(date) % 2)
+  if (routine.scheduleType === SCHEDULE_TYPES.monthly) return routine.monthly_recurrence.includes(getMonth(date))
 }
 
 export const getIsCurrentDate = ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => {

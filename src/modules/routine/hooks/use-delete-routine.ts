@@ -29,8 +29,10 @@ export function useDeleteRoutine() {
       })
 
       // 🏫 Update Routine Board
-      const previousBoardRoutines = queryClient.getQueryData(ROUTINE_KEYS.board({ type: data.type, date }))
-      queryClient.setQueryData(ROUTINE_KEYS.board({ type: data.type, date }), (old: Routine[] = []) => {
+      const previousBoardRoutines = queryClient.getQueryData(
+        ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
+      )
+      queryClient.setQueryData(ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date }), (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
       })
@@ -42,13 +44,16 @@ export function useDeleteRoutine() {
     onError: (_err, item, context) => {
       queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
-      queryClient.setQueryData(ROUTINE_KEYS.board({ type: item.type, date }), context?.previousBoardRoutines)
+      queryClient.setQueryData(
+        ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
+        context?.previousBoardRoutines
+      )
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ type: variables.type, date }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
     },
   })
 

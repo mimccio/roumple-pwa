@@ -15,13 +15,13 @@ interface Props {
 export function RoutineStatusSelector({ routine, date: dayDate, action, isLoading }: Props) {
   const getDate = () => {
     let date = dayDate
-    if (routine.type === SCHEDULE_TYPES.monthly) date = startOfMonth(date)
-    if (routine.type === SCHEDULE_TYPES.weekly) date = startOfWeek(date, { weekStartsOn: 1 })
+    if (routine.scheduleType === SCHEDULE_TYPES.monthly) date = startOfMonth(date)
+    if (routine.scheduleType === SCHEDULE_TYPES.weekly) date = startOfWeek(date, { weekStartsOn: 1 })
     return date
   }
   const date = getDate()
 
-  const { handleUpdateStatus } = useUpsertAction({ type: routine.type, date })
+  const { handleUpdateStatus } = useUpsertAction({ scheduleType: routine.scheduleType, date })
   const handleSelectStatus = (status: Status) => handleUpdateStatus({ routine, status, action })
   const showCheck = routine.occurrence <= 1 || routine.occurrence - (action?.doneOccurrence || 0) <= 1
 

@@ -10,17 +10,17 @@ import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { upsertRoutineAction } from '../mutations'
 
 interface Params {
-  type: ScheduleType
+  scheduleType: ScheduleType
   date: Date
 }
 
-export function useUpsertAction({ type, date }: Params) {
+export function useUpsertAction({ scheduleType, date }: Params) {
   const queryClient = useQueryClient()
-  const boardKey = ROUTINE_KEYS.board({ type, date })
+  const boardKey = ROUTINE_KEYS.board({ scheduleType, date })
 
   const { mutate } = useMutation(upsertRoutineAction, {
     onMutate: async (data) => {
-      const actionKey = ACTION_KEYS.detail({ routineId: data.routine.id, scheduleType: type, date })
+      const actionKey = ACTION_KEYS.detail({ routineId: data.routine.id, scheduleType: scheduleType, date })
 
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: actionKey })
@@ -34,7 +34,7 @@ export function useUpsertAction({ type, date }: Params) {
         status: data.status,
         doneOccurrence: data.doneOccurrence,
         checkedList: data.checkedList,
-        scheduleType: data.routine.type,
+        scheduleType: data.routine.scheduleType,
       }
 
       // ⛳ Update Action item
@@ -67,7 +67,7 @@ export function useUpsertAction({ type, date }: Params) {
       queryClient.setQueryData(boardKey, context?.previousList)
       queryClient.setQueryData(ACTION_KEYS.list(item.routine.id), context?.previousActionList)
       queryClient.setQueryData(
-        ACTION_KEYS.detail({ routineId: item.routine.id, scheduleType: type, date }),
+        ACTION_KEYS.detail({ routineId: item.routine.id, scheduleType: scheduleType, date }),
         context?.previousAction
       )
 
@@ -78,7 +78,7 @@ export function useUpsertAction({ type, date }: Params) {
       queryClient.invalidateQueries({ queryKey: boardKey })
       queryClient.invalidateQueries({ queryKey: ACTION_KEYS.list(variables.routine.id) })
       queryClient.invalidateQueries({
-        queryKey: ACTION_KEYS.detail({ routineId: variables.routine.id, scheduleType: type, date }),
+        queryKey: ACTION_KEYS.detail({ routineId: variables.routine.id, scheduleType: scheduleType, date }),
       })
     },
   })

@@ -43,7 +43,7 @@ export function useTaskSchedule(task: Task) {
       })
 
       // Update previous Board list
-      const prevBoardKey = TASK_KEYS.board({ type: task.scheduleType, date: todayDate })
+      const prevBoardKey = TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate })
       const prevPreviousBoardList = queryClient.getQueryData(prevBoardKey)
       queryClient.setQueryData(prevBoardKey, (old: Task[] = []) => {
         const i = old.findIndex((item) => item.id === data.id)
@@ -51,7 +51,7 @@ export function useTaskSchedule(task: Task) {
       })
 
       // Update new Board list
-      const newBoardKey = TASK_KEYS.board({ type: data.scheduleType, date: todayDate })
+      const newBoardKey = TASK_KEYS.board({ scheduleType: data.scheduleType, date: todayDate })
       const prevNewBoardList = queryClient.getQueryData(newBoardKey)
       queryClient.setQueryData(newBoardKey, (old: Task[] = []) => [...old, data])
 
@@ -62,17 +62,20 @@ export function useTaskSchedule(task: Task) {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(
-        TASK_KEYS.board({ type: task.scheduleType, date: todayDate }),
+        TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate }),
         context?.prevPreviousBoardList
       )
-      queryClient.setQueryData(TASK_KEYS.board({ type: item.scheduleType, date: todayDate }), context?.prevNewBoardList)
+      queryClient.setQueryData(
+        TASK_KEYS.board({ scheduleType: item.scheduleType, date: todayDate }),
+        context?.prevNewBoardList
+      )
       toast.error("Modification didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
       queryClient.invalidateQueries(TASK_KEYS.list({ done: variables.status === STATUSES.done }))
-      queryClient.invalidateQueries(TASK_KEYS.board({ type: variables.scheduleType, date: todayDate }))
-      queryClient.invalidateQueries(TASK_KEYS.board({ type: task.scheduleType, date: todayDate }))
+      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: variables.scheduleType, date: todayDate }))
+      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate }))
     },
   })
 

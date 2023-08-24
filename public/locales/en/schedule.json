@@ -39,7 +39,7 @@
   "notScheduledFor": "Not scheduled for",
   "createdOn": "created on",
 
-  "days": { "1": "m", "2": "t", "3": "w", "4": "t", "5": "f", "6": "s", "7": "s" },
+  "days": { "1": "mon", "2": "tue", "3": "wed", "4": "thu", "5": "fri", "6": "sat", "7": "sun" },
 
   "odd": "odd",
   "even": "even"

@@ -23,7 +23,7 @@ export interface Routine {
   daily_recurrence: number[]
   weekly_recurrence: number[]
   monthly_recurrence: number[]
-  type: ScheduleType
+  scheduleType: ScheduleType
   category_id?: string | null
   category: Category | null
   checklist?: RoutineChecklistItem[]

@@ -15,14 +15,14 @@ interface Props {
   showDone: boolean
   showPeriod: boolean
   handleDoneChange: () => void
-  type: ScheduleType
+  scheduleType: ScheduleType
   handleShowPeriod: () => void
 }
 
-export function Header({ title, showDone, handleDoneChange, showPeriod, type, handleShowPeriod }: Props) {
+export function Header({ title, showDone, handleDoneChange, showPeriod, scheduleType, handleShowPeriod }: Props) {
   const [category, setCategory] = useAtom(categoryAtom)
-  const periodColor = getPeriodColor(type)
-  const hoverPeriodColor = getGroupHoverPeriodColor(type)
+  const periodColor = getPeriodColor(scheduleType)
+  const hoverPeriodColor = getGroupHoverPeriodColor(scheduleType)
 
   return (
     <header

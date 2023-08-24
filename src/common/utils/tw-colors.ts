@@ -1,5 +1,3 @@
-// TODO?: use import colors from 'tailwindcss/colors'
-
 import {
   TW_COLOR_BG_100,
   TW_COLOR_BG_400,
@@ -61,7 +59,7 @@ const getTwTextColor = (nuance: Nuance, color: TwColor) => {
   return getTextTwColors(nuance)?.[color]
 }
 
-const getTwBgColor = (nuance: Nuance, color: TwColor) => {
+export const getTwBgColor = (nuance: Nuance, color: TwColor) => {
   return getBgTwColors(nuance)?.[color]
 }
 

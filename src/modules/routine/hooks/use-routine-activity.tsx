@@ -6,7 +6,7 @@ import { Routine } from '../types'
 export function useRoutineActivity(routine: Routine) {
   const { data, isLoading, isError, isPaused } = useQuery({
     queryKey: ACTION_KEYS.list(routine.id),
-    queryFn: ({ queryKey }) => fetchActionList(queryKey[2], routine.type),
+    queryFn: ({ queryKey }) => fetchActionList(queryKey[2], routine.scheduleType),
   })
 
   return { actions: data, isLoading, isError, isPaused }
