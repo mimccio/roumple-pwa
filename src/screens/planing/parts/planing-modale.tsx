@@ -43,7 +43,7 @@ export function PlaningModale({ scheduleType, date, onClose, routines, tasks }: 
           routines,
           tasks,
           date,
-          type: scheduleType,
+          scheduleType: scheduleType,
         })
       : []
 

@@ -22,21 +22,22 @@ export function PlaningScreen() {
   const { routineList, showStatus: routineStatus } = useRoutineList()
   const { taskList, showStatus: taskStatus } = useTaskList()
 
-  const [selected, setSelected] = useState<{ date: Date; type: ScheduleType }>()
+  const [selected, setSelected] = useState<{ date: Date; scheduleType: ScheduleType }>()
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth, onThisMonth, today } = useCalendar()
 
   if (routineStatus.error || taskStatus.error) return <MainError />
   if (routineStatus.offline || taskStatus.offline) return <OfflineError />
 
-  const onSelect = ({ type, date }: { type: ScheduleType; date: Date }) => setSelected({ type, date })
+  const onSelect = ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) =>
+    setSelected({ scheduleType, date })
 
   const dailyRoutines = [] as Routine[]
   const weeklyRoutines = [] as Routine[]
   const monthlyRoutines = [] as Routine[]
 
   routineList.forEach((r) => {
-    if (r.type === SCHEDULE_TYPES.weekly) weeklyRoutines.push(r)
-    if (r.type === SCHEDULE_TYPES.monthly) monthlyRoutines.push(r)
+    if (r.scheduleType === SCHEDULE_TYPES.weekly) weeklyRoutines.push(r)
+    if (r.scheduleType === SCHEDULE_TYPES.monthly) monthlyRoutines.push(r)
     dailyRoutines.push(r)
   })
 
@@ -56,16 +57,16 @@ export function PlaningScreen() {
   })
 
   const getSelectedRoutines = () => {
-    if (selected?.type === SCHEDULE_TYPES.daily) return dailyRoutines
-    if (selected?.type === SCHEDULE_TYPES.weekly) return weeklyRoutines
-    if (selected?.type === SCHEDULE_TYPES.monthly) return monthlyRoutines
+    if (selected?.scheduleType === SCHEDULE_TYPES.daily) return dailyRoutines
+    if (selected?.scheduleType === SCHEDULE_TYPES.weekly) return weeklyRoutines
+    if (selected?.scheduleType === SCHEDULE_TYPES.monthly) return monthlyRoutines
     return []
   }
 
   const getSelectedTasks = () => {
-    if (selected?.type === SCHEDULE_TYPES.daily) return dailyTasks
-    if (selected?.type === SCHEDULE_TYPES.weekly) return weeklyTasks
-    if (selected?.type === SCHEDULE_TYPES.monthly) return monthlyTasks
+    if (selected?.scheduleType === SCHEDULE_TYPES.daily) return dailyTasks
+    if (selected?.scheduleType === SCHEDULE_TYPES.weekly) return weeklyTasks
+    if (selected?.scheduleType === SCHEDULE_TYPES.monthly) return monthlyTasks
     return []
   }
 
@@ -104,7 +105,7 @@ export function PlaningScreen() {
       />
       <PlaningModale
         date={selected?.date}
-        scheduleType={selected?.type}
+        scheduleType={selected?.scheduleType}
         onClose={() => setSelected(undefined)}
         routines={getSelectedRoutines()}
         tasks={getSelectedTasks()}

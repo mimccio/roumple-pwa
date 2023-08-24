@@ -8,15 +8,15 @@ interface Props {
   children: string
   handleChange: (evt: FormEvent<HTMLInputElement>) => void
   id: string
-  type?: ScheduleType
+  scheduleType?: ScheduleType
   value: number
 }
 
-export function PeriodItem({ children, value, id, checked, handleChange, type }: Props) {
+export function PeriodItem({ children, value, id, checked, handleChange, scheduleType }: Props) {
   const getAccentColor = () => {
-    if (type === SCHEDULE_TYPES.daily) return 'accent-indigo-500'
-    if (type === SCHEDULE_TYPES.weekly) return 'accent-sky-600'
-    if (type === SCHEDULE_TYPES.monthly) return 'accent-purple-500'
+    if (scheduleType === SCHEDULE_TYPES.daily) return 'accent-indigo-500'
+    if (scheduleType === SCHEDULE_TYPES.weekly) return 'accent-sky-600'
+    if (scheduleType === SCHEDULE_TYPES.monthly) return 'accent-purple-500'
     return 'accent-gray-500'
   }
 

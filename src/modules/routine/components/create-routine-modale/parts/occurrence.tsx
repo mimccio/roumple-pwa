@@ -10,14 +10,14 @@ import { getOccurrenceBg } from '&/modules/routine/utils'
 
 interface Props {
   occurrence: number
-  type: ScheduleType
+  scheduleType: ScheduleType
   handleOccurrenceChange: (occurrence: number) => void
 }
 
-export function Occurrence({ occurrence, handleOccurrenceChange, type }: Props) {
+export function Occurrence({ occurrence, handleOccurrenceChange, scheduleType }: Props) {
   const { t } = useTranslation(['routine', 'schedule'])
-  const typeText = useOccurrenceTypeText(type)
-  const bg = getOccurrenceBg(type)
+  const typeText = useOccurrenceTypeText(scheduleType)
+  const bg = getOccurrenceBg(scheduleType)
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = Number(evt.currentTarget.value)
@@ -35,8 +35,8 @@ export function Occurrence({ occurrence, handleOccurrenceChange, type }: Props) 
   }
 
   const getTypeTextColor = () => {
-    if (type === SCHEDULE_TYPES.weekly) return 'text-sky-700'
-    if (type === SCHEDULE_TYPES.monthly) return 'text-purple-700'
+    if (scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-700'
+    if (scheduleType === SCHEDULE_TYPES.monthly) return 'text-purple-700'
     return 'text-indigo-700'
   }
 

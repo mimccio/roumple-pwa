@@ -7,20 +7,20 @@ import { useBoardTasks } from '&/modules/task/hooks'
 import { useBoardRoutines, useUpsertAction } from '&/modules/routine/hooks'
 
 interface Params {
-  type: ScheduleType
+  scheduleType: ScheduleType
 }
 
-export function useBoardList({ type }: Params) {
+export function useBoardList({ scheduleType }: Params) {
   const [showDone, setShowDone] = useState(false)
   const [showPeriod, setShowPeriod] = useState(true)
 
   const handleShowDone = () => setShowDone((prevState) => !prevState)
   const handleShowPeriod = () => setShowPeriod((prevState) => !prevState)
 
-  const { tasks, tasksShowStatus } = useBoardTasks({ type, showDone })
+  const { tasks, tasksShowStatus } = useBoardTasks({ scheduleType, showDone })
 
-  const { routines, date, routinesShowStatus } = useBoardRoutines({ type, showDone })
-  const { handleUpdateStatus } = useUpsertAction({ type, date })
+  const { routines, date, routinesShowStatus } = useBoardRoutines({ scheduleType, showDone })
+  const { handleUpdateStatus } = useUpsertAction({ scheduleType, date })
 
   const routineList = routines || []
   const taskList = tasks || []

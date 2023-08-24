@@ -44,7 +44,7 @@ export function useMutateTaskStatus(task: Task) {
       })
 
       // Update Board list
-      const boardKey = TASK_KEYS.board({ type: data.scheduleType, date })
+      const boardKey = TASK_KEYS.board({ scheduleType: data.scheduleType, date })
       const previousBoardList = queryClient.getQueryData(boardKey)
       queryClient.setQueryData(boardKey, (old: Task[] = []) => {
         const i = old.findIndex((item) => item.id === data.id)
@@ -56,13 +56,13 @@ export function useMutateTaskStatus(task: Task) {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
       queryClient.setQueryData(TASK_KEYS.list({ done: true }), context?.previousDoneTaskList)
       queryClient.setQueryData(TASK_KEYS.list({ done: false }), context?.previousNotDoneTaskList)
-      queryClient.setQueryData(TASK_KEYS.board({ type: item.scheduleType, date }), context?.previousBoardList)
+      queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousBoardList)
       toast.error("Modification didn't work")
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
       queryClient.invalidateQueries(TASK_KEYS.lists())
-      queryClient.invalidateQueries(TASK_KEYS.board({ type: variables.scheduleType, date }))
+      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: variables.scheduleType, date }))
     },
   })
 

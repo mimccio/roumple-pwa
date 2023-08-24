@@ -31,13 +31,13 @@ interface Props {
 
 export function RoutineDetails({ routine, action, date, handleDateChange, actionIsLoading, actionQuery }: Props) {
   const { t } = useTranslation('common')
-  const isCurrentDate = getIsCurrentDate({ scheduleType: routine.type, date })
+  const isCurrentDate = getIsCurrentDate({ scheduleType: routine.scheduleType, date })
 
   if (!actionQuery.data && actionQuery.isPaused && !isCurrentDate) {
     return (
       <>
         <DetailInfoSection>
-          <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.type} />
+          <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.scheduleType} />
         </DetailInfoSection>
         <OfflineError />
       </>
@@ -47,7 +47,7 @@ export function RoutineDetails({ routine, action, date, handleDateChange, action
   return (
     <>
       <DetailInfoSection>
-        <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.type} />
+        <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.scheduleType} />
         <div className="-mx-1 mb-4 mt-2 flex items-center justify-between">
           <div className="flex items-center gap-x-4">
             <RoutineStatusSelector routine={routine} action={action} date={date} isLoading={actionIsLoading} />

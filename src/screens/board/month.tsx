@@ -12,12 +12,12 @@ import { EmptyTodo } from './empty-todo'
 import { EmptyDone } from './empty-done'
 import { PeriodList } from './period-list'
 
-const type = SCHEDULE_TYPES.monthly
+const scheduleType = SCHEDULE_TYPES.monthly
 
 export function Month() {
   const { t } = useTranslation('schedule')
   const { showStatus, list, handleShowDone, showDone, showPeriod, handleShowPeriod, handleUpdateRoutineStatus } =
-    useBoardList({ type })
+    useBoardList({ scheduleType })
 
   return (
     <>
@@ -27,7 +27,7 @@ export function Month() {
         showDone={showDone}
         showPeriod={showPeriod}
         title={<h1 className="text-purple-700">{t('thisMonth')}</h1>}
-        type={type}
+        scheduleType={scheduleType}
       />
       <ContentLayout>
         {showStatus.error && <MainError />}
@@ -43,7 +43,7 @@ export function Month() {
               <ListItem key={item.id} item={item} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
             ))}
           {showStatus.data && showPeriod && (
-            <PeriodList type={type} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
+            <PeriodList scheduleType={scheduleType} list={list} handleUpdateStatus={handleUpdateRoutineStatus} />
           )}
         </div>
       </ContentLayout>

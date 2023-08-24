@@ -10,7 +10,7 @@ import { DayCircle } from './day-circle'
 import { PeriodItem } from './period-item'
 
 interface Props {
-  type: ScheduleType
+  scheduleType: ScheduleType
   recurrence: number[]
   period: number
   handlePeriodChange: ({ scheduleType, period }: { scheduleType: ScheduleType; period: number }) => void
@@ -23,9 +23,9 @@ interface Props {
   }) => void
 }
 
-export function Daily({ recurrence, period, handlePeriodChange, type, handleRecurrenceChange }: Props) {
+export function Daily({ recurrence, period, handlePeriodChange, scheduleType, handleRecurrenceChange }: Props) {
   const { t } = useTranslation('schedule')
-  const isSelected = type === SCHEDULE_TYPES.daily
+  const isSelected = scheduleType === SCHEDULE_TYPES.daily
 
   const onPeriodChange = (evt: FormEvent<HTMLInputElement>) => {
     handlePeriodChange({ scheduleType: SCHEDULE_TYPES.daily, period: Number(evt.currentTarget.value) })
@@ -100,7 +100,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && period === 1}
             handleChange={onPeriodChange}
             id="morning"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={1}
           >
             {t('period.day.morning')}
@@ -109,7 +109,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && period === 2}
             handleChange={onPeriodChange}
             id="lunch"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={2}
           >
             {t('period.day.lunchTime')}
@@ -118,7 +118,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && (period === 3 || period === 0)}
             handleChange={onPeriodChange}
             id="day"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={3}
           >
             {t('period.day.duringDay')}
@@ -127,7 +127,7 @@ export function Daily({ recurrence, period, handlePeriodChange, type, handleRecu
             checked={isSelected && period === 4}
             handleChange={onPeriodChange}
             id="evening"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={4}
           >
             {t('period.day.evening')}

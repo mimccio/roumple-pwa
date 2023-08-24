@@ -35,7 +35,7 @@ export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 1}
             handleChange={handlePeriodChange}
             id="start-of-month"
-            type={SCHEDULE_TYPES.monthly}
+            scheduleType={SCHEDULE_TYPES.monthly}
             value={1}
           >
             {t('period.month.start')}
@@ -44,7 +44,7 @@ export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 2}
             handleChange={handlePeriodChange}
             id="during-month"
-            type={SCHEDULE_TYPES.monthly}
+            scheduleType={SCHEDULE_TYPES.monthly}
             value={2}
           >
             {t('period.month.duringMonth')}
@@ -53,7 +53,7 @@ export function MonthCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 3}
             handleChange={handlePeriodChange}
             id="end-of-month"
-            type={SCHEDULE_TYPES.monthly}
+            scheduleType={SCHEDULE_TYPES.monthly}
             value={3}
           >
             {t('period.month.end')}

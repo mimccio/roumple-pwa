@@ -32,7 +32,7 @@ export function useCreateTask() {
       // Cancel list queries
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.list({ done: false }) })
       if (data.date != null && data.scheduleType != null) {
-        await queryClient.cancelQueries(TASK_KEYS.board({ type: data.scheduleType, date: data.date }))
+        await queryClient.cancelQueries(TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date }))
       }
 
       // Update item
@@ -44,11 +44,11 @@ export function useCreateTask() {
       let previousTaskBoard: Task[] = []
       if (data.date != null && data.scheduleType != null) {
         previousTaskBoard =
-          queryClient.getQueryData(TASK_KEYS.board({ type: data.scheduleType, date: data.date })) || []
-        queryClient.setQueryData(TASK_KEYS.board({ type: data.scheduleType, date: data.date }), (old: Task[] = []) => [
-          ...old,
-          data,
-        ])
+          queryClient.getQueryData(TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date })) || []
+        queryClient.setQueryData(
+          TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date }),
+          (old: Task[] = []) => [...old, data]
+        )
       }
 
       navigate(`d/task/${id}`)
@@ -59,7 +59,7 @@ export function useCreateTask() {
       queryClient.setQueryData(TASK_KEYS.list({ done: false }), context?.previousTaskList)
       if (item.date != null && item.scheduleType != null) {
         queryClient.setQueryData(
-          TASK_KEYS.board({ type: item.scheduleType, date: item.date }),
+          TASK_KEYS.board({ scheduleType: item.scheduleType, date: item.date }),
           context?.previousTaskBoard
         )
       }

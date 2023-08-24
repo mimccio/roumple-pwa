@@ -6,29 +6,29 @@ import type { ScheduleType } from '&/common/types'
 import type { Routine } from '../types'
 
 interface Params {
-  queryKey: readonly ['ROUTINE', 'BOARD', { readonly type: ScheduleType; readonly date: string }]
+  queryKey: readonly ['ROUTINE', 'BOARD', { readonly scheduleType: ScheduleType; readonly date: string }]
 }
 
 export const fetchBoardRoutines = async ({ queryKey }: Params) => {
-  const [, , { date: dateString, type }] = queryKey
+  const [, , { date: dateString, scheduleType }] = queryKey
   const date = new Date(dateString)
 
   let query = db
     .from('routine')
     .select(
-      'id, name, priority, created_at, archived, type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, occurrence, actions:routine_action(id, status, date, doneOccurrence:done_occurrence), category(id, name, color)'
+      'id, name, priority, created_at, archived, scheduleType: schedule_type, period, daily_recurrence, weekly_recurrence, monthly_recurrence, occurrence, actions:routine_action(id, status, date, doneOccurrence:done_occurrence), category(id, name, color)'
     )
     .eq('archived', false)
-    .eq('type', type)
+    .eq('schedule_type', scheduleType)
     .order('priority', { ascending: false })
     .order('name', { ascending: true })
     .limit(1, { foreignTable: 'routine_action' })
 
-  if (type === SCHEDULE_TYPES.daily) {
+  if (scheduleType === SCHEDULE_TYPES.daily) {
     query = query.eq('routine_action.date', format(date, DATE_FORMAT)).contains('daily_recurrence', [getDay(date)])
   }
 
-  if (type === SCHEDULE_TYPES.weekly) {
+  if (scheduleType === SCHEDULE_TYPES.weekly) {
     const lastDayOfWeekDate = format(lastDayOfWeek(date), DATE_FORMAT)
     query = query
       .gte('routine_action.date', format(startOfWeek(date), DATE_FORMAT))
@@ -36,7 +36,7 @@ export const fetchBoardRoutines = async ({ queryKey }: Params) => {
       .contains('weekly_recurrence', [getWeek(date) % 2])
   }
 
-  if (type === SCHEDULE_TYPES.monthly) {
+  if (scheduleType === SCHEDULE_TYPES.monthly) {
     const lastDayOfMonthDate = format(lastDayOfMonth(date), DATE_FORMAT)
     query = query
       .gte('routine_action.date', format(date, 'yyyy-MM-01'))

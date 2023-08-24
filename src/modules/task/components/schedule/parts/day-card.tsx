@@ -37,7 +37,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 1}
             handleChange={handlePeriodChange}
             id="morning"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={1}
           >
             {t('period.day.morning')}
@@ -46,7 +46,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 2}
             handleChange={handlePeriodChange}
             id="lunch"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={2}
           >
             {t('period.day.lunchTime')}
@@ -55,7 +55,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && (period === 3 || period === 0)}
             handleChange={handlePeriodChange}
             id="day"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={3}
           >
             {t('period.day.duringDay')}
@@ -64,7 +64,7 @@ export function DayCard({ period, onSelectPeriod, isSelected }: Props) {
             checked={isSelected && period === 4}
             handleChange={handlePeriodChange}
             id="evening"
-            type={SCHEDULE_TYPES.daily}
+            scheduleType={SCHEDULE_TYPES.daily}
             value={4}
           >
             {t('period.day.evening')}

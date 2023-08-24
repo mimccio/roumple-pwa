@@ -7,13 +7,13 @@ import { TASK_KEYS } from '../constants'
 import { fetchBoardTasks } from '../queries'
 
 interface Params {
-  type: TaskScheduleType
+  scheduleType: TaskScheduleType
 }
 
-export function useBoardTaskCount({ type }: Params) {
+export function useBoardTaskCount({ scheduleType }: Params) {
   const date = startOfToday()
 
-  const { data, isLoading } = useQuery(TASK_KEYS.board({ type, date }), fetchBoardTasks)
+  const { data, isLoading } = useQuery(TASK_KEYS.board({ scheduleType, date }), fetchBoardTasks)
 
   const count = data?.filter((task) => task.status !== STATUSES.done).length
 

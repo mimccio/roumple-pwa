@@ -20,9 +20,10 @@ export const upsertRoutineAction = async ({ status, date, routine, checkedList, 
   const userId = await getUserId()
 
   const getDate = () => {
-    if (routine.type === SCHEDULE_TYPES.monthly) return format(date, 'yyyy-MM-01')
-    if (routine.type === SCHEDULE_TYPES.weekly) return format(startOfWeek(date, { weekStartsOn: 1 }), DATE_FORMAT)
-    if (routine.type === SCHEDULE_TYPES.daily) return format(date, DATE_FORMAT)
+    if (routine.scheduleType === SCHEDULE_TYPES.monthly) return format(date, 'yyyy-MM-01')
+    if (routine.scheduleType === SCHEDULE_TYPES.weekly)
+      return format(startOfWeek(date, { weekStartsOn: 1 }), DATE_FORMAT)
+    if (routine.scheduleType === SCHEDULE_TYPES.daily) return format(date, DATE_FORMAT)
   }
 
   const newAction = {
@@ -33,7 +34,7 @@ export const upsertRoutineAction = async ({ status, date, routine, checkedList, 
     status,
     checked_list: checkedList,
     done_occurrence: doneOccurrence,
-    schedule_type: routine.type,
+    schedule_type: routine.scheduleType,
   }
 
   const { error, data } = await db.from('routine_action').upsert(newAction).select('*').single()

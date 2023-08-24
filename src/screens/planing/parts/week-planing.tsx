@@ -16,7 +16,7 @@ interface Props {
   firstDayCurrentMonth: Date
   weeklyRoutines: Routine[]
   weeklyTasks: Task[]
-  onSelect: ({ type, date }: { type: ScheduleType; date: Date }) => void
+  onSelect: ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => void
 }
 
 export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, weeklyTasks }: Props) {
@@ -45,7 +45,7 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, we
             routines: weeklyRoutines,
             tasks: weeklyTasks,
             date: week,
-            type: SCHEDULE_TYPES.weekly,
+            scheduleType: SCHEDULE_TYPES.weekly,
           })
 
           return (
@@ -70,7 +70,7 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, we
               </ol>
               {items.length > 5 && (
                 <button
-                  onClick={() => onSelect({ type: SCHEDULE_TYPES.weekly, date: week })}
+                  onClick={() => onSelect({ scheduleType: SCHEDULE_TYPES.weekly, date: week })}
                   className="mt-2 w-full rounded-sm border text-gray-500 transition-colors hover:text-gray-700"
                 >
                   see more
@@ -88,12 +88,12 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, we
             routines: weeklyRoutines,
             tasks: weeklyTasks,
             date: week,
-            type: SCHEDULE_TYPES.weekly,
+            scheduleType: SCHEDULE_TYPES.weekly,
           })
           return (
             <button
               key={week.toString()}
-              onClick={() => onSelect({ type: SCHEDULE_TYPES.weekly, date: week })}
+              onClick={() => onSelect({ scheduleType: SCHEDULE_TYPES.weekly, date: week })}
               type="button"
               className={cl(
                 'flex h-20 flex-col overflow-hidden border border-t-0 px-3  py-2 hover:bg-gray-100 focus:z-10'

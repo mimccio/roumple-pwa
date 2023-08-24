@@ -16,7 +16,7 @@ interface Props {
   dailyRoutines: Routine[]
   dailyTasks: Task[]
   today: Date
-  onSelect: ({ type, date }: { type: ScheduleType; date: Date }) => void
+  onSelect: ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => void
 }
 
 export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTasks }: Props) {
@@ -29,7 +29,7 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTas
             routines: dailyRoutines,
             tasks: dailyTasks,
             date: day,
-            type: SCHEDULE_TYPES.daily,
+            scheduleType: SCHEDULE_TYPES.daily,
           })
           return (
             <div
@@ -56,7 +56,7 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTas
               </ol>
               {items.length > 5 && (
                 <button
-                  onClick={() => onSelect({ type: SCHEDULE_TYPES.daily, date: day })}
+                  onClick={() => onSelect({ scheduleType: SCHEDULE_TYPES.daily, date: day })}
                   className="mt-2 w-full rounded-sm border text-gray-500 transition-colors hover:text-gray-700"
                 >
                   see more
@@ -74,12 +74,12 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTas
             routines: dailyRoutines,
             tasks: dailyTasks,
             date: day,
-            type: SCHEDULE_TYPES.daily,
+            scheduleType: SCHEDULE_TYPES.daily,
           })
           return (
             <button
               key={day.toString()}
-              onClick={() => onSelect({ type: SCHEDULE_TYPES.daily, date: day })}
+              onClick={() => onSelect({ scheduleType: SCHEDULE_TYPES.daily, date: day })}
               type="button"
               className={cl(
                 isSameMonth(day, today) ? 'bg-white' : 'bg-gray-50',

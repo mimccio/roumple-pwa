@@ -20,11 +20,11 @@ export function EditOccurrence({ routine, isOpen, close }: Props) {
   const { t } = useTranslation(['routine', 'action'])
   const ref = useRef<HTMLFormElement>(null)
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
-  const typeText = useOccurrenceTypeText(routine.type)
-  const inputBg = getOccurrenceBg(routine.type)
+  const typeText = useOccurrenceTypeText(routine.scheduleType)
+  const inputBg = getOccurrenceBg(routine.scheduleType)
   const getTypeTextColor = () => {
-    if (routine.type === SCHEDULE_TYPES.weekly) return 'text-sky-600 group-hover:text-sky-700'
-    if (routine.type === SCHEDULE_TYPES.monthly) return 'text-purple-600 group-hover:text-purple-700'
+    if (routine.scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-600 group-hover:text-sky-700'
+    if (routine.scheduleType === SCHEDULE_TYPES.monthly) return 'text-purple-600 group-hover:text-purple-700'
     return 'text-indigo-600 group-hover:text-indigo-700'
   }
   useOutsideClick({ ref, handler: close })

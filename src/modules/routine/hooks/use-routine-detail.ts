@@ -43,7 +43,7 @@ export function useRoutineDetail() {
     },
   })
 
-  const scheduleType = routineQuery.data?.type
+  const scheduleType = routineQuery.data?.scheduleType
 
   const actionQuery = useQuery(ACTION_KEYS.detail({ routineId, date, scheduleType }), fetchRoutineAction, {
     enabled: Boolean(scheduleType),

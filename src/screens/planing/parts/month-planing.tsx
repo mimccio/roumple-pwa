@@ -15,7 +15,7 @@ interface Props {
   firstDayCurrentMonth: Date
   monthlyRoutines: Routine[]
   monthlyTasks: Task[]
-  onSelect: ({ type, date }: { type: ScheduleType; date: Date }) => void
+  onSelect: ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => void
 }
 
 export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect, monthlyTasks }: Props) {
@@ -25,7 +25,7 @@ export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect, 
     routines: monthlyRoutines,
     tasks: monthlyTasks,
     date: firstDayCurrentMonth,
-    type: SCHEDULE_TYPES.monthly,
+    scheduleType: SCHEDULE_TYPES.monthly,
   })
 
   return (
@@ -54,7 +54,7 @@ export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect, 
 
       <button
         className="w-full border-l px-2 lg:hidden"
-        onClick={() => onSelect({ type: SCHEDULE_TYPES.monthly, date: firstDayCurrentMonth })}
+        onClick={() => onSelect({ scheduleType: SCHEDULE_TYPES.monthly, date: firstDayCurrentMonth })}
       >
         <ol className="flex flex-wrap gap-1">
           {items.map((item) => (

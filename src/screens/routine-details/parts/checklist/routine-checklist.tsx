@@ -18,7 +18,10 @@ interface Props {
 export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
   const { t } = useTranslation(['common', 'routine', 'schedule'])
   const { onDelete } = useDeleteChecklistItem(routine)
-  const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({ type: routine.type, date })
+  const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({
+    scheduleType: routine.scheduleType,
+    date,
+  })
 
   const onSelectChecklistItem = (checklistItemId: string) =>
     handleSelectChecklistItem({ routine, checklistItemId, action })
@@ -29,8 +32,8 @@ export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
   }
 
   const getText = () => {
-    if (routine.type === SCHEDULE_TYPES.monthly) return t('nextMonth', { ns: 'schedule' })
-    if (routine.type === SCHEDULE_TYPES.weekly) return t('nextWeek', { ns: 'schedule' })
+    if (routine.scheduleType === SCHEDULE_TYPES.monthly) return t('nextMonth', { ns: 'schedule' })
+    if (routine.scheduleType === SCHEDULE_TYPES.weekly) return t('nextWeek', { ns: 'schedule' })
     return t('tomorrow', { ns: 'schedule' })
   }
 

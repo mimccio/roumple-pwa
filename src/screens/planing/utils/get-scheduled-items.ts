@@ -27,10 +27,18 @@ const getMonthlyScheduledRoutines = ({ date, routines }: { date: Date; routines:
     (r) => compareAsc(date, startOfMonth(new Date(r.created_at))) >= 0 && r.monthly_recurrence.includes(getMonth(date))
   )
 
-const getScheduledRoutines = ({ type, date, routines }: { type?: ScheduleType; date: Date; routines: Routine[] }) => {
-  if (type === SCHEDULE_TYPES.daily) return getDailyScheduledRoutines({ date, routines })
-  if (type === SCHEDULE_TYPES.weekly) return getWeeklyScheduledRoutines({ date, routines })
-  if (type === SCHEDULE_TYPES.monthly) return getMonthlyScheduledRoutines({ date, routines })
+const getScheduledRoutines = ({
+  scheduleType,
+  date,
+  routines,
+}: {
+  scheduleType?: ScheduleType
+  date: Date
+  routines: Routine[]
+}) => {
+  if (scheduleType === SCHEDULE_TYPES.daily) return getDailyScheduledRoutines({ date, routines })
+  if (scheduleType === SCHEDULE_TYPES.weekly) return getWeeklyScheduledRoutines({ date, routines })
+  if (scheduleType === SCHEDULE_TYPES.monthly) return getMonthlyScheduledRoutines({ date, routines })
   return []
 }
 
@@ -43,25 +51,25 @@ const getWeeklyScheduledTask = ({ tasks, date }: { tasks: Task[]; date: Date }) 
 const getMonthlyScheduledTask = ({ tasks, date }: { tasks: Task[]; date: Date }) =>
   tasks.filter((t) => t.date && isSameMonth(new Date(t.date), date))
 
-const getScheduledTask = ({ tasks, type, date }: { tasks: Task[]; date: Date; type: ScheduleType }) => {
-  if (type === SCHEDULE_TYPES.daily) return getDailyScheduledTask({ date, tasks })
-  if (type === SCHEDULE_TYPES.weekly) return getWeeklyScheduledTask({ date, tasks })
-  if (type === SCHEDULE_TYPES.monthly) return getMonthlyScheduledTask({ date, tasks })
+const getScheduledTask = ({ tasks, scheduleType, date }: { tasks: Task[]; date: Date; scheduleType: ScheduleType }) => {
+  if (scheduleType === SCHEDULE_TYPES.daily) return getDailyScheduledTask({ date, tasks })
+  if (scheduleType === SCHEDULE_TYPES.weekly) return getWeeklyScheduledTask({ date, tasks })
+  if (scheduleType === SCHEDULE_TYPES.monthly) return getMonthlyScheduledTask({ date, tasks })
   return []
 }
 
 export const mergeTaskAndRoutines = ({
   tasks,
-  type,
+  scheduleType,
   date,
   routines,
 }: {
   tasks: Task[]
   date: Date
-  type: ScheduleType
+  scheduleType: ScheduleType
   routines: Routine[]
 }) => {
-  const scheduledRoutines = getScheduledRoutines({ type, date, routines })
-  const scheduledTasks = getScheduledTask({ type, date, tasks })
+  const scheduledRoutines = getScheduledRoutines({ scheduleType, date, routines })
+  const scheduledTasks = getScheduledTask({ scheduleType, date, tasks })
   return [...scheduledRoutines, ...scheduledTasks].sort((a, b) => b.priority - a.priority)
 }

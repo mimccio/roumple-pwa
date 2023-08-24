@@ -11,15 +11,15 @@ import { filterRoutines } from '../utils'
 import { fetchBoardRoutines } from '../queries'
 
 interface Params {
-  type: ScheduleType
+  scheduleType: ScheduleType
   showDone: boolean
 }
 
-export function useBoardRoutines({ type, showDone }: Params) {
+export function useBoardRoutines({ scheduleType, showDone }: Params) {
   const queryClient = useQueryClient()
   const date = startOfToday()
   const [category] = useAtom(categoryAtom)
-  const { data, isLoading, error, isPaused } = useQuery(ROUTINE_KEYS.board({ date, type }), fetchBoardRoutines)
+  const { data, isLoading, error, isPaused } = useQuery(ROUTINE_KEYS.board({ date, scheduleType }), fetchBoardRoutines)
 
   queryClient.removeQueries({
     queryKey: ROUTINE_KEYS.boards(),

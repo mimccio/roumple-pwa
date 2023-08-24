@@ -3,7 +3,7 @@ import { Routine } from '../types'
 
 export const editRoutineSchedule = async ({
   id,
-  type,
+  scheduleType,
   period,
   daily_recurrence,
   weekly_recurrence,
@@ -11,7 +11,7 @@ export const editRoutineSchedule = async ({
 }: Routine) => {
   const { data, error } = await db
     .from('routine')
-    .update({ type, period, daily_recurrence, weekly_recurrence, monthly_recurrence })
+    .update({ schedule_type: scheduleType, period, daily_recurrence, weekly_recurrence, monthly_recurrence })
     .eq('id', id)
   if (error) throw error
   return data
