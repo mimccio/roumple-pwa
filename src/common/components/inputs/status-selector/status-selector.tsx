@@ -12,7 +12,7 @@ export function StatusSelector({ status, onSelect }: Props) {
     <div className="flex items-center gap-2 rounded-md transition-colors">
       <TodoBtn handleClick={() => onSelect(STATUSES.todo)} isSelected={status === STATUSES.todo || !status} />
       <InProgressBtn handleClick={() => onSelect(STATUSES.inProgress)} isSelected={status === STATUSES.inProgress} />
-      <DoneBtn handleClick={() => onSelect(STATUSES.done)} isSelected={status === STATUSES.done} />
+      <DoneBtn showCheck handleClick={() => onSelect(STATUSES.done)} isSelected={status === STATUSES.done} />
     </div>
   )
 }
