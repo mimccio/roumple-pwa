@@ -7,8 +7,6 @@ import { RoutineNavbar } from './nav'
 import { RoutineActivity } from './routine-activity'
 import { RoutineDetails } from './routine-details'
 
-// TODO: handle isPaused for action => what to do ?
-
 export function RoutineDetailsScreen() {
   const { activity } = useParams()
   const { date, handleDateChange, routineQuery, actionQuery } = useRoutineDetail()
@@ -31,10 +29,8 @@ export function RoutineDetailsScreen() {
       {routineQuery.data && !activity && (
         <RoutineDetails
           routine={routineQuery.data}
-          action={actionQuery.data}
           date={date}
           handleDateChange={handleDateChange}
-          actionIsLoading={actionQuery.isLoading}
           actionQuery={actionQuery}
         />
       )}

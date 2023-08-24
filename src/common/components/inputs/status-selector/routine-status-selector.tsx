@@ -1,18 +1,21 @@
+import type { UseQueryResult } from '@tanstack/react-query'
+import { startOfMonth, startOfWeek } from 'date-fns'
+
 import type { Status } from '&/common/types'
 import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
-import { useUpsertAction } from '&/modules/routine/hooks'
+
 import type { RoutineAction, Routine } from '&/modules/routine/types'
+import { useUpsertAction } from '&/modules/routine/hooks'
 import { TodoBtn, InProgressBtn, DoneBtn, LoadingButton } from './parts'
-import { startOfMonth, startOfWeek } from 'date-fns'
 
 interface Props {
   routine: Routine
   date: Date
-  action?: RoutineAction
-  isLoading: boolean
+  actionQuery: UseQueryResult<RoutineAction | undefined, unknown>
 }
 
-export function RoutineStatusSelector({ routine, date: dayDate, action, isLoading }: Props) {
+export function RoutineStatusSelector({ routine, date: dayDate, actionQuery }: Props) {
+  const action = actionQuery.data
   const getDate = () => {
     let date = dayDate
     if (routine.scheduleType === SCHEDULE_TYPES.monthly) date = startOfMonth(date)
@@ -25,7 +28,7 @@ export function RoutineStatusSelector({ routine, date: dayDate, action, isLoadin
   const handleSelectStatus = (status: Status) => handleUpdateStatus({ routine, status, action })
   const showCheck = routine.occurrence <= 1 || routine.occurrence - (action?.doneOccurrence || 0) <= 1
 
-  if (isLoading) {
+  if (actionQuery.isLoading && !actionQuery.isPaused) {
     return (
       <div className="flex items-center gap-2">
         <LoadingButton />
