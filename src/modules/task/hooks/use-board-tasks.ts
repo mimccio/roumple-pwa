@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
-import { compareDesc, startOfToday } from 'date-fns'
+import { compareDesc, startOfToday, subMonths } from 'date-fns'
 
 import type { ScheduleType } from '&/common/types'
 import { useShow } from '&/common/hooks'
@@ -20,12 +20,13 @@ export function useBoardTasks({ scheduleType, showDone }: Params) {
   const [category] = useAtom(categoryAtom)
   const { data, isLoading, error, isPaused } = useQuery(TASK_KEYS.board({ scheduleType, date }), fetchBoardTasks)
 
+  // Remove old queries (older than 2 month)
   queryClient.removeQueries({
     queryKey: TASK_KEYS.boards(),
     type: 'inactive',
     predicate: (query) => {
       const queryOptions = query.queryKey[2] as { date: Date }
-      return Boolean(compareDesc(new Date(queryOptions.date), date))
+      return Boolean(compareDesc(new Date(queryOptions.date), subMonths(date, 2)))
     },
   })
 
