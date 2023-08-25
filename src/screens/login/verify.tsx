@@ -36,7 +36,6 @@ export function Verify({ handleVerify, code, handleOptChange, verifyIsLoading }:
           value={code}
           onChange={handleOptChange}
           numInputs={6}
-          inputType="number"
           renderInput={(props) => (
             <input
               {...props}
