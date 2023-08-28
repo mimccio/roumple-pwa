@@ -3,5 +3,6 @@
   "proposeFeature": "Vous pouvez <1>proposer une nouvelle fonctionnalité</1> en cliquant sur ce <3>lien Discord</3>",
   "voteForFeatures": "Vous pouvez <1>voter pour de nouvelles fonctionnalités</1> en cliquant sur ce <3>lien Productboard</3>",
   "supportWork": "Vous pouvez <1>aider le projet</1> en cliquant sur ce <3>lien Buymeacoffee</3>",
-  "ThanksForFeedback": "Merci pour vos retours"
+  "ThanksForFeedback": "Merci pour vos retours",
+  "byMeACoffee": "Offrir un café"
 }
