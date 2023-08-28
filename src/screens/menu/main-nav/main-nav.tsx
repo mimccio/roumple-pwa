@@ -6,6 +6,7 @@ import {
   ArrowPathRoundedSquareIcon,
   CheckCircleIcon,
   CalendarDaysIcon,
+  ChatBubbleBottomCenterTextIcon,
 } from '@heroicons/react/24/outline'
 
 import { NavItem } from './nav-item'
@@ -26,6 +27,7 @@ export function MainNav({ close }: Props) {
 
       <NavItem close={close} name={t('categories')} to="categories" Icon={TagIcon} />
       <NavItem close={close} name={t('settings')} to="settings" Icon={Cog6ToothIcon} />
+      <NavItem close={close} name={t('feedback')} to="feedback" Icon={ChatBubbleBottomCenterTextIcon} />
     </section>
   )
 }
