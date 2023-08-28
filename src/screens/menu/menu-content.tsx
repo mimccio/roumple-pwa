@@ -1,6 +1,7 @@
 import { BoardNav } from './board/board-nav'
 import { Categories } from './categories/categories'
 import { MainNav } from './main-nav/main-nav'
+import { Support } from './support'
 
 interface Props {
   close: () => void
@@ -12,6 +13,7 @@ export function MenuContent({ close }: Props) {
       <BoardNav close={close} />
       <MainNav close={close} />
       <Categories />
+      <Support />
     </div>
   )
 }

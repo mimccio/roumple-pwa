@@ -1,5 +1,5 @@
 import { Trans, useTranslation } from 'react-i18next'
-import { BugAntIcon, LightBulbIcon, MegaphoneIcon } from '@heroicons/react/24/outline'
+import { BugAntIcon, FaceSmileIcon, HandThumbUpIcon, LightBulbIcon, MegaphoneIcon } from '@heroicons/react/24/outline'
 
 export function FeedbackScreen() {
   const { t } = useTranslation('feedback')
@@ -7,6 +7,22 @@ export function FeedbackScreen() {
     <div className="relative mt-8 flex w-full flex-1 flex-col items-center p-4 ">
       <h2 className="text-center text-lg font-bold text-gray-600">Feedback</h2>
       <div className="mt-12 flex w-full max-w-3xl flex-col gap-y-4 text-gray-600 sm:px-4">
+        <p className="flex items-start gap-x-4">
+          <span>
+            <HandThumbUpIcon width={20} className="mt-0.5 text-gray-500" />
+          </span>
+          <span>
+            <Trans t={t} i18nKey="supportWork">
+              You can <span className="font-bold">support the work</span> by clicking on this
+              <a
+                className="text-indigo-500 transition-colors hover:text-indigo-600"
+                href="https://www.buymeacoffee.com/roumple"
+              >
+                Buymeacoffee link
+              </a>
+            </Trans>
+          </span>
+        </p>
         <p className="flex items-start gap-x-4">
           <span>
             <BugAntIcon width={20} className="mt-0.5 text-gray-500" />
@@ -50,6 +66,9 @@ export function FeedbackScreen() {
           </span>
         </p>
       </div>
+      <p className="mt-12 flex items-center gap-x-2 text-gray-500">
+        <FaceSmileIcon width={20} /> {t('ThanksForFeedback')}
+      </p>
       <div className="mt-8 hidden h-full w-full 2xl:block">
         <iframe
           title="product board"
