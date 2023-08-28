@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { registerSW } from 'virtual:pwa-register'
+import { inject } from '@vercel/analytics'
 import { toast } from 'react-hot-toast'
 import { App } from './app'
 import { ToastOfflineReady, ToastRefresh } from './common/components/toasts'
+
+inject()
 
 const updateSW = registerSW({
   onNeedRefresh() {
