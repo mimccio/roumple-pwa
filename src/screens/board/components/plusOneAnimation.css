@@ -1,0 +1,26 @@
+@keyframes plusOneAnimation {
+  0% {
+    opacity: 1;
+  }
+
+  90% {
+    transform: translate(12px, -40px) scale(3);
+    opacity: 0;
+  }
+
+  95% {
+    transform: translate(0, 0);
+    opacity: 0;
+    transform: scale(1/2);
+  }
+
+  100% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+}
+
+.plusOneAnimation {
+  animation: plusOneAnimation 700ms ease 0s 1 normal forwards;
+}
