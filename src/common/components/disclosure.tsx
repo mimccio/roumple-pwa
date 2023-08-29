@@ -29,12 +29,14 @@ export function Disclosure({ title, children, color }: Props) {
           </TwDisclosure.Button>
 
           <Transition
-            enter="transition duration-100 ease-out"
+            show={open}
+            enter="transition duration-250 ease-out"
             enterFrom="transform scale-95 opacity-0"
             enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
+            leave="transition duration-250 ease-out"
+            leaveFrom="transform scale-y-100 opacity-100"
+            leaveTo="transform scale-y-0 opacity-0"
+            className="origin-top"
           >
             <TwDisclosure.Panel className="flex flex-col gap-4 py-4">{children}</TwDisclosure.Panel>
           </Transition>

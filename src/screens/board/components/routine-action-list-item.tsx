@@ -31,7 +31,7 @@ export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {
           </div>
           <div
             className={cl(
-              'mx-4 flex h-full w-full flex-col gap-y-1 truncate border-b pt-1',
+              'mx-4 flex h-full w-full flex-col justify-center gap-y-1 truncate border-b pt-1',
               isActive ? 'border-transparent' : 'border-gray-100'
             )}
           >
