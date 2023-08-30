@@ -1,11 +1,15 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import type { Routine } from '../types'
 import { editRoutineOccurrence } from '../mutations'
 import { useMutateRoutine } from './use-mutate-routine'
 
 export function useEditOccurrence(routine: Routine) {
   const { mutate } = useMutateRoutine(editRoutineOccurrence)
-  const [occurrence, setOccurrence] = useState(routine.occurrence || 0)
+  const [occurrence, setOccurrence] = useState(routine.occurrence || 1)
+
+  useEffect(() => {
+    setOccurrence(routine.occurrence)
+  }, [routine])
 
   const submit = () => mutate({ ...routine, occurrence })
 
