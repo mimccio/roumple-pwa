@@ -9,7 +9,7 @@ export function useEditOccurrence(routine: Routine) {
 
   useEffect(() => {
     setOccurrence(routine.occurrence)
-  }, [routine])
+  }, [routine.id, routine.occurrence])
 
   const submit = () => mutate({ ...routine, occurrence })
 
