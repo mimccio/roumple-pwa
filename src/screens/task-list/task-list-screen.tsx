@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { AnimatePresence } from 'framer-motion'
+import { Transition } from '@headlessui/react'
 
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
 import { ListSkeleton } from '&/common/components/list-skeleton'
@@ -9,10 +9,10 @@ import workflowImg from '&/assets/illustrations/workflow.png'
 import successImg from '&/assets/illustrations/success.png'
 
 import { useTaskList } from '&/modules/task/hooks'
-import { CreateTaskModale, TaskListItem } from '&/modules/task/components'
+import { CreateTaskModale } from '&/modules/task/components'
 import { MainError, OfflineError } from '../errors'
 import { TaskListHeader } from './parts/task-list-header'
-import { Transition } from '@headlessui/react'
+import { TaskListContent } from './parts/task-list-content'
 
 export function TaskListScreen() {
   const { t } = useTranslation('task')
@@ -41,24 +41,9 @@ export function TaskListScreen() {
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-          {showDone && (
-            <ul>
-              <AnimatePresence>
-                {taskList?.map((task) => (
-                  <TaskListItem key={task.id} task={task} />
-                ))}
-              </AnimatePresence>
-            </ul>
-          )}
-          {!showDone && (
-            <ul>
-              <AnimatePresence>
-                {taskList?.map((task) => (
-                  <TaskListItem key={task.id} task={task} />
-                ))}
-              </AnimatePresence>
-            </ul>
-          )}
+
+          {showDone && <TaskListContent list={taskList} />}
+          {!showDone && <TaskListContent list={taskList} />}
         </MainListLayout>
         <Transition
           as="div"

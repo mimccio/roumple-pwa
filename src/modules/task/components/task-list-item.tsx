@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { format, getWeek } from 'date-fns'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -30,42 +29,35 @@ export function TaskListItem({ task }: Props) {
   const dateText = getDateText()
 
   return (
-    <motion.li
-      animate={{ opacity: 1, x: 0, scaleY: 1 }}
-      exit={{ opacity: 0, x: 100, scaleY: 0, height: '0px', marginBottom: '0px' }}
-      transition={{ duration: 0.3 }}
-      className="mb-4 h-14"
+    <NavLink
+      to={`d/task/${task.id}`}
+      className={({ isActive }) =>
+        cl('flex h-14 items-center justify-between rounded-lg px-2', isActive && 'bg-gray-100')
+      }
     >
-      <NavLink
-        to={`d/task/${task.id}`}
-        className={({ isActive }) =>
-          cl('flex h-14 items-center justify-between rounded-lg px-2', isActive && 'bg-gray-100')
-        }
-      >
-        {({ isActive }) => (
-          <>
-            <div>
-              <div className={cl('h-2 w-2 rounded-full', categoryBg || '')} />
-            </div>
-            <div
-              className={cl(
-                'mx-4 flex h-full w-full flex-col gap-y-1 truncate border-b pt-1',
-                isActive ? 'border-transparent' : 'border-gray-100'
-              )}
-            >
-              <p className="truncate font-semibold text-gray-700">{task.name}</p>
-              <p className="flex gap-x-2 text-xs  text-gray-500">
-                <span className={cl('font-semibold', !task.category?.name && 'text-gray-300')}>
-                  {task.category?.name || 'no category'}
-                </span>
-                {dateText && <span className="text-gray-300">-</span>}
-                <span>{dateText}</span>
-              </p>
-            </div>
-            <SquareDoneButton status={task.status} priority={task.priority} onUpdate={onSelect} />
-          </>
-        )}
-      </NavLink>
-    </motion.li>
+      {({ isActive }) => (
+        <>
+          <div>
+            <div className={cl('h-2 w-2 rounded-full', categoryBg || '')} />
+          </div>
+          <div
+            className={cl(
+              'mx-4 flex h-full w-full flex-col gap-y-1 truncate border-b pt-1',
+              isActive ? 'border-transparent' : 'border-gray-100'
+            )}
+          >
+            <p className="truncate font-semibold text-gray-700">{task.name}</p>
+            <p className="flex gap-x-2 text-xs  text-gray-500">
+              <span className={cl('font-semibold', !task.category?.name && 'text-gray-300')}>
+                {task.category?.name || 'no category'}
+              </span>
+              {dateText && <span className="text-gray-300">-</span>}
+              <span>{dateText}</span>
+            </p>
+          </div>
+          <SquareDoneButton status={task.status} priority={task.priority} onUpdate={onSelect} />
+        </>
+      )}
+    </NavLink>
   )
 }
