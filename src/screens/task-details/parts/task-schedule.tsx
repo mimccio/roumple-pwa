@@ -3,6 +3,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
 import { cl, getScheduleTypeBg, getScheduleTypeColor, isPassed } from '&/common/utils'
+import { usePeriodText } from '&/common/hooks'
 import type { Task } from '&/modules/task/types'
 import { useDateText, useTaskSchedule } from '&/modules/task/hooks'
 import { TaskSchedule } from '&/modules/task/components'
@@ -14,6 +15,8 @@ interface Props {
 export function Schedule({ task }: Props) {
   const { onSelectPeriod, onSelectDate, onSubmit, scheduleType, period, date, reset } = useTaskSchedule(task)
   const { getDateText } = useDateText()
+  const { getPeriodText } = usePeriodText()
+  const periodText = task.scheduleType && getPeriodText({ scheduleType: task.scheduleType, period: task.period })
 
   const scheduleColor = isPassed({ date, scheduleType }) ? 'text-red-400' : getScheduleTypeColor(task.scheduleType)
   const btnBg = getScheduleTypeBg(scheduleType)
@@ -25,6 +28,7 @@ export function Schedule({ task }: Props) {
           <p className="flex items-center gap-2">
             <CalendarDaysIcon height={18} className={scheduleColor} />
             <span className="font-semibold text-gray-500">{getDateText(task)}</span>
+            <span className="text-gray-400">({periodText})</span>
           </p>
         </div>
       </Popover.Button>
