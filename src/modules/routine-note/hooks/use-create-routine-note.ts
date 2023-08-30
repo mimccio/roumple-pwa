@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast'
 import { v5 as uuidv5 } from 'uuid'
 
 import type { Note } from '&/modules/note/types'
+import { NOTE_KEYS } from '&/modules/note/constants'
 import type { RoutineNote } from '../types'
 import { ROUTINE_NOTE_KEYS } from '../constants'
 import { createRoutineNote } from '../mutations'
@@ -18,18 +19,30 @@ export function useCreateRoutineNote() {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: listKey })
 
+      // ⛳ Update Note item
+      const previousNote = queryClient.getQueryData(NOTE_KEYS.detail(data.noteId))
+      queryClient.setQueryData(NOTE_KEYS.detail(data.noteId), (old?: Note) => {
+        if (!old) return
+        return {
+          ...old,
+          routineNotes: old.routineNotes ? [...old.routineNotes, data] : [data],
+        }
+      })
+
       // 🗃️ Update List
       const prevRoutineNoteList = queryClient.getQueryData(listKey)
       queryClient.setQueryData(listKey, (old: Note[] = []) => [...old, data])
 
-      return { prevRoutineNoteList }
+      return { prevRoutineNoteList, previousNote }
     },
-    onError: (_err, _item, context) => {
+    onError: (_err, item, context) => {
       queryClient.setQueryData(listKey, context?.prevRoutineNoteList)
+      queryClient.setQueryData(NOTE_KEYS.detail(item.noteId), context?.previousNote)
       toast.error('Error when linking note')
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(listKey)
+      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.noteId))
     },
   })
 
@@ -39,8 +52,8 @@ export function useCreateRoutineNote() {
       return
     }
     const id = uuidv5(note.id, routineId)
-    const previousTaskNoteList = queryClient.getQueryData(listKey) as RoutineNote[]
-    const index = previousTaskNoteList.findIndex((item) => item.id === id)
+    const previousRoutineNoteList = queryClient.getQueryData(listKey) as RoutineNote[]
+    const index = previousRoutineNoteList?.findIndex((item) => item.id === id)
     if (index >= 0) {
       toast.success('Note is already linked')
     } else {

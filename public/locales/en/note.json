@@ -11,5 +11,10 @@
   "newFolder": "New folder",
   "noNoteToShow": "No note to show",
   "searchNote": "search note",
-  "seeMore": "See more..."
+  "seeMore": "See more...",
+  "routineNumber_one": "{{count}} routine",
+  "routineNumber_other": "{{count}} routines",
+  "taskNumber_one": "{{count}} task",
+  "taskNumber_other": "{{count}} tasks",
+  "and": "and"
 }

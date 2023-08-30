@@ -11,5 +11,10 @@
   "newFolder": "Nouveau dossier",
   "noNoteToShow": "Aucune note à afficher",
   "searchNote": "chercher une note",
-  "seeMore": "Voir plus..."
+  "seeMore": "Voir plus...",
+  "routineNumber_one": "{{count}} routine",
+  "routineNumber_other": "{{count}} routines",
+  "taskNumber_one": "{{count}} tâche",
+  "taskNumber_other": "{{count}} tâches",
+  "and": "et"
 }
