@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import { Navigate, Route, createRoutesFromElements } from 'react-router-dom'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Navigate, Route, createRoutesFromElements, createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { inject } from '@vercel/analytics'
 import { QueryClient } from '@tanstack/react-query'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
@@ -17,6 +17,8 @@ import { AuthenticatedApp } from './authenticated-app'
 import { appLoader, loginLoader, logoutLoader } from './loaders'
 import { Fallback } from './fallback'
 import './styles.css'
+
+inject({ debug: false })
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
