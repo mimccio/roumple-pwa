@@ -28,7 +28,7 @@ export function Schedule({ task }: Props) {
           <p className="flex items-center gap-2">
             <CalendarDaysIcon height={18} className={scheduleColor} />
             <span className="font-semibold text-gray-500">{getDateText(task)}</span>
-            <span className="text-gray-400">({periodText})</span>
+            <span className="text-gray-400">{periodText && `(${periodText})`}</span>
           </p>
         </div>
       </Popover.Button>
