@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Popover, Transition } from '@headlessui/react'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function Schedule({ task }: Props) {
+  const { t } = useTranslation('action')
   const { onSelectPeriod, onSelectDate, onSubmit, scheduleType, period, date, reset } = useTaskSchedule(task)
   const { getDateText } = useDateText()
   const { getPeriodText } = usePeriodText()
@@ -69,7 +71,7 @@ export function Schedule({ task }: Props) {
                     reset()
                   }}
                 >
-                  cancel
+                  {t('cancel')}
                 </button>
                 <button
                   className={cl('rounded-md p-1 px-2 text-white transition-colors', btnBg)}
@@ -78,7 +80,7 @@ export function Schedule({ task }: Props) {
                     onSubmit()
                   }}
                 >
-                  save
+                  {t('save')}
                 </button>
               </div>
             </div>
