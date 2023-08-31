@@ -18,11 +18,11 @@ export const getPriorityTWBorderColor = (priority: number) => {
   return 'border-gray-400'
 }
 
-export const getScheduleTypeColor = (scheduleType: ScheduleType | TaskScheduleType) => {
+export const getScheduleTypeIconColor = (scheduleType: ScheduleType | TaskScheduleType) => {
   if (scheduleType === SCHEDULE_TYPES.daily) return 'text-indigo-500 group-hover:text-indigo-600'
   if (scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-500 group-hover:text-sky-600'
   if (scheduleType === SCHEDULE_TYPES.monthly) return 'text-purple-500 group-hover:text-purple-600'
-  return 'text-gray-500 group-hover:text-gray-600'
+  return 'text-gray-300 group-hover:text-gray-400'
 }
 
 export const getScheduleTypeBg = (scheduleType: ScheduleType | TaskScheduleType) => {

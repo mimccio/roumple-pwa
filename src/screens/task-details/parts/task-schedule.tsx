@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
-import { cl, getScheduleTypeBg, getScheduleTypeColor, isPassed } from '&/common/utils'
+import { cl, getScheduleTypeBg, getScheduleTypeIconColor, isPassed } from '&/common/utils'
 import { usePeriodText } from '&/common/hooks'
 import type { Task } from '&/modules/task/types'
 import { useDateText, useTaskSchedule } from '&/modules/task/hooks'
@@ -18,7 +18,7 @@ export function Schedule({ task }: Props) {
   const { getPeriodText } = usePeriodText()
   const periodText = task.scheduleType && getPeriodText({ scheduleType: task.scheduleType, period: task.period })
 
-  const scheduleColor = isPassed({ date, scheduleType }) ? 'text-red-400' : getScheduleTypeColor(task.scheduleType)
+  const scheduleColor = isPassed({ date, scheduleType }) ? 'text-red-400' : getScheduleTypeIconColor(task.scheduleType)
   const btnBg = getScheduleTypeBg(scheduleType)
 
   return (
@@ -26,8 +26,17 @@ export function Schedule({ task }: Props) {
       <Popover.Button>
         <div className="group flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="flex items-center gap-2">
-            <CalendarDaysIcon height={18} className={scheduleColor} />
-            <span className="font-semibold text-gray-500">{getDateText(task)}</span>
+            <CalendarDaysIcon height={18} className={cl('transition-colors', scheduleColor)} />
+            <span
+              className={cl(
+                'font-semibold  transition-colors ',
+                task.scheduleType
+                  ? 'text-gray-500 group-hover:text-gray-600'
+                  : 'text-gray-400 group-hover:text-gray-500'
+              )}
+            >
+              {getDateText(task)}
+            </span>
             <span className="text-gray-400">{periodText && `(${periodText})`}</span>
           </p>
         </div>
