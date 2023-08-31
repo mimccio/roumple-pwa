@@ -2,26 +2,17 @@ import { db } from '&/db'
 import { TaskNote } from '../types'
 
 interface FetchTaskNoteListParams {
-  queryKey: readonly [
-    'TASK_NOTE',
-    'LIST',
-    {
-      readonly taskId: string | undefined
-    }
-  ]
+  queryKey: readonly ['TASK_NOTE', 'LIST', string | undefined]
 }
 
+// TODO?: order
+
 export const fetchTaskNoteList = async ({ queryKey }: FetchTaskNoteListParams) => {
-  const [, , { taskId }] = queryKey
+  const [, , taskId] = queryKey
 
   if (!taskId) throw new Error('Task ID is missing')
 
-  const { data, error } = await db
-    .from('task_note')
-    .select('id, taskId:task_id, noteId:note_id, note(id, title, created_at)')
-    .eq('task_id', taskId)
-  // .order('note(created_at)', { ascending: true })
-  // .order('created_at', { foreignTable: 'note', ascending: true })
+  const { data, error } = await db.from('task_note').select('id, note(id, title), task(id, name)').eq('task_id', taskId)
 
   if (error) throw error
   return data as TaskNote[]

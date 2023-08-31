@@ -8,7 +8,7 @@ import { fetchRoutineNoteList } from '../queries'
 export function useRoutineNoteList() {
   const { routineId } = useParams()
 
-  const { data, isLoading, error } = useQuery(ROUTINE_NOTE_KEYS.list({ routineId }), fetchRoutineNoteList, {
+  const { data, isLoading, error } = useQuery(ROUTINE_NOTE_KEYS.list(routineId), fetchRoutineNoteList, {
     enabled: Boolean(routineId),
   })
 

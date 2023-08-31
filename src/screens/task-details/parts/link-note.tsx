@@ -8,15 +8,17 @@ import { useOutsideClick } from '&/common/hooks'
 import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
 
 import type { Note } from '&/modules/note/types'
+import type { Task } from '&/modules/task/types'
 import { useSearchNote } from '&/modules/note/hooks'
 import { useCreateTaskNote } from '&/modules/task-note/hooks'
 
 interface Props {
   isOpen: boolean
   close: () => void
+  task: Task
 }
 
-export function LinkNote({ isOpen = true, close }: Props) {
+export function LinkNote({ isOpen = true, close, task }: Props) {
   const { t } = useTranslation(['action', 'note'])
   const ref = useRef<HTMLFormElement>(null)
   const [searchText, setSearchText] = useState<string>('')
@@ -36,7 +38,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
     // setSearchText('')
   }
 
-  const onSelect = (note: Note) => onCreate(note)
+  const onSelect = (note: Note) => onCreate({ note, task })
 
   return (
     <Transition

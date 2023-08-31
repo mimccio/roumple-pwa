@@ -16,5 +16,9 @@
   "routineNumber_other": "{{count}} routines",
   "taskNumber_one": "{{count}} task",
   "taskNumber_other": "{{count}} tasks",
-  "and": "and"
+  "and": "and",
+  "linkedRoutines_one": "Linked routine",
+  "linkedRoutines_other": "Linked routines",
+  "linkedTasks_one": "Linked task",
+  "linkedTasks_other": "Linked tasks"
 }

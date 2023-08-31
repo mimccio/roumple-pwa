@@ -60,7 +60,7 @@ export function RoutineNavbar({ routine, isLoading, date, handleDateChange }: Pr
             title={t('deleteRoutine', { ns: 'routine' })}
             description={t('confirmDeleteRoutine', { ns: 'routine' })}
           />
-          <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} />
+          <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} routine={routine} />
           <EditOccurrence
             routine={routine}
             isOpen={editOccurrenceIsOpen}

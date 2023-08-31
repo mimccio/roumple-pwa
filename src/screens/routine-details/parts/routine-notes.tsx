@@ -16,12 +16,12 @@ export function RoutineNotes() {
       <h4 className="font-bold uppercase text-gray-400 ">{t('notes')}</h4>
 
       <div className="flex flex-col gap-y-2">
-        {routineNotes.map((note) => (
-          <div key={note?.id} className="flex justify-between">
-            <Link to={`note/${note.note.id}`} className="flex items-center gap-x-2 text-gray-500">
-              <DocumentTextIcon className=" text-gray-400" height={16} /> {note.note.title}
+        {routineNotes.map((routineNote) => (
+          <div key={routineNote?.id} className="flex justify-between">
+            <Link to={`note/${routineNote.note.id}`} className="flex items-center gap-x-2 text-gray-500">
+              <DocumentTextIcon className=" text-gray-400" height={16} /> {routineNote.note.title}
             </Link>
-            <button onClick={() => onDelete(note)} className="rounded-md p-1">
+            <button onClick={() => onDelete(routineNote)} className="rounded-md p-1">
               <XMarkIcon width={20} height={20} className="text-gray-400 transition-colors hover:text-gray-500" />
             </button>
           </div>

@@ -1,21 +1,23 @@
 import { useRef, useState, ChangeEvent, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
-import { useOutsideClick } from '&/common/hooks'
-import { useSearchNote } from '&/modules/note/hooks'
 import { Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
+
+import { useOutsideClick } from '&/common/hooks'
+import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+import type { Note } from '&/modules/note/types'
+import type { Routine } from '&/modules/routine/types'
+import { useSearchNote } from '&/modules/note/hooks'
 import { useCreateRoutineNote } from '&/modules/routine-note/hooks'
-import { Note } from '&/modules/note/types'
 
 interface Props {
   isOpen: boolean
   close: () => void
+  routine: Routine
 }
 
-export function LinkNote({ isOpen = true, close }: Props) {
+export function LinkNote({ isOpen = true, close, routine }: Props) {
   const { t } = useTranslation(['action', 'note'])
   const ref = useRef<HTMLFormElement>(null)
   const [searchText, setSearchText] = useState<string>('')
@@ -35,7 +37,7 @@ export function LinkNote({ isOpen = true, close }: Props) {
     // setSearchText('')
   }
 
-  const onSelect = (note: Note) => onCreate(note)
+  const onSelect = (note: Note) => onCreate({ note, routine })
 
   return (
     <Transition

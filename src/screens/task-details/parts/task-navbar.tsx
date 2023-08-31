@@ -27,16 +27,17 @@ export function TaskNavbar({ task, isLoading }: Props) {
         <ItemMenu onDelete={open} withCopyLink isLoading={isLoading} onLinkNote={() => setLinkSelectorIsOpen(true)} />
         <CloseNavBtn />
         {task && (
-          <ConfirmDeleteModale
-            isOpen={isOpen}
-            onDelete={() => onDelete(task)}
-            close={close}
-            title="Delete task"
-            description="Are you sure you want to delete this task? This action cannot be undone."
-          />
+          <>
+            <ConfirmDeleteModale
+              isOpen={isOpen}
+              onDelete={() => onDelete(task)}
+              close={close}
+              title="Delete task"
+              description="Are you sure you want to delete this task? This action cannot be undone."
+            />
+            <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} task={task} />
+          </>
         )}
-
-        <LinkNote isOpen={linkSelectorIsOpen} close={() => setLinkSelectorIsOpen(false)} />
       </div>
     </DetailsNavbar>
   )
