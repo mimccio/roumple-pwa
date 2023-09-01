@@ -32,7 +32,7 @@ export function useBoardTasks({ scheduleType, showDone }: Params) {
 
   const tasks = data?.filter((task) => filterTasks({ task, category, showDone }))
 
-  const tasksShowStatus = useShow({ data, isLoading, error, isPaused })
+  const tasksShowStatus = useShow({ data, isLoading, error, isPaused, filteredList: tasks })
 
   return { tasks, tasksShowStatus }
 }

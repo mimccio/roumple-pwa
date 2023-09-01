@@ -9,6 +9,6 @@
   "occurrence": "Occurrence",
   "time-per_one": "time per ",
   "time-per_other": "times per ",
-  "noRoutineWithCategory": "No routine with \"<0>%{category}</0>\" category",
-  "noArchivedRoutineWithCategory": "No archived routine with \"<0>%{category}</0>\" category"
+  "noRoutineWithCategory": "No routine with \"<1>{{category}}</1>\" category",
+  "noArchivedRoutineWithCategory": "No archived routine with \"<1>{{category}}</1>\" category"
 }

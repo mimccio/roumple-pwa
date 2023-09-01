@@ -37,7 +37,7 @@ export function useBoardRoutines({ scheduleType, showDone }: Params) {
 
   const routines = data?.filter((routine) => filterRoutines({ routine, category, showDone }))
 
-  const routinesShowStatus = useShow({ data, isLoading, error, isPaused })
+  const routinesShowStatus = useShow({ data, isLoading, error, isPaused, filteredList: routines })
 
   return { routines, date, routinesShowStatus }
 }

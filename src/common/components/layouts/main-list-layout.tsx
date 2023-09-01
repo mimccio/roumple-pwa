@@ -5,5 +5,5 @@ interface Props {
 }
 
 export function MainListLayout({ children }: Props) {
-  return <div className="flex flex-col gap-y-4 px-4">{children}</div>
+  return <div className="flex flex-col gap-y-4 px-2 xl:px-4">{children}</div>
 }

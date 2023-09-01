@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useAtom } from 'jotai'
 
 import type { ScheduleType } from '&/common/types'
 import { sortItems } from '&/common/utils/list'
 
+import { categoryAtom } from '&/modules/category/atoms'
 import { useBoardTasks } from '&/modules/task/hooks'
 import { useBoardRoutines, useUpsertAction } from '&/modules/routine/hooks'
 
@@ -11,6 +13,7 @@ interface Params {
 }
 
 export function useBoardList({ scheduleType }: Params) {
+  const [category] = useAtom(categoryAtom)
   const [showDone, setShowDone] = useState(false)
   const [showPeriod, setShowPeriod] = useState(true)
 
@@ -33,9 +36,12 @@ export function useBoardList({ scheduleType }: Params) {
     empty: tasksShowStatus.empty && routinesShowStatus.empty,
     offline: tasksShowStatus.offline || routinesShowStatus.offline,
     data: tasksShowStatus.data && routinesShowStatus.data,
+    emptyFilteredList:
+      Boolean(category) && routinesShowStatus.emptyFilteredList && routinesShowStatus.emptyFilteredList,
   }
 
-  showStatus.empty = !list.length && !showStatus.loading && !showStatus.error && !showStatus.offline
+  showStatus.empty =
+    !list.length && !showStatus.loading && !showStatus.error && !showStatus.offline && !showStatus.emptyFilteredList
   showStatus.data = !showStatus.loading && !showStatus.error && !showStatus.empty && !showStatus.offline
 
   return {

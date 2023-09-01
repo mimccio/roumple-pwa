@@ -1,12 +1,10 @@
-import { Transition } from '@headlessui/react'
-
 import type { ScheduleType } from '&/common/types'
-import { ContentLayout } from '&/common/components/layouts/content-layout'
+import { MainListLayout, ContentLayout } from '&/common/components/layouts'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { useBoardList } from '&/modules/board/hooks'
 
 import { MainError, OfflineError } from '../errors'
-import { Header, EmptyTodo, EmptyDone, PeriodList, ItemList } from './components'
+import { Header, EmptyContent, PeriodList, ItemList } from './parts'
 
 interface Props {
   scheduleType: ScheduleType
@@ -31,39 +29,23 @@ export function BoardScreen({ scheduleType, title }: Props) {
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
 
-        <div className="z-10 flex flex-col gap-4 px-2">
+        <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-          {!showPeriod && showDone && <ItemList list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />}
-          {!showPeriod && !showDone && <ItemList list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />}
+          {showStatus.data && !showPeriod && showDone && (
+            <ItemList list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
+          )}
+          {showStatus.data && !showPeriod && !showDone && (
+            <ItemList list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
+          )}
 
-          {showPeriod && showDone && (
+          {showStatus.data && showPeriod && showDone && (
             <PeriodList scheduleType={scheduleType} list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
           )}
-          {showPeriod && !showDone && (
+          {showStatus.data && showPeriod && !showDone && (
             <PeriodList scheduleType={scheduleType} list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
           )}
-        </div>
-
-        <Transition
-          as="div"
-          show={showStatus.empty && !showDone}
-          className="absolute bottom-0 top-0 w-full"
-          enter="transition ease-in-out duration-700"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-        >
-          <EmptyTodo />
-        </Transition>
-        <Transition
-          as="div"
-          show={showStatus.empty && showDone}
-          className="absolute bottom-0 top-0 w-full"
-          enter="transition ease-in-out duration-700"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-        >
-          <EmptyDone />
-        </Transition>
+        </MainListLayout>
+        <EmptyContent showStatus={showStatus} showDone={showDone} />
       </ContentLayout>
     </>
   )

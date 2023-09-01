@@ -1,5 +1,4 @@
 import groupBy from 'lodash/groupBy'
-import { motion, AnimatePresence } from 'framer-motion'
 
 import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
@@ -25,37 +24,13 @@ export function PeriodList({ scheduleType, list = [], handleUpdateRoutineStatus 
   if (scheduleType === SCHEDULE_TYPES.weekly) color = 'sky'
   if (scheduleType === SCHEDULE_TYPES.monthly) color = 'purple'
 
-  const listVariant = {
-    visible: { opacity: 1, scaleY: 1 },
-    hidden: {
-      opacity: 0,
-      scaleY: 0,
-      height: 0,
-      marginBottom: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  }
-
   return (
-    <div className="flex flex-col ">
-      <AnimatePresence>
-        {items.map((group) => (
-          <motion.div
-            key={group[0]}
-            animate="visible"
-            exit="hidden"
-            className="mb-8"
-            style={{ originY: 0 }}
-            variants={listVariant}
-          >
-            <Disclosure color={color} title={getPeriodText({ scheduleType, period: Number(group[0]) })}>
-              <ItemList list={group[1]} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
-            </Disclosure>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </div>
+    <>
+      {items.map((group) => (
+        <Disclosure key={group[0]} color={color} title={getPeriodText({ scheduleType, period: Number(group[0]) })}>
+          <ItemList list={group[1]} handleUpdateRoutineStatus={handleUpdateRoutineStatus} />
+        </Disclosure>
+      ))}
+    </>
   )
 }
