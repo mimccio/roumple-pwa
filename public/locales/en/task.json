@@ -5,5 +5,6 @@
   "noDoneTask": "No done task",
   "createNewTask": "Create a new task +",
   "enterTaskName": "Enter task name",
-  "noTaskWithCategory": "No task with \"<0>%{category}</0>\" category"
+  "noTaskWithCategory": "No task with \"<0>%{category}</0>\" category",
+  "noDoneTaskWithCategory": "No done task with \"<0>%{category}</0>\" category"
 }

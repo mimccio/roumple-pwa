@@ -5,5 +5,6 @@
   "noDoneTask": "Aucune tâche terminée",
   "createNewTask": "Créer une nouvelle tâche +",
   "enterTaskName": "Entrer le nom de la tâche",
-  "noTaskWithCategory": "Aucune tâche avec catégorie \"<1>{{category}}\"</1>"
+  "noTaskWithCategory": "Aucune tâche avec catégorie \"<1>{{category}}\"</1>",
+  "noDoneTaskWithCategory": "Aucune tâche faite avec catégorie \"<1>{{category}}\"</1>"
 }
