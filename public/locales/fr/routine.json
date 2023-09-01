@@ -9,5 +9,6 @@
   "occurrence": "Occurrence",
   "time-per_one": "fois par ",
   "time-per_other": "fois par ",
-  "noRoutineWithCategory": "Aucune routine avec catégorie \"<1>{{category}}\"</1>"
+  "noRoutineWithCategory": "Aucune routine avec catégorie \"<1>{{category}}\"</1>",
+  "noArchivedRoutineWithCategory": "Aucune routine archivée avec catégorie \"<1>{{category}}\"</1>"
 }

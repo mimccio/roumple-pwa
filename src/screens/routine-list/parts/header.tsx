@@ -6,9 +6,9 @@ import { ArchiveBoxIcon as ArchiveBoxOutlineIcon, ArrowPathRoundedSquareIcon } f
 import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
 import { cl } from '&/common/utils'
 import { Tooltip } from '&/common/components/tooltip'
+import type { SortType } from '&/modules/routine/types'
 import { categoryAtom } from '&/modules/category/atoms'
 import { RoutinesMenu } from './routines-menu'
-import { SortType } from '&/modules/routine/types'
 
 interface Props {
   archived: boolean

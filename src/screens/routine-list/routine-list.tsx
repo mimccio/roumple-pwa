@@ -1,22 +1,17 @@
-import { Trans, useTranslation } from 'react-i18next'
-
-import locationImg from '&/assets/illustrations/location.png'
-import workflowImg from '&/assets/illustrations/workflow.png'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
-import { EmptyMainContent } from '&/common/components/empty-screens'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineList } from '&/modules/routine/hooks'
 import { CreateRoutineModale } from '&/modules/routine/components/create-routine-modale'
 
 import { MainError, OfflineError } from '../errors'
-import { Header } from './header'
-import { Item } from './item'
-import { GroupedByScheduleRoutineList } from './grouped-by-schedule-routine-list'
+import { Header } from './parts/header'
+import { Item } from './parts/item'
+import { GroupedByScheduleRoutineList } from './parts/grouped-by-schedule-routine-list'
+import { EmptyContent } from './parts/empty-content'
 
 export function RoutineList() {
-  const { t } = useTranslation('routine')
   const {
     archived,
     createIsOpen,
@@ -43,20 +38,6 @@ export function RoutineList() {
       <ContentLayout>
         {showStatus.error && <MainError />}
         {showStatus.offline && <OfflineError />}
-        {showStatus.empty && !archived && (
-          <EmptyMainContent onClick={onOpenCreate} text={t('createNewRoutine')} image={workflowImg} />
-        )}
-        {showStatus.empty && archived && <EmptyMainContent text={t('noArchivedRoutine')} image={locationImg} />}
-        {showStatus.emptyFilteredList && category && (
-          <EmptyMainContent
-            text={
-              <Trans t={t} i18nKey="noRoutineWithCategory" values={{ category: category.name }}>
-                No routine with <span className="font-semibold">{category.name}</span> category
-              </Trans>
-            }
-            image={locationImg}
-          />
-        )}
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
@@ -67,6 +48,8 @@ export function RoutineList() {
             routineList?.map((routine) => <Item key={routine.id} routine={routine as Routine} />)
           )}
         </MainListLayout>
+
+        <EmptyContent showStatus={showStatus} archived={archived} category={category} onOpenCreate={onOpenCreate} />
       </ContentLayout>
       <CreateRoutineModale isOpen={createIsOpen} close={onCloseCreate} />
     </>
