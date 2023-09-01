@@ -4,5 +4,6 @@
   "confirmDeleteAllDoneTasks": "Are you sure you want to delete all done tasks? This action cannot be undone.",
   "noDoneTask": "No done task",
   "createNewTask": "Create a new task +",
-  "enterTaskName": "Enter task name"
+  "enterTaskName": "Enter task name",
+  "noTaskWithCategory": "No task with \"<0>%{category}</0>\" category"
 }

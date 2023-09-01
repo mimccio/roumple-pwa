@@ -1,12 +1,11 @@
-import { useTranslation } from 'react-i18next'
-import { Transition } from '@headlessui/react'
+import { Trans, useTranslation } from 'react-i18next'
 
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
 import { ListSkeleton } from '&/common/components/list-skeleton'
-import { EmptyScreen } from '&/common/components/empty-screen'
-import { EmptyMainContent } from '&/common/components/empty-main-content'
+import { EmptyMainContent } from '&/common/components/empty-screens'
 import workflowImg from '&/assets/illustrations/workflow.png'
 import successImg from '&/assets/illustrations/success.png'
+import locationImg from '&/assets/illustrations/location.png'
 
 import { useTaskList } from '&/modules/task/hooks'
 import { CreateTaskModale } from '&/modules/task/components'
@@ -25,6 +24,7 @@ export function TaskListScreen() {
     showDone,
     showStatus,
     taskList,
+    category,
   } = useTaskList()
 
   return (
@@ -41,30 +41,24 @@ export function TaskListScreen() {
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-
-          {showDone && <TaskListContent list={taskList} />}
-          {!showDone && <TaskListContent list={taskList} />}
+          {showStatus.data && showDone && <TaskListContent list={taskList} />}
+          {showStatus.data && !showDone && <TaskListContent list={taskList} />}
         </MainListLayout>
-        <Transition
-          as="div"
-          show={showStatus.empty && !showDone}
-          className="absolute bottom-0 top-0 w-full"
-          enter="transition ease-in-out duration-700"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-        >
+
+        {showStatus.empty && !showDone && (
           <EmptyMainContent onClick={onOpenCreate} text={t('createNewTask')} image={workflowImg} />
-        </Transition>
-        <Transition
-          as="div"
-          show={showStatus.empty && showDone}
-          className="absolute bottom-0 top-0 w-full"
-          enter="transition ease-in-out duration-700"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-        >
-          <EmptyScreen opacity text={t('noDoneTask')} image={successImg} />
-        </Transition>
+        )}
+        {showStatus.empty && showDone && <EmptyMainContent text={t('noDoneTask')} image={successImg} />}
+        {showStatus.emptyFilteredList && category && (
+          <EmptyMainContent
+            text={
+              <Trans t={t} i18nKey="noTaskWithCategory" values={{ category: category.name }}>
+                No task with <span className="font-semibold">{category.name}</span> category
+              </Trans>
+            }
+            image={locationImg}
+          />
+        )}
       </ContentLayout>
       <CreateTaskModale isOpen={createIsOpen} close={onCloseCreate} />
     </>

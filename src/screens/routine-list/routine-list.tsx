@@ -1,8 +1,10 @@
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
+
+import locationImg from '&/assets/illustrations/location.png'
 import workflowImg from '&/assets/illustrations/workflow.png'
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
-import { EmptyMainContent } from '&/common/components/empty-main-content'
+import { EmptyMainContent } from '&/common/components/empty-screens'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineList } from '&/modules/routine/hooks'
@@ -11,7 +13,6 @@ import { CreateRoutineModale } from '&/modules/routine/components/create-routine
 import { MainError, OfflineError } from '../errors'
 import { Header } from './header'
 import { Item } from './item'
-import { EmptyArchived } from './empty-archived'
 import { GroupedByScheduleRoutineList } from './grouped-by-schedule-routine-list'
 
 export function RoutineList() {
@@ -27,6 +28,7 @@ export function RoutineList() {
     routineList,
     showStatus,
     isGroupedBySchedule,
+    category,
   } = useRoutineList()
 
   return (
@@ -44,7 +46,17 @@ export function RoutineList() {
         {showStatus.empty && !archived && (
           <EmptyMainContent onClick={onOpenCreate} text={t('createNewRoutine')} image={workflowImg} />
         )}
-        {showStatus.empty && archived && <EmptyArchived />}
+        {showStatus.empty && archived && <EmptyMainContent text={t('noArchivedRoutine')} image={locationImg} />}
+        {showStatus.emptyFilteredList && category && (
+          <EmptyMainContent
+            text={
+              <Trans t={t} i18nKey="noRoutineWithCategory" values={{ category: category.name }}>
+                No routine with <span className="font-semibold">{category.name}</span> category
+              </Trans>
+            }
+            image={locationImg}
+          />
+        )}
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}

@@ -3,15 +3,17 @@ interface Params {
   isPaused?: boolean
   error: unknown
   data: unknown
+  filteredList?: unknown[]
 }
 
-export function useShow({ isLoading, data, isPaused = false, error }: Params) {
+export function useShow({ isLoading, data, isPaused = false, error, filteredList }: Params) {
   const show = {
     loading: false,
     error: false,
     empty: false,
     offline: false,
     data: false,
+    emptyFilteredList: false,
   }
 
   if (error) {
@@ -24,6 +26,8 @@ export function useShow({ isLoading, data, isPaused = false, error }: Params) {
     show.empty = true
   } else if (data && Array.isArray(data) && !data.length) {
     show.empty = true
+  } else if (data && Array.isArray(data) && data.length && !filteredList?.length) {
+    show.emptyFilteredList = true
   } else {
     show.data = true
   }

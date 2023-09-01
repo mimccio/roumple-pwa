@@ -24,7 +24,8 @@ export function useTaskList() {
     : data
     ? data.sort(sortTask(sortType))
     : undefined
-  const showStatus = useShow({ data, isLoading, error, isPaused })
+
+  const showStatus = useShow({ data, isLoading, error, isPaused, filteredList: taskList })
   const handleDoneChange = () => setShowDone((prevState) => !prevState)
   const handleSortChange = (newSortType: SortType) => setSortType(newSortType)
   const onOpenCreate = () => setCreateIsOpen(true)
@@ -39,5 +40,6 @@ export function useTaskList() {
     createIsOpen,
     onOpenCreate,
     onCloseCreate,
+    category,
   }
 }

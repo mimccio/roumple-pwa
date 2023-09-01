@@ -26,7 +26,7 @@ export function useRoutineList() {
     ? data.sort(sortRoutines(sortType))
     : []
 
-  const showStatus = useShow({ data, isLoading, error, isPaused })
+  const showStatus = useShow({ data, isLoading, error, isPaused, filteredList: routineList })
   const handleShowArchived = () => setArchived((prevState) => !prevState)
   const onOpenCreate = () => setCreateIsOpen(true)
   const onCloseCreate = () => setCreateIsOpen(false)
@@ -44,5 +44,6 @@ export function useRoutineList() {
     routineList,
     showStatus,
     isGroupedBySchedule,
+    category,
   }
 }
