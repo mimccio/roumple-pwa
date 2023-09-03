@@ -4,12 +4,13 @@ import { TaskListItem } from '&/modules/task/components'
 
 interface Props {
   list?: Task[]
+  listId: string
 }
 
-export function TaskListContent({ list = [] }: Props) {
+export function TaskListContent({ list = [], listId }: Props) {
   return (
     <ul>
-      <AnimatePresence>
+      <AnimatePresence key={listId}>
         {list?.map((task) => (
           <motion.li
             key={task.id}
