@@ -62,7 +62,7 @@ export function EditOccurrence({ routine, isOpen, close }: Props) {
               'flex w-10 items-center justify-center rounded-lg border border-transparent py-1 text-center font-semibold text-gray-700 outline-none focus:border-indigo-300',
               inputBg
             )}
-            value={occurrence.toString()}
+            value={occurrence?.toString()}
           />
           <span>{t('time-per', { ns: 'routine', count: occurrence })}</span>
           <span className={cl(getTypeTextColor())}>{typeText}</span>
