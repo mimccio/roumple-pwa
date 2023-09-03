@@ -1,5 +1,6 @@
-import { Fragment } from 'react'
+import { Fragment, useRef, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
@@ -20,6 +21,32 @@ export function Occurrence({ routine, action }: Props) {
   const typeText = useOccurrenceTypeText(routine.scheduleType)
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
   const inputBg = getOccurrenceBg(routine.scheduleType)
+  const prevCountRef = useRef<number>(action?.doneOccurrence || 0)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const doneOccurrence = action?.doneOccurrence || 0
+
+  const getColor = () => {
+    if (doneOccurrence === 0) return '#6b7280'
+    if (doneOccurrence === occurrence) return '#22c55e'
+    return '#3b82f6'
+  }
+
+  const variants = {
+    initial: {
+      scale: 1,
+    },
+    visible: {
+      color: ['#10b981', '#10b981', getColor()],
+      scale: [1, 2, 1],
+    },
+  }
+
+  useEffect(() => {
+    if (prevCountRef.current !== doneOccurrence) {
+      setIsAnimating(true)
+      prevCountRef.current = doneOccurrence
+    }
+  }, [doneOccurrence]) //run this code when the value of count changes
 
   const getTypeTextColor = () => {
     if (routine.scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-600 group-hover:text-sky-700'
@@ -31,8 +58,16 @@ export function Occurrence({ routine, action }: Props) {
 
   return (
     <Popover>
-      <Popover.Button className="text-lg font-bold text-gray-500 transition-colors group-hover:text-gray-600">
-        {action?.doneOccurrence || 0} / {routine.occurrence}
+      <Popover.Button className="text-lg font-bold  transition-colors group-hover:text-gray-600">
+        <motion.p
+          key={action?.doneOccurrence}
+          animate={isAnimating ? 'visible' : 'initial'}
+          variants={variants}
+          className={cl('origin-left')}
+          style={{ color: getColor() }}
+        >
+          {doneOccurrence} / {routine.occurrence}
+        </motion.p>
       </Popover.Button>
 
       <Transition
