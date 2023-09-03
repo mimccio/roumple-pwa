@@ -9,10 +9,13 @@ import { ToastOfflineReady, ToastRefresh } from './common/components/toasts'
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    toast.custom((t) => <ToastRefresh t={t} onUpdate={updateSW} />, { duration: Infinity, position: 'top-center' })
+    toast.custom((toast) => <ToastRefresh toast={toast} onUpdate={updateSW} />, {
+      duration: Infinity,
+      position: 'top-center',
+    })
   },
   onOfflineReady() {
-    toast.custom((t) => <ToastOfflineReady t={t} />, { duration: Infinity, position: 'top-center' })
+    toast.custom((toast) => <ToastOfflineReady toast={toast} />, { duration: Infinity, position: 'top-center' })
   },
 })
 

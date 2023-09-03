@@ -1,4 +1,10 @@
 {
   "offlineDataNotUpToDate": "We're offline, data may not be up to date",
-  "loadingDataNotUpToDate": "Still loading, data is not up to date..."
+  "loadingDataNotUpToDate": "Still loading, data is not up to date...",
+  "Please refresh": "Please refresh",
+  "newVersionAvailable": "A new version is available.",
+  "Refresh": "Refresh",
+  "Dismiss": "Dismiss",
+  "Offline ready": "Offline ready",
+  "appReadyToWorkOffline": "The app is ready to work offline."
 }
