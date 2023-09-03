@@ -89,7 +89,13 @@ export function useUpsertAction({ scheduleType, date }: Params) {
     let newStatus = status
     let newDoneOccurrence = prevDoneOccurrence
 
+    if (prevStatus === status && status !== STATUSES.todo) return
+
     if (status === STATUSES.todo && prevDoneOccurrence > 0) {
+      newDoneOccurrence = prevDoneOccurrence - 1
+    }
+
+    if (status === STATUSES.inProgress && prevDoneOccurrence === routine.occurrence) {
       newDoneOccurrence = prevDoneOccurrence - 1
     }
 
@@ -98,8 +104,9 @@ export function useUpsertAction({ scheduleType, date }: Params) {
       newDoneOccurrence === routine.occurrence ? STATUSES.done : (newStatus = STATUSES.todo)
     }
 
-    if (prevStatus === status && (prevStatus !== STATUSES.todo || !prevCheckedList?.length) && prevDoneOccurrence < 1)
+    if (prevStatus === status && (prevStatus !== STATUSES.todo || !prevCheckedList?.length) && prevDoneOccurrence < 1) {
       return
+    }
 
     const checkedList = newStatus === STATUSES.todo ? [] : prevCheckedList
     mutate({ routine, status: newStatus, date, checkedList, doneOccurrence: newDoneOccurrence, actionId: action?.id })
