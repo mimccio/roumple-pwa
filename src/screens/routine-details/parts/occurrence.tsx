@@ -22,31 +22,66 @@ export function Occurrence({ routine, action }: Props) {
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
   const inputBg = getOccurrenceBg(routine.scheduleType)
   const prevCountRef = useRef<number>(action?.doneOccurrence || 0)
+  const prevIdRef = useRef<string>(routine.id)
+
   const [isAnimating, setIsAnimating] = useState(false)
+  const [animationVariant, setAnimationVariant] = useState<string>('initial')
+
+  const [color, setColor] = useState('#6b7280')
   const doneOccurrence = action?.doneOccurrence || 0
 
-  const getColor = () => {
-    if (doneOccurrence === 0) return '#6b7280'
-    if (doneOccurrence === occurrence) return '#22c55e'
-    return '#3b82f6'
+  const getTwColor = () => {
+    if (doneOccurrence === 0) return 'text-gray-500'
+    if (doneOccurrence === occurrence) return 'text-green-500'
+    return 'text-blue-500'
   }
 
   const variants = {
     initial: {
       scale: 1,
+      color,
     },
-    visible: {
-      color: ['#10b981', '#10b981', getColor()],
+    max: {
+      color: ['#10b981', '#10b981', '#22c55e'],
+      scale: [1, 2, 1],
+    },
+    zero: {
+      color: ['#10b981', '#10b981', '#6b7280'],
+      scale: [1, 2, 1],
+    },
+    between: {
+      color: ['#10b981', '#10b981', '#3b82f6'],
       scale: [1, 2, 1],
     },
   }
 
   useEffect(() => {
-    if (prevCountRef.current !== doneOccurrence) {
+    const getColor = () => {
+      if (doneOccurrence === 0) {
+        setColor('#6b7280')
+      } else if (doneOccurrence === routine.occurrence) {
+        setColor('#22c55e')
+      } else {
+        setColor('#3b82f6')
+      }
+    }
+    getColor()
+    if (prevCountRef.current !== doneOccurrence && prevIdRef.current === routine.id) {
+      setAnimationVariant('')
+
+      if (doneOccurrence === 0) {
+        setAnimationVariant('zero')
+      } else if (doneOccurrence === routine.occurrence) {
+        setAnimationVariant('max')
+      } else {
+        setAnimationVariant('between')
+      }
       setIsAnimating(true)
       prevCountRef.current = doneOccurrence
     }
-  }, [doneOccurrence]) //run this code when the value of count changes
+
+    prevIdRef.current = routine.id
+  }, [doneOccurrence, routine.id, routine.occurrence])
 
   const getTypeTextColor = () => {
     if (routine.scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-600 group-hover:text-sky-700'
@@ -60,11 +95,10 @@ export function Occurrence({ routine, action }: Props) {
     <Popover>
       <Popover.Button className="text-lg font-bold  transition-colors group-hover:text-gray-600">
         <motion.p
-          key={action?.doneOccurrence}
-          animate={isAnimating ? 'visible' : 'initial'}
+          animate={isAnimating ? animationVariant : false}
           variants={variants}
-          className={cl('origin-left')}
-          style={{ color: getColor() }}
+          className={cl('origin-left', getTwColor())}
+          onAnimationComplete={() => setAnimationVariant('initial')}
         >
           {doneOccurrence} / {routine.occurrence}
         </motion.p>
