@@ -19,11 +19,7 @@ export function CategorySelector({ category, categoryList, isLoading, isError, o
 
   return (
     <div className="w-full">
-      <Listbox
-        disabled={isLoading || isError}
-        value={category || { id: null, name: t('noCategory') }}
-        onChange={onSelect}
-      >
+      <Listbox disabled={isLoading || isError} value={category} onChange={onSelect}>
         {({ open }) => (
           <div className="relative">
             <CategoryBtn category={category} isLoading={isLoading} isError={isError} />

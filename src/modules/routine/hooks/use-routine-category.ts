@@ -14,7 +14,8 @@ export function useRoutineCategory(routine: Routine) {
 
   const { mutate } = useMutateRoutine(editRoutineCategory)
 
-  const onSelect = (category: Category) => {
+  const onSelect = (cat: Category) => {
+    const category = cat.id ? cat : null
     mutate({ ...routine, category })
     // update selected category if there is one selected
     if (selectedCategory?.id) {
