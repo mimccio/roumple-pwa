@@ -36,8 +36,7 @@ export function useBoardList({ scheduleType }: Params) {
     empty: tasksShowStatus.empty && routinesShowStatus.empty,
     offline: tasksShowStatus.offline || routinesShowStatus.offline,
     data: tasksShowStatus.data && routinesShowStatus.data,
-    emptyFilteredList:
-      Boolean(category) && routinesShowStatus.emptyFilteredList && routinesShowStatus.emptyFilteredList,
+    emptyFilteredList: Boolean(category) && routinesShowStatus.emptyFilteredList && tasksShowStatus.emptyFilteredList,
   }
 
   showStatus.empty =
