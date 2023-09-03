@@ -1,5 +1,5 @@
 {
-  "emptyDone": "Nothing done yet",
+  "emptyDone": "Nothing scheduled done yet",
   "emptyTodo": "All done",
   "selectItemToViewDetails": "Select an item to view the details",
   "nothingToDOWithCategory": "Nothing to do with \"<0>%{category}</0>\" category",
