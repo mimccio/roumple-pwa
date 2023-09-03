@@ -44,7 +44,7 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
           action?.status === STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
         )}
       >
-        {action?.status === STATUSES.inProgress && (
+        {action?.status === STATUSES.inProgress && !showPlusOne && (
           <ChartBarIcon width={14} height={14} className="text-gray-300 transition-colors group-hover:text-gray-200" />
         )}
         {action?.status === STATUSES.done && (
