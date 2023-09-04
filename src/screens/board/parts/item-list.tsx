@@ -7,12 +7,13 @@ import { RoutineActionListItem } from './routine-action-list-item'
 interface Props {
   list: (Routine | Task)[]
   handleUpdateRoutineStatus: ({ routine, action, status }: UpdateStatusParams) => void
+  showDone?: boolean
 }
 
-export function ItemList({ list, handleUpdateRoutineStatus }: Props) {
+export function ItemList({ list, handleUpdateRoutineStatus, showDone }: Props) {
   return (
     <ul className="">
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} key={`${showDone}`}>
         {list.map((item) => (
           <motion.li
             key={item.id}

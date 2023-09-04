@@ -16,6 +16,8 @@ export function EmptyContent({ showStatus, showDone }: Props) {
   const [category] = useAtom(categoryAtom)
   const showEmpty = showStatus.emptyFilteredList || showStatus.empty
 
+  if (!showEmpty) return null
+
   const todoText =
     showStatus.emptyFilteredList && category ? (
       <Trans t={t} i18nKey="nothingToDOWithCategory" values={{ category: category.name }}>
@@ -34,7 +36,10 @@ export function EmptyContent({ showStatus, showDone }: Props) {
       t('emptyDone')
     )
 
-  if (!showDone && showEmpty) return <EmptyMainContent text={todoText} image={orderCompletedImg} />
-  if (showDone && showEmpty) return <EmptyMainContent text={doneText} image={successImg} />
-  return null
+  return (
+    <div className="absolute bottom-0 top-0 w-full">
+      {!showDone && <EmptyMainContent text={todoText} image={orderCompletedImg} />}
+      {showDone && <EmptyMainContent text={doneText} image={successImg} />}
+    </div>
+  )
 }

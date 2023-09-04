@@ -35,7 +35,7 @@ export function TaskListScreen() {
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-          {showStatus.data && <TaskListContent list={taskList} listId={`${showDone}-${category?.id}`} />}
+          {<TaskListContent list={taskList} showDone={showDone} />}
         </MainListLayout>
 
         <EmptyContent showStatus={showStatus} showDone={showDone} onOpenCreate={onOpenCreate} category={category} />

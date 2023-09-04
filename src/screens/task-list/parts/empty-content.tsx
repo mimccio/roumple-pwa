@@ -14,9 +14,10 @@ interface Props {
 
 export function EmptyContent({ showStatus, category, showDone, onOpenCreate }: Props) {
   const { t } = useTranslation('task')
+  if (!showStatus.empty && !showStatus.emptyFilteredList) return null
 
   return (
-    <>
+    <div className="absolute bottom-0 top-0 w-full">
       {showStatus.empty && !showDone && (
         <EmptyMainContent onClick={onOpenCreate} text={t('createNewTask')} image={workflowImg} />
       )}
@@ -41,6 +42,6 @@ export function EmptyContent({ showStatus, category, showDone, onOpenCreate }: P
           image={locationImg}
         />
       )}
-    </>
+    </div>
   )
 }

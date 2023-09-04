@@ -4,12 +4,13 @@ import { Item } from './item'
 
 interface Props {
   routineList: Routine[]
+  archived?: boolean
 }
 
-export function SimpleList({ routineList }: Props) {
+export function SimpleList({ routineList, archived }: Props) {
   return (
     <ul>
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} key={`${archived}`}>
         {routineList.map((routine) => (
           <motion.li
             key={routine.id}

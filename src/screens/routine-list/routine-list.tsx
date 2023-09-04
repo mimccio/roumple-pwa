@@ -42,9 +42,9 @@ export function RoutineList() {
           {showStatus.loading && <ListSkeleton />}
 
           {showStatus.data && isGroupedBySchedule ? (
-            <GroupedByScheduleRoutineList list={routineList} />
+            <GroupedByScheduleRoutineList list={routineList} archived={archived} />
           ) : (
-            <SimpleList routineList={routineList} />
+            <SimpleList routineList={routineList} archived={archived} />
           )}
         </MainListLayout>
 
