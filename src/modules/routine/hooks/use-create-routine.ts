@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
@@ -30,6 +30,10 @@ export function useCreateRoutine() {
   const [occurrence, setOccurrence] = useState(1)
   const id = uuidv4()
   const date = startOfToday()
+
+  useEffect(() => {
+    setCategory(globalCategory)
+  }, [globalCategory])
 
   const listKey = ROUTINE_KEYS.list({ archived: false })
   const { mutate } = useMutation(createRoutine, {

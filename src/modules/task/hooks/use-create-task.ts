@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
@@ -26,6 +26,10 @@ export function useCreateTask() {
   const [date, setDate] = useState<Date | null>(null)
   const [scheduleType, setScheduleType] = useState<TaskScheduleType>(null)
   const [period, setPeriod] = useState(0)
+
+  useEffect(() => {
+    setCategory(globalCategory)
+  }, [globalCategory])
 
   const { mutate } = useMutation(createTask, {
     onMutate: async (data) => {
