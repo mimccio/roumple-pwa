@@ -1,15 +1,14 @@
 import { ListSkeleton } from '&/common/components/list-skeleton'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
 
-import type { Routine } from '&/modules/routine/types'
 import { useRoutineList } from '&/modules/routine/hooks'
 import { CreateRoutineModale } from '&/modules/routine/components/create-routine-modale'
 
 import { MainError, OfflineError } from '../errors'
 import { Header } from './parts/header'
-import { Item } from './parts/item'
 import { GroupedByScheduleRoutineList } from './parts/grouped-by-schedule-routine-list'
 import { EmptyContent } from './parts/empty-content'
+import { SimpleList } from './parts/simple-list'
 
 export function RoutineList() {
   const {
@@ -45,7 +44,7 @@ export function RoutineList() {
           {showStatus.data && isGroupedBySchedule ? (
             <GroupedByScheduleRoutineList list={routineList} />
           ) : (
-            routineList?.map((routine) => <Item key={routine.id} routine={routine as Routine} />)
+            <SimpleList routineList={routineList} />
           )}
         </MainListLayout>
 

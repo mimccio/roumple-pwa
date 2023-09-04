@@ -5,7 +5,7 @@ import { SCHEDULE_TYPES } from '&/common/constants'
 import { Disclosure } from '&/common/components/disclosure'
 
 import type { Routine } from '&/modules/routine/types'
-import { Item } from './item'
+import { SimpleList } from './simple-list'
 
 interface Props {
   list?: Routine[]
@@ -29,14 +29,12 @@ export function GroupedByScheduleRoutineList({ list = [] }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       {items.map((group) => {
         return (
           <div key={group[0]}>
             <Disclosure color={getTypeColor(group[0])} title={t(group[0].toLocaleLowerCase())}>
-              {group[1].map((routine) => (
-                <Item key={routine.id} routine={routine as Routine} />
-              ))}
+              <SimpleList routineList={group[1]} />
             </Disclosure>
           </div>
         )
