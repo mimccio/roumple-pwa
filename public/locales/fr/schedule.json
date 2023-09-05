@@ -1,0 +1,43 @@
+{
+  "schedule": "Programmation",
+  "noSchedule": "Pas programmé",
+
+  "today": "Aujourd'hui",
+  "thisWeek": "Cette semaine",
+  "thisMonth": "Ce mois",
+  "tomorrow": "demain",
+  "nextWeek": "la semaine prochaine",
+  "nextMonth": "le mois prochain",
+  "daily": "Quotidien",
+  "weekly": "Hebdomadaire",
+  "monthly": "Mensuel",
+  "day": "jour",
+  "week": "semaine",
+  "month": "mois",
+
+  "period": {
+    "title": "Période",
+    "day": {
+      "morning": "Durant la matinée",
+      "lunchTime": "Entre midi et 2",
+      "duringDay": "Durant la journée",
+      "evening": "Dans la soirée"
+    },
+    "week": {
+      "duringWeek": "Durant la semaine",
+      "weekend": "Dans le weekend"
+    },
+    "month": {
+      "start": "Au début du mois",
+      "duringMonth": "Durant le mois",
+      "end": "À la fin du mois"
+    }
+  },
+
+  "scheduledFor": "Programmé pour",
+  "notScheduledFor": "Pas programmé pour",
+  "createdOn": "créé le",
+  "days": { "1": "lun", "2": "mar", "3": "mer", "4": "jeu", "5": "ven", "6": "sam", "7": "dim" },
+  "odd": "impair",
+  "even": "pair"
+}

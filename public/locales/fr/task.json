@@ -1,0 +1,10 @@
+{
+  "createTask": "créer tâche",
+  "clearDoneTasks": "Supprimer tâches terminées",
+  "confirmDeleteAllDoneTasks": "Êtes-vous sûr de vouloir supprimer toutes les tâches terminées ? Cette action est irréversible.",
+  "noDoneTask": "Aucune tâche terminée",
+  "createNewTask": "Créer une nouvelle tâche +",
+  "enterTaskName": "Entrer le nom de la tâche",
+  "noTaskWithCategory": "Aucune tâche avec catégorie \"<1>{{category}}\"</1>",
+  "noDoneTaskWithCategory": "Aucune tâche faite avec catégorie \"<1>{{category}}\"</1>"
+}

@@ -1,0 +1,63 @@
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.ProseMirror > * + * {
+  margin-top: 0.3em;
+}
+.ProseMirror ul,
+.ProseMirror ol {
+  padding: 0 1rem;
+}
+
+.ProseMirror .is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #ced4da;
+  pointer-events: none;
+  height: 0;
+}
+
+a.tiptap-link {
+  color: #14b8a6;
+  text-decoration: underline;
+  cursor: pointer;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+}
+
+a.tiptap-link:hover {
+  color: #22d3ee;
+}
+
+a.tiptap-link[href^="http://localhost"],
+a.tiptap-link[href^="https://dev.my.roumple"],
+a.tiptap-link[href^="https://my.roumple"]
+{
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  background-color: rgb(249 250 251);
+  border-radius: 8px;
+  border: 1px solid rgb(243 244 246);
+  color: #6366f1;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+}
+
+a.tiptap-link:hover[href^="http://localhost"],
+a.tiptap-link:hover[href^="https://dev.my.roumple"],
+a.tiptap-link:hover[href^="https://my.roumple"]
+{
+  color: #4f46e5;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}

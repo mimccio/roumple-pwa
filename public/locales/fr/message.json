@@ -1,0 +1,10 @@
+{
+  "offlineDataNotUpToDate": "Hors ligne, les données peuvent ne pas être à jour.",
+  "loadingDataNotUpToDate": "Chargement en cours, les données ne sont pas à jour...",
+  "Please refresh": "Veuillez rafraîchir svp",
+  "newVersionAvailable": "Une nouvelle version est disponible.",
+  "Refresh": "Rafraîchir",
+  "Dismiss": "Rejeter",
+  "Offline ready": "Prêt hors ligne",
+  "appReadyToWorkOffline": "L'application est prête pour fonctionner hors ligne."
+}

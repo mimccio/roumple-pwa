@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove blue highlight on touch screen */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE and Edge */
+  /* Firefox */
+  /* .no-scrollbar {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  } */
+}
+
+/* Remove focus ring on tap */
+*:focus {
+  -webkit-tap-highlight-color: transparent;
+  /* outline: none;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation; */
+}
+
+/* Remove arrows from number input*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  appearance: none;
+  -moz-appearance: textfield;
+}
