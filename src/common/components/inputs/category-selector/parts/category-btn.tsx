@@ -30,7 +30,7 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
         <span
           className={cl(
             'ml-3 block truncate font-semibold  transition-colors ',
-            category?.id ? 'text-gray-500 group-hover:text-gray-600' : 'text-gray-300 group-hover:text-gray-400'
+            category?.id ? 'text-gray-500 group-hover:text-gray-600' : 'text-gray-400 group-hover:text-gray-500'
           )}
         >
           {category?.name ||
