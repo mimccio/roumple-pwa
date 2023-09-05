@@ -23,7 +23,7 @@ export function TaskListHeader({ showDone, handleDoneChange, handleSortChange, o
         <CheckCircleIcon width={20} className="text-gray-400" />
         <h1 className="ml-2 text-gray-500">{t('tasks', { ns: 'common' })}</h1>
       </div>
-      <div className="flex gap-2">
+      <div className="relative flex gap-2">
         <TasksMenu handleSortChange={handleSortChange} />
         <Tooltip message={t('createTask', { ns: 'task' })}>
           <button className="group  rounded-md p-1" onClick={onCreate}>

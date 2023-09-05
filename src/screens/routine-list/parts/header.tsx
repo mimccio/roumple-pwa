@@ -34,7 +34,7 @@ export function Header({ handleShowArchived, archived, onCreate, handleSortChang
 
         <h1 className="ml-2">{t('routines', { ns: 'common' })}</h1>
       </div>
-      <div className="flex gap-1">
+      <div className="relative flex gap-1">
         <RoutinesMenu handleSortChange={handleSortChange} handleGroupBySchedule={handleGroupBySchedule} />
 
         <Tooltip message={t('createRoutine', { ns: 'routine' })}>

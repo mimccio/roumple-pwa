@@ -22,7 +22,7 @@ export function TasksMenu({ handleSortChange }: Props) {
   const { open, close, isOpen, onDelete } = useDeleteAllDoneTasks()
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="inline-block text-left">
       <Menu.Button className="flex h-full items-center justify-center rounded-md p-1 text-gray-400 transition-colors  hover:text-gray-500 focus:outline-none disabled:cursor-wait">
         <span className="sr-only">{t('openOptions', { ns: 'action' })}</span>
         <EllipsisHorizontalIcon width={24} aria-hidden="true" />
@@ -37,7 +37,7 @@ export function TasksMenu({ handleSortChange }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute -left-20 z-10 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1 ">
             <MenuBtn Icon={AdjustmentsVerticalIcon} handleClick={() => handleSortChange(SORT_TYPES.date)}>
               {t('sortByDate', { ns: 'action' })}
