@@ -30,7 +30,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
   if (isLoading && !actions) return <DetailsLoadingPage />
   if (actions) {
     return (
-      <div className="p-2">
+      <div className="mb-8 p-2">
         <h4 className="mb-4 p-4 text-center font-bold text-gray-500">{t('activity')}</h4>
         {routine.scheduleType === SCHEDULE_TYPES.daily && (
           <DayActivity
