@@ -32,7 +32,7 @@ export function ItemMenu({
   const { t } = useTranslation('action')
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="inline-block text-left">
       <div>
         <Menu.Button
           disabled={isLoading}

@@ -23,7 +23,7 @@ export function TaskNavbar({ task, isLoading }: Props) {
   return (
     <DetailsNavbar>
       <h4 className="text-sm font-semibold text-gray-500">{t('task')}</h4>
-      <div className="flex gap-x-2">
+      <div className="relative flex gap-x-2">
         <ItemMenu onDelete={open} withCopyLink isLoading={isLoading} onLinkNote={() => setLinkSelectorIsOpen(true)} />
         <CloseNavBtn />
         {task && (
