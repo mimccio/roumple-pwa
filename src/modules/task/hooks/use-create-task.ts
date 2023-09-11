@@ -55,7 +55,7 @@ export function useCreateTask() {
         )
       }
 
-      navigate(`d/task/${id}`)
+      navigate(`/tasks/d/task/${id}`)
       return { previousTaskList, previousTaskBoard }
     },
     onError: (_err, item, context) => {
