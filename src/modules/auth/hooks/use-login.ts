@@ -14,14 +14,12 @@ export const useLogin = () => {
   const handleEmailChange = (evt: FormEvent<HTMLInputElement>) => setEmail(evt.currentTarget.value)
 
   const getURL = () => {
-    let incompleteUrl = window.location.href
-
-    console.log('incompleteUrl :', incompleteUrl)
-    console.log('window.location :', window.location)
-    console.log('window.location.origin :', window.location.origin)
+    let incompleteUrl = window.location.origin
 
     // Make sure to include `https://` when not localhost.
     incompleteUrl = incompleteUrl.includes('http') ? incompleteUrl : `https://${incompleteUrl}`
+    // Redirect to today because we can't do it with template for local supabase (issue with trailing #)
+    incompleteUrl = incompleteUrl.includes('localhost') ? `${incompleteUrl}/today` : incompleteUrl
     // Make sure to including trailing `/`.
     return incompleteUrl.charAt(incompleteUrl.length - 1) === '/' ? incompleteUrl : `${incompleteUrl}/`
   }
