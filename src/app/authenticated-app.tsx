@@ -10,6 +10,7 @@ import { OfflineBanner } from './offline-banner'
 import { PlaningScreen } from '&/screens/planing/planing-screen'
 import { Route, Routes } from 'react-router'
 import { FeedbackScreen } from '&/screens/feedback'
+import { WelcomeScreen } from '&/screens/welcome/welcome-screen'
 
 export function AuthenticatedApp() {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -33,6 +34,7 @@ export function AuthenticatedApp() {
             }
           />
           <Route path="feedback/*" element={<FeedbackScreen />} />
+          <Route path="welcome/*" element={<WelcomeScreen />} />
 
           <Route
             path="*"

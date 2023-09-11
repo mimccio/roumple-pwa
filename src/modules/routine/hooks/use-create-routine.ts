@@ -53,7 +53,7 @@ export function useCreateRoutine() {
       // 🏫 Update Routine Board
       const previousBoardList = queryClient.getQueryData(boardKey)
       queryClient.setQueryData(boardKey, (old: Routine[] = []) => [...old, data])
-      navigate(`d/routine/${id}`)
+      navigate(`/routines/d/routine/${id}`)
       return { previousRoutineList, previousBoardList }
     },
     onError: (_err, item, context) => {

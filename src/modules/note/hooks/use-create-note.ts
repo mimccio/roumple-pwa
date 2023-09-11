@@ -4,7 +4,6 @@ import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 
-import { useMainPath } from '&/common/hooks'
 import { categoryAtom } from '&/modules/category/atoms'
 import { useNoteFolderDetails } from '&/modules/note-folder/hooks'
 
@@ -17,7 +16,6 @@ export function useCreateNote() {
   const id = uuidv4()
   const navigate = useNavigate()
   const [category] = useAtom(categoryAtom)
-  const mainPath = useMainPath()
   const { folder } = useNoteFolderDetails()
   const created_at = new Date()
 
@@ -33,7 +31,8 @@ export function useCreateNote() {
       const previousSearchList = queryClient.getQueryData(NOTE_KEYS.search({ searchText: '' }))
       queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), (old: Note[] = []) => [data, ...old])
 
-      navigate(`${mainPath}/d/note/${id}`)
+      const folderId = data.folder?.id || 'folders'
+      navigate(`/notes/${folderId}/d/note/${id}`)
       return { previousNoteListNoCategory, previousSearchList }
     },
 
