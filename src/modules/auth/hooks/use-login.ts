@@ -15,6 +15,11 @@ export const useLogin = () => {
 
   const getURL = () => {
     let incompleteUrl = window.location.href
+
+    console.log('incompleteUrl :', incompleteUrl)
+    console.log('window.location :', window.location)
+    console.log('window.location.origin :', window.location.origin)
+
     // Make sure to include `https://` when not localhost.
     incompleteUrl = incompleteUrl.includes('http') ? incompleteUrl : `https://${incompleteUrl}`
     // Make sure to including trailing `/`.
