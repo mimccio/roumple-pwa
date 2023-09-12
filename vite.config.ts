@@ -23,7 +23,6 @@ export default defineConfig({
         short_name: 'Roumple',
         description: 'My Roumple App',
         theme_color: '#f3f4f6',
-        start_url: '/',
         icons: [
           {
             src: 'assets/android-chrome-192x192.png',
