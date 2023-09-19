@@ -34,7 +34,11 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, schedule
       <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">{title}</div>
       <div className="flex gap-1">
         <Tooltip message={showPeriod ? 'hide period' : 'show period'}>
-          <button onClick={handleShowPeriod} className="group p-2">
+          <button
+            onClick={handleShowPeriod}
+            className="group p-2"
+            aria-label={showPeriod ? 'hide period' : 'show period'}
+          >
             {showPeriod ? (
               <ClockIcon width={20} className={cl('transition-colors', periodColor, hoverPeriodColor)} />
             ) : (
@@ -44,7 +48,7 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, schedule
         </Tooltip>
 
         <Tooltip message={showDone ? 'show to do' : 'show done'}>
-          <button onClick={handleDoneChange} className="group p-2">
+          <button onClick={handleDoneChange} className="group p-2" aria-label={showDone ? 'show to do' : 'show done'}>
             {showDone ? (
               <CheckBadgeIcon width={20} className="text-green-500 transition-colors group-hover:text-gray-300" />
             ) : (
@@ -55,7 +59,12 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, schedule
             )}
           </button>
         </Tooltip>
-        <button disabled={!category} onClick={() => setCategory(null)} className="p-2">
+        <button
+          disabled={!category}
+          onClick={() => setCategory(null)}
+          className="p-2"
+          aria-label="clear category filter"
+        >
           <TagIcon
             width={20}
             className={cl('transition-colors', category?.color ? TW_COLOR_TEXT_500[category.color] : 'text-gray-300')}

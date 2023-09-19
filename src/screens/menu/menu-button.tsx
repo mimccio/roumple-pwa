@@ -10,6 +10,7 @@ export function MenuButton({ isOpen, toggle }: Props) {
     <button
       onClick={toggle}
       className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center  justify-center rounded-full bg-gradient-to-br from-sky-300 from-15% via-purple-300 via-30% to-indigo-400 to-80% text-gray-50 shadow-md md:hidden"
+      aria-label="toggle menu"
     >
       {isOpen ? <XMarkIcon width={24} /> : <Bars3Icon width={24} />}
     </button>

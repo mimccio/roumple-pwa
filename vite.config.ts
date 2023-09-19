@@ -22,7 +22,7 @@ export default defineConfig({
         name: 'My Roumple',
         short_name: 'Roumple',
         description: 'My Roumple App',
-        theme_color: 'rgb(243 244 246)',
+        theme_color: '#f3f4f6',
         icons: [
           {
             src: 'assets/android-chrome-192x192.png',
@@ -33,6 +33,12 @@ export default defineConfig({
             src: 'assets/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
+          },
+          {
+            src: 'assets/maskable-icon.png',
+            sizes: '240x240',
+            type: 'image/png',
+            purpose: 'maskable',
           },
         ],
       },

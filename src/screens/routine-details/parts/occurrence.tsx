@@ -89,7 +89,7 @@ export function Occurrence({ routine, action }: Props) {
     return 'text-indigo-600 group-hover:text-indigo-700'
   }
 
-  if (routine.occurrence <= 1) return null
+  if (!routine?.occurrence || routine.occurrence <= 1) return null
 
   return (
     <Popover>
