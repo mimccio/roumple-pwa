@@ -8,7 +8,7 @@ import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
 
 import type { Routine } from '&/modules/routine/types'
 import type { Task } from '&/modules/task/types'
-import { mergeTaskAndRoutines, getUrl } from '../utils'
+import { mergeTaskAndRoutines, getItemUrl } from '../utils'
 import { DotItem } from './dot-item'
 
 interface Props {
@@ -37,7 +37,7 @@ export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect, 
           return (
             <li className="max-w-[200px] truncate" key={item.id}>
               <Link
-                to={getUrl(item)}
+                to={getItemUrl(item)}
                 className={cl(
                   'block w-full truncate rounded-sm px-2 py-1 text-xs font-medium transition-colors ',
                   color ? 'text-white' : 'text-gray-700 ',
