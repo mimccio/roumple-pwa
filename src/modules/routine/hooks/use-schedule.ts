@@ -6,7 +6,7 @@ import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'
-import { getIsScheduled } from '../utils'
+import { getIsScheduled, getScheduleTypeDate } from '../utils'
 import { editRoutineSchedule } from '../mutations'
 
 interface Params {
@@ -14,13 +14,14 @@ interface Params {
   date: Date
 }
 
-export function useSchedule({ routine, date }: Params) {
+export function useSchedule({ routine, date: mainDate }: Params) {
   const queryClient = useQueryClient()
   const [currentType, setType] = useState(routine.scheduleType)
   const [currentPeriod, setPeriod] = useState(routine.period)
   const [dailyRecurrence, setDailyRecurrence] = useState(routine.daily_recurrence)
   const [weeklyRecurrence, setWeeklyRecurrence] = useState(routine.weekly_recurrence)
   const [monthlyRecurrence, setMonthlyRecurrence] = useState(routine.monthly_recurrence)
+  const date = getScheduleTypeDate({ scheduleType: routine.scheduleType, date: mainDate })
 
   useEffect(() => {
     setType(routine.scheduleType)
