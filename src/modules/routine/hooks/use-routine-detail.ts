@@ -26,11 +26,13 @@ export function useRoutineDetail() {
     queryClient.getQueriesData<Routine[]>(ROUTINE_KEYS.boards()).forEach((query) => {
       const queryOptions = query[0][2] as { date: Date }
       const queryDate = queryOptions.date
+
       if (isSameDay(new Date(queryDate), date)) {
-        const action = query[1]?.find((item) => item.id === routineId)?.actions?.[0]
-        if (action) boardAction = action
+        const routine = query[1]?.find((item) => item.id === routineId)
+        if (routine) boardAction = routine.actions?.[0] || null
       }
     })
+
     return boardAction
   }
 
@@ -46,7 +48,7 @@ export function useRoutineDetail() {
   const scheduleType = routineQuery.data?.scheduleType
 
   const actionQuery = useQuery(ACTION_KEYS.detail({ routineId, date, scheduleType }), fetchRoutineAction, {
-    enabled: Boolean(scheduleType),
+    enabled: Boolean(scheduleType) && Boolean(routineId),
     initialDataUpdatedAt: () =>
       routineId ? queryClient.getQueryState(ACTION_KEYS.list(routineId))?.dataUpdatedAt : undefined,
     initialData: getBoardAction,
