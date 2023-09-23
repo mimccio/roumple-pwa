@@ -6,13 +6,13 @@ import { WeeksList } from './parts/weeks-list'
 
 interface Props {
   date: Date
-  handleDateChange: (date: Date) => void
+  onSelectDate: (date: Date) => void
   close: () => void
   noFuture?: boolean
   pastLimit?: number
 }
 
-export function WeekCalendar({ date, handleDateChange, noFuture, pastLimit, close }: Props) {
+export function WeekCalendar({ date, onSelectDate, noFuture, pastLimit, close }: Props) {
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth } = useCalendar()
 
   const weeks = eachWeekOfInterval(
@@ -23,8 +23,8 @@ export function WeekCalendar({ date, handleDateChange, noFuture, pastLimit, clos
     { weekStartsOn: 1 }
   )
 
-  const onSelectDate = (date: Date) => {
-    handleDateChange(date)
+  const handleDateChange = (date: Date) => {
+    onSelectDate(date)
     close()
   }
 
@@ -41,7 +41,7 @@ export function WeekCalendar({ date, handleDateChange, noFuture, pastLimit, clos
       <WeeksList
         firstDayCurrentMonth={firstDayCurrentMonth}
         noFuture={noFuture}
-        onSelectDay={onSelectDate}
+        onSelectDay={handleDateChange}
         selectedDay={startOfWeek(date, { weekStartsOn: 1 })}
         weeks={weeks}
       />

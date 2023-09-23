@@ -46,10 +46,10 @@ export function SelectDateBtn({ handleDateChange, date, scheduleType }: Props) {
             {({ close }) => (
               <>
                 {scheduleType === SCHEDULE_TYPES.daily && (
-                  <DayCalendar noFuture pastLimit={2} date={date} handleDateChange={handleDateChange} close={close} />
+                  <DayCalendar noFuture pastLimit={2} date={date} onSelectDate={handleDateChange} close={close} />
                 )}
                 {scheduleType === SCHEDULE_TYPES.weekly && (
-                  <WeekCalendar noFuture date={date} handleDateChange={handleDateChange} close={close} />
+                  <WeekCalendar noFuture date={date} onSelectDate={handleDateChange} close={close} />
                 )}
                 <CalendarBtn close={close} scheduleType={scheduleType} />
               </>

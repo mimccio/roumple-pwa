@@ -4,13 +4,13 @@ import { DaysHeader, DaysList, MonthSelector } from './parts'
 
 interface Props {
   date: Date
-  handleDateChange: (date: Date) => void
+  onSelectDate: (date: Date) => void
   close: () => void
   noFuture?: boolean
   pastLimit?: number
 }
 
-export function DayCalendar({ date, handleDateChange, noFuture, pastLimit, close }: Props) {
+export function DayCalendar({ date, onSelectDate, noFuture, pastLimit, close }: Props) {
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth } = useCalendar()
 
   const days = eachDayOfInterval({
@@ -18,8 +18,8 @@ export function DayCalendar({ date, handleDateChange, noFuture, pastLimit, close
     end: endOfWeek(endOfMonth(firstDayCurrentMonth), { weekStartsOn: 1 }),
   })
 
-  const onSelectDate = (date: Date) => {
-    handleDateChange(date)
+  const handleDateChange = (date: Date) => {
+    onSelectDate(date)
     close()
   }
 
@@ -37,7 +37,7 @@ export function DayCalendar({ date, handleDateChange, noFuture, pastLimit, close
         noFuture={noFuture}
         days={days}
         selectedDay={date}
-        onSelectDay={onSelectDate}
+        onSelectDay={handleDateChange}
         firstDayCurrentMonth={firstDayCurrentMonth}
       />
     </div>
