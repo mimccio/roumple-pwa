@@ -39,11 +39,10 @@ export function DayActivityBoard({ actions, occurrence, days, month, onDayClick,
                   !isScheduled && !action && 'border-gray-100 bg-white',
                   isFuture && isScheduled && 'border-gray-100 bg-gray-50',
                   Boolean(action) && 'border-transparent',
-                  action?.status === STATUSES.done && action.doneOccurrence === occurrence && 'bg-green-400',
-                  action?.status === STATUSES.done && action.doneOccurrence < occurrence && 'bg-blue-400',
-                  action?.status === STATUSES.inProgress && 'bg-blue-400',
+                  action?.status === STATUSES.inProgress && 'bg-cyan-500',
                   action?.status === STATUSES.todo && action.doneOccurrence === 0 && 'bg-gray-200',
-                  action?.doneOccurrence && action.doneOccurrence > 0 ? 'bg-blue-400' : '',
+                  action?.doneOccurrence && action.doneOccurrence > 0 ? 'bg-cyan-500' : '',
+                  action?.doneOccurrence && action.doneOccurrence >= occurrence ? 'bg-green-500' : '',
                   !action && 'bg-gray-200'
                 )}
               ></button>

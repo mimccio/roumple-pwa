@@ -7,11 +7,12 @@ import { WeeksList } from './parts/weeks-list'
 interface Props {
   date: Date
   onSelectDate: (date: Date) => void
+  close: () => void
   noFuture?: boolean
   pastLimit?: number
 }
 
-export function WeekCalendar({ date, onSelectDate, noFuture, pastLimit }: Props) {
+export function WeekCalendar({ date, onSelectDate, noFuture, pastLimit, close }: Props) {
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth } = useCalendar()
 
   const weeks = eachWeekOfInterval(
@@ -21,6 +22,11 @@ export function WeekCalendar({ date, onSelectDate, noFuture, pastLimit }: Props)
     },
     { weekStartsOn: 1 }
   )
+
+  const handleDateChange = (date: Date) => {
+    onSelectDate(date)
+    close()
+  }
 
   return (
     <div className="flex w-80 flex-col gap-y-4">
@@ -35,7 +41,7 @@ export function WeekCalendar({ date, onSelectDate, noFuture, pastLimit }: Props)
       <WeeksList
         firstDayCurrentMonth={firstDayCurrentMonth}
         noFuture={noFuture}
-        onSelectDay={onSelectDate}
+        onSelectDay={handleDateChange}
         selectedDay={startOfWeek(date, { weekStartsOn: 1 })}
         weeks={weeks}
       />

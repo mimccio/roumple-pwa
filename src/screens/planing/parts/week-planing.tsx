@@ -65,7 +65,7 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, we
 
               <ol className="mb-2 mt-2 flex flex-col gap-y-1">
                 {items.slice(0, 5).map((item) => (
-                  <PlaningItem key={item.id} name={item.name} id={item.id} color={item.category?.color} date={week} />
+                  <PlaningItem key={item.id} item={item} date={week} />
                 ))}
               </ol>
               {items.length > 5 && (

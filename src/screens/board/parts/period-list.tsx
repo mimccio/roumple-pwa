@@ -32,7 +32,6 @@ export function PeriodList({ scheduleType, list = [], handleUpdateRoutineStatus,
         {items.map((group) => (
           <motion.li
             key={group[0]}
-            initial={{ opacity: 0, scaleY: 0 }}
             animate={{ opacity: 1, x: 0, scaleY: 1 }}
             exit={{ opacity: 0, scaleY: 0, height: '0px' }}
             transition={{ duration: 0.3 }}

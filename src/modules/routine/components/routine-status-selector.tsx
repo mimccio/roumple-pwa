@@ -3,10 +3,11 @@ import { startOfMonth, startOfWeek } from 'date-fns'
 
 import type { Status } from '&/common/types'
 import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
+import { TodoBtn, InProgressBtn, DoneBtn, LoadingButton } from '&/common/components/buttons/status'
 
 import type { RoutineAction, Routine } from '&/modules/routine/types'
 import { useUpsertAction } from '&/modules/routine/hooks'
-import { TodoBtn, InProgressBtn, DoneBtn, LoadingButton } from './parts'
+import { getRoutineIsDone } from '&/modules/routine/utils/status'
 
 interface Props {
   routine: Routine
@@ -23,10 +24,10 @@ export function RoutineStatusSelector({ routine, date: dayDate, actionQuery }: P
     return date
   }
   const date = getDate()
-
   const { handleUpdateStatus } = useUpsertAction({ scheduleType: routine.scheduleType, date })
   const handleSelectStatus = (status: Status) => handleUpdateStatus({ routine, status, action })
   const showCheck = routine.occurrence <= 1 || routine.occurrence - (action?.doneOccurrence || 0) <= 1
+  const isDone = getRoutineIsDone({ routine, action })
 
   if (actionQuery.isLoading && !actionQuery.isPaused) {
     return (
@@ -42,17 +43,13 @@ export function RoutineStatusSelector({ routine, date: dayDate, actionQuery }: P
     <div className="flex items-center gap-2">
       <TodoBtn
         handleClick={() => handleSelectStatus(STATUSES.todo)}
-        isSelected={action?.status === STATUSES.todo || !action?.status}
+        isSelected={(!isDone && action?.status === STATUSES.todo) || !action?.status}
       />
       <InProgressBtn
         handleClick={() => handleSelectStatus(STATUSES.inProgress)}
-        isSelected={action?.status === STATUSES.inProgress}
+        isSelected={!isDone && action?.status === STATUSES.inProgress}
       />
-      <DoneBtn
-        showCheck={showCheck}
-        handleClick={() => handleSelectStatus(STATUSES.done)}
-        isSelected={action?.status === STATUSES.done}
-      />
+      <DoneBtn showCheck={showCheck} handleClick={() => handleSelectStatus(STATUSES.done)} isSelected={isDone} />
     </div>
   )
 }

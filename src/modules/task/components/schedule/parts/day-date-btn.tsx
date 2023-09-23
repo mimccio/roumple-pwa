@@ -43,7 +43,7 @@ export function DayDateBtn({ date, onSelectDate }: Props) {
           <Popover.Panel className=" absolute -left-24 -top-12 z-10 rounded-lg border bg-white p-2 shadow-md">
             {({ close }) => (
               <>
-                <DayCalendar date={date} onSelectDate={onSelectDate} />
+                <DayCalendar close={close} date={date} onSelectDate={onSelectDate} />
                 <CalendarBtn close={close} scheduleType={SCHEDULE_TYPES.daily} />
               </>
             )}

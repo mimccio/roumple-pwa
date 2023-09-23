@@ -51,7 +51,7 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTas
 
               <ol className="mb-2 mt-2 flex flex-col gap-y-1">
                 {items.slice(0, 5).map((item) => (
-                  <PlaningItem key={item.id} name={item.name} id={item.id} color={item.category?.color} date={day} />
+                  <PlaningItem key={item.id} date={day} item={item} />
                 ))}
               </ol>
               {items.length > 5 && (

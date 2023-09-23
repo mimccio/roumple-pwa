@@ -38,7 +38,7 @@ export function RoutineSchedule({ routine, date }: Props) {
   const getIsScheduledText = () => {
     if (routine.scheduleType === SCHEDULE_TYPES.monthly) return t('thisMonth', { ns: 'schedule' })
     if (routine.scheduleType === SCHEDULE_TYPES.weekly) return t('thisWeek', { ns: 'schedule' })
-    return t('today', { ns: 'schedule' })
+    return t('thisDay', { ns: 'schedule' })
   }
   const scheduledText = getIsScheduledText()
 

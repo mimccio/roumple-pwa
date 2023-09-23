@@ -89,7 +89,8 @@ export function useUpsertAction({ scheduleType, date }: Params) {
     let newStatus = status
     let newDoneOccurrence = prevDoneOccurrence
 
-    if (prevStatus === status && status !== STATUSES.todo) return
+    if (prevStatus === status && status === STATUSES.inProgress) return
+    if (prevStatus === status && status === STATUSES.done && prevDoneOccurrence >= routine.occurrence) return
 
     if (status === STATUSES.todo && prevDoneOccurrence > 0) {
       newDoneOccurrence = prevDoneOccurrence - 1

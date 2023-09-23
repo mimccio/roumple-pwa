@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 import type { UseQueryResult } from '@tanstack/react-query'
 
 import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
-import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
 import { CreatedAt } from '&/common/components/display/created-at'
 import { RoutineAction, Routine } from '&/modules/routine/types'
+import { RoutineStatusSelector } from '&/modules/routine/components'
 
 import {
   Priority,
@@ -50,7 +50,7 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery }:
           <div className="flex items-center gap-x-4">
             <RoutineStatusSelector routine={routine} actionQuery={actionQuery} date={date} />
             {actionQuery.isLoading && !actionQuery.isPaused ? null : (
-              <Occurrence routine={routine} action={actionQuery.data} />
+              <Occurrence routine={routine} action={actionQuery.data} date={date} />
             )}
           </div>
 

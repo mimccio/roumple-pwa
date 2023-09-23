@@ -13,7 +13,7 @@ import { cl, getDateFnsLocale, getTwBgColor } from '&/common/utils'
 import type { Routine } from '&/modules/routine/types'
 import type { Task } from '&/modules/task/types'
 import { mergeTaskAndRoutines } from '../utils/get-scheduled-items'
-import { getUrl } from '../utils/get-url'
+import { getItemUrl } from '../utils'
 
 interface Props {
   scheduleType?: ScheduleType
@@ -92,7 +92,7 @@ export function PlaningModale({ scheduleType, date, onClose, routines, tasks }: 
                     return (
                       <li key={item.id}>
                         <Link
-                          to={getUrl(item)}
+                          to={getItemUrl(item)}
                           state={{ date }}
                           className={cl(
                             'block w-full truncate rounded-sm px-2 py-1 text-left text-sm font-medium  transition-colors ',

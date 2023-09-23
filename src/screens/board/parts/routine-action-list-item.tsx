@@ -50,7 +50,7 @@ export function RoutineActionListItem({ routine, handleUpdateStatus }: Props) {
                 <span
                   className={cl(
                     'flex items-center gap-x-1',
-                    doneOccurrence === routine.occurrence ? 'text-green-500' : 'text-gray-500'
+                    doneOccurrence >= routine.occurrence ? 'text-green-500' : 'text-gray-500'
                   )}
                 >
                   <ArrowPathRoundedSquareIcon width={12} height={12} />

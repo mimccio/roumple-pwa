@@ -5,17 +5,23 @@ import { DaysHeader, DaysList, MonthSelector } from './parts'
 interface Props {
   date: Date
   onSelectDate: (date: Date) => void
+  close: () => void
   noFuture?: boolean
   pastLimit?: number
 }
 
-export function DayCalendar({ date, onSelectDate, noFuture, pastLimit }: Props) {
+export function DayCalendar({ date, onSelectDate, noFuture, pastLimit, close }: Props) {
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth } = useCalendar()
 
   const days = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 }),
     end: endOfWeek(endOfMonth(firstDayCurrentMonth), { weekStartsOn: 1 }),
   })
+
+  const handleDateChange = (date: Date) => {
+    onSelectDate(date)
+    close()
+  }
 
   return (
     <div className="flex w-80 flex-col gap-y-4">
@@ -31,7 +37,7 @@ export function DayCalendar({ date, onSelectDate, noFuture, pastLimit }: Props) 
         noFuture={noFuture}
         days={days}
         selectedDay={date}
-        onSelectDay={onSelectDate}
+        onSelectDay={handleDateChange}
         firstDayCurrentMonth={firstDayCurrentMonth}
       />
     </div>

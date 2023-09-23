@@ -1,3 +1,5 @@
 export * from './create-task-modale'
 export * from './schedule'
+export * from './square-done-button'
 export * from './task-list-item'
+export * from './task-status-selector'

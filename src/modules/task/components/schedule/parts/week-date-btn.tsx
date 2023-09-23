@@ -43,7 +43,7 @@ export function WeekDateBtn({ date, onSelectDate }: Props) {
           <Popover.Panel className="absolute -left-24 -top-12 z-10 rounded-lg border bg-white p-2 shadow-md">
             {({ close }) => (
               <>
-                <WeekCalendar date={date} onSelectDate={onSelectDate} />
+                <WeekCalendar close={close} date={date} onSelectDate={onSelectDate} />
                 <CalendarBtn close={close} scheduleType={SCHEDULE_TYPES.weekly} />
               </>
             )}

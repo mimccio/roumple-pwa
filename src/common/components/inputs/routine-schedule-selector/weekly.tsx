@@ -38,8 +38,8 @@ export function Weekly({ recurrence, period, handlePeriodChange, scheduleType, h
       )}
     >
       {isSelected && <CheckIcon width={80} className="absolute bottom-4 right-4 text-sky-200" />}
-      <div className="grid grid-cols-6">
-        <h4 className="col-span-2 text-sm font-bold text-sky-700 ">{t('weekly')}</h4>
+      <div className="grid grid-cols-7">
+        <h4 className="col-span-3 text-sm font-bold text-sky-700">{t('weekly')}</h4>
         <div className="col-span-4 flex gap-2">
           <WeekRecurrence
             handleChange={handleRecurrenceChange}
