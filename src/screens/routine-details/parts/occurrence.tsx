@@ -27,7 +27,6 @@ export function Occurrence({ routine, action, date }: Props) {
   const dateString = date.toDateString()
   const prevDate = useRef<string>(dateString)
   const isRenderedRef = useRef(0) // render twice on first render because of i18next
-
   const [isAnimating, setIsAnimating] = useState(false)
   const [animationVariant, setAnimationVariant] = useState<string>('initial')
 
@@ -67,11 +66,11 @@ export function Occurrence({ routine, action, date }: Props) {
 
   useEffect(() => {
     const getColor = () => {
-      if (!routine?.occurrence || routine.occurrence <= 1) {
+      if (!routine.occurrence || routine.occurrence <= 1) {
         setColor('transparent')
       } else if (!doneOccurrence || doneOccurrence === 0) {
         setColor('#6b7280')
-      } else if (doneOccurrence === routine.occurrence) {
+      } else if (doneOccurrence >= routine.occurrence) {
         setColor('#22c55e')
       } else if (doneOccurrence) {
         setColor('#06B6D4')
@@ -87,7 +86,7 @@ export function Occurrence({ routine, action, date }: Props) {
         setAnimationVariant('zero')
       } else if (!doneOccurrence) {
         setAnimationVariant('initial')
-      } else if (doneOccurrence === routine.occurrence) {
+      } else if (doneOccurrence >= routine.occurrence) {
         setAnimationVariant('max')
       } else if (prevCountRef.current === 0) {
         setAnimationVariant('from0')
@@ -102,7 +101,7 @@ export function Occurrence({ routine, action, date }: Props) {
       setIsAnimating(true)
       prevCountRef.current = doneOccurrence || 0
     }
-  }, [doneOccurrence, routine.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [doneOccurrence, routine.id, routine.occurrence]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     prevIdRef.current = routine.id
