@@ -4,9 +4,9 @@ import { format, getWeek } from 'date-fns'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { cl, getDateFnsLocale, getTwColor } from '&/common/utils'
-import { SquareDoneButton } from '&/common/components/buttons/square-done-button'
 import type { Task } from '&/modules/task/types'
 import { useTaskStatus } from '&/modules/task/hooks'
+import { SquareDoneButton } from '&/modules/task/components'
 
 interface Props {
   task: Task

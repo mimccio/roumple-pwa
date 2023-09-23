@@ -5,6 +5,7 @@ import { STATUSES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import type { Routine, UpdateStatusParams } from '&/modules/routine/types'
 import './plusOneAnimation.css'
+import { getRoutineIsDone } from '&/modules/routine/utils/status'
 
 interface Props {
   routine: Routine
@@ -14,7 +15,7 @@ interface Props {
 export function DoneButton({ handleUpdateStatus, routine }: Props) {
   const [isAnimating, setIsAnimating] = useState(false)
   const action = routine.actions?.[0]
-
+  const isDone = getRoutineIsDone({ routine, action })
   const showPlusOne = routine.occurrence > 1 && (action?.doneOccurrence || 0) < routine.occurrence
 
   const getColor = () => {
@@ -40,21 +41,18 @@ export function DoneButton({ handleUpdateStatus, routine }: Props) {
         className={cl(
           'flex h-7  w-7 items-center justify-center rounded-full border-[3px] transition-colors ',
           ringColor,
-          action?.status === STATUSES.done ? 'bg-green-500 group-hover:bg-green-400' : 'group-hover:bg-green-100',
-          action?.status === STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
+          isDone ? 'bg-green-500 group-hover:bg-green-400' : 'group-hover:bg-green-100',
+          !isDone && action?.status === STATUSES.inProgress && 'border-dotted group-hover:bg-green-100'
         )}
       >
-        {action?.status === STATUSES.inProgress && !showPlusOne && (
+        {!isDone && action?.status === STATUSES.inProgress && !showPlusOne && (
           <ChartBarIcon width={14} height={14} className="text-gray-300 transition-colors group-hover:text-gray-200" />
         )}
-        {action?.status === STATUSES.done && (
+        {isDone && (
           <CheckIcon
             width={18}
             height={18}
-            className={cl(
-              'transition-colors group-hover:text-gray-200',
-              action?.status === STATUSES.done ? 'text-white' : 'text-transparent'
-            )}
+            className={cl('transition-colors group-hover:text-gray-200', isDone ? 'text-white' : 'text-transparent')}
           />
         )}
 

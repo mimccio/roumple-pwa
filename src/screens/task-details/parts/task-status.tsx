@@ -1,6 +1,6 @@
-import { StatusSelector } from '&/common/components/inputs/status-selector'
 import type { Task } from '&/modules/task/types'
 import { useTaskStatus } from '&/modules/task/hooks'
+import { TaskStatusSelector } from '&/modules/task/components'
 
 interface Props {
   task: Task
@@ -8,5 +8,5 @@ interface Props {
 
 export function TaskStatus({ task }: Props) {
   const { onSelect } = useTaskStatus(task)
-  return <StatusSelector status={task.status} onSelect={onSelect} />
+  return <TaskStatusSelector status={task.status} onSelect={onSelect} />
 }

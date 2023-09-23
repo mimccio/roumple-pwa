@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 import type { UseQueryResult } from '@tanstack/react-query'
 
 import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
-import { RoutineStatusSelector } from '&/common/components/inputs/status-selector'
 import { CreatedAt } from '&/common/components/display/created-at'
 import { RoutineAction, Routine } from '&/modules/routine/types'
+import { RoutineStatusSelector } from '&/modules/routine/components'
 
 import {
   Priority,
