@@ -78,11 +78,8 @@ export function Occurrence({ routine, action, date }: Props) {
     }
     getColor()
 
-    setAnimationVariant('initial')
-    if (!isRenderedRef.current || prevIdRef.current !== routine.id || prevDate.current !== dateString) {
-      setAnimationVariant('initial')
-    } else {
-      if (doneOccurrence === 0) {
+    if (isRenderedRef.current && prevIdRef.current === routine.id && prevDate.current === dateString) {
+      if (doneOccurrence === 0 && prevCountRef.current !== 0) {
         setAnimationVariant('zero')
       } else if (!doneOccurrence) {
         setAnimationVariant('initial')
