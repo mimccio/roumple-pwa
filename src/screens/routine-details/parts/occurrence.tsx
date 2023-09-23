@@ -26,7 +26,7 @@ export function Occurrence({ routine, action, date }: Props) {
   const prevIdRef = useRef<string>(routine.id)
   const dateString = date.toDateString()
   const prevDate = useRef<string>(dateString)
-  const isRenderedRef = useRef(0) // render twice on first render because of i18next
+  const isRenderedRef = useRef(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const [animationVariant, setAnimationVariant] = useState<string>('initial')
 
@@ -79,7 +79,7 @@ export function Occurrence({ routine, action, date }: Props) {
     getColor()
 
     setAnimationVariant('initial')
-    if (isRenderedRef.current < 2 || prevIdRef.current !== routine.id || prevDate.current !== dateString) {
+    if (!isRenderedRef.current || prevIdRef.current !== routine.id || prevDate.current !== dateString) {
       setAnimationVariant('initial')
     } else {
       if (doneOccurrence === 0) {
@@ -106,7 +106,7 @@ export function Occurrence({ routine, action, date }: Props) {
   useEffect(() => {
     prevIdRef.current = routine.id
     prevDate.current = dateString
-    isRenderedRef.current = isRenderedRef.current + 1
+    isRenderedRef.current = true
   }, [routine.id, dateString])
 
   const getTypeTextColor = () => {
