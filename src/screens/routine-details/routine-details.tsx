@@ -50,7 +50,7 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery }:
           <div className="flex items-center gap-x-4">
             <RoutineStatusSelector routine={routine} actionQuery={actionQuery} date={date} />
             {actionQuery.isLoading && !actionQuery.isPaused ? null : (
-              <Occurrence routine={routine} action={actionQuery.data} />
+              <Occurrence routine={routine} action={actionQuery.data} date={date} />
             )}
           </div>
 

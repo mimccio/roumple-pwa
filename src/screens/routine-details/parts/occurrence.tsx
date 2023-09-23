@@ -14,74 +14,101 @@ import { getOccurrenceBg } from '&/modules/routine/utils'
 interface Props {
   routine: Routine
   action?: RoutineAction
+  date: Date
 }
 
-export function Occurrence({ routine, action }: Props) {
+export function Occurrence({ routine, action, date }: Props) {
   const { t } = useTranslation(['routine', 'action'])
   const typeText = useOccurrenceTypeText(routine.scheduleType)
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
   const inputBg = getOccurrenceBg(routine.scheduleType)
   const prevCountRef = useRef<number>(action?.doneOccurrence || 0)
   const prevIdRef = useRef<string>(routine.id)
+  const dateString = date.toDateString()
+  const prevDate = useRef<string>(dateString)
+  const isRenderedRef = useRef(0) // render twice on first render because of i18next
 
   const [isAnimating, setIsAnimating] = useState(false)
   const [animationVariant, setAnimationVariant] = useState<string>('initial')
 
-  const [color, setColor] = useState('#6b7280')
-  const doneOccurrence = action?.doneOccurrence || 0
-
-  const getTwColor = () => {
-    if (doneOccurrence === 0) return 'text-gray-500'
-    if (doneOccurrence === occurrence) return 'text-green-500'
-    return 'text-blue-500'
-  }
+  const [color, setColor] = useState<string>('transparent')
+  const doneOccurrence = action?.doneOccurrence
 
   const variants = {
     initial: {
       scale: 1,
-      color,
+      color: color || '#6b7280',
     },
     max: {
-      color: ['#10b981', '#10b981', '#22c55e'],
-      scale: [1, 2, 1],
+      color: ['#06B6D4', '#22c55e'],
+      scale: [1, 1.2, 1],
     },
     zero: {
-      color: ['#10b981', '#10b981', '#6b7280'],
-      scale: [1, 2, 1],
+      color: ['#06B6D4', '#0891B2', '#6b7280'],
+      scale: [1, 1.2, 1],
     },
-    between: {
-      color: ['#10b981', '#10b981', '#3b82f6'],
-      scale: [1, 2, 1],
+    from0: {
+      color: ['#6b7280', '#06B6D4'],
+      scale: [1, 1.2, 1],
+    },
+    fromDone: {
+      color: ['#22c55e', '#06B6D4'],
+      scale: [1, 1.2, 1],
+    },
+    less: {
+      color: ['#06B6D4', '#0891B2', '#06B6D4'],
+      scale: [1, 1.2, 1],
+    },
+    more: {
+      color: ['#06B6D4', '#22c55e', '#06B6D4'],
+      scale: [1, 1.2, 1],
     },
   }
 
   useEffect(() => {
     const getColor = () => {
-      if (doneOccurrence === 0) {
+      if (!routine?.occurrence || routine.occurrence <= 1) {
+        setColor('transparent')
+      } else if (!doneOccurrence || doneOccurrence === 0) {
         setColor('#6b7280')
       } else if (doneOccurrence === routine.occurrence) {
         setColor('#22c55e')
-      } else {
-        setColor('#3b82f6')
+      } else if (doneOccurrence) {
+        setColor('#06B6D4')
       }
     }
     getColor()
-    if (prevCountRef.current !== doneOccurrence && prevIdRef.current === routine.id) {
-      setAnimationVariant('')
 
+    setAnimationVariant('initial')
+    if (isRenderedRef.current < 2 || prevIdRef.current !== routine.id || prevDate.current !== dateString) {
+      setAnimationVariant('initial')
+    } else {
       if (doneOccurrence === 0) {
         setAnimationVariant('zero')
+      } else if (!doneOccurrence) {
+        setAnimationVariant('initial')
       } else if (doneOccurrence === routine.occurrence) {
         setAnimationVariant('max')
+      } else if (prevCountRef.current === 0) {
+        setAnimationVariant('from0')
+      } else if (prevCountRef.current === routine.occurrence) {
+        setAnimationVariant('fromDone')
+      } else if (prevCountRef.current > (doneOccurrence || 0)) {
+        setAnimationVariant('less')
       } else {
-        setAnimationVariant('between')
+        setAnimationVariant('more')
       }
-      setIsAnimating(true)
-      prevCountRef.current = doneOccurrence
-    }
 
+      setIsAnimating(true)
+      prevCountRef.current = doneOccurrence || 0
+    }
+  }, [doneOccurrence, routine.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     prevIdRef.current = routine.id
-  }, [doneOccurrence, routine.id, routine.occurrence])
+    prevDate.current = dateString
+    isRenderedRef.current = isRenderedRef.current + 1
+  }, [routine.id, dateString])
 
   const getTypeTextColor = () => {
     if (routine.scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-600 group-hover:text-sky-700'
@@ -93,15 +120,18 @@ export function Occurrence({ routine, action }: Props) {
 
   return (
     <Popover>
-      <Popover.Button className="text-lg font-bold  transition-colors group-hover:text-gray-600">
-        <motion.p
-          animate={isAnimating ? animationVariant : false}
-          variants={variants}
-          className={cl('origin-left', getTwColor())}
-          onAnimationComplete={() => setAnimationVariant('initial')}
-        >
-          {doneOccurrence} / {routine.occurrence}
-        </motion.p>
+      <Popover.Button className={cl('text-lg font-bold')}>
+        {color !== 'transparent' && (
+          <motion.p
+            className="origin-left rounded-lg bg-gray-50 px-2 py-1 shadow-md"
+            animate={isAnimating ? animationVariant : 'initial'}
+            variants={variants}
+            style={{ color: color || 'transparent' }}
+            onAnimationComplete={() => setIsAnimating(false)}
+          >
+            {doneOccurrence || 0} / {routine.occurrence}
+          </motion.p>
+        )}
       </Popover.Button>
 
       <Transition
