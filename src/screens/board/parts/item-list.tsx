@@ -12,7 +12,7 @@ interface Props {
 
 export function ItemList({ list, handleUpdateRoutineStatus, showDone }: Props) {
   return (
-    <ul className="">
+    <ul>
       <AnimatePresence initial={false} key={`${showDone}`}>
         {list.map((item) => (
           <motion.li

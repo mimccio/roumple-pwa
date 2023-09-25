@@ -31,11 +31,11 @@ export function BoardScreen({ scheduleType, title }: Props) {
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}
-          {!showPeriod && (
+          {showStatus.data && !showPeriod && (
             <ItemList list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} showDone={showDone} />
           )}
 
-          {showPeriod && (
+          {showStatus.data && showPeriod && (
             <PeriodList
               scheduleType={scheduleType}
               list={list}

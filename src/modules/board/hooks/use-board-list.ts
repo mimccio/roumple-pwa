@@ -41,7 +41,7 @@ export function useBoardList({ scheduleType }: Params) {
 
   showStatus.empty =
     !list.length && !showStatus.loading && !showStatus.error && !showStatus.offline && !showStatus.emptyFilteredList
-  showStatus.data = !showStatus.loading && !showStatus.error && !showStatus.empty && !showStatus.offline
+  showStatus.data = !showStatus.loading && !showStatus.error && !showStatus.offline
 
   return {
     showStatus,
