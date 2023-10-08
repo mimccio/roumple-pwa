@@ -23,7 +23,7 @@ interface Props {
   tasks: Task[]
 }
 
-export function PlaningModale({ scheduleType, date, onClose, routines, tasks }: Props) {
+export function PlanningModale({ scheduleType, date, onClose, routines, tasks }: Props) {
   const { t } = useTranslation('schedule')
 
   const getDateText = () => {

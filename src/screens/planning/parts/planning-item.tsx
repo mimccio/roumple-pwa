@@ -11,7 +11,7 @@ interface Props {
   item: Routine | Task
 }
 
-export function PlaningItem({ date, item }: Props) {
+export function PlanningItem({ date, item }: Props) {
   const color = item.category?.color
   const bg = color ? getTwBgColor(500, color) : 'bg-gray-100'
 

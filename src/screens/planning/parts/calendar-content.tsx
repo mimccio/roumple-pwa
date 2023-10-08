@@ -8,7 +8,7 @@ import type { Routine } from '&/modules/routine/types'
 import type { Task } from '&/modules/task/types'
 
 import { mergeTaskAndRoutines } from '../utils/'
-import { PlaningItem } from './planing-item'
+import { PlanningItem } from './planning-item'
 import { DotItem } from './dot-item'
 
 interface Props {
@@ -51,7 +51,7 @@ export function CalendarContent({ days, dailyRoutines, today, onSelect, dailyTas
 
               <ol className="mb-2 mt-2 flex flex-col gap-y-1">
                 {items.slice(0, 5).map((item) => (
-                  <PlaningItem key={item.id} date={day} item={item} />
+                  <PlanningItem key={item.id} date={day} item={item} />
                 ))}
               </ol>
               {items.length > 5 && (

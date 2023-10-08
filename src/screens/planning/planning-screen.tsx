@@ -1,24 +1,24 @@
 import { useState } from 'react'
 import { eachDayOfInterval, endOfMonth, endOfWeek, startOfWeek } from 'date-fns'
 
+import { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { useCalendar } from '&/common/components/calendars/hooks'
 
 import type { Routine } from '&/modules/routine/types'
+import type { Task } from '&/modules/task/types'
 import { useRoutineList } from '&/modules/routine/hooks'
+import { useTaskList } from '&/modules/task/hooks'
 
 import { MainError, OfflineError } from '../errors'
 import { CalendarContent } from './parts/calendar-content'
 import { DaysHeader } from './parts/days-header'
-import { WeekPlaning } from './parts/week-planing'
-import { MonthPlaning } from './parts/month-planing'
-import { PlaningHeader } from './parts/planing-header'
-import { ScheduleType } from '&/common/types'
-import { PlaningModale } from './parts/planing-modale'
-import { useTaskList } from '&/modules/task/hooks'
-import { Task } from '&/modules/task/types'
+import { WeekPlanning } from './parts/week-planning'
+import { MonthPlanning } from './parts/month-planning'
+import { PlanningHeader } from './parts/planning-header'
+import { PlanningModale } from './parts/planning-modale'
 
-export function PlaningScreen() {
+export function PlanningScreen() {
   const { routineList, showStatus: routineStatus } = useRoutineList()
   const { taskList, showStatus: taskStatus } = useTaskList()
 
@@ -72,7 +72,7 @@ export function PlaningScreen() {
 
   return (
     <div className="mb-4 w-full  p-2 lg:flex lg:flex-col">
-      <PlaningHeader
+      <PlanningHeader
         date={firstDayCurrentMonth}
         onNextMonth={onNextMonth}
         onPreviousMonth={onPreviousMonth}
@@ -90,20 +90,20 @@ export function PlaningScreen() {
             dailyTasks={dailyTasks}
           />
         </div>
-        <WeekPlaning
+        <WeekPlanning
           firstDayCurrentMonth={firstDayCurrentMonth}
           weeklyRoutines={weeklyRoutines}
           onSelect={onSelect}
           weeklyTasks={weeklyTasks}
         />
       </div>
-      <MonthPlaning
+      <MonthPlanning
         firstDayCurrentMonth={firstDayCurrentMonth}
         monthlyRoutines={monthlyRoutines}
         onSelect={onSelect}
         monthlyTasks={monthlyTasks}
       />
-      <PlaningModale
+      <PlanningModale
         date={selected?.date}
         scheduleType={selected?.scheduleType}
         onClose={() => setSelected(undefined)}

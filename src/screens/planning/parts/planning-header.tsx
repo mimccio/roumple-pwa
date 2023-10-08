@@ -11,7 +11,7 @@ interface Props {
   onNextMonth: () => void
 }
 
-export function PlaningHeader({ date, onPreviousMonth, onNextMonth, today, onThisMonth }: Props) {
+export function PlanningHeader({ date, onPreviousMonth, onNextMonth, today, onThisMonth }: Props) {
   return (
     <header className="flex items-center justify-between px-6 py-4 lg:flex-none">
       <button

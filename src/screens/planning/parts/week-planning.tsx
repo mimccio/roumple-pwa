@@ -9,7 +9,7 @@ import type { Routine } from '&/modules/routine/types'
 import type { Task } from '&/modules/task/types'
 
 import { mergeTaskAndRoutines } from '../utils'
-import { PlaningItem } from './planing-item'
+import { PlanningItem } from './planning-item'
 import { DotItem } from './dot-item'
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
   onSelect: ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => void
 }
 
-export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, weeklyTasks }: Props) {
+export function WeekPlanning({ firstDayCurrentMonth, weeklyRoutines, onSelect, weeklyTasks }: Props) {
   const { t } = useTranslation('schedule')
 
   const weeks = eachWeekOfInterval(
@@ -65,7 +65,7 @@ export function WeekPlaning({ firstDayCurrentMonth, weeklyRoutines, onSelect, we
 
               <ol className="mb-2 mt-2 flex flex-col gap-y-1">
                 {items.slice(0, 5).map((item) => (
-                  <PlaningItem key={item.id} item={item} date={week} />
+                  <PlanningItem key={item.id} item={item} date={week} />
                 ))}
               </ol>
               {items.length > 5 && (

@@ -1,16 +1,17 @@
 import { useState } from 'react'
+import { Route, Routes } from 'react-router'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { FetchingSpinner } from '&/common/components/fetching-spinner'
 import { AppError } from '&/screens/errors'
+import { PlanningScreen } from '&/screens/planning/planning-screen'
+import { FeedbackScreen } from '&/screens/feedback'
 import { Menu, MenuButton } from '&/screens/menu'
+import { WelcomeScreen } from '&/screens/welcome/welcome-screen'
+
 import { DetailsScreen } from './details-screen'
 import { MainScreen } from './main-screen'
 import { OfflineBanner } from './offline-banner'
-import { PlaningScreen } from '&/screens/planing/planing-screen'
-import { Route, Routes } from 'react-router'
-import { FeedbackScreen } from '&/screens/feedback'
-import { WelcomeScreen } from '&/screens/welcome/welcome-screen'
 
 export function AuthenticatedApp() {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -26,10 +27,10 @@ export function AuthenticatedApp() {
 
         <Routes>
           <Route
-            path="planing/*"
+            path="planning/*"
             element={
               <div className="relative flex flex-1 ">
-                <PlaningScreen />
+                <PlanningScreen />
               </div>
             }
           />

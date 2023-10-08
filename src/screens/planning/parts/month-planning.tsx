@@ -18,7 +18,7 @@ interface Props {
   onSelect: ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) => void
 }
 
-export function MonthPlaning({ firstDayCurrentMonth, monthlyRoutines, onSelect, monthlyTasks }: Props) {
+export function MonthPlanning({ firstDayCurrentMonth, monthlyRoutines, onSelect, monthlyTasks }: Props) {
   const { t } = useTranslation('schedule')
 
   const items = mergeTaskAndRoutines({
