@@ -11,10 +11,12 @@ import '&/assets/fonts/fonts.css'
 import { editCategory } from '&/modules/category/mutations'
 import { CATEGORY_LIST } from '&/modules/category/constants'
 import { Login } from '&/screens/login'
+import { WelcomeScreen } from '&/screens/welcome/welcome-screen'
+import { TemplateDetailsScreen } from '&/screens/template-details'
 
 import './i18n'
 import { AuthenticatedApp } from './authenticated-app'
-import { appLoader, loginLoader, logoutLoader } from './loaders'
+import { appLoader, loginLoader, logoutLoader, onboardingLoader } from './loaders'
 import { Fallback } from './fallback'
 import './styles.css'
 
@@ -57,6 +59,9 @@ const router = createBrowserRouter(
       <Route path="/" element={<Navigate to="today" />} />
       {/* redirect to login if NO auth */}
       <Route path="*" element={<AuthenticatedApp />} loader={appLoader} />
+
+      <Route path="welcome/*" element={<WelcomeScreen />} loader={onboardingLoader} />
+      <Route path="welcome/:templateId" element={<TemplateDetailsScreen />} />
     </>
   )
 )

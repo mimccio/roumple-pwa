@@ -7,11 +7,13 @@ import { AppError } from '&/screens/errors'
 import { PlanningScreen } from '&/screens/planning/planning-screen'
 import { FeedbackScreen } from '&/screens/feedback'
 import { Menu, MenuButton } from '&/screens/menu'
-import { WelcomeScreen } from '&/screens/welcome/welcome-screen'
 
 import { DetailsScreen } from './details-screen'
 import { MainScreen } from './main-screen'
 import { OfflineBanner } from './offline-banner'
+import { FirstStepScreen } from '&/screens/first-step'
+import { TemplatesScreen } from '&/screens/templates'
+import { TemplateDetailsScreen } from '&/screens/template-details'
 
 export function AuthenticatedApp() {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -35,7 +37,9 @@ export function AuthenticatedApp() {
             }
           />
           <Route path="feedback/*" element={<FeedbackScreen />} />
-          <Route path="welcome/*" element={<WelcomeScreen />} />
+          <Route path="first-step/*" element={<FirstStepScreen />} />
+          <Route path="templates/:templateId" element={<TemplateDetailsScreen />} />
+          <Route path="templates/*" element={<TemplatesScreen />} />
 
           <Route
             path="*"

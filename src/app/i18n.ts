@@ -28,6 +28,8 @@ i18next
       'schedule',
       'status',
       'task',
-      'welcome',
+      'first-step',
+      'template',
+      'settings',
     ],
   })
