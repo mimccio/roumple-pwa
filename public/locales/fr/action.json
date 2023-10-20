@@ -21,5 +21,6 @@
   "unGroupBySchedule": "Dégrouper",
   "clearDone": "Réinitialiser terminées",
   "editOccurrence": "Modifier l'occurrence",
-  "selectDate": "selection de la date"
+  "selectDate": "selection de la date",
+  "confirm": "Confirmer"
 }
