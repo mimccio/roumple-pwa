@@ -5,3 +5,13 @@ export const TEMPLATE_KEYS = {
   details: () => [...TEMPLATE_KEYS.all, 'DETAIL'] as const,
   detail: (id?: string) => [...TEMPLATE_KEYS.details(), id] as const,
 }
+
+const ROUTINE = 'ROUTINE'
+const TASK = 'TASK'
+const NOTE = 'NOTE'
+
+export const ENTRY_TYPES = {
+  routine: ROUTINE as 'ROUTINE',
+  task: TASK as 'TASK',
+  note: NOTE as 'NOTE',
+}

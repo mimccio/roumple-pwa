@@ -61,7 +61,7 @@ const router = createBrowserRouter(
       <Route path="*" element={<AuthenticatedApp />} loader={appLoader} />
 
       <Route path="welcome/*" element={<WelcomeScreen />} loader={onboardingLoader} />
-      <Route path="welcome/:templateId" element={<TemplateDetailsScreen />} />
+      <Route path="welcome/:templateId/*" element={<TemplateDetailsScreen />} />
     </>
   )
 )

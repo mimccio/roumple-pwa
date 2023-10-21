@@ -18,10 +18,10 @@ export function NoteListItem({ note }: Props) {
         <p className={cl('line-clamp-2', !note.title && 'text-gray-500')}>{note.title || 'New note'}</p>
       </div>
       <div className="flex gap-x-2 text-gray-500">
-        {note.folder && (
+        {note.templateNoteFolder && (
           <span className="ml-2 flex items-center gap-x-2 text-sm font-semibold">
             <FolderIcon className="w-3" />
-            <span className="whitespace-nowrap">{note.folder.name}</span>
+            <span className="whitespace-nowrap">{note.templateNoteFolder.name}</span>
           </span>
         )}
         <span

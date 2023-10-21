@@ -1,13 +1,15 @@
 import { redirect } from 'react-router-dom'
 import { db } from '&/db'
 
+// const unOnboardUser = async () => {
+//   await db.auth.updateUser({ data: { onboarded: false } })
+// }
+
 export const appLoader = async () => {
   const { data, error } = await db.auth.getSession()
   if (error) throw error
   if (!data?.session?.user) return redirect('/login')
-
-  // await db.auth.updateUser({ data: { onboarded: false } })
-
+  // await unOnboardUser()
   if (!data.session.user?.user_metadata?.onboarded) return redirect('/welcome')
   return { user: data.session.user }
 }

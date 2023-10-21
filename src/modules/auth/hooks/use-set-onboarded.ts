@@ -1,15 +1,16 @@
 import { db } from '&/db'
-import { useNavigate } from 'react-router-dom'
+import { useIsOnboarded } from './use-is-onboarded'
 
 export function useSetOnboarded() {
-  const navigate = useNavigate()
+  const { getIsOnboarded } = useIsOnboarded()
 
   const onSetOnboarded = async () => {
+    const isOnboarded = await getIsOnboarded()
+    if (isOnboarded) return
     const { error } = await db.auth.updateUser({
       data: { onboarded: true },
     })
     if (error) throw error
-    navigate('/first-step')
   }
   return { onSetOnboarded }
 }

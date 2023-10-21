@@ -38,7 +38,7 @@ export function AuthenticatedApp() {
           />
           <Route path="feedback/*" element={<FeedbackScreen />} />
           <Route path="first-step/*" element={<FirstStepScreen />} />
-          <Route path="templates/:templateId" element={<TemplateDetailsScreen />} />
+          <Route path="templates/:templateId/*" element={<TemplateDetailsScreen />} />
           <Route path="templates/*" element={<TemplatesScreen />} />
 
           <Route

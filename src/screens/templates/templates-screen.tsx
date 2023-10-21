@@ -1,8 +1,17 @@
 import { useGetTemplates } from '&/modules/template/hooks'
 import { TemplateItem, TemplateItemSkeleton } from '&/modules/template/components'
+import { MainError } from '../errors'
 
 export function TemplatesScreen() {
   const { templateList, isLoading, error } = useGetTemplates()
+
+  if (error) {
+    return (
+      <div className="flex w-full items-center justify-center">
+        <MainError />
+      </div>
+    )
+  }
 
   return (
     <div className="flex w-full flex-col p-4">

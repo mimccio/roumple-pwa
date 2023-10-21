@@ -1,17 +1,17 @@
 import { ScheduleType, TwColor } from '&/common/types'
 import { JSONContent } from '@tiptap/react'
 
-type TemplateCategory = {
+export type TemplateCategory = {
   id: string
   templateId: string
   name: string
   color: TwColor
 }
 
-interface TemplateRoutineChecklistItem {
+export interface TemplateRoutineChecklistItem {
   id: string
   name: string
-  templateRoutineId: string
+  template_routine_id: string
 }
 
 export interface TemplateRoutine {
@@ -22,10 +22,10 @@ export interface TemplateRoutine {
   description?: JSONContent
   priority: number
   period: number
-  dailyRecurrence: number[]
-  weeklyRecurrence: number[]
-  monthlyRecurrence: number[]
-  scheduleType: ScheduleType
+  daily_recurrence: number[]
+  weekly_recurrence: number[]
+  monthly_recurrence: number[]
+  schedule_type: ScheduleType
   templateCategory: TemplateCategory | null
   templateChecklist?: TemplateRoutineChecklistItem[]
   occurrence: number
@@ -33,10 +33,10 @@ export interface TemplateRoutine {
 
 type TaskScheduleType = ScheduleType | null
 
-interface TemplateTaskChecklistItem {
+export interface TemplateTaskChecklistItem {
   id: string
   name: string
-  templateTaskId: string
+  template_task_id: string
 }
 
 export interface TemplateTask {
@@ -48,12 +48,12 @@ export interface TemplateTask {
   templateCategory: TemplateCategory | null
   priority: number
   period: number
-  scheduleType: TaskScheduleType
+  schedule_type: TaskScheduleType
   date: Date | null
   templateChecklist: TemplateTaskChecklistItem[]
 }
 
-interface TemplateNoteFolder {
+export interface TemplateNoteFolder {
   id: string
   templateId: string
   name: string
@@ -67,10 +67,12 @@ export interface TemplateNote {
   content?: JSONContent
   createdAt: Date
   templateCategory: TemplateCategory | null
-  folder?: TemplateNoteFolder | null
+  templateNoteFolder?: TemplateNoteFolder | null
   // routineNotes?: TemplateRoutineNote[]
   // taskNotes?: TemplateTaskNote[]
 }
+
+export type EntryType = 'ROUTINE' | 'TASK' | 'NOTE'
 
 export type Template = {
   id: string
@@ -81,7 +83,86 @@ export type Template = {
   routines: TemplateRoutine[]
   tasks: TemplateTask[]
   notes: TemplateNote[]
-  folders: TemplateNoteFolder[]
+  noteFolders: TemplateNoteFolder[]
+  templateRoutineChecklistItems: TemplateRoutineChecklistItem[]
+  templateTaskChecklistItems: TemplateTaskChecklistItem[]
+  entryId: string | null
+  entryType: EntryType | null
+  entryNoteFolderId: string | null
 }
 
 export type TemplateListItem = Pick<Template, 'id' | 'name' | 'description'>
+
+export interface NewRoutine {
+  id: string
+  name: string
+  description?: JSONContent
+  priority: number
+  period: number
+  daily_recurrence: number[]
+  weekly_recurrence: number[]
+  monthly_recurrence: number[]
+  schedule_type: ScheduleType
+  category_id?: string | null
+  occurrence: number
+}
+
+export interface NewRoutineChecklistItem {
+  user_id: string
+  id: string
+  name: string
+  routine_id: string
+}
+
+export interface NewTask {
+  id: string
+  user_id: string
+  name: string
+  description?: JSONContent
+  category_id?: string | null
+  priority: number
+  period: number
+  schedule_type: TaskScheduleType
+  // date: Date | null // TODO?:date
+}
+
+export interface NewTaskChecklistItem {
+  user_id: string
+  id: string
+  name: string
+  task_id: string
+}
+
+export interface NewNoteFolder {
+  id: string
+  name: string
+  user_id: string
+}
+
+export interface NewNote {
+  id: string
+  user_id: string
+  title?: string
+  content?: JSONContent
+  category_id?: string | null
+  folder_id?: string | null
+
+  // routineNotes?: TemplateRoutineNote[]
+  // taskNotes?: TemplateTaskNote[]
+}
+
+export type CreationStatusItem = {
+  isLoading: boolean
+  isDone: boolean
+  isError: boolean
+}
+
+export type CreationStatus = {
+  categories: CreationStatusItem
+  routines: CreationStatusItem
+  tasks: CreationStatusItem
+  routineChecklists: CreationStatusItem
+  taskChecklists: CreationStatusItem
+  noteFolders: CreationStatusItem
+  notes: CreationStatusItem
+}
