@@ -1,6 +1,8 @@
 {
   "confirmStartBlank": "Êtes vous sûr de vouloir démarrer de rien ?",
   "confirmUseTemplate": "Êtes vous sûr de vouloir utiliser ce template ?",
-  "startBlank": "Démarrer vide",
-  "useTemplate": "Utiliser le template"
+  "useTemplate": "Utiliser le template",
+  "see details": "voir les détails",
+  "use this template": "utiliser ce template",
+  "Templates": "Templates"
 }

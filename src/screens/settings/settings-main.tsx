@@ -6,12 +6,12 @@ import { SettingsHeader } from './settings-header'
 import { Section } from './parts/section'
 
 export function SettingsMain() {
-  const { t } = useTranslation(['login', 'settings'])
+  const { t } = useTranslation(['login', 'settings', 'template'])
   return (
     <>
       <SettingsHeader />
       <div className="mt-4 flex w-full flex-col gap-y-8 p-4">
-        <Section title="Templates" Icon={DocumentDuplicateIcon}>
+        <Section title={t('Templates', { ns: 'template' })} Icon={DocumentDuplicateIcon}>
           <Link
             to="/templates"
             className="group flex items-center gap-x-2 font-semibold text-indigo-500 transition-colors hover:text-indigo-600"
@@ -20,7 +20,7 @@ export function SettingsMain() {
           </Link>
         </Section>
 
-        <Section title="Account" Icon={UserIcon}>
+        <Section title={t('Account', { ns: 'settings' })} Icon={UserIcon}>
           <Link
             to="/logout"
             className="rounded-md bg-gray-100 px-4 py-2 font-semibold text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800"

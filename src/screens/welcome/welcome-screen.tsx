@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 
 import welcomeImg from '&/assets/illustrations/welcome.png'
@@ -7,6 +8,7 @@ import { BlankItem } from './parts/blank-item'
 import { TemplateItem, TemplateItemSkeleton } from '&/modules/template/components'
 
 export function WelcomeScreen() {
+  const { t } = useTranslation('welcome')
   const { templateList, isLoading, error } = useGetTemplates()
 
   return (
@@ -17,7 +19,10 @@ export function WelcomeScreen() {
         transition={{ duration: 0.75 }}
         className="py-2 text-center text-4xl font-semibold text-indigo-500"
       >
-        Welcome to <span>Roumple</span>
+        {t('Welcome to')}{' '}
+        <span className="bg-gradient-to-r from-emerald-500 via-pink-400 to-indigo-500 bg-clip-text text-transparent">
+          Roumple
+        </span>
       </motion.h1>
       <motion.img
         src={welcomeImg}
@@ -32,7 +37,7 @@ export function WelcomeScreen() {
         transition={{ duration: 0.75 }}
         className="mb-4 text-xl font-semibold text-gray-500"
       >
-        Start blank or use a template
+        {t('Start blank or use a template')}
       </motion.h2>
 
       {Boolean(error) && <AppError />}

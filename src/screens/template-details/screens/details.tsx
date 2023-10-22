@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { ArrowLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 
 import educationImg from '&/assets/illustrations/education.png'
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function Details({ template, onUseTemplate }: Props) {
+  const { t } = useTranslation(['common', 'template'])
   const navigate = useNavigate()
   const { isOpen, close, open } = useModale()
 
@@ -31,7 +33,7 @@ export function Details({ template, onUseTemplate }: Props) {
           onClick={open}
           className="rounded-lg border border-indigo-500 px-4 py-2 font-semibold text-indigo-500 transition-colors hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-600"
         >
-          use this template
+          {t('use this template', { ns: 'template' })}
         </button>
       </section>
 
@@ -46,7 +48,7 @@ export function Details({ template, onUseTemplate }: Props) {
         <section className="mb-8 mt-4 p-4">
           {template.routines.length > 0 && (
             <div>
-              <h4 className="font-bold text-gray-500">Routines</h4>
+              <h4 className="font-bold text-gray-500">{t('routines', { ns: 'common' })}</h4>
               <div className="mt-2 flex flex-col gap-y-2">
                 {template.routines.map((routine) => (
                   <ListItem item={routine} key={routine.id} />
@@ -57,7 +59,7 @@ export function Details({ template, onUseTemplate }: Props) {
 
           {template.tasks.length > 0 && (
             <div className="mt-8">
-              <h4 className="font-bold text-gray-500">Tasks</h4>
+              <h4 className="font-bold text-gray-500">{t('tasks', { ns: 'common' })}</h4>
               <div className="mt-2 flex flex-col gap-y-2">
                 {template.tasks.map((task) => (
                   <ListItem item={task} key={task.id} />
@@ -68,7 +70,7 @@ export function Details({ template, onUseTemplate }: Props) {
 
           {template.notes.length > 0 && (
             <div className="mt-8">
-              <h4 className="font-bold text-gray-500">Notes</h4>
+              <h4 className="font-bold text-gray-500">{t('notes', { ns: 'common' })}</h4>
               <div className="mt-2 flex flex-col gap-y-2">
                 {template.notes.map((note) => (
                   <NoteListItem note={note} key={note.id} />
@@ -78,7 +80,7 @@ export function Details({ template, onUseTemplate }: Props) {
           )}
 
           {!template.routines.length && !template.tasks.length && !template.notes.length && (
-            <EmptyScreen text="No item" opacity image={educationImg} />
+            <EmptyScreen text={t('noItem', { ns: 'common' })} opacity image={educationImg} />
           )}
         </section>
       </div>

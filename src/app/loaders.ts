@@ -1,9 +1,9 @@
 import { redirect } from 'react-router-dom'
 import { db } from '&/db'
 
-// const unOnboardUser = async () => {
-//   await db.auth.updateUser({ data: { onboarded: false } })
-// }
+const unOnboardUser = async () => {
+  await db.auth.updateUser({ data: { onboarded: false } })
+}
 
 export const appLoader = async () => {
   const { data, error } = await db.auth.getSession()

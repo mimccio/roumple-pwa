@@ -1,6 +1,8 @@
 {
   "confirmStartBlank": "Are you sure you want to start from scratch?",
-  "startBlank": "Start blank",
   "useTemplate": "Use Template",
-  "confirmUseTemplate": "Are you sure you want to use this template?"
+  "use this template": "use this template",
+  "confirmUseTemplate": "Are you sure you want to use this template?",
+  "see details": "see details",
+  "Templates": "Templates"
 }
