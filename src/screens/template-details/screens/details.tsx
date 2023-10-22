@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 
+import educationImg from '&/assets/illustrations/education.png'
 import { useModale } from '&/common/hooks'
+import { EmptyScreen } from '&/common/components/empty-screen'
 import type { Template } from '&/modules/template/types'
 import { ConfirmUseTemplateModale, ListItem, NoteListItem } from '&/modules/template/components'
 
@@ -42,31 +44,42 @@ export function Details({ template, onUseTemplate }: Props) {
         </section>
 
         <section className="mb-8 mt-4 p-4">
-          <div>
-            <h4 className="font-bold text-gray-500">Routines</h4>
-            <div className="mt-2 flex flex-col gap-y-2">
-              {template.routines.map((routine) => (
-                <ListItem item={routine} key={routine.id} />
-              ))}
+          {template.routines.length > 0 && (
+            <div>
+              <h4 className="font-bold text-gray-500">Routines</h4>
+              <div className="mt-2 flex flex-col gap-y-2">
+                {template.routines.map((routine) => (
+                  <ListItem item={routine} key={routine.id} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="mt-8">
-            <h4 className="font-bold text-gray-500">Tasks</h4>
-            <div className="mt-2 flex flex-col gap-y-2">
-              {template.tasks.map((task) => (
-                <ListItem item={task} key={task.id} />
-              ))}
+          {template.tasks.length > 0 && (
+            <div className="mt-8">
+              <h4 className="font-bold text-gray-500">Tasks</h4>
+              <div className="mt-2 flex flex-col gap-y-2">
+                {template.tasks.map((task) => (
+                  <ListItem item={task} key={task.id} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="mt-8">
-            <h4 className="font-bold text-gray-500">Notes</h4>
-            <div className="mt-2 flex flex-col gap-y-2">
-              {template.notes.map((note) => (
-                <NoteListItem note={note} key={note.id} />
-              ))}
+          )}
+
+          {template.notes.length > 0 && (
+            <div className="mt-8">
+              <h4 className="font-bold text-gray-500">Notes</h4>
+              <div className="mt-2 flex flex-col gap-y-2">
+                {template.notes.map((note) => (
+                  <NoteListItem note={note} key={note.id} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
+          {!template.routines.length && !template.tasks.length && !template.notes.length && (
+            <EmptyScreen text="No item" opacity image={educationImg} />
+          )}
         </section>
       </div>
       <ConfirmUseTemplateModale isOpen={isOpen} close={close} onUseTemplate={onUseTemplate} />

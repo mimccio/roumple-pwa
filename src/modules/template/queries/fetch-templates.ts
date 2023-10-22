@@ -8,14 +8,14 @@ interface FetchTemplatesParams {
 
 export const fetchTemplates = async ({ queryKey }: FetchTemplatesParams) => {
   const [, , { lang }] = queryKey
-  const language = lang as Language
-  if (!Object.values(LANGUAGES).includes(language)) throw new Error('Wrong lang')
+  let language = lang as Language
+  if (!Object.values(LANGUAGES).includes(language)) language = LANGUAGES.en
 
   const { data, error } = await db
     .from('template')
     .select('id, name, description, createdAt:created_at, published')
     .eq('published', true)
-    .eq('lang', lang)
+    .eq('lang', language)
     .order('created_at')
     .limit(10)
 
