@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { DocumentDuplicateIcon, UserIcon, LanguageIcon } from '@heroicons/react/24/outline'
 
 import { LanguageSelector } from '&/common/components/inputs/language-selector'
-import { SettingsHeader } from './settings-header'
+import { SettingsHeader } from './parts/settings-header'
 import { Section } from './parts/section'
 
 export function SettingsMain() {
