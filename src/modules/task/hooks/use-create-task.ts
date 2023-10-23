@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 import { toast } from 'react-hot-toast'
@@ -14,6 +15,7 @@ import { TASK_KEYS } from '../constants'
 import { createTask } from '../mutations'
 
 export function useCreateTask() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
   const [globalCategory, setGlobalCategory] = useAtom(categoryAtom)
@@ -68,7 +70,7 @@ export function useCreateTask() {
         )
       }
       navigate(mainPath)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(TASK_KEYS.list({ done: false }))

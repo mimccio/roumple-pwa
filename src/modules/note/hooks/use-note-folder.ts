@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { NoteFolder } from '&/modules/note-folder/types'
@@ -10,6 +11,7 @@ import { sortNotes } from '../utils'
 import { editNoteFolder } from '../mutations'
 
 export function useNoteFolder(note: Note) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const { folderList, isLoading, error } = useFolderList()
 
@@ -86,7 +88,7 @@ export function useNoteFolder(note: Note) {
         context?.previousNoteFolderCategory
       )
 
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))

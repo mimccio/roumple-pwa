@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
@@ -8,6 +9,7 @@ import { TASK_KEYS } from '../constants'
 import { editTaskStatus } from '../mutations'
 
 export function useMutateTaskStatus(task: Task) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const date = startOfToday()
 
@@ -57,7 +59,7 @@ export function useMutateTaskStatus(task: Task) {
       queryClient.setQueryData(TASK_KEYS.list({ done: true }), context?.previousDoneTaskList)
       queryClient.setQueryData(TASK_KEYS.list({ done: false }), context?.previousNotDoneTaskList)
       queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousBoardList)
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))

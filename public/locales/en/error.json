@@ -8,5 +8,7 @@
   "error": "Error",
   "maxChars": "max {{maxChars}} characters",
   "required": "required",
-  "emptyName": "Name can't be empty"
+  "emptyName": "Name can't be empty",
+  "errorCreation": "Creation didn't work",
+  "errorModification": "Modification didn't work"
 }

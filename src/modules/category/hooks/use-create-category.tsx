@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
@@ -11,6 +12,7 @@ import { CATEGORY_LIST } from '../constants'
 import { useOutsideClick } from '&/common/hooks'
 
 export function useCreateCategory() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
   const ref = useRef<HTMLFormElement>(null)
@@ -29,7 +31,7 @@ export function useCreateCategory() {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData([CATEGORY_LIST], context?.previousCategoryList)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries([CATEGORY_LIST])

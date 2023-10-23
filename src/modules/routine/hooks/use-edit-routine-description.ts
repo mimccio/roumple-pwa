@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { JSONContent } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
@@ -7,6 +8,7 @@ import { ROUTINE_KEYS } from '../constants'
 import { editRoutineDescription } from '../mutations'
 
 export function useEditRoutineDescription(routine: Routine) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(editRoutineDescription, {
@@ -18,7 +20,7 @@ export function useEditRoutineDescription(routine: Routine) {
     },
     onError: (_err, item) => {
       queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))

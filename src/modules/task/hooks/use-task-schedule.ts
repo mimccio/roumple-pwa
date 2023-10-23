@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek } from 'date-fns'
 import { toast } from 'react-hot-toast'
 
@@ -10,6 +11,7 @@ import { TASK_KEYS } from '../constants'
 import { editTaskSchedule } from '../mutations'
 
 export function useTaskSchedule(task: Task) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const [scheduleType, setScheduleType] = useState(task.scheduleType)
   const [period, setPeriod] = useState(task.period)
@@ -69,7 +71,7 @@ export function useTaskSchedule(task: Task) {
         TASK_KEYS.board({ scheduleType: item.scheduleType, date: todayDate }),
         context?.prevNewBoardList
       )
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))

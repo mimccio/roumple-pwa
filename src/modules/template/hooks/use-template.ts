@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 
 import { useSetOnboarded } from '&/modules/auth/hooks'
@@ -30,6 +31,7 @@ import {
 import { useGetTemplateDetails } from './use-get-template-details'
 
 export function useTemplate() {
+  const { t } = useTranslation('template')
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { template, isLoading, error } = useGetTemplateDetails()
@@ -48,7 +50,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
     },
     onError: () => {
-      toast.error("Categories creation didn't work")
+      toast.error(t('errorCategoriesCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries([CATEGORY_LIST])
@@ -67,7 +69,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
     },
     onError: () => {
-      toast.error("Note folders creation didn't work")
+      toast.error(t('errorNoteFoldersCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(NOTE_FOLDER_KEYS.lists())
@@ -86,7 +88,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.lists() })
     },
     onError: () => {
-      toast.error("Note creation didn't work")
+      toast.error(t('errorNotesCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(NOTE_KEYS.lists())
@@ -104,7 +106,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
     },
     onError: () => {
-      toast.error("Routines creation didn't work")
+      toast.error(t('errorRoutinesCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(ROUTINE_KEYS.lists())
@@ -123,7 +125,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
     },
     onError: () => {
-      toast.error("Routines checklist creation didn't work")
+      toast.error(t('errorRoutinesChecklistCreation'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(ROUTINE_KEYS.lists())
@@ -141,7 +143,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.lists() })
     },
     onError: () => {
-      toast.error("Tasks creation didn't work")
+      toast.error(t('errorTasksCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(TASK_KEYS.lists())
@@ -160,7 +162,7 @@ export function useTemplate() {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.lists() })
     },
     onError: () => {
-      toast.error("Tasks checklist creation didn't work")
+      toast.error(t('errorTasksChecklistCreation'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(TASK_KEYS.lists())

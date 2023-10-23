@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
@@ -8,6 +9,7 @@ import { getScheduleTypeDate } from '../utils'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useMutateRoutine(mutation: (routine: Routine) => any) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const today = startOfToday()
 
@@ -51,7 +53,7 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
         }),
         context?.previousBoardRoutineList
       )
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))

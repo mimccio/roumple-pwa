@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { TwColor } from '&/common/types'
@@ -20,6 +21,7 @@ interface Params {
 }
 
 export function useEditCategory({ category }: Params) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(editCategory, {
@@ -127,7 +129,7 @@ export function useEditCategory({ category }: Params) {
         old?.category?.id === item.id ? { ...old, category: context.category } : old
       )
 
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSettled: () => {
       queryClient.invalidateQueries([CATEGORY_LIST])

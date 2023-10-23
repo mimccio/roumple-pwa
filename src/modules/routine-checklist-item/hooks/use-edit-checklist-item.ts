@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
@@ -10,6 +11,7 @@ import type { RoutineChecklistItem } from '../types'
 import { editRoutineChecklistItem } from '../mutations'
 
 export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const ref = useRef<HTMLFormElement>(null)
   const routineKey = ROUTINE_KEYS.detail(checklistItem.routine_id)
@@ -37,7 +39,7 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData(routineKey, context?.previousRoutine)
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(routineKey)

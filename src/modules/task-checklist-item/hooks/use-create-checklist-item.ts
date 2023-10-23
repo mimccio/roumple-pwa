@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -11,6 +12,7 @@ import { TASK_KEYS } from '&/modules/task/constants'
 import { Task } from '&/modules/task/types'
 
 export function useCreateChecklistItem(task: Task) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
   const ref = useRef<HTMLFormElement>(null)
@@ -32,7 +34,7 @@ export function useCreateChecklistItem(task: Task) {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(task.id), context?.previousTask)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(TASK_KEYS.detail(task.id))

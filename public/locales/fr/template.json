@@ -4,5 +4,12 @@
   "useTemplate": "Utiliser le template",
   "see details": "voir les détails",
   "use this template": "utiliser ce template",
-  "Templates": "Templates"
+  "Templates": "Templates",
+  "errorCategoriesCreation": "La création des catégories n'a pas fonctionné",
+  "errorRoutinesCreation": "La création des routines n'a pas fonctionné",
+  "errorTasksCreation": "La création des tâches n'a pas fonctionné",
+  "errorNoteFoldersCreation": "La création des dossiers de notes n'a pas fonctionné",
+  "errorNotesCreation": "La création des notes n'a pas fonctionné",
+  "errorRoutinesChecklistCreation": "La création des checklists des routines n'a pas fonctionné",
+  "errorTasksChecklistCreation": "La création des checklist des tâches n'a pas fonctionné"
 }

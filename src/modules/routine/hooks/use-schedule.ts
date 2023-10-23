@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { ScheduleType } from '&/common/types'
@@ -15,6 +16,7 @@ interface Params {
 }
 
 export function useSchedule({ routine, date: mainDate }: Params) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const [currentType, setType] = useState(routine.scheduleType)
   const [currentPeriod, setPeriod] = useState(routine.period)
@@ -89,7 +91,7 @@ export function useSchedule({ routine, date: mainDate }: Params) {
         ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
         context?.previousNewPrevType
       )
-      toast.error("Schedule modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))

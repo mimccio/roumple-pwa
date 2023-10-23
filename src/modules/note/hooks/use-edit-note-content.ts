@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { JSONContent } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
@@ -7,6 +8,7 @@ import { NOTE_KEYS } from '../constants'
 import { editNoteContent } from '../mutations'
 
 export function useEditNoteContent(note: Note) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(editNoteContent, {
@@ -35,7 +37,7 @@ export function useEditNoteContent(note: Note) {
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }), context?.previousNoteList)
       queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), context?.previousNoteList)
 
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(NOTE_KEYS.detail(note.id))
