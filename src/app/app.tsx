@@ -11,7 +11,7 @@ import '&/assets/fonts/fonts.css'
 import { editCategory } from '&/modules/category/mutations'
 import { CATEGORY_LIST } from '&/modules/category/constants'
 import { Login } from '&/screens/login'
-import { WelcomeScreen } from '&/screens/welcome/welcome-screen'
+import { WelcomeScreen } from '&/screens/welcome'
 import { TemplateDetailsScreen } from '&/screens/template-details'
 
 import './i18n'
