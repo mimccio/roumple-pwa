@@ -53,15 +53,15 @@ const router = createBrowserRouter(
     <>
       {/* redirect to board if auth */}
       <Route path="login/*" element={<Login />} loader={loginLoader} />
-      {/* redirect to login on logout */}
+      {/* redirect to login after logout */}
       <Route path="logout" loader={logoutLoader} />
-      {/* redirect to today */}
+      {/* Onboarding */}
+      <Route path="welcome/:templateId/*" element={<TemplateDetailsScreen />} loader={onboardingLoader} />
+      <Route path="welcome/*" element={<WelcomeScreen />} loader={onboardingLoader} />
+      {/* redirect home to today */}
       <Route path="/" element={<Navigate to="today" />} />
       {/* redirect to login if NO auth */}
       <Route path="*" element={<AuthenticatedApp />} loader={appLoader} />
-
-      <Route path="welcome/*" element={<WelcomeScreen />} loader={onboardingLoader} />
-      <Route path="welcome/:templateId/*" element={<TemplateDetailsScreen />} />
     </>
   )
 )
