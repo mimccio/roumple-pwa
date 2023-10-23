@@ -2,17 +2,22 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 
 import welcomeImg from '&/assets/illustrations/welcome.png'
+import { LoadingSpinner } from '&/common/components/spinners'
 import { useGetTemplates } from '&/modules/template/hooks'
+import { TemplateItem } from '&/modules/template/components'
+
 import { AppError } from '&/screens/errors'
+import { FirstStepItems } from '&/screens/first-step'
 import { BlankItem } from './parts/blank-item'
-import { TemplateItem, TemplateItemSkeleton } from '&/modules/template/components'
 
 export function WelcomeScreen() {
   const { t } = useTranslation('welcome')
-  const { templateList, isLoading, error } = useGetTemplates()
+  const { isLoading, error, templateList } = useGetTemplates()
+
+  if (error) return <AppError />
 
   return (
-    <div className="relative mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center justify-center gap-y-12 px-4 pb-8 pt-16 text-gray-600">
+    <div className="relative mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center gap-y-12 px-4 pb-8 pt-32 text-gray-600">
       <motion.h1
         initial={{ translateY: -50, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
@@ -31,41 +36,34 @@ export function WelcomeScreen() {
         transition={{ duration: 0.75 }}
         className="mx-auto flex h-52 w-52 items-center justify-center opacity-50"
       />
-      <motion.h2
-        initial={{ translateY: 20, opacity: 0 }}
-        animate={{ translateY: 0, opacity: 1 }}
-        transition={{ duration: 0.75 }}
-        className="mb-4 text-xl font-semibold text-gray-500"
-      >
-        {t('Start blank or use a template')}
-      </motion.h2>
+      <LoadingSpinner isLoading={isLoading} />
 
-      {Boolean(error) && <AppError />}
+      {templateList && templateList?.length >= 1 && (
+        <>
+          <motion.h2
+            initial={{ translateY: 20, opacity: 0 }}
+            animate={{ translateY: 0, opacity: 1 }}
+            transition={{ duration: 0.75 }}
+            className="mb-4 text-xl font-semibold text-gray-500"
+          >
+            {t('Start blank or use a template')}
+          </motion.h2>
 
-      <motion.div
-        initial={{ translateY: 100, opacity: 0 }}
-        animate={{ translateY: 0, opacity: 1 }}
-        transition={{ duration: 0.75 }}
-        className="flex flex-wrap items-center justify-center gap-x-8 gap-y-8"
-      >
-        {isLoading && (
-          <>
-            <TemplateItemSkeleton />
-            <TemplateItemSkeleton />
-            <TemplateItemSkeleton />
-          </>
-        )}
-
-        {templateList && (
-          <>
+          <motion.div
+            initial={{ translateY: 100, opacity: 0 }}
+            animate={{ translateY: 0, opacity: 1 }}
+            transition={{ duration: 0.75 }}
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-8"
+          >
             <BlankItem />
             {templateList?.map((template) => (
               <TemplateItem key={template.id} template={template} />
             ))}
-          </>
-        )}
-      </motion.div>
-      <div className="flex max-h-24 grow" />
+          </motion.div>
+        </>
+      )}
+
+      {!isLoading && !templateList?.length && !error && <FirstStepItems />}
     </div>
   )
 }
