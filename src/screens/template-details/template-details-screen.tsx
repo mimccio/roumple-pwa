@@ -2,14 +2,14 @@ import { Route, Routes } from 'react-router-dom'
 
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
 import { useTemplate } from '&/modules/template/hooks'
-import { AppError } from '&/screens/errors'
+import { NotFoundScreen } from '&/screens/errors'
 import { Details } from './screens/details'
 import { Creating } from './screens/creating'
 
 export function TemplateDetailsScreen() {
   const { template, isLoading, error, onUseTemplate, status } = useTemplate()
 
-  if (!template || error) return <AppError />
+  if (!template || error) return <NotFoundScreen />
   if (isLoading) return <DetailsLoadingPage />
   return (
     <Routes>
