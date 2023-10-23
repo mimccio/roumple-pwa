@@ -1,9 +1,7 @@
 import { db } from '&/db'
-import { useIsOnboarded } from './use-is-onboarded'
+import { getIsOnboarded } from '../utils'
 
 export function useSetOnboarded() {
-  const { getIsOnboarded } = useIsOnboarded()
-
   const onSetOnboarded = async () => {
     const isOnboarded = await getIsOnboarded()
     if (isOnboarded) return

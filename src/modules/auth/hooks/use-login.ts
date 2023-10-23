@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { db } from '&/db'
-import { useIsOnboarded } from './use-is-onboarded'
+import { getIsOnboarded } from '../utils'
 
 export const useLogin = () => {
   const navigate = useNavigate()
@@ -11,7 +11,6 @@ export const useLogin = () => {
   const [verifyIsLoading, setVerifyIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
-  const { getIsOnboarded } = useIsOnboarded()
 
   const handleEmailChange = (evt: FormEvent<HTMLInputElement>) => setEmail(evt.currentTarget.value)
 
