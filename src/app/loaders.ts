@@ -37,6 +37,7 @@ export const logoutLoader = async () => {
 export const onboardingLoader = async () => {
   const { data, error } = await db.auth.getSession()
   if (error) throw error
+  if (!data?.session?.user) return redirect('/login')
   if (data.session?.user?.user_metadata?.onboarded === true) return redirect('/first-step')
   return { session: data.session }
 }
