@@ -7,7 +7,7 @@ export function NotFoundScreen() {
   const { t } = useTranslation('error')
 
   return (
-    <div className="flex h-full min-h-screen justify-center border pt-[25vh]">
+    <div className="flex h-full min-h-screen justify-center pt-[25vh]">
       <Transition
         appear
         show
