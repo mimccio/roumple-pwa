@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import { RingLoader } from 'react-spinners'
-import { Transition } from '@headlessui/react'
 import { SignalSlashIcon } from '@heroicons/react/24/outline'
 
-import { SCHEDULE_TYPES, SPINNER_COLOR } from '&/common/constants'
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { useMainPath } from '&/common/hooks'
 import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+import { SyncSpinner } from '&/common/components/spinners'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity'
@@ -62,24 +61,8 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           />
         )}
 
-        <Transition
-          as="div"
-          appear
-          show={isLoading}
-          className="mt-12 flex flex-col items-center justify-center gap-y-8"
-          enter="transition ease-in-out duration-700 delay-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-        >
-          <RingLoader
-            color={SPINNER_COLOR}
-            loading
-            size={50}
-            aria-label="Loading Spinner"
-            data-testid="fetching loader"
-          />
-          <p className="text-gray-400">{t('loadingDataNotUpToDate')}</p>
-        </Transition>
+        <SyncSpinner isLoading={isLoading} text={t('loadingDataNotUpToDate')} />
+
         {isPaused && (
           <p className="mt-12 flex items-start justify-center gap-x-1 px-4 text-center text-gray-400">
             <span className="flex h-6 items-center">
