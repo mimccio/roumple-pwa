@@ -12,7 +12,7 @@ export function WelcomeScreen() {
   const { templateList, isLoading, error } = useGetTemplates()
 
   return (
-    <div className="relative mx-auto  flex h-full min-h-screen w-full max-w-7xl flex-col items-center justify-center gap-y-12 px-4 pb-24 text-gray-600">
+    <div className="relative mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center justify-center gap-y-12 px-4 pb-8 pt-16 text-gray-600">
       <motion.h1
         initial={{ translateY: -50, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
@@ -65,6 +65,7 @@ export function WelcomeScreen() {
           </>
         )}
       </motion.div>
+      <div className="flex max-h-24 grow" />
     </div>
   )
 }

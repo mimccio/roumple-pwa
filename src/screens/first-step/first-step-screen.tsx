@@ -17,12 +17,12 @@ export function FirstStepScreen() {
   const { onCreate: onCreateNote } = useCreateNote()
 
   return (
-    <div className="relative mb-20 flex w-full flex-1 flex-col items-center justify-center p-4">
+    <div className="relative mb-20 flex w-full flex-1 flex-col items-center justify-center px-4 pb-8  pt-16">
       <motion.h1
         initial={{ translateY: -50, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
         transition={{ duration: 0.75 }}
-        className="mb-12 text-center text-2xl font-bold  text-indigo-500"
+        className="mb-12 text-center text-2xl font-semibold  text-indigo-500"
       >
         {t('title')}
       </motion.h1>
@@ -99,6 +99,7 @@ export function FirstStepScreen() {
       </ul>
       <CreateRoutineModale isOpen={routineIsOpen} close={closeRoutine} />
       <CreateTaskModale isOpen={taskIsOpen} close={closeTask} />
+      <div className="flex max-h-28 grow" />
     </div>
   )
 }
