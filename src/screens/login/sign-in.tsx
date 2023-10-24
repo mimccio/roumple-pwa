@@ -36,7 +36,7 @@ export function SignIn({ isLoading, handleLogin, email, handleEmailChange }: Pro
         enterTo="opacity-100 translate-y-0"
         leave="transition ease-in-out duration-300 transform"
         leaveFrom="opacity-100 translate-y-0"
-        leaveTo="opacity-0 -translate-y-full"
+        leaveTo="opacity-0 -translate-y-28"
         onSubmit={handleLogin}
       >
         <h2 className="text-xl font-semibold">{t('signInWithMagicLink', { ns: 'login' })}</h2>
