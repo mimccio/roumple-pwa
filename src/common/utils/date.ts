@@ -1,5 +1,4 @@
 import { compareAsc, isBefore, startOfMonth, startOfToday, startOfWeek } from 'date-fns'
-import { fr, enUS } from 'date-fns/locale'
 
 import { SCHEDULE_TYPES } from '../constants'
 import { ScheduleType } from '../types'
@@ -18,9 +17,4 @@ export const isPassed = ({ date, scheduleType }: { date: Date | null; scheduleTy
   if (scheduleType === SCHEDULE_TYPES.daily) return isBeforeToday(date)
   if (scheduleType === SCHEDULE_TYPES.weekly) return isBeforeThisWeek(date)
   if (scheduleType === SCHEDULE_TYPES.monthly) return isBeforeThisMonth(date)
-}
-
-export const getDateFnsLocale = () => {
-  const locale = navigator.language === 'fr' ? fr : enUS
-  return locale
 }

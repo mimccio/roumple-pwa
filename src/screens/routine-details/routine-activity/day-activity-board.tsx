@@ -1,7 +1,9 @@
-import { STATUSES } from '&/common/constants'
-import { cl, getDateFnsLocale } from '&/common/utils'
-import { RoutineAction } from '&/modules/routine/types'
 import { compareAsc, format, getDay, isSameDay } from 'date-fns'
+
+import { STATUSES } from '&/common/constants'
+import { cl } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
+import { RoutineAction } from '&/modules/routine/types'
 
 const colStartClasses = ['', 'col-start-2', 'col-start-3', 'col-start-4', 'col-start-5', 'col-start-6', 'col-start-7']
 
@@ -15,10 +17,12 @@ interface Props {
 }
 
 export function DayActivityBoard({ actions, occurrence, days, month, onDayClick, recurrence }: Props) {
+  const { locale } = useGetDateFnsLocale()
+
   return (
     <div className="">
       <h6 className="font-semi-bold mb-2 flex w-64 justify-center text-sm capitalize text-gray-600 ">
-        {format(month, 'MMMM', { locale: getDateFnsLocale() })}
+        {format(month, 'MMMM', { locale })}
       </h6>
       <div className="col-start-1 grid h-48 w-64 grid-cols-7 items-center rounded-xl border border-gray-200 p-1">
         {days.map((day, dayIdx) => {

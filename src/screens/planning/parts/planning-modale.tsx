@@ -8,7 +8,8 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
-import { cl, getDateFnsLocale, getTwBgColor } from '&/common/utils'
+import { cl, getTwBgColor } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
 
 import type { Routine } from '&/modules/routine/types'
 import type { Task } from '&/modules/task/types'
@@ -25,14 +26,13 @@ interface Props {
 
 export function PlanningModale({ scheduleType, date, onClose, routines, tasks }: Props) {
   const { t } = useTranslation('schedule')
+  const { locale } = useGetDateFnsLocale()
 
   const getDateText = () => {
     if (!date) return null
-    if (scheduleType === SCHEDULE_TYPES.daily)
-      return format(new Date(date), 'dd MMM yyyy', { locale: getDateFnsLocale() })
+    if (scheduleType === SCHEDULE_TYPES.daily) return format(new Date(date), 'dd MMM yyyy', { locale })
     if (scheduleType === SCHEDULE_TYPES.weekly) return t('week') + ' ' + getWeek(new Date(date))
-    if (scheduleType === SCHEDULE_TYPES.monthly)
-      return format(new Date(date), 'MMMM yyyy', { locale: getDateFnsLocale() })
+    if (scheduleType === SCHEDULE_TYPES.monthly) return format(new Date(date), 'MMMM yyyy', { locale })
   }
 
   const dateText = getDateText()

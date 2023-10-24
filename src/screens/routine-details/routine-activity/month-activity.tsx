@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { format, getMonth, isSameMonth, startOfToday, subMonths } from 'date-fns'
 
-import { cl, getDateFnsLocale } from '&/common/utils'
-import type { RoutineAction } from '&/modules/routine/types'
 import { STATUSES } from '&/common/constants'
+import { cl } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
+import type { RoutineAction } from '&/modules/routine/types'
 
 interface Props {
   actions: RoutineAction[]
@@ -15,6 +16,8 @@ interface Props {
 
 export function MonthActivity({ actions, occurrence, handleDateChange, recurrence, url }: Props) {
   const navigate = useNavigate()
+  const { locale } = useGetDateFnsLocale()
+
   const today = startOfToday()
   const array = [...Array(12).keys()].reverse()
 
@@ -47,7 +50,7 @@ export function MonthActivity({ actions, occurrence, handleDateChange, recurrenc
               )}
               key={i}
             >
-              {format(date, 'LLLLL', { locale: getDateFnsLocale() })}
+              {format(date, 'LLLLL', { locale })}
             </button>
           )
         })}

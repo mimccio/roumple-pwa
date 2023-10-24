@@ -3,7 +3,9 @@ import { NavLink } from 'react-router-dom'
 import { format, getWeek } from 'date-fns'
 
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl, getDateFnsLocale, getTwColor } from '&/common/utils'
+import { cl, getTwColor } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
+
 import type { Task } from '&/modules/task/types'
 import { useTaskStatus } from '&/modules/task/hooks'
 import { SquareDoneButton } from '&/modules/task/components'
@@ -14,16 +16,15 @@ interface Props {
 
 export function TaskListItem({ task }: Props) {
   const { t } = useTranslation('schedule')
+  const { locale } = useGetDateFnsLocale()
   const { onSelect } = useTaskStatus(task)
   const categoryBg = task.category?.color ? getTwColor('bg', task.category.color, 500) : 'bg-gray-300'
 
   const getDateText = () => {
     if (!task.date) return null
-    if (task.scheduleType === SCHEDULE_TYPES.daily)
-      return format(new Date(task.date), 'dd MMM yyyy', { locale: getDateFnsLocale() })
+    if (task.scheduleType === SCHEDULE_TYPES.daily) return format(new Date(task.date), 'dd MMM yyyy', { locale })
     if (task.scheduleType === SCHEDULE_TYPES.weekly) return t('week') + ' ' + getWeek(new Date(task.date))
-    if (task.scheduleType === SCHEDULE_TYPES.monthly)
-      return format(new Date(task.date), 'MMMM yyyy', { locale: getDateFnsLocale() })
+    if (task.scheduleType === SCHEDULE_TYPES.monthly) return format(new Date(task.date), 'MMMM yyyy', { locale })
   }
 
   const dateText = getDateText()

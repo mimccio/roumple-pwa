@@ -1,7 +1,8 @@
 import { format, isSameMonth } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
-import { cl, getDateFnsLocale } from '&/common/utils'
+import { cl } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
 
 interface Props {
   date: Date
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export function PlanningHeader({ date, onPreviousMonth, onNextMonth, today, onThisMonth }: Props) {
+  const { locale } = useGetDateFnsLocale()
+
   return (
     <header className="flex items-center justify-between px-6 py-4 lg:flex-none">
       <button
@@ -32,7 +35,7 @@ export function PlanningHeader({ date, onPreviousMonth, onNextMonth, today, onTh
           isSameMonth(date, today) ? 'text-gray-500' : 'text-purple-700 hover:text-purple-500'
         )}
       >
-        {format(date, 'MMMM yyyy', { locale: getDateFnsLocale() })}
+        {format(date, 'MMMM yyyy', { locale })}
       </button>
 
       <button
