@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { DocumentIcon } from '@heroicons/react/24/outline'
 
-import { useModale } from '&/common/hooks'
+import { useToggleOpen } from '&/common/hooks'
 import { ConfirmStartBlankModale } from './confirm-start-blank-modale'
 
 export function BlankItem() {
   const { t } = useTranslation('welcome')
-  const { open, close, isOpen } = useModale()
+  const { open, close, isOpen } = useToggleOpen()
 
   return (
     <div>

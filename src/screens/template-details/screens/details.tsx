@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { ArrowLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 
 import educationImg from '&/assets/illustrations/education.png'
-import { useModale } from '&/common/hooks'
+import { useToggleOpen } from '&/common/hooks'
 import { EmptyScreen } from '&/common/components/empty-screen'
 import type { Template } from '&/modules/template/types'
 import { ConfirmUseTemplateModale, ListItem, NoteListItem } from '&/modules/template/components'
@@ -16,7 +16,7 @@ interface Props {
 export function Details({ template, onUseTemplate }: Props) {
   const { t } = useTranslation(['common', 'template'])
   const navigate = useNavigate()
-  const { isOpen, close, open } = useModale()
+  const { isOpen, close, open } = useToggleOpen()
 
   const goBack = () => navigate(-1)
 

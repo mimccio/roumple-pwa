@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export function useModale() {
+export function useToggleOpen() {
   const [isOpen, setIsOpen] = useState(false)
 
   const open = () => setIsOpen(true)
