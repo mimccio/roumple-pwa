@@ -1,7 +1,9 @@
+import { Language } from '&/common/types'
+
 export const TEMPLATE_KEYS = {
   all: ['TEMPLATE'] as const,
   lists: () => [...TEMPLATE_KEYS.all, 'LIST'] as const,
-  list: ({ lang }: { lang: string }) => [...TEMPLATE_KEYS.lists(), { lang }] as const,
+  list: ({ lang }: { lang: Language }) => [...TEMPLATE_KEYS.lists(), { lang }] as const,
   details: () => [...TEMPLATE_KEYS.all, 'DETAIL'] as const,
   detail: (id?: string) => [...TEMPLATE_KEYS.details(), id] as const,
 }

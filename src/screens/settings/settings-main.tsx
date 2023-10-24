@@ -17,7 +17,10 @@ export function SettingsMain() {
       <ContentLayout>
         <div className="mt-6 flex w-full flex-col gap-y-8 px-2 xl:px-4">
           <Section title={t('Language', { ns: 'settings' })} Icon={LanguageIcon}>
-            <LanguageSelector />
+            <div className="flex w-full flex-wrap items-center gap-x-8 gap-y-2">
+              <span className="whitespace-nowrap">{t('Select language')}</span>
+              <LanguageSelector />
+            </div>
           </Section>
           <Section title={t('Templates', { ns: 'template' })} Icon={DocumentDuplicateIcon}>
             <Link

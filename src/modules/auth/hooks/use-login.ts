@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { db } from '&/db'
+import { useGetLanguage } from '&/common/hooks'
 import { getIsOnboarded } from '../utils'
 
 export const useLogin = () => {
@@ -11,6 +12,7 @@ export const useLogin = () => {
   const [verifyIsLoading, setVerifyIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
+  const lang = useGetLanguage()
 
   const handleEmailChange = (evt: FormEvent<HTMLInputElement>) => setEmail(evt.currentTarget.value)
 
@@ -42,7 +44,7 @@ export const useLogin = () => {
         email,
         options: {
           emailRedirectTo,
-          data: { lang: navigator.language.slice(0, 2) },
+          data: { lang },
         },
       })
       if (error) throw error

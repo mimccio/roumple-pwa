@@ -1,8 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { LanguageIcon } from '@heroicons/react/24/outline'
 
 import welcomeImg from '&/assets/illustrations/welcome.png'
 import { LoadingSpinner } from '&/common/components/spinners'
+import { useToggleOpen } from '&/common/hooks'
+import { LanguageSelector } from '&/common/components/inputs/language-selector'
+
 import { useGetTemplates } from '&/modules/template/hooks'
 import { TemplateItem } from '&/modules/template/components'
 
@@ -13,11 +17,35 @@ import { BlankItem } from './parts/blank-item'
 export function WelcomeScreen() {
   const { t } = useTranslation('welcome')
   const { isLoading, error, templateList } = useGetTemplates()
+  const { toggle, isOpen } = useToggleOpen()
 
   if (error) return <AppError />
 
   return (
-    <div className="relative mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center gap-y-12 px-4 pb-8 pt-32 text-gray-600">
+    <div className="mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center gap-y-12 px-4 pb-8 pt-32 text-gray-600">
+      <div className="absolute right-4 top-4 flex items-center gap-x-4">
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, scaleX: 0.5 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              exit={{ opacity: 0, scaleX: 0.7, transition: { duration: 0.1 } }}
+              style={{ originX: 1 }}
+            >
+              <div className="w-40">
+                <LanguageSelector />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button
+          onClick={toggle}
+          className="rounded-lg p-3 text-gray-400 transition-all hover:bg-gray-50 hover:text-gray-500 hover:shadow-md "
+        >
+          <LanguageIcon className="w-5 " />
+        </button>
+      </div>
       <motion.h1
         initial={{ translateY: -50, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
