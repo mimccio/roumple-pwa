@@ -36,6 +36,7 @@ export function useDeleteRoutineNote() {
 
       // 🗃️ Update RoutineNote List
       const prevTaskNoteList = queryClient.getQueryData(routineNotesKey)
+      // TODO?: wrong type (RoutineNote)
       queryClient.setQueryData(routineNotesKey, (old: Note[] = []) => {
         const i = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, i), ...old.slice(i + 1)]
