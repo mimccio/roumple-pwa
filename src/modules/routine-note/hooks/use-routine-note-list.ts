@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ROUTINE_NOTE_KEYS } from '../constants'
 
 import { fetchRoutineNoteList } from '../queries'
+// TODO: remove and fetch through routine
 
 export function useRoutineNoteList() {
   const { routineId } = useParams()

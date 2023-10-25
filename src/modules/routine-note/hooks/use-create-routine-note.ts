@@ -34,6 +34,7 @@ export function useCreateRoutineNote() {
 
       // 🗃️ Update RoutineNote List
       const prevRoutineNoteList = queryClient.getQueryData(routineNotesKey)
+      // TODO?: wrong type (RoutineNote)
       queryClient.setQueryData(routineNotesKey, (old: Note[] = []) => [...old, data])
 
       return { prevRoutineNoteList, previousNote }
