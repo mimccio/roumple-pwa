@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
+
 import workflowImg from '&/assets/illustrations/workflow.png'
 import { useGetTemplates } from '&/modules/template/hooks'
 import { TemplateItem, TemplateItemSkeleton } from '&/modules/template/components'
 import { MainError } from '../errors'
 
 export function TemplatesScreen() {
+  const { t } = useTranslation('template')
   const { templateList, error, isLoading } = useGetTemplates()
 
   if (error) {
@@ -18,7 +21,7 @@ export function TemplatesScreen() {
     <div className="flex w-full flex-col p-4">
       <div className="mt-24 flex flex-col items-center">
         <h1 className="mb-12 text-2xl font-semibold text-gray-500">
-          {isLoading || templateList?.length ? 'Select a template' : 'No template yet'}
+          {isLoading || templateList?.length ? t('Select a template') : t('No template yet')}
         </h1>
         <img
           alt=""

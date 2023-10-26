@@ -60,6 +60,18 @@ export interface TemplateNoteFolder {
   createdAt?: Date
 }
 
+export interface TemplateRoutineLinkedNote {
+  id: string
+  templateRoutineId: string
+  templateNoteId: string
+}
+
+export interface TemplateTaskLinkedNote {
+  id: string
+  templateTaskId: string
+  templateNoteId: string
+}
+
 export interface TemplateNote {
   id: string
   templateId: string
@@ -68,8 +80,6 @@ export interface TemplateNote {
   createdAt: Date
   templateCategory: TemplateCategory | null
   templateNoteFolder?: TemplateNoteFolder | null
-  // routineNotes?: TemplateRoutineNote[]
-  // taskNotes?: TemplateTaskNote[]
 }
 
 export type EntryType = 'ROUTINE' | 'TASK' | 'NOTE'
@@ -89,6 +99,8 @@ export type Template = {
   entryId: string | null
   entryType: EntryType | null
   entryNoteFolderId: string | null
+  templateRoutineLinkedNotes: TemplateRoutineLinkedNote[]
+  templateTaskLinkedNotes: TemplateTaskLinkedNote[]
 }
 
 export type TemplateListItem = Pick<Template, 'id' | 'name' | 'description'>
@@ -146,9 +158,6 @@ export interface NewNote {
   content?: JSONContent
   category_id?: string | null
   folder_id?: string | null
-
-  // routineNotes?: TemplateRoutineNote[]
-  // taskNotes?: TemplateTaskNote[]
 }
 
 export type CreationStatusItem = {
@@ -165,4 +174,20 @@ export type CreationStatus = {
   taskChecklists: CreationStatusItem
   noteFolders: CreationStatusItem
   notes: CreationStatusItem
+  routineNotes: CreationStatusItem
+  taskNotes: CreationStatusItem
+}
+
+export type NewRoutineNote = {
+  id: string
+  user_id: string
+  routine_id: string
+  note_id: string
+}
+
+export type NewTaskNote = {
+  id: string
+  user_id: string
+  task_id: string
+  note_id: string
 }

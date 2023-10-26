@@ -11,5 +11,19 @@
   "errorNoteFoldersCreation": "La création des dossiers de notes n'a pas fonctionné",
   "errorNotesCreation": "La création des notes n'a pas fonctionné",
   "errorRoutinesChecklistCreation": "La création des checklists des routines n'a pas fonctionné",
-  "errorTasksChecklistCreation": "La création des checklist des tâches n'a pas fonctionné"
+  "errorTasksChecklistCreation": "La création des checklist des tâches n'a pas fonctionné",
+  "errorRoutineLinkedNotesCreation": "La création des notes liées aux routines n'a pas fonctionné",
+  "errorTaskLinkedNotesCreation": "La création des notes liées aux tâches n'a pas fonctionné",
+  "routinesLinkedNotes": "Notes liées aux routines",
+  "tasksLinkedNotes": "Notes liées aux tâches",
+  "noteFolders": "Dossiers de notes",
+  "routinesChecklists": "Routines checklists",
+  "tasksChecklists": "Tâches checklists",
+  "creatingFromTemplate": "Création à partir du template",
+  "Select a template": "Sélectionner un template",
+  "No template yet": "Pas de template pour le moment",
+  "Creating": "Création des",
+  "created_male": "créés",
+  "created_female": "créées",
+  "Error creating": "Erreur lors de la création des"
 }

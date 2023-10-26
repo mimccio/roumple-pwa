@@ -7,8 +7,10 @@ import {
   TemplateNoteFolder,
   TemplateRoutine,
   TemplateRoutineChecklistItem,
+  TemplateRoutineLinkedNote,
   TemplateTask,
   TemplateTaskChecklistItem,
+  TemplateTaskLinkedNote,
 } from '../types'
 
 export const getTransformedCategories = async (templateCategories?: TemplateCategory[]) => {
@@ -112,5 +114,31 @@ export const getTransformedNoteFolders = async (noteFolders?: TemplateNoteFolder
     id: uuidv5(noteFolder.id, userId),
     user_id: userId,
     name: noteFolder.name,
+  }))
+}
+
+export const getTransformedRoutineLinkedNotes = async (templateRoutineLinkedNotes?: TemplateRoutineLinkedNote[]) => {
+  if (!templateRoutineLinkedNotes) throw new Error('templateRoutineLinkedNotes is undefined')
+
+  const userId = await getUserId()
+
+  return templateRoutineLinkedNotes.map((routineLinkedNote) => ({
+    id: uuidv5(routineLinkedNote.id, userId),
+    user_id: userId,
+    routine_id: uuidv5(routineLinkedNote.templateRoutineId, userId),
+    note_id: uuidv5(routineLinkedNote.templateNoteId, userId),
+  }))
+}
+
+export const getTransformedTaskLinkedNotes = async (templateTaskLinkedNotes?: TemplateTaskLinkedNote[]) => {
+  if (!templateTaskLinkedNotes) throw new Error('templateTaskLinkedNotes is undefined')
+
+  const userId = await getUserId()
+
+  return templateTaskLinkedNotes.map((taskLinkedNote) => ({
+    id: uuidv5(taskLinkedNote.id, userId),
+    user_id: userId,
+    task_id: uuidv5(taskLinkedNote.templateTaskId, userId),
+    note_id: uuidv5(taskLinkedNote.templateNoteId, userId),
   }))
 }

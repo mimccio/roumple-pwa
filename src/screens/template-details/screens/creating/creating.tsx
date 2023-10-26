@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 import { CreationStatus, Template } from '&/modules/template/types'
 import { Item } from './parts/item'
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function Creating({ status, template }: Props) {
+  const { t } = useTranslation(['common', 'template'])
   useNavigateToEntry({ status, template })
 
   const containerVariants = {
@@ -39,7 +41,7 @@ export function Creating({ status, template }: Props) {
         transition={{ duration: 0.75 }}
         className="flex items-center justify-center gap-x-2 text-2xl font-semibold"
       >
-        <span className="text-gray-600">Creating from template</span>
+        <span className="text-gray-600">{t('creatingFromTemplate', { ns: 'template' })}</span>
         <span className="font-bold text-indigo-500">{template.name}</span>
       </motion.h1>
       <div className="mt-20 flex justify-center">
@@ -51,13 +53,15 @@ export function Creating({ status, template }: Props) {
         animate="visible"
         className="mx-auto mt-28 flex w-full max-w-xl flex-col gap-y-4"
       >
-        <Item status={status.categories} name="categories" />
-        <Item status={status.routines} name="routines" />
-        <Item status={status.routineChecklists} name="routines checklists" />
-        <Item status={status.tasks} name="tasks" />
-        <Item status={status.taskChecklists} name="tasks checklists" />
-        <Item status={status.noteFolders} name="notes folders" />
-        <Item status={status.notes} name="notes" />
+        <Item status={status.categories} name={t('categories', { ns: 'common' })} feminine />
+        <Item status={status.routines} name={t('routines', { ns: 'common' })} feminine />
+        <Item status={status.routineChecklists} name={t('routinesChecklists', { ns: 'template' })} feminine />
+        <Item status={status.tasks} name={t('tasks', { ns: 'common' })} feminine />
+        <Item status={status.taskChecklists} name={t('tasksChecklists', { ns: 'template' })} feminine />
+        <Item status={status.noteFolders} name={t('noteFolders', { ns: 'template' })} />
+        <Item status={status.notes} name={t('notes', { ns: 'common' })} feminine />
+        <Item status={status.routineNotes} name={t('routinesLinkedNotes', { ns: 'template' })} feminine />
+        <Item status={status.taskNotes} name={t('tasksLinkedNotes', { ns: 'template' })} feminine />
       </motion.div>
     </div>
   )
