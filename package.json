@@ -35,6 +35,7 @@
     "@tiptap/react": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
     "@vercel/analytics": "^1.0.2",
+    "d-forest": "^3.2.4",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.1",
     "i18next": "^23.2.11",

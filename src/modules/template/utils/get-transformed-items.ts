@@ -12,6 +12,7 @@ import {
   TemplateTaskChecklistItem,
   TemplateTaskLinkedNote,
 } from '../types'
+import { getTransformedContent } from '.'
 
 export const getTransformedCategories = async (templateCategories?: TemplateCategory[]) => {
   if (!templateCategories) throw new Error('templateCategories is undefined')
@@ -36,7 +37,7 @@ export const getTransformedRoutines = async (templateRoutines?: TemplateRoutine[
     user_id: userId,
     name: templateRoutine.name,
     priority: templateRoutine.priority,
-    description: templateRoutine.description,
+    description: getTransformedContent(userId, templateRoutine.description),
     schedule_type: templateRoutine.schedule_type,
     daily_recurrence: templateRoutine.daily_recurrence,
     weekly_recurrence: templateRoutine.weekly_recurrence,
@@ -56,7 +57,7 @@ export const getTransformedTasks = async (templateTasks?: TemplateTask[]) => {
     id: uuidv5(templateTask.id, userId),
     user_id: userId,
     name: templateTask.name,
-    description: templateTask.description,
+    description: getTransformedContent(userId, templateTask.description),
     category_id: templateTask.templateCategory?.id ? uuidv5(templateTask.templateCategory.id, userId) : null,
     priority: templateTask.priority,
     period: templateTask.period,
@@ -101,7 +102,7 @@ export const getTransformedNotes = async (templateNotes?: TemplateNote[]) => {
     id: uuidv5(templateNote.id, userId),
     user_id: userId,
     title: templateNote.title,
-    content: templateNote.content,
+    content: getTransformedContent(userId, templateNote.content),
     category_id: templateNote.templateCategory?.id ? uuidv5(templateNote.templateCategory.id, userId) : null,
     folder_id: templateNote.templateNoteFolder?.id ? uuidv5(templateNote.templateNoteFolder.id, userId) : null,
   }))
