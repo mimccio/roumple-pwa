@@ -10,11 +10,20 @@ import { CategoryItem } from './category-item'
 import { ListSkeleton } from './category-list-skeleton'
 import { CategoriesError } from './categories-error'
 
-export function Categories() {
+interface Props {
+  close: () => void
+}
+
+export function Categories({ close }: Props) {
   const { t } = useTranslation('common')
   const { categoryList, isLoading, error } = useCategories()
   const [selectedCategory, setCategory] = useAtom(categoryAtom)
   const selectCategory = (category: Category | null) => setCategory(category)
+
+  const onAllClick = () => {
+    selectCategory(null)
+    close()
+  }
 
   return (
     <div className="flex-1 py-4">
@@ -27,7 +36,7 @@ export function Categories() {
         {isLoading && <ListSkeleton />}
         {!isLoading && (
           <button
-            onClick={() => selectCategory(null)}
+            onClick={onAllClick}
             className="flex h-9 items-center gap-4 rounded-lg px-2 text-sm font-semibold text-gray-400"
           >
             <TagIcon className="text-gray-300" width={20} height={20} />
@@ -42,6 +51,7 @@ export function Categories() {
               category={category}
               selectCategory={selectCategory}
               selectedCategory={selectedCategory}
+              close={close}
             />
           ))}
       </div>

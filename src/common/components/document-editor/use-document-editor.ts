@@ -110,6 +110,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
     },
   })
 
+  // change editor on id change
   useEffect(() => {
     if (!editor) return
     editor.commands.setContent(content || null)
@@ -122,6 +123,12 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
     })
     editor.view.updateState(newEditorState)
   }, [id, editor]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // change editor on content change
+  useEffect(() => {
+    if (!editor) return
+    editor.commands.setContent(content || null)
+  }, [editor, content])
 
   useEffect(() => {
     document.querySelectorAll<HTMLElement>('a.tiptap-link').forEach((a) => {

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
@@ -8,9 +9,12 @@ import { cl } from '&/common/utils'
 interface Props {
   name: string
   status: CreationStatusItem
+  feminine?: boolean
 }
 
-export function Item({ status, name }: Props) {
+export function Item({ status, name, feminine }: Props) {
+  const { t } = useTranslation('template')
+
   const itemVariants = {
     hidden: {
       opacity: 0,
@@ -31,17 +35,18 @@ export function Item({ status, name }: Props) {
         <>
           <ItemSpinner />
           <span className="text-gray-600">
-            Creating <span className="lower-case">{name}</span>
+            {t('Creating')} <span className="lowercase">{name}</span>
           </span>
         </>
       )}
+
       {status.isDone && (
         <>
           <span className="w-6">
             <CheckIcon className="w-5 text-green-500" />
           </span>
           <span>
-            <span className="capitalize">{name}</span> created
+            <span>{name}</span> {t('created', { context: feminine ? 'female' : 'male' })}
           </span>
         </>
       )}
@@ -51,7 +56,7 @@ export function Item({ status, name }: Props) {
             <XMarkIcon className="w-5 text-red-500" />
           </span>
           <span>
-            Error Creating <span className="lower-case">{name}</span>
+            {t('Error creating')} <span className="lowercase">{name}</span>
           </span>
         </>
       )}

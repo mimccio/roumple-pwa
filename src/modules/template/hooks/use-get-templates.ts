@@ -7,7 +7,7 @@ import { fetchTemplates } from '../queries'
 export function useGetTemplates() {
   const lang = useGetLanguage()
 
-  const { data, isLoading, error } = useQuery(TEMPLATE_KEYS.list({ lang }), fetchTemplates)
+  const { data, isLoading, error, isFetching } = useQuery(TEMPLATE_KEYS.list({ lang }), fetchTemplates)
 
-  return { templateList: data, isLoading, error }
+  return { templateList: data, isLoading: isLoading || isFetching, error }
 }

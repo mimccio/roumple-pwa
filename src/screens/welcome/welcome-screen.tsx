@@ -10,16 +10,13 @@ import { LanguageSelector } from '&/common/components/inputs/language-selector'
 import { useGetTemplates } from '&/modules/template/hooks'
 import { TemplateItem } from '&/modules/template/components'
 
-import { AppError } from '&/screens/errors'
-import { FirstStepItems } from '&/screens/first-step'
 import { BlankItem } from './parts/blank-item'
+import { NoTemplate } from './parts/no-template'
 
 export function WelcomeScreen() {
   const { t } = useTranslation('welcome')
-  const { isLoading, error, templateList } = useGetTemplates()
+  const { isLoading, templateList } = useGetTemplates()
   const { toggle, isOpen } = useToggleOpen()
-
-  if (error) return <AppError />
 
   return (
     <div className="mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center gap-y-12 px-4 pb-8 pt-32 text-gray-600">
@@ -71,7 +68,7 @@ export function WelcomeScreen() {
           <motion.h2
             initial={{ translateY: 20, opacity: 0 }}
             animate={{ translateY: 0, opacity: 1 }}
-            transition={{ duration: 0.75 }}
+            transition={{ duration: 0.75, delay: 0.1 }}
             className="mb-4 text-xl font-semibold text-gray-500"
           >
             {t('Start blank or use a template')}
@@ -80,7 +77,7 @@ export function WelcomeScreen() {
           <motion.div
             initial={{ translateY: 100, opacity: 0 }}
             animate={{ translateY: 0, opacity: 1 }}
-            transition={{ duration: 0.75 }}
+            transition={{ duration: 0.75, delay: 0.1 }}
             className="flex flex-wrap items-center justify-center gap-x-8 gap-y-8"
           >
             <BlankItem />
@@ -91,7 +88,7 @@ export function WelcomeScreen() {
         </>
       )}
 
-      {!isLoading && !templateList?.length && !error && <FirstStepItems />}
+      {!isLoading && !templateList?.length && <NoTemplate />}
     </div>
   )
 }

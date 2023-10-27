@@ -11,5 +11,18 @@
   "errorNoteFoldersCreation": "Note folders creation didn't work",
   "errorNotesCreation": "Notes creation didn't work",
   "errorRoutinesChecklistCreation": "Routines checklist creation didn't work",
-  "errorTasksChecklistCreation": "Tasks checklist creation didn't work"
+  "errorTasksChecklistCreation": "Tasks checklist creation didn't work",
+  "errorRoutineLinkedNotesCreation": "Routine linked notes creation didn't work",
+  "errorTaskLinkedNotesCreation": "Task linked notes creation didn't work",
+  "routinesLinkedNotes": "Routines linked notes",
+  "tasksLinkedNotes": "Task linked notes",
+  "noteFolders": "Notes folders",
+  "routinesChecklists": "Routines checklists",
+  "tasksChecklists": "Tasks checklists",
+  "creatingFromTemplate": "Creating from template",
+  "Select a template": "Select a template",
+  "No template yet": "No template yet",
+  "Creating": "Creating",
+  "created": "created",
+  "Error creating": "Error creating"
 }

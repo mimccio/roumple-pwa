@@ -10,9 +10,10 @@ interface Props {
   category: Category
   selectedCategory: Category | null
   selectCategory: (category: Category | null) => void
+  close: () => void
 }
 
-export function CategoryItem({ category, selectCategory, selectedCategory }: Props) {
+export function CategoryItem({ category, selectCategory, selectedCategory, close }: Props) {
   const navigate = useNavigate()
   const mainPath = useMainPath()
   const bg = TW_COLOR_BG_100[category.color]
@@ -25,6 +26,7 @@ export function CategoryItem({ category, selectCategory, selectedCategory }: Pro
       selectCategory(category)
     }
     navigate(mainPath)
+    close()
   }
 
   return (

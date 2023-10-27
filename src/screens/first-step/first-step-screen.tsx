@@ -8,7 +8,7 @@ export function FirstStepScreen() {
   const { t } = useTranslation('first-step')
 
   return (
-    <div className="relative mb-20 flex w-full flex-1 flex-col items-center justify-center px-4 pb-8  pt-16">
+    <div className="relative mb-20 flex w-full flex-1 flex-col items-center justify-center px-4 pb-8  pt-32">
       <motion.h1
         initial={{ translateY: -50, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
