@@ -74,12 +74,14 @@ export function useTemplate() {
   } = useMutation(createBulkNoteFolders, {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.details() })
     },
     onError: () => {
       toast.error(t('errorNoteFoldersCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(NOTE_FOLDER_KEYS.lists())
+      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.details())
       await createNotes()
     },
   })
@@ -93,12 +95,14 @@ export function useTemplate() {
   } = useMutation(createBulkNotes, {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.details() })
     },
     onError: () => {
       toast.error(t('errorNotesCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(NOTE_KEYS.lists())
+      queryClient.invalidateQueries(NOTE_KEYS.details())
     },
   })
 
@@ -111,12 +115,14 @@ export function useTemplate() {
   } = useMutation(createBulkRoutines, {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.details() })
     },
     onError: () => {
       toast.error(t('errorRoutinesCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(ROUTINE_KEYS.lists())
+      queryClient.invalidateQueries(ROUTINE_KEYS.details())
       await createRoutineChecklists()
     },
   })
@@ -129,13 +135,13 @@ export function useTemplate() {
     isError: routineChecklistsIsError,
   } = useMutation(createBulkRoutineChecklistItems, {
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.details() })
     },
     onError: () => {
       toast.error(t('errorRoutinesChecklistCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.lists())
+      queryClient.invalidateQueries(ROUTINE_KEYS.details())
     },
   })
 
@@ -148,12 +154,14 @@ export function useTemplate() {
   } = useMutation(createBulkTasks, {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: TASK_KEYS.details() })
     },
     onError: () => {
       toast.error(t('errorTasksCreation'))
     },
     onSuccess: async () => {
       queryClient.invalidateQueries(TASK_KEYS.lists())
+      queryClient.invalidateQueries(TASK_KEYS.details())
       await createTaskChecklists()
     },
   })
@@ -166,13 +174,13 @@ export function useTemplate() {
     isError: taskChecklistsIsError,
   } = useMutation(createBulkTaskChecklistItems, {
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: TASK_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: TASK_KEYS.details() })
     },
     onError: () => {
       toast.error(t('errorTasksChecklistCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.lists())
+      queryClient.invalidateQueries(TASK_KEYS.details())
     },
   })
 

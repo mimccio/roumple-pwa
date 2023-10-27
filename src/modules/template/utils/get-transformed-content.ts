@@ -4,16 +4,22 @@ import { v5 as uuidv5 } from 'uuid'
 
 const getTransformPath = (userId: string, path: string) => {
   const pathArr = path.split('/')
+  if (pathArr[1] !== 'templates') return path
   const listType = pathArr[3]
-
   let newPath = path
-
   if (listType === 'routines') {
-    newPath = `/${listType}/d/routine/${uuidv5(pathArr[4], userId)}/`
+    newPath = pathArr[4] ? `/routines/d/routine/${uuidv5(pathArr[4], userId)}/` : '/routines'
   } else if (listType === 'tasks') {
-    newPath = `/${listType}/d/task/${uuidv5(pathArr[4], userId)}/`
+    newPath = pathArr[4] ? `/tasks/d/task/${uuidv5(pathArr[4], userId)}/` : '/tasks'
   } else if (listType === 'notes') {
-    newPath = `/${listType}/${pathArr[4]}/d/note/${uuidv5(pathArr[5], userId)}/`
+    newPath =
+      pathArr[4] && pathArr[5]
+        ? `/notes/${pathArr[4]}/d/note/${uuidv5(pathArr[5], userId)}/`
+        : pathArr[4]
+        ? `/notes/${pathArr[4]}/`
+        : '/notes'
+  } else if (listType === 'categories') {
+    newPath = '/categories'
   }
 
   return newPath
