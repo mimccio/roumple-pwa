@@ -12,7 +12,7 @@ export function MenuContent({ close }: Props) {
     <div className="no-scrollbar absolute flex h-full min-h-screen w-full flex-col overflow-y-scroll bg-gray-50 px-4">
       <BoardNav close={close} />
       <MainNav close={close} />
-      <Categories />
+      <Categories close={close} />
       <Support />
     </div>
   )
