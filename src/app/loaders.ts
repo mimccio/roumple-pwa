@@ -39,6 +39,6 @@ export const onboardingLoader = async () => {
   // Only used in "development mode" to unBoard user when needed
   if (unBoard) await unOnboardUser()
   // end
-  if (data.session?.user?.user_metadata?.onboarded === true) return redirect('/first-step')
+  if (data.session?.user?.user_metadata?.onboarded === true) return redirect('/today')
   return { session: data.session }
 }

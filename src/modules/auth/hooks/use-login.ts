@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router'
 
 import { db } from '&/db'
 import { useGetLanguage } from '&/common/hooks'
-import { getIsOnboarded } from '../utils'
 
 export const useLogin = () => {
   const navigate = useNavigate()
@@ -18,19 +17,12 @@ export const useLogin = () => {
 
   // TODO!: check redirect paths (button click & otp) for dev & prod
 
-  const getPath = async () => {
-    const isOnboarded = await getIsOnboarded()
-    return isOnboarded ? '/today' : '/welcome'
-  }
-
-  const getURL = async () => {
+  const getURL = () => {
     let incompleteUrl = window.location.origin
-    const path = await getPath()
-
     // Make sure to include `https://` when not localhost.
     incompleteUrl = incompleteUrl.includes('http') ? incompleteUrl : `https://${incompleteUrl}`
-    // Redirect to /today if already onboarded and to /welcome if not
-    incompleteUrl = `${incompleteUrl}${path}`
+    // Redirect to /today
+    incompleteUrl = `${incompleteUrl}/today/`
     // Make sure to including trailing `/`.
     return incompleteUrl.charAt(incompleteUrl.length - 1) === '/' ? incompleteUrl : `${incompleteUrl}/`
   }
@@ -39,7 +31,7 @@ export const useLogin = () => {
     try {
       setIsLoading(true)
       e.preventDefault()
-      const emailRedirectTo = await getURL()
+      const emailRedirectTo = getURL()
       const { error } = await db.auth.signInWithOtp({
         email,
         options: {
@@ -59,14 +51,13 @@ export const useLogin = () => {
   const verifyOpt = async (opt: string) => {
     try {
       setVerifyIsLoading(true)
-      const path = await getPath()
       const { error } = await db.auth.verifyOtp({
         email: email,
         token: opt.trim(),
         type: 'email',
       })
       if (error) throw error
-      navigate(path)
+      navigate('/today/')
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {
