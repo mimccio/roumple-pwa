@@ -7,12 +7,10 @@ import type { RoutineAction } from '../types'
 export const fetchActionList = async (routineId: string, scheduleType: ScheduleType) => {
   const date = startOfToday()
 
-  // TODO!: WEEK
   const getOldestDate = () => {
-    if (scheduleType === SCHEDULE_TYPES.monthly) return startOfMonth(subMonths(date, 12))
-    // if (scheduleType === SCHEDULE_TYPES.weekly) return startOfMonth(subMonths(date, 1))
-
-    return startOfMonth(subMonths(date, 1))
+    if (scheduleType === SCHEDULE_TYPES.daily) return startOfMonth(subMonths(date, 2))
+    if (scheduleType === SCHEDULE_TYPES.weekly) return startOfMonth(subMonths(date, 5))
+    return startOfMonth(subMonths(date, 12))
   }
 
   const oldestDate = getOldestDate()
