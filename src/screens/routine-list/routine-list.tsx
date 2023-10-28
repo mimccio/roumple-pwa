@@ -1,4 +1,4 @@
-import { ListSkeleton } from '&/common/components/list-skeleton'
+import { ListSkeleton } from '&/common/components/skeletons'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
 
 import { useRoutineList } from '&/modules/routine/hooks'

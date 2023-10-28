@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
 import { useOutsideClick } from '&/common/hooks'
-import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+import { ListSkeletonSmall } from '&/common/components/skeletons'
 
 import type { Note } from '&/modules/note/types'
 import type { Task } from '&/modules/task/types'

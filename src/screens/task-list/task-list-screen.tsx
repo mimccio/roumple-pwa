@@ -1,5 +1,5 @@
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
-import { ListSkeleton } from '&/common/components/list-skeleton'
+import { ListSkeleton } from '&/common/components/skeletons'
 
 import { useTaskList } from '&/modules/task/hooks'
 import { CreateTaskModale } from '&/modules/task/components'

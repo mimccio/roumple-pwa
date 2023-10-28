@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { InboxIcon } from '@heroicons/react/24/solid'
 
-import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+import { ListSkeletonSmall } from '&/common/components/skeletons'
 import { useNoteList } from '&/modules/note/hooks'
 import { InboxPreviewItem } from './inbox-preview-item'
 

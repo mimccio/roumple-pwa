@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { InboxIcon } from '@heroicons/react/24/solid'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 
-import { ListSkeleton } from '&/common/components/list-skeleton'
+import { ListSkeleton } from '&/common/components/skeletons'
 import { ContentLayout } from '&/common/components/layouts'
 import { useNoteList } from '&/modules/note/hooks'
 import { MainError } from '&/screens/errors'

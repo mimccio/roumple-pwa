@@ -1,6 +1,6 @@
 import type { ScheduleType } from '&/common/types'
 import { MainListLayout, ContentLayout } from '&/common/components/layouts'
-import { ListSkeleton } from '&/common/components/list-skeleton'
+import { ListSkeleton } from '&/common/components/skeletons'
 import { useBoardList } from '&/modules/board/hooks'
 
 import { MainError, OfflineError } from '../errors'
