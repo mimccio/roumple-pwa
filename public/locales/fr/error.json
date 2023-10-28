@@ -10,5 +10,6 @@
   "required": "requis",
   "emptyName": "Le nom ne peux pas être vide",
   "errorCreation": "La création n'a pas fonctionné",
-  "errorModification": "La modification n'a pas fonctionné"
+  "errorModification": "La modification n'a pas fonctionné",
+  "editLangError": "Erreur lors de la sélection de la langue"
 }
