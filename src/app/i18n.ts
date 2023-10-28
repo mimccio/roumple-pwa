@@ -12,7 +12,7 @@ i18next
     load: 'languageOnly',
     fallbackLng: 'en',
     // debug: import.meta.env.MODE === 'development',
-    cache: { enabled: import.meta.env.MODE !== 'development' },
+    cache: { enabled: import.meta.env.MODE === 'production' },
     fallbackNS: 'common',
     ns: [
       'action',
@@ -36,5 +36,5 @@ i18next
     ],
   })
 
-document.documentElement.lang =
-  i18next.language || window.localStorage.i18nextLng || window.navigator.language.slice(0, 2) || LANGUAGES.en
+const lang = i18next.language || window.localStorage.i18nextLng || window.navigator.language || LANGUAGES.en
+document.documentElement.lang = lang.slice(0, 2)

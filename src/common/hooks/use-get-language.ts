@@ -5,9 +5,9 @@ import { LANGUAGES } from '../constants'
 
 export function useGetLanguage() {
   const { i18n } = useTranslation()
-  const lang = i18n.language || window.localStorage.i18nextLng || window.navigator.language.slice(0, 2) || LANGUAGES.en
+  const lang = i18n.language || window.localStorage.i18nextLng || window.navigator.language || LANGUAGES.en
 
-  let language = lang as Language
+  let language = lang.slice(0, 2) as Language
   if (!Object.prototype.hasOwnProperty.call(LANGUAGES, language)) language = LANGUAGES.en
 
   return language
