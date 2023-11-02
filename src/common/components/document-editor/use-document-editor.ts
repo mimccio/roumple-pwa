@@ -117,6 +117,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
       selection: editor.state.selection,
     })
     editor.view.updateState(newEditorState)
+    if (!content) editor.commands.focus()
   }, [id, editor]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // change editor on content change
@@ -142,10 +143,6 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
       return () => a.removeEventListener('click', handleClick)
     })
   }, [navigate, id, editor, refreshLink])
-
-  // useEffect(() => {
-  //   editor?.commands.focus('end')
-  // }, [note.id, editor])
 
   return { editor }
 }
