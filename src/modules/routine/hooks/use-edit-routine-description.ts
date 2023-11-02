@@ -18,8 +18,8 @@ export function useEditRoutineDescription(routine: Routine) {
       // ⛳ Update Item
       queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), { ...routine, description: data.description })
     },
-    onError: (_err, item) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
+    onError: (_err, variables) => {
+      queryClient.setQueryData(ROUTINE_KEYS.detail(variables.id), routine)
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {

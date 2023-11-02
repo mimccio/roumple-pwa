@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
 import { useMainPath } from '&/common/hooks'
+
 import type { NoteFolder } from '&/modules/note-folder/types'
-import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
+import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
 import type { Note } from '../types'
+
+import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
+import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
 import { NOTE_KEYS } from '../constants'
+
 import { deleteNote } from '../mutations'
 
 export function useDeleteNote() {
@@ -16,16 +21,31 @@ export function useDeleteNote() {
 
   const { mutate } = useMutation(deleteNote, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
+      // ✖️ Cancel related queries
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: NOTE_KEYS.detail(data.id) }),
+        queryClient.cancelQueries({ queryKey: NOTE_KEYS.list({ folderId: data.folder?.id }) }),
+        queryClient.cancelQueries({ queryKey: NOTE_KEYS.searches() }),
+        queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) }),
+        queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: data.category?.id }) }),
+        queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }),
+        queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.note(data.id) }),
+      ])
 
+      // ⛳ Update Note
       queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => null)
 
+      // 🗃️ Update Note list
       const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: data.folder?.id }))
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: data.folder?.id }), (old: Note[] = []) => {
         const noteIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, noteIndex), ...old.slice(noteIndex + 1)]
       })
 
+      // 🗃️ Update Note search lists
+      queryClient.setQueriesData(NOTE_KEYS.searches(), (old?: Note[]) => old?.filter((item) => item.id !== data.id))
+
+      // 🗃️ Update NoteFolder list all category
       const previousFolderListAllCategory = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
       queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), (old: NoteFolder[] = []) => {
         const folderIndex = old.findIndex((item) => item.id === data.folder?.id)
@@ -36,6 +56,7 @@ export function useDeleteNote() {
         return [...old.slice(0, folderIndex), newFolder, ...old.slice(folderIndex + 1)]
       })
 
+      // 🗃️ Update NoteFolder list selected category
       const previousFolderListCategoryId = queryClient.getQueryData(
         NOTE_FOLDER_KEYS.list({ categoryId: data.category?.id })
       )
@@ -49,8 +70,17 @@ export function useDeleteNote() {
         return [...old.slice(0, folderIndex), newFolder, ...old.slice(folderIndex + 1)]
       })
 
+      // 🗃️ Update RoutineNote by routine lists
+      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byRoutineLists(), (old?: RoutineNoteByRoutine[]) =>
+        old?.map((item) => (item.note.id === data.id ? { ...item, deleted: true } : item))
+      )
+
       navigate(mainPath)
-      return { previousNoteList, previousFolderListAllCategory, previousFolderListCategoryId }
+      return {
+        previousNoteList,
+        previousFolderListAllCategory,
+        previousFolderListCategoryId,
+      }
     },
 
     onError: (_err, item, context) => {
@@ -61,14 +91,21 @@ export function useDeleteNote() {
         NOTE_FOLDER_KEYS.list({ categoryId: item.category?.id }),
         context?.previousFolderListCategoryId
       )
-
+      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byRoutineLists(), (old?: RoutineNoteByRoutine[]) =>
+        old?.map((routineNote) => (routineNote.note.id === item.id ? { ...routineNote, deleted: false } : routineNote))
+      )
+      queryClient.setQueriesData(NOTE_KEYS.searches(), (old?: Note[]) => (old ? [...old, item] : [item])) // TODO?: order
       toast.error("Deletion didn't work")
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: variables.folder?.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }))
+    onSettled: async (_data, _error, note) => {
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(note.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: note.folder?.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.searches() })
+      queryClient.removeQueries(NOTE_KEYS.detail(note.id))
+      queryClient.removeQueries(ROUTINE_NOTE_KEYS.note(note.id))
     },
   })
 

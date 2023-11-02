@@ -1,3 +1,5 @@
+// TODO: remove and use react query new status (v5)
+
 interface Params {
   isLoading: boolean
   isPaused?: boolean

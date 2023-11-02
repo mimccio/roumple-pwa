@@ -20,5 +20,11 @@
   "linkedRoutines_one": "Routine liée",
   "linkedRoutines_other": "Routines liées",
   "linkedTasks_one": "Tâche liée",
-  "linkedTasks_other": "Tâches liées"
+  "linkedTasks_other": "Tâches liées",
+  "Error fetching notes": "Erreur lors de la récupération des notes",
+  "Offline, no note to show": "Hors ligne, aucune de note à afficher",
+  "Note is already linked": "Cette note est déjà liée",
+  "Error when linking note": "Erreur lors de la liaison de la note",
+  "Error fetching linked notes": "Erreur lors de la récupération des notes liées",
+  "new note": "nouvelle note"
 }

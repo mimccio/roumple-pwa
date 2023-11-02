@@ -1,15 +1,21 @@
+import { useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { useGetRoutineNoteByNoteList } from '&/modules/routine-note/hooks'
+import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'
 import { fetchNoteById } from '../queries'
-import { useParams } from 'react-router-dom'
-import { Note } from '../types'
 
-export function useNoteDetail() {
+export function useGetNoteDetail() {
   const { noteId, folderId } = useParams()
   const queryClient = useQueryClient()
 
-  const { data, isLoading, error, isPaused } = useQuery(NOTE_KEYS.detail(noteId), fetchNoteById, {
+  const {
+    data: note,
+    isLoading: noteIsLoading,
+    error,
+    isPaused,
+  } = useQuery(NOTE_KEYS.detail(noteId), fetchNoteById, {
     enabled: Boolean(noteId),
     initialDataUpdatedAt: () => queryClient.getQueryState(NOTE_KEYS.list({ folderId }))?.dataUpdatedAt,
     initialData: () => {
@@ -18,5 +24,7 @@ export function useNoteDetail() {
     },
   })
 
-  return { note: data, isLoading, error, isPaused }
+  const { routineNoteList, routineNoteListIsLoading } = useGetRoutineNoteByNoteList()
+
+  return { note, isLoading: noteIsLoading || routineNoteListIsLoading, error, isPaused, routineNoteList }
 }

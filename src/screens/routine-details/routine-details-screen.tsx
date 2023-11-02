@@ -9,29 +9,23 @@ import { RoutineDetails } from './routine-details'
 
 export function RoutineDetailsScreen() {
   const { activity } = useParams()
-  const { date, handleDateChange, routineQuery, actionQuery } = useRoutineDetail()
+  const { date, handleDateChange, routine, actionQuery, isPaused, routineNoteList, isLoading } = useRoutineDetail()
 
-  if (!routineQuery.data && routineQuery.isPaused) return <OfflineError />
-  if (!routineQuery.data && !routineQuery.isLoading) return <NotFoundDetails />
+  if (isLoading) return <DetailsLoadingPage />
+  if (!routine && isPaused) return <OfflineError />
+  if (!routine) return <NotFoundDetails />
 
   return (
     <>
-      <RoutineNavbar
-        routine={routineQuery.data}
-        isLoading={routineQuery.isLoading}
-        date={date}
-        handleDateChange={handleDateChange}
-      />
-      {routineQuery.isLoading && <DetailsLoadingPage />}
-      {routineQuery.data && activity && (
-        <RoutineActivity routine={routineQuery.data} handleDateChange={handleDateChange} />
-      )}
-      {routineQuery.data && !activity && (
+      <RoutineNavbar routine={routine} date={date} handleDateChange={handleDateChange} />
+      {activity && <RoutineActivity routine={routine} handleDateChange={handleDateChange} />}
+      {!activity && (
         <RoutineDetails
-          routine={routineQuery.data}
+          routine={routine}
           date={date}
           handleDateChange={handleDateChange}
           actionQuery={actionQuery}
+          routineNoteList={routineNoteList}
         />
       )}
     </>

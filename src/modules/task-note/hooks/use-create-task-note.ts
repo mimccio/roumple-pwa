@@ -3,12 +3,13 @@ import { toast } from 'react-hot-toast'
 import { v5 as uuidv5 } from 'uuid'
 
 import type { Note } from '&/modules/note/types'
+import type { Task } from '&/modules/task/types'
 import { NOTE_KEYS } from '&/modules/note/constants'
 import type { TaskNote } from '../types'
 import { TASK_NOTES_KEYS } from '../constants'
 import { createTaskNote } from '../mutations'
 
-export function useCreateTaskNote() {
+export function useCreateTaskNote(task: Task) {
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation(createTaskNote, {
@@ -50,7 +51,7 @@ export function useCreateTaskNote() {
     },
   })
 
-  const onCreate = ({ note, task }: { note: Note; task: { id: string; name: string } }) => {
+  const onCreate = (note: Note) => {
     const id = uuidv5(note.id, task.id)
     const previousTaskNoteList = queryClient.getQueryData(TASK_NOTES_KEYS.list(task.id)) as TaskNote[]
     const index = previousTaskNoteList.findIndex((item) => item.id === id)

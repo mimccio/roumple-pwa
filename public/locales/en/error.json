@@ -11,5 +11,6 @@
   "emptyName": "Name can't be empty",
   "errorCreation": "Creation didn't work",
   "errorModification": "Modification didn't work",
+  "errorDelete": "Delete didn't work",
   "editLangError": "Error selecting language"
 }

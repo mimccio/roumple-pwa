@@ -1,59 +1,74 @@
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
 import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'
 import { deleteRoutine } from '../mutations'
+import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
+import { RoutineNoteByNote } from '&/modules/routine-note/types'
 
 export function useDeleteRoutine() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const date = startOfToday()
 
   const { mutate } = useMutation(deleteRoutine, {
-    onMutate: async (data) => {
+    onMutate: async (routine) => {
+      // 🗝️ Keys
+      const listKey = ROUTINE_KEYS.list({ archived: routine.archived })
+      const boardKey = ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date })
+
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(routine.id) }),
+        queryClient.cancelQueries({ queryKey: listKey }),
+        queryClient.cancelQueries({ queryKey: boardKey }),
+        queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.routine(routine.id) }),
+        queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.byNoteLists() }),
+      ])
 
       // ⛳ Update Item
-      queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), undefined)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(routine.id), null)
 
       // 🗃️ Update Routine List
-      const previousRoutineList = queryClient.getQueryData(ROUTINE_KEYS.list({ archived: data.archived }))
-      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: data.archived }), (old: Routine[] = []) => {
-        const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
-      })
+      const prevList = queryClient.getQueryData(listKey)
+      queryClient.setQueryData(listKey, (old: Routine[] = []) => old && old.filter((r) => r.id !== routine.id))
 
       // 🏫 Update Routine Board
-      const previousBoardRoutines = queryClient.getQueryData(
-        ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
+      const prevBoard = queryClient.getQueryData(boardKey)
+      queryClient.setQueryData(boardKey, (old: Routine[] = []) => old && old.filter((r) => r.id !== routine.id))
+
+      // 🗃️ Update RoutineNote by note lists
+      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byNoteLists(), (old?: RoutineNoteByNote[]) =>
+        old?.map((item) => (item.routine.id === routine.id ? { ...item, deleted: true } : item))
       )
-      queryClient.setQueryData(ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date }), (old: Routine[] = []) => {
-        const routineIndex = old.findIndex((item) => item.id === data.id)
-        return [...old.slice(0, routineIndex), ...old.slice(routineIndex + 1)]
-      })
 
       navigate('/routines')
-      return { previousRoutineList, previousBoardRoutines }
+      return { prevList, prevBoard }
     },
 
-    onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
-      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
-      queryClient.setQueryData(
-        ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
-        context?.previousBoardRoutines
+    onError: (_err, routine, context) => {
+      queryClient.setQueryData(ROUTINE_KEYS.detail(routine.id), routine)
+      queryClient.setQueryData(ROUTINE_KEYS.list({ archived: routine.archived }), context?.prevList)
+      queryClient.setQueryData(ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }), context?.prevBoard)
+      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byNoteLists(), (old?: RoutineNoteByNote[]) =>
+        old?.map((routineNote) =>
+          routineNote.routine.id === routine.id ? { ...routineNote, deleted: false } : routineNote
+        )
       )
-      toast.error("Deletion didn't work")
+
+      toast.error(t('errorDelete'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
+    onSettled: (_data, _error, routine) => {
+      queryClient.invalidateQueries(ROUTINE_KEYS.detail(routine.id))
+      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: routine.archived }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }))
+      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.byNoteLists())
+      queryClient.removeQueries({ queryKey: ROUTINE_NOTE_KEYS.routine(routine.id) })
     },
   })
 

@@ -23,31 +23,29 @@ export function useCreateNote() {
 
   const { mutate } = useMutation(createNote, {
     onMutate: async (data) => {
-      await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: NOTE_KEYS.detail(id) }),
+        queryClient.cancelQueries({ queryKey: NOTE_KEYS.list({ folderId: folder?.id }) }),
+      ])
 
       queryClient.setQueryData(NOTE_KEYS.detail(id), () => ({ id, category, created_at, folder }))
 
       const previousNoteListNoCategory = queryClient.getQueryData(NOTE_KEYS.list({ folderId: folder?.id }))
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder?.id }), (old: Note[] = []) => [data, ...old])
 
-      const previousSearchList = queryClient.getQueryData(NOTE_KEYS.search({ searchText: '' }))
-      queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), (old: Note[] = []) => [data, ...old])
-
       const folderId = data.folder?.id || 'folders'
       navigate(`/notes/${folderId}/d/note/${id}`)
-      return { previousNoteListNoCategory, previousSearchList }
+      return { previousNoteListNoCategory }
     },
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData(NOTE_KEYS.detail(id), null)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder?.id }), context?.previousNoteListNoCategory)
-      queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), context?.previousSearchList)
       toast.error(t('errorCreation'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries(NOTE_KEYS.detail(id))
       queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: folder?.id }))
-      queryClient.invalidateQueries(NOTE_KEYS.search({ searchText: '' }))
     },
   })
 

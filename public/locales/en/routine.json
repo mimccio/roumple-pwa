@@ -10,5 +10,6 @@
   "time-per_one": "time per ",
   "time-per_other": "times per ",
   "noRoutineWithCategory": "No routine with \"<1>{{category}}</1>\" category",
-  "noArchivedRoutineWithCategory": "No archived routine with \"<1>{{category}}</1>\" category"
+  "noArchivedRoutineWithCategory": "No archived routine with \"<1>{{category}}</1>\" category",
+  "Error fetching linked routines": "Error fetching linked routines"
 }

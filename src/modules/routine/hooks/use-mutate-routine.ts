@@ -18,10 +18,14 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
       const date = getScheduleTypeDate({ scheduleType: data.scheduleType, date: today })
 
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) }),
+        queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.list({ archived: data.archived }) }),
+        // TODO: cancel board list
+      ])
 
       // ⛳ Update Item
+      const prevRoutine = queryClient.getQueryData(ROUTINE_KEYS.detail(data.id))
       queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), data)
 
       // 🗃️ Update Routine List
@@ -40,11 +44,11 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
         return [...old.slice(0, routineIndex), { ...old[routineIndex], ...data }, ...old.slice(routineIndex + 1)]
       })
 
-      return { previousRoutineList, previousBoardRoutineList }
+      return { previousRoutineList, previousBoardRoutineList, prevRoutine }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), context?.prevRoutine)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
       queryClient.setQueryData(
         ROUTINE_KEYS.board({

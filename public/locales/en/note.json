@@ -20,5 +20,11 @@
   "linkedRoutines_one": "Linked routine",
   "linkedRoutines_other": "Linked routines",
   "linkedTasks_one": "Linked task",
-  "linkedTasks_other": "Linked tasks"
+  "linkedTasks_other": "Linked tasks",
+  "Error fetching notes": "Error fetching notes",
+  "Offline, no note to show": "Offline, no note to show",
+  "Note is already linked": "Note is already linked",
+  "Error when linking note": "Error when linking note",
+  "Error fetching linked notes": "Error fetching linked notes",
+  "new note": "new note"
 }

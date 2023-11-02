@@ -5,8 +5,6 @@ import { TASK_NOTES_KEYS } from '../constants'
 
 import { fetchTaskNoteList } from '../queries'
 
-// TODO: remove and fetch through task details
-
 export function useTaskNoteList() {
   const { taskId } = useParams()
 

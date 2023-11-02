@@ -2,16 +2,18 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowPathRoundedSquareIcon, CheckCircleIcon, LinkIcon } from '@heroicons/react/24/outline'
 
-import type { Note } from '&/modules/note/types'
 import { DetailsInfoPopover } from '&/common/components/popovers/details-info-popover'
+import type { RoutineNoteByNote } from '&/modules/routine-note/types'
+import type { Note } from '&/modules/note/types'
 
 interface Props {
   note: Note
+  routineNoteList?: RoutineNoteByNote[]
 }
 
-export function NoteLinks({ note }: Props) {
+export function NoteLinks({ note, routineNoteList }: Props) {
   const { t } = useTranslation(['common', 'note'])
-  const routineCount = note.routineNotes?.length || 0
+  const routineCount = routineNoteList?.length || 0
   const taskCount = note.taskNotes?.length || 0
 
   if (!routineCount && !taskCount) return null
@@ -48,7 +50,7 @@ export function NoteLinks({ note }: Props) {
               {t('linkedRoutines', { ns: 'note', count: routineCount })}
             </h4>
             <ul className="flex flex-col gap-y-1">
-              {note.routineNotes?.map((routineNote) => (
+              {routineNoteList?.map((routineNote) => (
                 <Link
                   className="truncate text-gray-600 transition-colors hover:text-gray-500"
                   key={routineNote.routine.id}

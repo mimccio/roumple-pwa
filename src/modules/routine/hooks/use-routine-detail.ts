@@ -6,6 +6,7 @@ import { compareAsc, isSameDay, startOfToday } from 'date-fns'
 import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { fetchRoutineById, fetchRoutineAction } from '../queries'
 import { Routine } from '../types'
+import { useGetRoutineNoteByRoutineList } from '&/modules/routine-note/hooks'
 
 export function useRoutineDetail() {
   const { routineId } = useParams()
@@ -41,7 +42,12 @@ export function useRoutineDetail() {
     return boardAction
   }
 
-  const routineQuery = useQuery(ROUTINE_KEYS.detail(routineId), fetchRoutineById, {
+  const {
+    data: routine,
+    isLoading: routineIsLoading,
+    isError,
+    isPaused,
+  } = useQuery(ROUTINE_KEYS.detail(routineId), fetchRoutineById, {
     enabled: Boolean(routineId),
     initialDataUpdatedAt: () => queryClient.getQueryState(ROUTINE_KEYS.list({ archived: false }))?.dataUpdatedAt,
     initialData: () => {
@@ -50,7 +56,7 @@ export function useRoutineDetail() {
     },
   })
 
-  const scheduleType = routineQuery.data?.scheduleType
+  const scheduleType = routine?.scheduleType
 
   const actionQuery = useQuery(ACTION_KEYS.detail({ routineId, date, scheduleType }), fetchRoutineAction, {
     enabled: Boolean(scheduleType) && Boolean(routineId),
@@ -59,10 +65,16 @@ export function useRoutineDetail() {
     initialData: getBoardAction,
   })
 
+  const { routineNoteList, routineNoteListIsLoading } = useGetRoutineNoteByRoutineList()
+
   return {
     date,
     handleDateChange: (date: Date) => setDate(date),
-    routineQuery,
+    isLoading: routineIsLoading || routineNoteListIsLoading,
+    routine,
+    isError,
+    isPaused,
+    routineNoteList,
     actionQuery,
   }
 }

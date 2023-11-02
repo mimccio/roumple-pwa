@@ -17,34 +17,30 @@ import { TaskStatus } from './parts/task-status'
 export function TaskDetailsScreen() {
   const { task, isLoading, isPaused } = useTaskDetail()
 
+  if (isLoading) return <DetailsLoadingPage />
   if (!task && isPaused) return <OfflineError />
-  if (!task && !isLoading) return <NotFoundDetails />
+  if (!task) return <NotFoundDetails />
 
   return (
     <>
       <TaskNavbar task={task} isLoading={isLoading} />
-      {isLoading && <DetailsLoadingPage />}
 
-      {task && (
-        <>
-          <DetailInfoSection>
-            <div className="-mx-1 mb-6 flex items-center justify-between">
-              <TaskStatus task={task} />
-              <TaskPriority task={task} />
-            </div>
-            <Schedule task={task} />
-            <TaskCategory task={task} />
-            <CreatedAt createdAt={task.created_at} />
-          </DetailInfoSection>
+      <DetailInfoSection>
+        <div className="-mx-1 mb-6 flex items-center justify-between">
+          <TaskStatus task={task} />
+          <TaskPriority task={task} />
+        </div>
+        <Schedule task={task} />
+        <TaskCategory task={task} />
+        <CreatedAt createdAt={task.created_at} />
+      </DetailInfoSection>
 
-          <DetailContentSection>
-            <TaskName task={task} />
-            <TaskDescription task={task} />
-            <TaskChecklist task={task} />
-            <TaskNotes />
-          </DetailContentSection>
-        </>
-      )}
+      <DetailContentSection>
+        <TaskName task={task} />
+        <TaskDescription task={task} />
+        <TaskChecklist task={task} />
+        <TaskNotes />
+      </DetailContentSection>
     </>
   )
 }

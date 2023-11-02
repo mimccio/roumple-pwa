@@ -192,13 +192,13 @@ export function useTemplate() {
     isError: routineLinkedNotesIsError,
   } = useMutation(createBulkRoutineLinkedNotes, {
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.lists() })
+      await queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.all })
     },
     onError: () => {
       toast.error(t('errorRoutineLinkedNotesCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.lists())
+      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.all)
     },
   })
 

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
 import { Note } from '&/modules/note/types'
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function InboxPreviewItem({ note }: Props) {
+  const { t } = useTranslation('note')
   const iconColor = note.category ? getTwColor('text', note.category?.color, 400) || 'text-gray-300' : 'text-gray-300'
 
   return (
@@ -20,7 +22,7 @@ export function InboxPreviewItem({ note }: Props) {
           note.title ? 'text-gray-600' : 'text-gray-400'
         )}
       >
-        {note.title || 'new note'}
+        {note.title || t('new note')}
       </span>
     </Link>
   )

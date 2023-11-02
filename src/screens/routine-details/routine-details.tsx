@@ -7,27 +7,29 @@ import { RoutineAction, Routine } from '&/modules/routine/types'
 import { RoutineStatusSelector } from '&/modules/routine/components'
 
 import {
+  Occurrence,
   Priority,
   RoutineCategory,
   RoutineChecklist,
+  RoutineDate,
   RoutineDescription,
   RoutineName,
   RoutineNotes,
   RoutineSchedule,
-  Occurrence,
-  RoutineDate,
 } from './parts'
 import { OfflineError } from '../errors'
 import { getIsCurrentDate } from '&/modules/routine/utils'
+import { RoutineNoteByRoutine } from '&/modules/routine-note/types'
 
 interface Props {
   routine: Routine
   date: Date
   handleDateChange: (date: Date) => void
   actionQuery: UseQueryResult<RoutineAction | undefined, unknown>
+  routineNoteList?: RoutineNoteByRoutine[]
 }
 
-export function RoutineDetails({ routine, date, handleDateChange, actionQuery }: Props) {
+export function RoutineDetails({ routine, date, handleDateChange, actionQuery, routineNoteList }: Props) {
   const { t } = useTranslation('common')
   const isCurrentDate = getIsCurrentDate({ scheduleType: routine.scheduleType, date })
 
@@ -74,7 +76,7 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery }:
           action={actionQuery.data}
           isLoading={actionQuery.isLoading && !actionQuery.isPaused}
         />
-        <RoutineNotes />
+        <RoutineNotes routineNoteList={routineNoteList} />
       </DetailContentSection>
     </>
   )
