@@ -117,7 +117,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
       selection: editor.state.selection,
     })
     editor.view.updateState(newEditorState)
-    if (!content) editor.commands.focus()
+    if (forceTitle && !content?.length) editor.commands.focus()
   }, [id, editor]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // change editor on content change
