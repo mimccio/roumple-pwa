@@ -51,7 +51,7 @@ export function useArchiveRoutine() {
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), { ...item, archived: !item.archived })
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: false }), context?.previousRoutineList)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: true }), context?.previousArchivedRoutineList)
       queryClient.setQueryData(

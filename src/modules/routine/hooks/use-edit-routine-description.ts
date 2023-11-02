@@ -13,13 +13,18 @@ export function useEditRoutineDescription(routine: Routine) {
 
   const { mutate } = useMutation(editRoutineDescription, {
     onMutate: async (data) => {
+      // 🗝️ Keys
+      const detailKey = ROUTINE_KEYS.detail(data.id)
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      await queryClient.cancelQueries({ queryKey: detailKey })
       // ⛳ Update Item
-      queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), { ...routine, description: data.description })
+      const prevRoutine = queryClient.getQueryData(detailKey)
+      queryClient.setQueryData(detailKey, { ...routine, description: data.description })
+
+      return { prevRoutine }
     },
-    onError: (_err, variables) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(variables.id), routine)
+    onError: (_err, variables, context) => {
+      queryClient.setQueryData(ROUTINE_KEYS.detail(variables.id), context?.prevRoutine)
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {

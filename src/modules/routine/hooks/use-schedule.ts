@@ -40,6 +40,7 @@ export function useSchedule({ routine, date: mainDate }: Params) {
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
 
       // ⛳ Update Item
+      const prevRoutine = queryClient.getQueryData(ROUTINE_KEYS.detail(data.id))
       queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), data)
 
       // 🗃️ Update Routine List
@@ -80,11 +81,11 @@ export function useSchedule({ routine, date: mainDate }: Params) {
         })
       }
 
-      return { previousRoutineList, previousBoardPrevType, previousNewPrevType }
+      return { previousRoutineList, previousBoardPrevType, previousNewPrevType, prevRoutine }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), routine)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), context?.prevRoutine)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
       queryClient.setQueryData(boardPrevTypeKey, context?.previousBoardPrevType)
       queryClient.setQueryData(
