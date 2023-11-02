@@ -6,5 +6,8 @@
   "Refresh": "Refresh",
   "Dismiss": "Dismiss",
   "Offline ready": "Offline ready",
-  "appReadyToWorkOffline": "The app is ready to work offline."
+  "appReadyToWorkOffline": "The app is ready to work offline.",
+  "Back online": "Back online",
+  "Offline": "Offline",
+  "Data may not be up to date": "Data may not be up to date"
 }

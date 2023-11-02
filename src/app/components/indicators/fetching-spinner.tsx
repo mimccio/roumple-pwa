@@ -1,7 +1,7 @@
 import { useIsFetching, useIsMutating, onlineManager } from '@tanstack/react-query'
 import { Transition } from '@headlessui/react'
 import { DotLoader } from 'react-spinners'
-import { SPINNER_COLOR } from '../constants'
+import { SPINNER_COLOR } from '&/common/constants'
 
 export function FetchingSpinner() {
   const fetchingNum = useIsFetching()
@@ -13,7 +13,7 @@ export function FetchingSpinner() {
     <Transition
       appear
       show={fetchingNum >= 1 || isMutating}
-      className="fixed bottom-4 right-4 z-30 md:bottom-6 md:right-6"
+      className="fixed bottom-3 right-3 z-30"
       enter="ease-out duration-200"
       enterFrom="opacity-0"
       enterTo="opacity-100"

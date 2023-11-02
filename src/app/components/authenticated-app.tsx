@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Route, Routes } from 'react-router'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { FetchingSpinner } from '&/common/components/fetching-spinner'
 import { AppError } from '&/screens/errors'
 import { PlanningScreen } from '&/screens/planning/planning-screen'
 import { FeedbackScreen } from '&/screens/feedback'
@@ -11,21 +10,22 @@ import { FirstStepScreen } from '&/screens/first-step'
 import { TemplatesScreen } from '&/screens/templates'
 import { TemplateDetailsScreen } from '&/screens/template-details'
 
-import { DetailsScreen } from './details-screen'
-import { MainScreen } from './main-screen'
-import { OfflineBanner } from './offline-banner'
+import { useOfflineToast } from '../hooks'
+import { MainScreen, DetailsScreen } from './screens'
+import { FetchingSpinner, OfflineIndicator } from './indicators'
 
 export function AuthenticatedApp() {
+  useOfflineToast()
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   const toggleMenu = () => setMenuIsOpen((prevState) => !prevState)
 
   return (
     <ErrorBoundary fallback={<AppError />}>
-      <OfflineBanner />
       <div className="relative flex min-h-screen overflow-hidden bg-white text-gray-800">
         <Menu close={toggleMenu} isOpen={menuIsOpen} />
         <MenuButton isOpen={menuIsOpen} toggle={toggleMenu} />
         <FetchingSpinner />
+        <OfflineIndicator />
 
         <div className="absolute bottom-0 left-0 right-0 top-0 h-full overflow-y-auto md:left-72 xl:left-80">
           <Routes>

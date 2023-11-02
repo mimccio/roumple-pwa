@@ -15,9 +15,9 @@ import { WelcomeScreen } from '&/screens/welcome'
 import { TemplateDetailsScreen } from '&/screens/template-details'
 
 import './i18n'
-import { AuthenticatedApp } from './authenticated-app'
+import { AuthenticatedApp } from './components/authenticated-app'
 import { appLoader, loginLoader, logoutLoader, onboardingLoader } from './loaders'
-import { Fallback } from './fallback'
+import { Fallback } from './components/fallback'
 import './styles.css'
 
 inject({ debug: false })
