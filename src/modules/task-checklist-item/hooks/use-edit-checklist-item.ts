@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
@@ -13,7 +12,6 @@ import { editTaskChecklistItem } from '../mutations'
 export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
-  const ref = useRef<HTMLFormElement>(null)
 
   const { mutate } = useMutation(editTaskChecklistItem, {
     onMutate: async (data) => {
@@ -67,7 +65,7 @@ export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
     mutate({ ...checklistItem, name })
   })
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, handleSubmit, errors, submit, ref, name }
 }

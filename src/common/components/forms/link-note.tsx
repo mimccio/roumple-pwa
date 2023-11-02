@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
@@ -20,16 +19,12 @@ interface Props {
 
 export function LinkNote({ isOpen, close, onLinkNote }: Props) {
   const { t } = useTranslation(['action', 'note'])
-  const ref = useRef<HTMLFormElement>(null)
   const { notes, onSearchSubmit, value, handleTextChange, isLoading, isError, isPaused, isFetching, reset } =
     useGetSearchNote()
 
-  useOutsideClick({
-    ref,
-    handler: () => {
-      close()
-      reset()
-    },
+  const ref = useOutsideClick(() => {
+    close()
+    reset()
   })
 
   return (

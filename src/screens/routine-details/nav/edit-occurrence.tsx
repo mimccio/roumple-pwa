@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
@@ -18,7 +17,6 @@ interface Props {
 
 export function EditOccurrence({ routine, isOpen, close }: Props) {
   const { t } = useTranslation(['routine', 'action'])
-  const ref = useRef<HTMLFormElement>(null)
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
   const typeText = useOccurrenceTypeText(routine.scheduleType)
   const inputBg = getOccurrenceBg(routine.scheduleType)
@@ -27,7 +25,7 @@ export function EditOccurrence({ routine, isOpen, close }: Props) {
     if (routine.scheduleType === SCHEDULE_TYPES.monthly) return 'text-purple-600 group-hover:text-purple-700'
     return 'text-indigo-600 group-hover:text-indigo-700'
   }
-  useOutsideClick({ ref, handler: close })
+  const ref = useOutsideClick(close)
 
   return (
     <Transition

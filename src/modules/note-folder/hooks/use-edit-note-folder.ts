@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -13,7 +13,6 @@ import { editNoteFolder } from '../mutations'
 
 export function useEditNoteFolder(folder: NoteFolder) {
   const queryClient = useQueryClient()
-  const ref = useRef<HTMLFormElement>(null)
   const [isEditing, setIsEditing] = useState(false)
   const { categoryList } = useCategories()
 
@@ -96,7 +95,7 @@ export function useEditNoteFolder(folder: NoteFolder) {
 
   const onRename = () => setIsEditing(true)
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, errors, submit, ref, name, onRename, isEditing }
 }

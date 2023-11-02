@@ -1,12 +1,8 @@
-import { useEffect } from 'react'
-import type { RefObject } from 'react'
+import { useEffect, useRef } from 'react'
 
-interface Params {
-  ref: RefObject<HTMLElement>
-  handler?: () => void
-}
+export function useOutsideClick(handler?: () => void) {
+  const ref = useRef<HTMLFormElement>(null)
 
-export function useOutsideClick({ handler, ref }: Params) {
   useEffect(() => {
     const listener = (event: Event) => {
       if (!ref.current || ref.current.contains(event.target as HTMLElement)) return
@@ -24,5 +20,5 @@ export function useOutsideClick({ handler, ref }: Params) {
     }
   }, [ref, handler])
 
-  return { ref }
+  return ref
 }

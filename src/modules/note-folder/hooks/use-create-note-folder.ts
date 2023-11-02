@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -14,7 +13,6 @@ export function useCreateNoteFolder() {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
-  const ref = useRef<HTMLFormElement>(null)
 
   const { mutate } = useMutation(createNoteFolder, {
     onMutate: async (data) => {
@@ -55,7 +53,7 @@ export function useCreateNoteFolder() {
     reset()
   })
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, handleSubmit, errors, submit, ref, name }
 }
