@@ -59,7 +59,7 @@ export function useCreateRoutine() {
       return { previousRoutineList, previousBoardList }
     },
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(id), undefined)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(id), null)
       queryClient.setQueryData(listKey, context?.previousRoutineList)
       queryClient.setQueryData(
         ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
@@ -67,10 +67,10 @@ export function useCreateRoutine() {
       )
       toast.error(t('errorCreation'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, routine) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(id))
       queryClient.invalidateQueries(listKey)
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
+      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }))
     },
   })
 

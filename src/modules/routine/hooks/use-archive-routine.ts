@@ -61,7 +61,7 @@ export function useArchiveRoutine() {
       toast.error("Archive didn't work")
     },
 
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: false }))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: true }))

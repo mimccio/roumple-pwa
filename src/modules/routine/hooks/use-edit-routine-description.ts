@@ -27,7 +27,7 @@ export function useEditRoutineDescription(routine: Routine) {
       queryClient.setQueryData(ROUTINE_KEYS.detail(variables.id), context?.prevRoutine)
       toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
     },
   })

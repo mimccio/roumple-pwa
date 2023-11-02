@@ -37,7 +37,7 @@ export function useSchedule({ routine, date: mainDate }: Params) {
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
 
       // ⛳ Update Item
       const prevRoutine = queryClient.getQueryData(ROUTINE_KEYS.detail(data.id))
@@ -91,10 +91,10 @@ export function useSchedule({ routine, date: mainDate }: Params) {
       queryClient.setQueryData(
         ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
         context?.previousNewPrevType
-      )
+      ) // TODO: verifier
       toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
       queryClient.invalidateQueries(boardPrevTypeKey)

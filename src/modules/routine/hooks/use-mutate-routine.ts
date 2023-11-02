@@ -16,12 +16,13 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
   const { mutate } = useMutation(mutation, {
     onMutate: async (data) => {
       const date = getScheduleTypeDate({ scheduleType: data.scheduleType, date: today })
+      const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
 
       // ✖️ Cancel related queries
       await Promise.all([
         queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) }),
         queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.list({ archived: data.archived }) }),
-        // TODO: cancel board list
+        queryClient.cancelQueries({ queryKey: boardKey }),
       ])
 
       // ⛳ Update Item
@@ -37,7 +38,6 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
       })
 
       // 🏫 Update Routine Board
-      const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
       const previousBoardRoutineList = queryClient.getQueryData(boardKey)
       queryClient.setQueryData(boardKey, (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
@@ -59,7 +59,7 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
       )
       toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
       queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
       queryClient.invalidateQueries(
