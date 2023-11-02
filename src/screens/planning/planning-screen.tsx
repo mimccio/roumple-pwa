@@ -11,6 +11,7 @@ import { useRoutineList } from '&/modules/routine/hooks'
 import { useTaskList } from '&/modules/task/hooks'
 
 import { MainError, OfflineError } from '../errors'
+import { MainLoadingScreen } from '../main-loading-screen'
 import { CalendarContent } from './parts/calendar-content'
 import { DaysHeader } from './parts/days-header'
 import { WeekPlanning } from './parts/week-planning'
@@ -25,8 +26,21 @@ export function PlanningScreen() {
   const [selected, setSelected] = useState<{ date: Date; scheduleType: ScheduleType }>()
   const { onNextMonth, onPreviousMonth, firstDayCurrentMonth, onThisMonth, today } = useCalendar()
 
-  if (routineStatus.error || taskStatus.error) return <MainError />
-  if (routineStatus.offline || taskStatus.offline) return <OfflineError />
+  if (
+    routineStatus.loading ||
+    routineStatus.error ||
+    routineStatus.offline ||
+    taskStatus.loading ||
+    taskStatus.error ||
+    taskStatus.offline
+  )
+    return (
+      <div className="flex h-full min-h-screen w-full items-center justify-center ">
+        {(routineStatus.loading || routineStatus.loading) && <MainLoadingScreen />}
+        {(routineStatus.error || taskStatus.error) && <MainError />}
+        {(routineStatus.offline || taskStatus.offline) && <OfflineError />}
+      </div>
+    )
 
   const onSelect = ({ scheduleType, date }: { scheduleType: ScheduleType; date: Date }) =>
     setSelected({ scheduleType, date })
