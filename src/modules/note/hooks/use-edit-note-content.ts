@@ -13,7 +13,8 @@ export function useEditNoteContent(note: Note) {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editNoteContent, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteContent,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await Promise.all([
@@ -38,7 +39,7 @@ export function useEditNoteContent(note: Note) {
       })
 
       // 🗃️ Update Note search lists
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old?: Note[]) =>
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old?: Note[]) =>
         old?.map((item) => (item.id === data.id ? { ...item, title: data.title } : item))
       )
 
@@ -53,7 +54,7 @@ export function useEditNoteContent(note: Note) {
       })
 
       // 🗃️ Update RoutineNote by routine Lists
-      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byRoutineLists(), (old?: RoutineNoteByRoutine[]) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }, (old?: RoutineNoteByRoutine[]) =>
         old?.map((item) => (item.note.id === data.id ? { ...item, note: { ...item.note, title: data.title } } : item))
       )
 
@@ -64,26 +65,26 @@ export function useEditNoteContent(note: Note) {
       if (variables.title !== context?.prevNote?.title) {
         queryClient.setQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }), context?.previousNoteList)
         queryClient.setQueryData(NOTE_KEYS.search({ searchText: '' }), context?.previousSearchNoteList)
-        queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byRoutineLists(), (old?: RoutineNoteByRoutine[]) => {
+        queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }, (old?: RoutineNoteByRoutine[]) => {
           if (!context?.prevNote) return
           const prevNote = context?.prevNote
           return old?.map((routineNote) =>
             routineNote.note.id === variables.id ? { ...routineNote, note: prevNote } : routineNote
           )
         })
-        queryClient.setQueriesData(NOTE_KEYS.searches(), (old?: Note[]) =>
+        queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old?: Note[]) =>
           old?.map((item) => (item.id === variables.id ? variables : item))
         )
       }
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables, context) => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(note.id))
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(note.id) })
 
       if (variables.title !== context?.prevNote?.title) {
-        queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: note.folder?.id }))
-        queryClient.invalidateQueries(NOTE_KEYS.search({ searchText: '' }))
-        queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.byRoutineLists())
+        queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: note.folder?.id }) })
+        queryClient.invalidateQueries({ queryKey: NOTE_KEYS.search({ searchText: '' }) })
+        queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() })
       }
     },
   })

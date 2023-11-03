@@ -12,7 +12,8 @@ import { createTaskNote } from '../mutations'
 export function useCreateTaskNote(task: Task) {
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(createTaskNote, {
+  const { mutate } = useMutation({
+    mutationFn: createTaskNote,
     onMutate: async (data) => {
       // 🗝️ Keys
       const taskNotesKey = TASK_NOTES_KEYS.list(data.task.id)
@@ -46,8 +47,8 @@ export function useCreateTaskNote(task: Task) {
       toast.error("Link note didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_NOTES_KEYS.list(variables.task.id))
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.note.id))
+      queryClient.invalidateQueries({ queryKey: TASK_NOTES_KEYS.list(variables.task.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.note.id) })
     },
   })
 

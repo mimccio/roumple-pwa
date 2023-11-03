@@ -15,7 +15,9 @@ export function useGetNoteDetail() {
     isLoading: noteIsLoading,
     error,
     isPaused,
-  } = useQuery(NOTE_KEYS.detail(noteId), fetchNoteById, {
+  } = useQuery({
+    queryKey: NOTE_KEYS.detail(noteId),
+    queryFn: fetchNoteById,
     enabled: Boolean(noteId),
     initialDataUpdatedAt: () => queryClient.getQueryState(NOTE_KEYS.list({ folderId }))?.dataUpdatedAt,
     initialData: () => {

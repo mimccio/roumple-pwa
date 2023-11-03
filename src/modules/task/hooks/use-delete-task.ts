@@ -17,7 +17,8 @@ export function useDeleteTask() {
   const [isOpen, setIsOpen] = useState(false)
   const date = startOfToday()
 
-  const { mutate } = useMutation(deleteTask, {
+  const { mutate } = useMutation({
+    mutationFn: deleteTask,
     onMutate: async (data) => {
       const listKey = TASK_KEYS.list({ done: data.status === STATUSES.done })
       const boardKey = TASK_KEYS.board({ scheduleType: data.scheduleType, date })
@@ -54,9 +55,9 @@ export function useDeleteTask() {
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(TASK_KEYS.list({ done: variables.status === STATUSES.done }))
-      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: variables.scheduleType, date }))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: variables.status === STATUSES.done }) })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.board({ scheduleType: variables.scheduleType, date }) })
     },
   })
 

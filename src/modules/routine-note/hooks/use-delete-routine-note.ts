@@ -14,7 +14,8 @@ export function useDeleteRoutineNote() {
 
   const routineNoteByRoutineListKey = ROUTINE_NOTE_KEYS.routine(routineId)
 
-  const { mutate } = useMutation(deleteRoutineNote, {
+  const { mutate } = useMutation({
+    mutationFn: deleteRoutineNote,
     onMutate: async (routineNote) => {
       // 🗝️ Keys
       const routineNoteByNoteListKey = ROUTINE_NOTE_KEYS.note(routineNote.note.id)
@@ -50,8 +51,8 @@ export function useDeleteRoutineNote() {
       toast.error(t('errorDelete'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(routineNoteByRoutineListKey)
-      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.note(variables.note.id))
+      queryClient.invalidateQueries({ queryKey: routineNoteByRoutineListKey })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.note(variables.note.id) })
     },
   })
 

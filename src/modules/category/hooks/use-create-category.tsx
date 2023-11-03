@@ -17,7 +17,8 @@ export function useCreateCategory() {
   const id = uuidv4()
   const [color, setColor] = useState<TwColor>('gray')
 
-  const { mutate } = useMutation(createCategory, {
+  const { mutate } = useMutation({
+    mutationFn: createCategory,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
 
@@ -33,7 +34,7 @@ export function useCreateCategory() {
       toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([CATEGORY_LIST])
+      queryClient.invalidateQueries({ queryKey: [CATEGORY_LIST] })
     },
   })
 

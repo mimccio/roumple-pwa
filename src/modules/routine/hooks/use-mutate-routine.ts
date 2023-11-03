@@ -13,7 +13,8 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
   const queryClient = useQueryClient()
   const today = startOfToday()
 
-  const { mutate } = useMutation(mutation, {
+  const { mutate } = useMutation({
+    mutationFn: mutation,
     onMutate: async (data) => {
       const date = getScheduleTypeDate({ scheduleType: data.scheduleType, date: today })
       const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
@@ -60,14 +61,14 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
       toast.error(t('errorModification'))
     },
     onSettled: (_data, _error, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
-      queryClient.invalidateQueries(
-        ROUTINE_KEYS.board({
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: variables.archived }) })
+      queryClient.invalidateQueries({
+        queryKey: ROUTINE_KEYS.board({
           scheduleType: variables.scheduleType,
           date: getScheduleTypeDate({ scheduleType: variables.scheduleType, date: today }),
-        })
-      )
+        }),
+      })
     },
   })
 

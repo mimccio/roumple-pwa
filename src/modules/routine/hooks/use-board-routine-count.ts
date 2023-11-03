@@ -14,7 +14,10 @@ interface Params {
 export function useBoardRoutineCount({ scheduleType }: Params) {
   const date = getScheduleTypeDate({ scheduleType, date: startOfToday() })
 
-  const { data, isLoading } = useQuery(ROUTINE_KEYS.board({ date, scheduleType }), fetchBoardRoutines)
+  const { data, isLoading } = useQuery({
+    queryKey: ROUTINE_KEYS.board({ date, scheduleType }),
+    queryFn: fetchBoardRoutines,
+  })
 
   const count = data?.filter((routine) => routine.actions?.[0]?.status !== STATUSES.done).length
 

@@ -9,7 +9,10 @@ export function useGetSearchNote() {
   const [value, setValue] = useState<string>('')
   const [searchText, setSearchText] = useState<string>('')
 
-  const { data, isLoading, isError, isPaused, isFetching } = useQuery(NOTE_KEYS.search({ searchText }), fetchNoteSearch)
+  const { data, isLoading, isError, isPaused, isFetching } = useQuery({
+    queryKey: NOTE_KEYS.search({ searchText }),
+    queryFn: fetchNoteSearch,
+  })
 
   const handleTextChange = (evt: ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault()

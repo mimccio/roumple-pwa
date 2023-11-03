@@ -13,7 +13,7 @@ interface Params {
 export function useBoardTaskCount({ scheduleType }: Params) {
   const date = startOfToday()
 
-  const { data, isLoading } = useQuery(TASK_KEYS.board({ scheduleType, date }), fetchBoardTasks)
+  const { data, isLoading } = useQuery({ queryKey: TASK_KEYS.board({ scheduleType, date }), queryFn: fetchBoardTasks })
 
   const count = data?.filter((task) => task.status !== STATUSES.done).length
 

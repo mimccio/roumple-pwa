@@ -17,7 +17,8 @@ export function useCreateRoutineNote(routine: Routine) {
 
   const routineNoteByRoutineListKey = ROUTINE_NOTE_KEYS.routine(routine.id)
 
-  const { mutate } = useMutation(createRoutineNote, {
+  const { mutate } = useMutation({
+    mutationFn: createRoutineNote,
     onMutate: async (routineNote) => {
       // 🗝️ Keys
       const routineNoteByNoteListKey = ROUTINE_NOTE_KEYS.note(routineNote.note.id)
@@ -50,8 +51,8 @@ export function useCreateRoutineNote(routine: Routine) {
       toast.error(t('Error when linking note'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(routineNoteByRoutineListKey)
-      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.note(variables.note.id))
+      queryClient.invalidateQueries({ queryKey: routineNoteByRoutineListKey })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.note(variables.note.id) })
     },
   })
 

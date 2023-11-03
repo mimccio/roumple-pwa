@@ -9,7 +9,9 @@ export function useTaskDetail() {
   const { taskId } = useParams()
   const queryClient = useQueryClient()
 
-  const { data, isLoading, isPaused } = useQuery(TASK_KEYS.detail(taskId), fetchTaskDetail, {
+  const { data, isLoading, isPaused } = useQuery({
+    queryKey: TASK_KEYS.detail(taskId),
+    queryFn: fetchTaskDetail,
     enabled: Boolean(taskId),
     initialDataUpdatedAt: () => queryClient.getQueryState(TASK_KEYS.list({ done: false }))?.dataUpdatedAt,
     initialData: () =>

@@ -15,7 +15,8 @@ export function useCreateChecklistItem(task: Task) {
   const queryClient = useQueryClient()
   const id = uuidv4()
 
-  const { mutate } = useMutation(createTaskChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: createTaskChecklistItem,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(task.id) })
 
@@ -35,7 +36,7 @@ export function useCreateChecklistItem(task: Task) {
       toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(task.id))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(task.id) })
     },
   })
 

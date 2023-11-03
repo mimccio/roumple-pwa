@@ -33,7 +33,8 @@ export function useSchedule({ routine, date: mainDate }: Params) {
   }, [routine])
 
   const boardPrevTypeKey = ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date })
-  const { mutate } = useMutation(editRoutineSchedule, {
+  const { mutate } = useMutation({
+    mutationFn: editRoutineSchedule,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
@@ -95,10 +96,10 @@ export function useSchedule({ routine, date: mainDate }: Params) {
       toast.error(t('errorModification'))
     },
     onSettled: (_data, _error, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
-      queryClient.invalidateQueries(boardPrevTypeKey)
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: variables.archived }) })
+      queryClient.invalidateQueries({ queryKey: boardPrevTypeKey })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }) })
     },
   })
 

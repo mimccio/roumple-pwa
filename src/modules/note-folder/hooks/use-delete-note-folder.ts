@@ -15,7 +15,8 @@ export function useDeleteNoteFolder(folder: NoteFolder) {
   const [isOpen, setIsOpen] = useState(false)
   const { categoryList } = useCategories()
 
-  const { mutate } = useMutation(deleteNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: deleteNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.detail(data.id) })
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists(), exact: false })
@@ -60,8 +61,8 @@ export function useDeleteNoteFolder(folder: NoteFolder) {
       toast.error("Deletion didn't work")
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.lists())
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
     },
   })
   const openDeleteModale = () => setIsOpen(true)

@@ -11,7 +11,8 @@ export function useEditRoutineDescription(routine: Routine) {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editRoutineDescription, {
+  const { mutate } = useMutation({
+    mutationFn: editRoutineDescription,
     onMutate: async (data) => {
       // 🗝️ Keys
       const detailKey = ROUTINE_KEYS.detail(data.id)
@@ -28,7 +29,7 @@ export function useEditRoutineDescription(routine: Routine) {
       toast.error(t('errorModification'))
     },
     onSettled: (_data, _error, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
     },
   })
 

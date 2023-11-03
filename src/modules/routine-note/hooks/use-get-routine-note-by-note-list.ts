@@ -11,7 +11,9 @@ export function useGetRoutineNoteByNoteList() {
   const { t } = useTranslation('routine')
   const { noteId } = useParams()
 
-  const { data, isLoading, isError, isPaused } = useQuery(ROUTINE_NOTE_KEYS.note(noteId), fetchRoutineNoteByNoteList, {
+  const { data, isLoading, isError, isPaused } = useQuery({
+    queryKey: ROUTINE_NOTE_KEYS.note(noteId),
+    queryFn: fetchRoutineNoteByNoteList,
     enabled: Boolean(noteId),
   })
 

@@ -9,7 +9,8 @@ export function useDeleteChecklistItem(routine: Routine) {
   const queryClient = useQueryClient()
   const routineKey = ROUTINE_KEYS.detail(routine.id)
 
-  const { mutate } = useMutation(deletedRoutineChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: deletedRoutineChecklistItem,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: routineKey })
@@ -35,7 +36,7 @@ export function useDeleteChecklistItem(routine: Routine) {
       toast.error("Delete didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(routineKey)
+      queryClient.invalidateQueries({ queryKey: routineKey })
     },
   })
 

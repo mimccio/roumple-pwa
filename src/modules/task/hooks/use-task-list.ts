@@ -17,7 +17,10 @@ export function useTaskList() {
   const [showDone, setShowDone] = useState(false)
   const [createIsOpen, setCreateIsOpen] = useState(false)
 
-  const { data, isLoading, error, isPaused } = useQuery(TASK_KEYS.list({ done: showDone }), fetchTaskList)
+  const { data, isLoading, error, isPaused } = useQuery({
+    queryKey: TASK_KEYS.list({ done: showDone }),
+    queryFn: fetchTaskList,
+  })
 
   const taskList = category?.id
     ? data?.filter((task) => task.category?.id === category.id).sort(sortTask(sortType))

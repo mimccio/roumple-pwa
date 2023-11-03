@@ -26,7 +26,8 @@ export function useEditRoutineName(routine: Routine) {
   })
   const linkedNotesKey = ROUTINE_NOTE_KEYS.byNoteLists()
 
-  const { mutate } = useMutation(editRoutineName, {
+  const { mutate } = useMutation({
+    mutationFn: editRoutineName,
     onMutate: async (data) => {
       const newRoutine = { ...routine, name: data.name }
 
@@ -55,7 +56,7 @@ export function useEditRoutineName(routine: Routine) {
       )
 
       // 🗃️ Update RoutineNote by note Lists
-      queryClient.setQueriesData(linkedNotesKey, (old?: RoutineNoteByNote[]) =>
+      queryClient.setQueriesData({ queryKey: linkedNotesKey }, (old?: RoutineNoteByNote[]) =>
         old?.map((item) =>
           item.routine.id === routine.id ? { ...item, routine: { ...item.routine, name: data.name } } : item
         )
@@ -67,7 +68,7 @@ export function useEditRoutineName(routine: Routine) {
       queryClient.setQueryData(detailKey, context?.prevRoutine)
       queryClient.setQueryData(listKey, context?.prevList)
       queryClient.setQueryData(boardKey, context?.prevBoard)
-      queryClient.setQueriesData(linkedNotesKey, (old?: RoutineNoteByNote[]) => {
+      queryClient.setQueriesData({ queryKey: linkedNotesKey }, (old?: RoutineNoteByNote[]) => {
         if (!context?.prevRoutine) return
         const name = context.prevRoutine.name
         return old?.map((item) =>
@@ -77,10 +78,10 @@ export function useEditRoutineName(routine: Routine) {
       toast.error(t('errorModification'))
     },
     onSettled: () => {
-      queryClient.invalidateQueries(detailKey)
-      queryClient.invalidateQueries(listKey)
-      queryClient.invalidateQueries(boardKey)
-      queryClient.invalidateQueries(linkedNotesKey)
+      queryClient.invalidateQueries({ queryKey: detailKey })
+      queryClient.invalidateQueries({ queryKey: listKey })
+      queryClient.invalidateQueries({ queryKey: boardKey })
+      queryClient.invalidateQueries({ queryKey: linkedNotesKey })
     },
   })
 

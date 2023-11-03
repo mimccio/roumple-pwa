@@ -38,7 +38,8 @@ export function useCreateRoutine() {
   }, [globalCategory])
 
   const listKey = ROUTINE_KEYS.list({ archived: false })
-  const { mutate } = useMutation(createRoutine, {
+  const { mutate } = useMutation({
+    mutationFn: createRoutine,
     onMutate: async (data) => {
       const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
       // ✖️ Cancel related queries
@@ -68,9 +69,9 @@ export function useCreateRoutine() {
       toast.error(t('errorCreation'))
     },
     onSettled: (_data, _error, routine) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(id))
-      queryClient.invalidateQueries(listKey)
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }))
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(id) })
+      queryClient.invalidateQueries({ queryKey: listKey })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }) })
     },
   })
 

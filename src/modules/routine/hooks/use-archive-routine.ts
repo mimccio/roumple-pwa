@@ -10,7 +10,8 @@ export function useArchiveRoutine() {
   const queryClient = useQueryClient()
   const date = startOfToday()
 
-  const { mutate } = useMutation(archiveRoutine, {
+  const { mutate } = useMutation({
+    mutationFn: archiveRoutine,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
@@ -62,10 +63,10 @@ export function useArchiveRoutine() {
     },
 
     onSettled: (_data, _error, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: false }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: true }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ date, scheduleType: variables.scheduleType }))
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: false }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: true }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ date, scheduleType: variables.scheduleType }) })
     },
   })
 

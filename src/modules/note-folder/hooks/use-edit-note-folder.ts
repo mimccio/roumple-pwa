@@ -16,7 +16,8 @@ export function useEditNoteFolder(folder: NoteFolder) {
   const [isEditing, setIsEditing] = useState(false)
   const { categoryList } = useCategories()
 
-  const { mutate } = useMutation(editNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.detail(data.id) })
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists(), exact: false })
@@ -68,9 +69,9 @@ export function useEditNoteFolder(folder: NoteFolder) {
       toast.error("Edit didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.detail(folder.id))
-      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: folder.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.detail(folder.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: folder.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
     },
   })
 

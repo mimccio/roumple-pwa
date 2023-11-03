@@ -13,7 +13,8 @@ export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editTaskChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: editTaskChecklistItem,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(checklistItem.task_id) })
 
@@ -43,7 +44,7 @@ export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
       toast.error(t('errorModification'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(checklistItem.task_id))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(checklistItem.task_id) })
     },
   })
 

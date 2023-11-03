@@ -21,7 +21,8 @@ export function useNoteCategory(note: Note) {
   const { categoryList, isLoading, error } = useCategories()
   const [selectedCategory, setSelectedCategory] = useAtom(categoryAtom)
 
-  const { mutate } = useMutation(editNoteCategory, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteCategory,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
 
@@ -83,10 +84,10 @@ export function useNoteCategory(note: Note) {
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: note.folder?.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }))
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: note.folder?.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }) })
     },
   })
 

@@ -14,7 +14,8 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
   const queryClient = useQueryClient()
   const routineKey = ROUTINE_KEYS.detail(checklistItem.routine_id)
 
-  const { mutate } = useMutation(editRoutineChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: editRoutineChecklistItem,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: routineKey })
@@ -40,7 +41,7 @@ export function useEditChecklistItem(checklistItem: RoutineChecklistItem) {
       toast.error(t('errorModification'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(routineKey)
+      queryClient.invalidateQueries({ queryKey: routineKey })
     },
   })
 

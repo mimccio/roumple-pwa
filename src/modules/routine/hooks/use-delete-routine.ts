@@ -16,7 +16,8 @@ export function useDeleteRoutine() {
   const navigate = useNavigate()
   const date = startOfToday()
 
-  const { mutate } = useMutation(deleteRoutine, {
+  const { mutate } = useMutation({
+    mutationFn: deleteRoutine,
     onMutate: async (routine) => {
       // 🗝️ Keys
       const listKey = ROUTINE_KEYS.list({ archived: routine.archived })
@@ -43,7 +44,7 @@ export function useDeleteRoutine() {
       queryClient.setQueryData(boardKey, (old: Routine[] = []) => old && old.filter((r) => r.id !== routine.id))
 
       // 🗃️ Update RoutineNote by note lists
-      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byNoteLists(), (old?: RoutineNoteByNote[]) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byNoteLists() }, (old?: RoutineNoteByNote[]) =>
         old?.map((item) => (item.routine.id === routine.id ? { ...item, deleted: true } : item))
       )
 
@@ -55,7 +56,7 @@ export function useDeleteRoutine() {
       queryClient.setQueryData(ROUTINE_KEYS.detail(routine.id), routine)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: routine.archived }), context?.prevList)
       queryClient.setQueryData(ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }), context?.prevBoard)
-      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byNoteLists(), (old?: RoutineNoteByNote[]) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byNoteLists() }, (old?: RoutineNoteByNote[]) =>
         old?.map((routineNote) =>
           routineNote.routine.id === routine.id ? { ...routineNote, deleted: false } : routineNote
         )
@@ -64,10 +65,10 @@ export function useDeleteRoutine() {
       toast.error(t('errorDelete'))
     },
     onSettled: (_data, _error, routine) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(routine.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: routine.archived }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }))
-      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.byNoteLists())
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(routine.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: routine.archived }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.byNoteLists() })
       queryClient.removeQueries({ queryKey: ROUTINE_NOTE_KEYS.routine(routine.id) })
     },
   })

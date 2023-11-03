@@ -18,7 +18,10 @@ export function useRoutineList() {
   const [archived, setArchived] = useState(false)
   const [createIsOpen, setCreateIsOpen] = useState(false)
 
-  const { data, isLoading, error, isPaused } = useQuery(ROUTINE_KEYS.list({ archived }), fetchRoutines)
+  const { data, isLoading, error, isPaused } = useQuery({
+    queryKey: ROUTINE_KEYS.list({ archived }),
+    queryFn: fetchRoutines,
+  })
 
   const routineList: Routine[] = category?.id
     ? data?.filter((task) => task.category?.id === category.id).sort(sortRoutines(sortType)) || []

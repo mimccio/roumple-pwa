@@ -19,7 +19,8 @@ export function useDeleteNote() {
   const navigate = useNavigate()
   const mainPath = useMainPath()
 
-  const { mutate } = useMutation(deleteNote, {
+  const { mutate } = useMutation({
+    mutationFn: deleteNote,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await Promise.all([
@@ -43,7 +44,9 @@ export function useDeleteNote() {
       })
 
       // 🗃️ Update Note search lists
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old?: Note[]) => old?.filter((item) => item.id !== data.id))
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old?: Note[]) =>
+        old?.filter((item) => item.id !== data.id)
+      )
 
       // 🗃️ Update NoteFolder list all category
       const previousFolderListAllCategory = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
@@ -71,7 +74,7 @@ export function useDeleteNote() {
       })
 
       // 🗃️ Update RoutineNote by routine lists
-      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byRoutineLists(), (old?: RoutineNoteByRoutine[]) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }, (old?: RoutineNoteByRoutine[]) =>
         old?.map((item) => (item.note.id === data.id ? { ...item, deleted: true } : item))
       )
 
@@ -91,10 +94,10 @@ export function useDeleteNote() {
         NOTE_FOLDER_KEYS.list({ categoryId: item.category?.id }),
         context?.previousFolderListCategoryId
       )
-      queryClient.setQueriesData(ROUTINE_NOTE_KEYS.byRoutineLists(), (old?: RoutineNoteByRoutine[]) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }, (old?: RoutineNoteByRoutine[]) =>
         old?.map((routineNote) => (routineNote.note.id === item.id ? { ...routineNote, deleted: false } : routineNote))
       )
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old?: Note[]) => (old ? [...old, item] : [item])) // TODO?: order
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old?: Note[]) => (old ? [...old, item] : [item])) // TODO?: order
       toast.error("Deletion didn't work")
     },
     onSettled: async (_data, _error, note) => {
@@ -104,8 +107,8 @@ export function useDeleteNote() {
       queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }) })
       queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() })
       queryClient.invalidateQueries({ queryKey: NOTE_KEYS.searches() })
-      queryClient.removeQueries(NOTE_KEYS.detail(note.id))
-      queryClient.removeQueries(ROUTINE_NOTE_KEYS.note(note.id))
+      queryClient.removeQueries({ queryKey: NOTE_KEYS.detail(note.id) })
+      queryClient.removeQueries({ queryKey: ROUTINE_NOTE_KEYS.note(note.id) })
     },
   })
 

@@ -29,7 +29,7 @@ export function useRoutineDetail() {
 
   const getBoardAction = () => {
     let boardAction
-    queryClient.getQueriesData<Routine[]>(ROUTINE_KEYS.boards()).forEach((query) => {
+    queryClient.getQueriesData<Routine[]>({ queryKey: ROUTINE_KEYS.boards() }).forEach((query) => {
       const queryOptions = query[0][2] as { date: Date }
       const queryDate = queryOptions.date
 
@@ -47,7 +47,9 @@ export function useRoutineDetail() {
     isLoading: routineIsLoading,
     isError,
     isPaused,
-  } = useQuery(ROUTINE_KEYS.detail(routineId), fetchRoutineById, {
+  } = useQuery({
+    queryKey: ROUTINE_KEYS.detail(routineId),
+    queryFn: fetchRoutineById,
     enabled: Boolean(routineId),
     initialDataUpdatedAt: () => queryClient.getQueryState(ROUTINE_KEYS.list({ archived: false }))?.dataUpdatedAt,
     initialData: () => {
@@ -58,7 +60,9 @@ export function useRoutineDetail() {
 
   const scheduleType = routine?.scheduleType
 
-  const actionQuery = useQuery(ACTION_KEYS.detail({ routineId, date, scheduleType }), fetchRoutineAction, {
+  const actionQuery = useQuery({
+    queryKey: ACTION_KEYS.detail({ routineId, date, scheduleType }),
+    queryFn: fetchRoutineAction,
     enabled: Boolean(scheduleType) && Boolean(routineId),
     initialDataUpdatedAt: () =>
       routineId ? queryClient.getQueryState(ACTION_KEYS.list(routineId))?.dataUpdatedAt : undefined,

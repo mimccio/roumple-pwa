@@ -33,12 +33,15 @@ export function useCreateTask() {
     setCategory(globalCategory)
   }, [globalCategory])
 
-  const { mutate } = useMutation(createTask, {
+  const { mutate } = useMutation({
+    mutationFn: createTask,
     onMutate: async (data) => {
       // Cancel list queries
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.list({ done: false }) })
       if (data.date != null && data.scheduleType != null) {
-        await queryClient.cancelQueries(TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date }))
+        await queryClient.cancelQueries({
+          queryKey: TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date }),
+        })
       }
 
       // Update item
@@ -73,7 +76,7 @@ export function useCreateTask() {
       toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.list({ done: false }))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: false }) })
     },
   })
 

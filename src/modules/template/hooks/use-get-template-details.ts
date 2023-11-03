@@ -6,7 +6,10 @@ import { fetchTemplateDetails } from '../queries'
 
 export function useGetTemplateDetails() {
   const { templateId } = useParams()
-  const { data, isLoading, error } = useQuery(TEMPLATE_KEYS.detail(templateId), fetchTemplateDetails)
+  const { data, isLoading, error } = useQuery({
+    queryKey: TEMPLATE_KEYS.detail(templateId),
+    queryFn: fetchTemplateDetails,
+  })
 
   return { template: data, isLoading, error }
 }

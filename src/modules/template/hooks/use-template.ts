@@ -49,10 +49,11 @@ export function useTemplate() {
   // Create categories mutation
   const {
     mutate: mutateCategories,
-    isLoading: categoriesIsLoading,
+    isPending: categoriesIsLoading,
     isSuccess: categoriesIsSuccess,
     isError: categoriesIsError,
-  } = useMutation(createBulkCategories, {
+  } = useMutation({
+    mutationFn: createBulkCategories,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
     },
@@ -60,7 +61,7 @@ export function useTemplate() {
       toast.error(t('errorCategoriesCreation'))
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries([CATEGORY_LIST])
+      queryClient.invalidateQueries({ queryKey: [CATEGORY_LIST] })
       await Promise.all([createRoutines(), createTasks(), createNoteFolders()])
     },
   })
@@ -68,10 +69,11 @@ export function useTemplate() {
   // Create note folders mutation
   const {
     mutate: mutateNoteFolders,
-    isLoading: noteFoldersIsLoading,
+    isPending: noteFoldersIsLoading,
     isSuccess: noteFoldersIsSuccess,
     isError: noteFoldersIsError,
-  } = useMutation(createBulkNoteFolders, {
+  } = useMutation({
+    mutationFn: createBulkNoteFolders,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.details() })
@@ -80,8 +82,8 @@ export function useTemplate() {
       toast.error(t('errorNoteFoldersCreation'))
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.lists())
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.details() })
       await createNotes()
     },
   })
@@ -89,10 +91,11 @@ export function useTemplate() {
   // Create notes mutation
   const {
     mutate: mutateNotes,
-    isLoading: notesIsLoading,
+    isPending: notesIsLoading,
     isSuccess: notesIsSuccess,
     isError: notesIsError,
-  } = useMutation(createBulkNotes, {
+  } = useMutation({
+    mutationFn: createBulkNotes,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.lists() })
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.details() })
@@ -101,18 +104,19 @@ export function useTemplate() {
       toast.error(t('errorNotesCreation'))
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries(NOTE_KEYS.lists())
-      queryClient.invalidateQueries(NOTE_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.details() })
     },
   })
 
   // Create routines mutation
   const {
     mutate: mutateRoutines,
-    isLoading: routinesIsLoading,
+    isPending: routinesIsLoading,
     isSuccess: routinesIsSuccess,
     isError: routinesIsError,
-  } = useMutation(createBulkRoutines, {
+  } = useMutation({
+    mutationFn: createBulkRoutines,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.details() })
@@ -121,8 +125,8 @@ export function useTemplate() {
       toast.error(t('errorRoutinesCreation'))
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.lists())
-      queryClient.invalidateQueries(ROUTINE_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.details() })
       await createRoutineChecklists()
     },
   })
@@ -130,10 +134,11 @@ export function useTemplate() {
   // Create routine checklist items mutation
   const {
     mutate: mutateRoutineChecklistItems,
-    isLoading: routineChecklistsIsLoading,
+    isPending: routineChecklistsIsLoading,
     isSuccess: routineChecklistsIsSuccess,
     isError: routineChecklistsIsError,
-  } = useMutation(createBulkRoutineChecklistItems, {
+  } = useMutation({
+    mutationFn: createBulkRoutineChecklistItems,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.details() })
     },
@@ -141,17 +146,18 @@ export function useTemplate() {
       toast.error(t('errorRoutinesChecklistCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.details() })
     },
   })
 
   // Create tasks mutation
   const {
     mutate: mutateTasks,
-    isLoading: tasksIsLoading,
+    isPending: tasksIsLoading,
     isSuccess: tasksIsSuccess,
     isError: tasksIsError,
-  } = useMutation(createBulkTasks, {
+  } = useMutation({
+    mutationFn: createBulkTasks,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.lists() })
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.details() })
@@ -160,8 +166,8 @@ export function useTemplate() {
       toast.error(t('errorTasksCreation'))
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries(TASK_KEYS.lists())
-      queryClient.invalidateQueries(TASK_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.details() })
       await createTaskChecklists()
     },
   })
@@ -169,10 +175,11 @@ export function useTemplate() {
   // create task checklist items mutation
   const {
     mutate: mutateTaskChecklistItems,
-    isLoading: taskChecklistsIsLoading,
+    isPending: taskChecklistsIsLoading,
     isSuccess: taskChecklistsIsSuccess,
     isError: taskChecklistsIsError,
-  } = useMutation(createBulkTaskChecklistItems, {
+  } = useMutation({
+    mutationFn: createBulkTaskChecklistItems,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.details() })
     },
@@ -180,17 +187,18 @@ export function useTemplate() {
       toast.error(t('errorTasksChecklistCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.details() })
     },
   })
 
   // create routine linked notes mutation
   const {
     mutate: mutateRoutineLinkedNotes,
-    isLoading: routineLinkedNotesIsLoading,
+    isPending: routineLinkedNotesIsLoading,
     isSuccess: routineLinkedNotesIsSuccess,
     isError: routineLinkedNotesIsError,
-  } = useMutation(createBulkRoutineLinkedNotes, {
+  } = useMutation({
+    mutationFn: createBulkRoutineLinkedNotes,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ROUTINE_NOTE_KEYS.all })
     },
@@ -198,17 +206,18 @@ export function useTemplate() {
       toast.error(t('errorRoutineLinkedNotesCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(ROUTINE_NOTE_KEYS.all)
+      queryClient.invalidateQueries({ queryKey: ROUTINE_NOTE_KEYS.all })
     },
   })
 
   // create task linked notes mutation
   const {
     mutate: mutateTaskLinkedNotes,
-    isLoading: taskLinkedNotesIsLoading,
+    isPending: taskLinkedNotesIsLoading,
     isSuccess: taskLinkedNotesIsSuccess,
     isError: taskLinkedNotesIsError,
-  } = useMutation(createBulkTaskLinkedNotes, {
+  } = useMutation({
+    mutationFn: createBulkTaskLinkedNotes,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: TASK_NOTES_KEYS.lists() })
     },
@@ -216,7 +225,7 @@ export function useTemplate() {
       toast.error(t('errorTaskLinkedNotesCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_NOTES_KEYS.lists())
+      queryClient.invalidateQueries({ queryKey: TASK_NOTES_KEYS.lists() })
     },
   })
 

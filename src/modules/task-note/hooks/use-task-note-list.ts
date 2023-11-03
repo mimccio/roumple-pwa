@@ -8,7 +8,9 @@ import { fetchTaskNoteList } from '../queries'
 export function useTaskNoteList() {
   const { taskId } = useParams()
 
-  const { data, isLoading, error } = useQuery(TASK_NOTES_KEYS.list(taskId), fetchTaskNoteList, {
+  const { data, isLoading, error } = useQuery({
+    queryKey: TASK_NOTES_KEYS.list(taskId),
+    queryFn: fetchTaskNoteList,
     enabled: Boolean(taskId),
   })
 

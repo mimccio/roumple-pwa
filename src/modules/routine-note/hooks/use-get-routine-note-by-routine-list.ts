@@ -11,11 +11,11 @@ export function useGetRoutineNoteByRoutineList() {
   const { t } = useTranslation('note')
   const { routineId } = useParams()
 
-  const { data, isLoading, isError, isPaused } = useQuery(
-    ROUTINE_NOTE_KEYS.routine(routineId),
-    fetchRoutineNoteByRoutineList,
-    { enabled: Boolean(routineId) }
-  )
+  const { data, isLoading, isError, isPaused } = useQuery({
+    queryKey: ROUTINE_NOTE_KEYS.routine(routineId),
+    queryFn: fetchRoutineNoteByRoutineList,
+    enabled: Boolean(routineId),
+  })
 
   useEffect(() => {
     if (isError) toast.error(t('Error fetching linked notes'))

@@ -8,7 +8,8 @@ import { deletedTaskChecklistItem } from '../mutations'
 export function useDeleteChecklistItem(task: Task) {
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(deletedTaskChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: deletedTaskChecklistItem,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(task.id) })
 
@@ -28,7 +29,7 @@ export function useDeleteChecklistItem(task: Task) {
       toast.error("Delete didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(task.id))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(task.id) })
     },
   })
 

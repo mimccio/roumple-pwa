@@ -14,7 +14,8 @@ export function useCreateNoteFolder() {
   const queryClient = useQueryClient()
   const id = uuidv4()
 
-  const { mutate } = useMutation(createNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: createNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
       const previousFolderList = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
@@ -31,7 +32,7 @@ export function useCreateNoteFolder() {
       toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
     },
   })
 

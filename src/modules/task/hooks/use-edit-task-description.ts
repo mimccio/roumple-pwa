@@ -11,7 +11,8 @@ export function useEditTaskDescription(task: Task) {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editTaskDescription, {
+  const { mutate } = useMutation({
+    mutationFn: editTaskDescription,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(data.id) })
       queryClient.setQueryData(TASK_KEYS.detail(data.id), data)
@@ -21,7 +22,7 @@ export function useEditTaskDescription(task: Task) {
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
     },
   })
 

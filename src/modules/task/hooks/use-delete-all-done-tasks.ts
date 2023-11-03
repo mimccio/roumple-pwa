@@ -11,7 +11,8 @@ export function useDeleteAllDoneTasks() {
   const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
 
-  const { mutate } = useMutation(deleteAllDoneTasks, {
+  const { mutate } = useMutation({
+    mutationFn: deleteAllDoneTasks,
     onMutate: async () => {
       // Cancel related queries
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.list({ done: true }) })
@@ -37,8 +38,8 @@ export function useDeleteAllDoneTasks() {
       toast.error("Deletion didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.list({ done: true }))
-      queryClient.invalidateQueries(TASK_KEYS.boards())
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: true }) })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.boards() })
     },
   })
 

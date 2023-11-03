@@ -14,7 +14,8 @@ import { deleteCategory } from '../mutations'
 export function useDeleteCategory() {
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(deleteCategory, {
+  const { mutate } = useMutation({
+    mutationFn: deleteCategory,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
@@ -38,47 +39,47 @@ export function useDeleteCategory() {
       })
 
       // Update Routines
-      queryClient.setQueriesData(ROUTINE_KEYS.lists(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.lists() }, (old: Routine[] = []) => {
         return old.map((routine) =>
           routine.category?.id === data.id ? { ...routine, category: null, deletedCategory: data } : routine
         )
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.boards(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.boards() }, (old: Routine[] = []) => {
         return old.map((routine) =>
           routine.category?.id === data.id ? { ...routine, category: null, deletedCategory: data } : routine
         )
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.details(), (old?: Routine) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.details() }, (old?: Routine) =>
         old?.category?.id === data.id ? { ...old, category: null, deletedCategory: data } : old
       )
 
       // Update Tasks
-      queryClient.setQueriesData(TASK_KEYS.lists(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.lists() }, (old: Task[] = []) => {
         return old.map((task) =>
           task.category?.id === data.id ? { ...task, category: null, deletedCategory: data } : task
         )
       })
-      queryClient.setQueriesData(TASK_KEYS.boards(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.boards() }, (old: Task[] = []) => {
         return old.map((task) =>
           task.category?.id === data.id ? { ...task, category: null, deletedCategory: data } : task
         )
       })
-      queryClient.setQueriesData(TASK_KEYS.details(), (old?: Task) =>
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.details() }, (old?: Task) =>
         old?.category?.id === data.id ? { ...old, category: null, deletedCategory: data } : old
       )
 
       // Update Notes
-      queryClient.setQueriesData(NOTE_KEYS.lists(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.lists() }, (old: Note[] = []) => {
         return old.map((note) =>
           note.category?.id === data.id ? { ...note, category: null, deletedCategory: data } : note
         )
       })
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old: Note[] = []) => {
         return old.map((note) =>
           note.category?.id === data.id ? { ...note, category: null, deletedCategory: data } : note
         )
       })
-      queryClient.setQueriesData(NOTE_KEYS.details(), (old?: Note) =>
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.details() }, (old?: Note) =>
         old?.category?.id === data.id ? { ...old, category: null, deletedCategory: data } : old
       )
 
@@ -88,63 +89,63 @@ export function useDeleteCategory() {
     onError: (_err, item, context) => {
       queryClient.setQueryData([CATEGORY_LIST], context?.previousCategoryList)
       // Update Routines
-      queryClient.setQueriesData(ROUTINE_KEYS.lists(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.lists() }, (old: Routine[] = []) => {
         return old.map((routine) =>
           routine.deletedCategory?.id === item.id ? { ...routine, category: item, deletedCategory: undefined } : routine
         )
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.boards(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.boards() }, (old: Routine[] = []) => {
         return old.map((routine) =>
           routine.deletedCategory?.id === item.id ? { ...routine, category: item, deletedCategory: undefined } : routine
         )
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.details(), (old?: Routine) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.details() }, (old?: Routine) =>
         old?.deletedCategory?.id === item.id ? { ...old, category: item, deletedCategory: undefined } : old
       )
 
       // Update Tasks
-      queryClient.setQueriesData(TASK_KEYS.lists(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.lists() }, (old: Task[] = []) => {
         return old.map((task) =>
           task.deletedCategory?.id === item.id ? { ...task, category: item, deletedCategory: undefined } : task
         )
       })
-      queryClient.setQueriesData(TASK_KEYS.boards(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.boards() }, (old: Task[] = []) => {
         return old.map((task) =>
           task.deletedCategory?.id === item.id ? { ...task, category: item, deletedCategory: undefined } : task
         )
       })
-      queryClient.setQueriesData(TASK_KEYS.details(), (old?: Task) =>
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.details() }, (old?: Task) =>
         old?.deletedCategory?.id === item.id ? { ...old, category: item, deletedCategory: undefined } : old
       )
 
       // Update Notes
-      queryClient.setQueriesData(NOTE_KEYS.lists(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.lists() }, (old: Note[] = []) => {
         return old.map((note) =>
           note.deletedCategory?.id === item.id ? { ...note, category: item, deletedCategory: undefined } : note
         )
       })
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old: Note[] = []) => {
         return old.map((note) =>
           note.deletedCategory?.id === item.id ? { ...note, category: item, deletedCategory: undefined } : note
         )
       })
-      queryClient.setQueriesData(NOTE_KEYS.details(), (old?: Note) =>
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.details() }, (old?: Note) =>
         old?.deletedCategory?.id === item.id ? { ...old, category: item, deletedCategory: undefined } : old
       )
 
       toast.error("Deletion didn't work")
     },
     onSettled: () => {
-      queryClient.invalidateQueries([CATEGORY_LIST])
-      queryClient.invalidateQueries(ROUTINE_KEYS.lists())
-      queryClient.invalidateQueries(ROUTINE_KEYS.boards())
-      queryClient.invalidateQueries(ROUTINE_KEYS.details())
-      queryClient.invalidateQueries(TASK_KEYS.lists())
-      queryClient.invalidateQueries(TASK_KEYS.boards())
-      queryClient.invalidateQueries(TASK_KEYS.details())
-      queryClient.invalidateQueries(NOTE_KEYS.lists())
-      queryClient.invalidateQueries(NOTE_KEYS.searches())
-      queryClient.invalidateQueries(NOTE_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: [CATEGORY_LIST] })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.boards() })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.details() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.boards() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.details() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.searches() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.details() })
     },
   })
 

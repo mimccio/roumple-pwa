@@ -18,14 +18,15 @@ export function useUpsertAction({ scheduleType, date }: Params) {
   const queryClient = useQueryClient()
   const boardKey = ROUTINE_KEYS.board({ scheduleType, date })
 
-  const { mutate } = useMutation(upsertRoutineAction, {
+  const { mutate } = useMutation({
+    mutationFn: upsertRoutineAction,
     onMutate: async (data) => {
       const actionKey = ACTION_KEYS.detail({ routineId: data.routine.id, scheduleType, date })
 
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: actionKey })
       await queryClient.cancelQueries({ queryKey: ACTION_KEYS.list(data.routine.id) })
-      await queryClient.cancelQueries(boardKey)
+      await queryClient.cancelQueries({ queryKey: boardKey })
 
       const newAction = {
         id: data.actionId || uuidv5(format(date, DATE_FORMAT), data.routine.id),

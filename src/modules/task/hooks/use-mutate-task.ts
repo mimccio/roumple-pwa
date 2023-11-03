@@ -13,7 +13,8 @@ export function useMutateTask(mutation: (task: Task) => any) {
   const date = startOfToday()
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(mutation, {
+  const { mutate } = useMutation({
+    mutationFn: mutation,
     onMutate: async (data) => {
       const taskListKey = TASK_KEYS.list({ done: data.status === STATUSES.done })
 
@@ -47,9 +48,9 @@ export function useMutateTask(mutation: (task: Task) => any) {
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(TASK_KEYS.list({ done: variables.status === STATUSES.done }))
-      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: variables.scheduleType, date }))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: variables.status === STATUSES.done }) })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.board({ scheduleType: variables.scheduleType, date }) })
     },
   })
 

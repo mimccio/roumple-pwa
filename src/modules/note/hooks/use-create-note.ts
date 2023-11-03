@@ -21,7 +21,8 @@ export function useCreateNote() {
   const { folder } = useNoteFolderDetails()
   const created_at = new Date()
 
-  const { mutate } = useMutation(createNote, {
+  const { mutate } = useMutation({
+    mutationFn: createNote,
     onMutate: async (data) => {
       await Promise.all([
         queryClient.cancelQueries({ queryKey: NOTE_KEYS.detail(id) }),
@@ -44,8 +45,8 @@ export function useCreateNote() {
       toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(id))
-      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: folder?.id }))
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: folder?.id }) })
     },
   })
 

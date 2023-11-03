@@ -18,7 +18,10 @@ export function useBoardTasks({ scheduleType, showDone }: Params) {
   const queryClient = useQueryClient()
   const date = startOfToday()
   const [category] = useAtom(categoryAtom)
-  const { data, isLoading, error, isPaused } = useQuery(TASK_KEYS.board({ scheduleType, date }), fetchBoardTasks)
+  const { data, isLoading, error, isPaused } = useQuery({
+    queryKey: TASK_KEYS.board({ scheduleType, date }),
+    queryFn: fetchBoardTasks,
+  })
 
   // Remove old queries (older than 2 month)
   queryClient.removeQueries({

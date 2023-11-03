@@ -15,7 +15,8 @@ export function useNoteFolder(note: Note) {
   const queryClient = useQueryClient()
   const { folderList, isLoading, error } = useFolderList()
 
-  const { mutate } = useMutation(editNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
       queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => data)
@@ -91,10 +92,10 @@ export function useNoteFolder(note: Note) {
       toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(NOTE_KEYS.lists(), { exact: false })
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }) })
     },
   })
 
