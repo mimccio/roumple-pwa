@@ -29,8 +29,8 @@ const persister = createSyncStoragePersister({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      gcTime: 1000 * 60 * 60 * 24, // 24 hours
-      staleTime: 2000,
+      gcTime: 1000 * 60 * 60 * 24 * 3, // 3 days
+      staleTime: 1000 * 60 * 10, // 10 min
       retry: 1,
       throwOnError: false,
       refetchOnWindowFocus: false,
