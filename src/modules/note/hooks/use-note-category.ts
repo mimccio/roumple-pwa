@@ -27,6 +27,7 @@ export function useNoteCategory(note: Note) {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
 
       // Note item
+      const prevNote = queryClient.getQueryData(NOTE_KEYS.detail(data.id))
       queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => data)
 
       // Note list
@@ -66,11 +67,11 @@ export function useNoteCategory(note: Note) {
         return [...old.slice(0, folderIndex), newFolder, ...old.slice(folderIndex + 1)]
       })
 
-      return { previousNoteList, previousFolderListPrevCategory, previousFolderListNewCategory }
+      return { previousNoteList, previousFolderListPrevCategory, previousFolderListNewCategory, prevNote }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(NOTE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_KEYS.detail(item.id), context?.prevNote)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: item.folder?.id }), context?.previousNoteList)
       queryClient.setQueryData(
         NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }),

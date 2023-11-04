@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast'
 
 import type { NoteFolder } from '&/modules/note-folder/types'
 import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
-import { useFolderList } from '&/modules/note-folder/hooks'
+import { useGetAllFolderList } from '&/modules/note-folder/hooks'
 import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'
 import { sortNotes } from '../utils'
@@ -13,7 +13,7 @@ import { editNoteFolder } from '../mutations'
 export function useNoteFolder(note: Note) {
   const { t } = useTranslation('error')
   const queryClient = useQueryClient()
-  const { folderList, isLoading, error } = useFolderList()
+  const { folderList, isLoading, isError } = useGetAllFolderList()
 
   const { mutate } = useMutation({
     mutationFn: editNoteFolder,
@@ -107,5 +107,5 @@ export function useNoteFolder(note: Note) {
     mutate({ ...note, folder })
   }
 
-  return { onSelect, folderList, isLoading, error }
+  return { onSelect, folderList, isLoading, isError }
 }
