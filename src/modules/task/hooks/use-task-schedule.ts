@@ -36,6 +36,7 @@ export function useTaskSchedule(task: Task) {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.boards() })
 
       // Update item
+      const prevTask = queryClient.getQueryData(TASK_KEYS.detail(data.id))
       queryClient.setQueryData(TASK_KEYS.detail(data.id), () => data)
 
       // Update task list
@@ -58,11 +59,11 @@ export function useTaskSchedule(task: Task) {
       const prevNewBoardList = queryClient.getQueryData(newBoardKey)
       queryClient.setQueryData(newBoardKey, (old: Task[] = []) => [...old, data])
 
-      return { previousTaskList, prevPreviousBoardList, prevNewBoardList }
+      return { previousTaskList, prevPreviousBoardList, prevNewBoardList, prevTask }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
+      queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(
         TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate }),
@@ -74,7 +75,7 @@ export function useTaskSchedule(task: Task) {
       )
       toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: variables.status === STATUSES.done }) })
       queryClient.invalidateQueries({

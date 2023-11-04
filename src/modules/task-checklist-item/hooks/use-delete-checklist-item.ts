@@ -13,6 +13,7 @@ export function useDeleteChecklistItem(task: Task) {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(task.id) })
 
+      const prevTask = queryClient.getQueryData(TASK_KEYS.detail(task.id))
       queryClient.setQueryData(TASK_KEYS.detail(task.id), (old?: Task) => {
         if (!old) return
         const oldChecklist = old.checklist || []
@@ -22,13 +23,14 @@ export function useDeleteChecklistItem(task: Task) {
 
         return { ...old, checklist: newChecklist }
       })
+      return { prevTask }
     },
 
-    onError: () => {
-      queryClient.setQueryData(TASK_KEYS.detail(task.id), task)
+    onError: (_err, _item, context) => {
+      queryClient.setQueryData(TASK_KEYS.detail(task.id), context?.prevTask)
       toast.error("Delete didn't work")
     },
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(task.id) })
     },
   })

@@ -20,9 +20,10 @@ export function useEditNoteFolder(folder: NoteFolder) {
     mutationFn: editNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.detail(data.id) })
-      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists(), exact: false })
+      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
 
       // Item
+      const prevNoteFolder = queryClient.getQueryData(NOTE_FOLDER_KEYS.detail(data.id))
       queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(data.id), () => ({ ...folder, name: data.name }))
 
       const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: folder.id }))
@@ -58,11 +59,11 @@ export function useEditNoteFolder(folder: NoteFolder) {
         })
       }
 
-      return { previousNoteList, previousFolderList, categoryIds }
+      return { previousNoteList, previousFolderList, categoryIds, prevNoteFolder }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(item.id), context?.prevNoteFolder)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder.id }), context?.previousNoteList)
       queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), context?.previousFolderList)
 

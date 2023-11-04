@@ -24,6 +24,7 @@ export function useMutateTask(mutation: (task: Task) => any) {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.boards() })
 
       // Update item
+      const prevTask = queryClient.getQueryData(TASK_KEYS.detail(data.id))
       queryClient.setQueryData(TASK_KEYS.detail(data.id), () => data)
 
       // Update task list
@@ -39,15 +40,15 @@ export function useMutateTask(mutation: (task: Task) => any) {
         const i = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, i), data, ...old.slice(i + 1)]
       })
-      return { previousTaskList, previousBoardList }
+      return { previousTaskList, previousBoardList, prevTask }
     },
     onError: (_err, item, context) => {
-      queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
+      queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
-      queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousTaskList)
+      queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousBoardList)
       toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: variables.status === STATUSES.done }) })
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.board({ scheduleType: variables.scheduleType, date }) })

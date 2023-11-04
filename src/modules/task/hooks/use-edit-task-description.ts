@@ -15,13 +15,15 @@ export function useEditTaskDescription(task: Task) {
     mutationFn: editTaskDescription,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(data.id) })
+      const prevTask = queryClient.getQueryData(TASK_KEYS.detail(data.id))
       queryClient.setQueryData(TASK_KEYS.detail(data.id), data)
+      return { prevTask }
     },
-    onError: (_err, item) => {
-      queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
+    onError: (_err, item, context) => {
+      queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
     },
   })

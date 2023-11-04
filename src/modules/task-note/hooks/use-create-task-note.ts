@@ -46,7 +46,7 @@ export function useCreateTaskNote(task: Task) {
 
       toast.error("Link note didn't work")
     },
-    onSuccess: (_data, variables) => {
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: TASK_NOTES_KEYS.list(variables.task.id) })
       queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.note.id) })
     },

@@ -43,7 +43,7 @@ export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
       queryClient.setQueryData(TASK_KEYS.detail(checklistItem.task_id), context?.previousTask)
       toast.error(t('errorModification'))
     },
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(checklistItem.task_id) })
     },
   })
