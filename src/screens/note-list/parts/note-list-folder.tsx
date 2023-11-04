@@ -8,8 +8,8 @@ export function NoteListFolder() {
   const { t } = useTranslation('note')
   const { noteList, show } = useNoteList()
 
-  if (show.offline) return <OfflineError />
   if (show.error) return <MainError />
+  if (show.offline) return <OfflineError />
 
   return (
     <div className="flex flex-col gap-2 p-2 px-4">

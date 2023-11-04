@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { InboxIcon } from '@heroicons/react/24/solid'
+import { ExclamationTriangleIcon, SignalSlashIcon } from '@heroicons/react/24/outline'
 
 import { ListSkeletonSmall } from '&/common/components/skeletons'
 import { useNoteList } from '&/modules/note/hooks'
@@ -21,6 +22,18 @@ export function InboxPreview() {
         <InboxIcon width={20} /> <span className="font-bold ">{t('inbox')}</span>
       </Link>
       <div className="ml-0 flex flex-col gap-y-1 font-normal">
+        {show.error && (
+          <p className="flex items-center justify-center gap-x-2 text-xs text-red-300">
+            <ExclamationTriangleIcon className="w-3" />
+            {t('Error fetching notes', { ns: 'note' })}
+          </p>
+        )}
+        {show.offline && (
+          <p className="flex items-center justify-center gap-x-2 text-xs text-orange-300">
+            <SignalSlashIcon className="w-3" />
+            {t('Offline, no note to show', { ns: 'note' })}
+          </p>
+        )}
         {show.loading && <ListSkeletonSmall count={1} />}
         {noteList?.map((note) => (
           <InboxPreviewItem key={note.id} note={note} />
@@ -34,7 +47,7 @@ export function InboxPreview() {
           {t('seeMore')}.
         </Link>
       )}
-      {noteList?.length === 0 && <p className="px-2 py-1 text-gray-300">{t('empty')}</p>}
+      {show.empty && <p className="px-2 py-1 text-gray-300">{t('empty')}</p>}
     </div>
   )
 }
