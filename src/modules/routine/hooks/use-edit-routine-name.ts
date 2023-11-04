@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'
 import { editRoutineName } from '../mutations'
-import { getScheduleTypeDate } from '../utils'
+import { getScheduleTypeDate, sortRoutineNotes } from '../utils'
 import { startOfToday } from 'date-fns'
 import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
 import { RoutineNoteByNote } from '&/modules/routine-note/types'
@@ -57,9 +57,11 @@ export function useEditRoutineName(routine: Routine) {
 
       // 🗃️ Update RoutineNote by note Lists
       queryClient.setQueriesData({ queryKey: linkedNotesKey }, (old?: RoutineNoteByNote[]) =>
-        old?.map((item) =>
-          item.routine.id === routine.id ? { ...item, routine: { ...item.routine, name: data.name } } : item
-        )
+        old
+          ?.map((item) =>
+            item.routine.id === routine.id ? { ...item, routine: { ...item.routine, name: data.name } } : item
+          )
+          .sort(sortRoutineNotes)
       )
 
       return { prevList, prevBoard, prevRoutine }
@@ -71,9 +73,9 @@ export function useEditRoutineName(routine: Routine) {
       queryClient.setQueriesData({ queryKey: linkedNotesKey }, (old?: RoutineNoteByNote[]) => {
         if (!context?.prevRoutine) return
         const name = context.prevRoutine.name
-        return old?.map((item) =>
-          item.routine.id === routine.id ? { ...item, routine: { ...item.routine, name } } : item
-        )
+        return old
+          ?.map((item) => (item.routine.id === routine.id ? { ...item, routine: { ...item.routine, name } } : item))
+          .sort(sortRoutineNotes)
       })
       toast.error(t('errorModification'))
     },

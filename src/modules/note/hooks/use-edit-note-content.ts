@@ -8,6 +8,7 @@ import { NOTE_KEYS } from '../constants'
 import { editNoteContent } from '../mutations'
 import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
 import { RoutineNoteByRoutine } from '&/modules/routine-note/types'
+import { sortRoutineNotes } from '../utils'
 
 export function useEditNoteContent(note: Note) {
   const { t } = useTranslation('error')
@@ -55,7 +56,9 @@ export function useEditNoteContent(note: Note) {
 
       // 🗃️ Update RoutineNote by routine Lists
       queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }, (old?: RoutineNoteByRoutine[]) =>
-        old?.map((item) => (item.note.id === data.id ? { ...item, note: { ...item.note, title: data.title } } : item))
+        old
+          ?.map((item) => (item.note.id === data.id ? { ...item, note: { ...item.note, title: data.title } } : item))
+          .sort(sortRoutineNotes)
       )
 
       return { previousNoteList, previousSearchNoteList, prevNote }
@@ -68,9 +71,11 @@ export function useEditNoteContent(note: Note) {
         queryClient.setQueriesData({ queryKey: ROUTINE_NOTE_KEYS.byRoutineLists() }, (old?: RoutineNoteByRoutine[]) => {
           if (!context?.prevNote) return
           const prevNote = context?.prevNote
-          return old?.map((routineNote) =>
-            routineNote.note.id === variables.id ? { ...routineNote, note: prevNote } : routineNote
-          )
+          return old
+            ?.map((routineNote) =>
+              routineNote.note.id === variables.id ? { ...routineNote, note: prevNote } : routineNote
+            )
+            .sort(sortRoutineNotes)
         })
         queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old?: Note[]) =>
           old?.map((item) => (item.id === variables.id ? variables : item))
