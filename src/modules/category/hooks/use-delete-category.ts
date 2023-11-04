@@ -1,5 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 
 import type { Routine } from '&/modules/routine/types'
 import type { Task } from '&/modules/task/types'
@@ -13,6 +14,7 @@ import { deleteCategory } from '../mutations'
 
 export function useDeleteCategory() {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('error')
 
   const { mutate } = useMutation({
     mutationFn: deleteCategory,
@@ -133,7 +135,7 @@ export function useDeleteCategory() {
         old?.deletedCategory?.id === item.id ? { ...old, category: item, deletedCategory: undefined } : old
       )
 
-      toast.error("Deletion didn't work")
+      toast.error(t('errorDelete'))
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [CATEGORY_LIST] })

@@ -1,6 +1,7 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 
 import { useMainPath } from '&/common/hooks'
 
@@ -15,6 +16,7 @@ import { NOTE_KEYS } from '../constants'
 import { deleteNote } from '../mutations'
 
 export function useDeleteNote() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const mainPath = useMainPath()
@@ -98,7 +100,7 @@ export function useDeleteNote() {
         old?.map((routineNote) => (routineNote.note.id === item.id ? { ...routineNote, deleted: false } : routineNote))
       )
       queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old?: Note[]) => (old ? [...old, item] : [item])) // TODO?: order
-      toast.error("Deletion didn't work")
+      toast.error(t('errorDelete'))
     },
     onSettled: async (_data, _error, note) => {
       queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(note.id) })

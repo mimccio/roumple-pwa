@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import { STATUSES } from '&/common/constants'
@@ -9,6 +10,7 @@ import { deleteAllDoneTasks } from '../mutations'
 
 export function useDeleteAllDoneTasks() {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('error')
   const [isOpen, setIsOpen] = useState(false)
 
   const { mutate } = useMutation({
@@ -35,7 +37,7 @@ export function useDeleteAllDoneTasks() {
       queryClient.setQueryData(TASK_KEYS.list({ done: true }), context?.previousTaskList)
       queryClient.setQueryData(TASK_KEYS.boards(), context?.previousTaskBoards)
 
-      toast.error("Deletion didn't work")
+      toast.error(t('errorDelete'))
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: true }) })

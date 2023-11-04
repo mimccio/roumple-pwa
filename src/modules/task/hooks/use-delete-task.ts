@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
+import { STATUSES } from '&/common/constants'
 import { useMainPath } from '&/common/hooks'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 import { deleteTask } from '../mutations'
-import { STATUSES } from '&/common/constants'
 
 export function useDeleteTask() {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('error')
   const navigate = useNavigate()
   const mainPath = useMainPath()
   const [isOpen, setIsOpen] = useState(false)
@@ -52,7 +54,7 @@ export function useDeleteTask() {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousTaskBoard)
-      toast.error("Deletion didn't work")
+      toast.error(t('errorDelete'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })

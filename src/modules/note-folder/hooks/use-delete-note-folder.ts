@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { NoteFolder } from '../types'
@@ -11,6 +12,7 @@ import { sortByCreatedAtAsc } from '&/common/utils'
 
 export function useDeleteNoteFolder(folder: NoteFolder) {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('error')
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const { categoryList } = useCategories()
@@ -58,7 +60,7 @@ export function useDeleteNoteFolder(folder: NoteFolder) {
         })
       }
 
-      toast.error("Deletion didn't work")
+      toast.error(t('errorDelete'))
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.detail(variables.id) })
