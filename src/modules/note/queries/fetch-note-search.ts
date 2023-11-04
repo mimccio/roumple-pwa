@@ -13,7 +13,7 @@ export const fetchNoteSearch = async ({ queryKey }: FetchNoteSearchParams) => {
   if (searchText?.length) {
     query = query.textSearch('title', `${searchText}`, { type: 'websearch', config: 'english' }).limit(20)
   } else {
-    query = query.limit(5)
+    query = query.limit(10)
   }
 
   const { data, error } = await query
