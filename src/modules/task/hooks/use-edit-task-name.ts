@@ -34,7 +34,6 @@ export function useEditTaskName(task: Task) {
 
       // ⛳ Update item
       const prevTask = queryClient.getQueryData<Task>(detailKey)
-      console.log('data :', data)
       queryClient.setQueryData(detailKey, data)
 
       // 🗃️ Update task list
@@ -58,8 +57,7 @@ export function useEditTaskName(task: Task) {
 
       return { previousTaskList, previousBoardList, prevTask }
     },
-    onError: (err, item, context) => {
-      console.log('err :', err)
+    onError: (_err, item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousBoardList)
