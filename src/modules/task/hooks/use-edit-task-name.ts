@@ -58,7 +58,8 @@ export function useEditTaskName(task: Task) {
 
       return { previousTaskList, previousBoardList, prevTask }
     },
-    onError: (_err, item, context) => {
+    onError: (err, item, context) => {
+      console.log('err :', err)
       queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousBoardList)
