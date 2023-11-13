@@ -14,7 +14,7 @@ interface Props {
 export function NoteLinks({ note, routineNoteList }: Props) {
   const { t } = useTranslation(['common', 'note'])
   const routineCount = routineNoteList?.length || 0
-  const taskCount = note.taskNotes?.length || 0
+  const taskCount = note.taskNotes?.filter((item) => !item.deleted)?.length || 0
 
   if (!routineCount && !taskCount) return null
 

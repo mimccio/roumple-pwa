@@ -17,7 +17,7 @@ export const fetchNoteById = async ({ queryKey }: IParams) => {
       content, 
       folder:note_folder(id, name), 
       category(id, name, color), 
-      taskNotes:task_note(id, task(id, name))` // TODO: fetch TaskNote list
+      taskNotes:task_note(id, task(id, name))`
     )
     .eq('id', noteId)
     .order('created_at')

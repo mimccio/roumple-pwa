@@ -5,6 +5,7 @@ import type { NoteFolder } from '../note-folder/types'
 interface TaskNote {
   id: string
   task: { id: string; name: string }
+  deleted?: boolean
 }
 
 export interface Note {
@@ -14,7 +15,7 @@ export interface Note {
   created_at?: Date
   category?: Category | null
   folder?: NoteFolder | null
-  taskNotes?: TaskNote[] // TODO: remove when use TaskNote list
+  taskNotes?: TaskNote[]
   deletedCategory?: Category
 }
 

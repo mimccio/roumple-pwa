@@ -26,7 +26,7 @@ export function useMutateTaskStatus(task: Task) {
       queryClient.setQueryData(TASK_KEYS.detail(data.id), () => data)
 
       // Update done task list
-      const previousDoneTaskList = queryClient.getQueriesData({ queryKey: TASK_KEYS.list({ done: true }) })
+      const previousDoneTaskList = queryClient.getQueryData(TASK_KEYS.list({ done: true }))
       queryClient.setQueryData(TASK_KEYS.list({ done: true }), (old: Task[] = []) => {
         if (data.status === STATUSES.done) {
           return task.status !== data.status ? [...old, data] : old
@@ -37,7 +37,7 @@ export function useMutateTaskStatus(task: Task) {
       })
 
       // Update not done task list
-      const previousNotDoneTaskList = queryClient.getQueriesData({ queryKey: TASK_KEYS.list({ done: false }) })
+      const previousNotDoneTaskList = queryClient.getQueryData(TASK_KEYS.list({ done: false }))
       queryClient.setQueryData(TASK_KEYS.list({ done: false }), (old: Task[] = []) => {
         const i = old.findIndex((item) => item.id === data.id)
         if (data.status !== STATUSES.done) {

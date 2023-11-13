@@ -8,6 +8,7 @@ import { categoryAtom } from '&/modules/category/atoms'
 import { TASK_KEYS } from '../constants'
 import { filterTasks } from '../utils'
 import { fetchBoardTasks } from '../queries'
+import { Task } from '../types'
 
 interface Params {
   scheduleType: ScheduleType
@@ -20,10 +21,18 @@ export function useBoardTasks({ scheduleType, showDone }: Params) {
   const [category] = useAtom(categoryAtom)
   const { data, isLoading, error, isPaused } = useQuery({
     queryKey: TASK_KEYS.board({ scheduleType, date }),
-    queryFn: fetchBoardTasks,
+    queryFn: async (props) => {
+      const list = await fetchBoardTasks(props)
+      // Set details if none
+      list?.forEach((task) => {
+        if (queryClient.getQueryData<Task>(TASK_KEYS.detail(task.id))) return
+        queryClient.setQueryData(TASK_KEYS.detail(task.id), task)
+      })
+      return list
+    },
   })
 
-  // Remove old queries (older than 2 month)
+  // Remove old queries (older than 2 month) // Unnecessary ?
   queryClient.removeQueries({
     queryKey: TASK_KEYS.boards(),
     type: 'inactive',
