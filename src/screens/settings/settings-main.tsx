@@ -18,7 +18,7 @@ export function SettingsMain() {
         <div className="mt-6 flex w-full flex-col gap-y-8 px-2 xl:px-4">
           <Section title={t('Language', { ns: 'settings' })} Icon={LanguageIcon}>
             <div className="flex w-full flex-wrap items-center gap-x-8 gap-y-2">
-              <span className="whitespace-nowrap">{t('Select language')}</span>
+              <span className="whitespace-nowrap">{t('Select language', { ns: 'settings' })}</span>
               <LanguageSelector />
             </div>
           </Section>
