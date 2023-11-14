@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
+import { startOfToday } from 'date-fns'
+
+import type { RoutineNoteByNote } from '&/modules/routine-note/types'
+import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
 
 import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'
-import { editRoutineName } from '../mutations'
 import { getScheduleTypeDate, sortRoutineNotes } from '../utils'
-import { startOfToday } from 'date-fns'
-import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
-import { RoutineNoteByNote } from '&/modules/routine-note/types'
+import { editRoutineName } from '../mutations'
 
 export function useEditRoutineName(routine: Routine) {
   const { t } = useTranslation('error')
@@ -29,8 +30,6 @@ export function useEditRoutineName(routine: Routine) {
   const { mutate } = useMutation({
     mutationFn: editRoutineName,
     onMutate: async (data) => {
-      const newRoutine = { ...routine, name: data.name }
-
       // ✖️ Cancel related queries
       await Promise.all([
         queryClient.cancelQueries({ queryKey: detailKey }),
@@ -41,18 +40,18 @@ export function useEditRoutineName(routine: Routine) {
 
       // ⛳ Update Routine detail
       const prevRoutine = queryClient.getQueryData<Routine>(detailKey)
-      queryClient.setQueryData(detailKey, newRoutine)
+      queryClient.setQueryData(detailKey, (old: Routine) => ({ ...old, name: data.name }))
 
       // 🗃️ Update Routine List
       const prevList = queryClient.getQueryData(listKey)
       queryClient.setQueryData(listKey, (old: Routine[] = []) =>
-        old.map((item) => (item.id === routine.id ? newRoutine : item))
+        old.map((item) => (item.id === routine.id ? { ...item, name: data.name } : item))
       )
 
       // 🗃️ Update Routine board
       const prevBoard = queryClient.getQueryData(boardKey)
       queryClient.setQueryData(boardKey, (old: Routine[] = []) =>
-        old.map((item) => (item.id === routine.id ? newRoutine : item))
+        old.map((item) => (item.id === routine.id ? { ...item, name: data.name } : item))
       )
 
       // 🗃️ Update RoutineNote by note Lists
