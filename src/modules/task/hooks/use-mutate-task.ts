@@ -16,7 +16,6 @@ export function useMutateTask(mutation: (task: Task) => any) {
   const { mutate } = useMutation({
     mutationFn: mutation,
     onMutate: async (data) => {
-      console.log('data :', data)
       const taskListKey = TASK_KEYS.list({ done: data.status === STATUSES.done })
 
       // Cancel related queries
@@ -46,14 +45,12 @@ export function useMutateTask(mutation: (task: Task) => any) {
       return { previousTaskList, previousBoardList, prevTask }
     },
     onError: (_err, item, context) => {
-      console.log('item :', item)
       queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(TASK_KEYS.board({ scheduleType: item.scheduleType, date }), context?.previousBoardList)
       toast.error(t('errorModification'))
     },
     onSettled: (_data, _error, variables) => {
-      console.log('variables :', variables)
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: variables.status === STATUSES.done }) })
       queryClient.invalidateQueries({ queryKey: TASK_KEYS.board({ scheduleType: variables.scheduleType, date }) })
