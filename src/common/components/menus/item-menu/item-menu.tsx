@@ -58,7 +58,7 @@ export function ItemMenu({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 top-12 z-10 w-56 origin-top-right rounded-md bg-gray-50 shadow-sm ring-1 ring-gray-400 ring-opacity-20 focus:outline-none">
+        <Menu.Items className="absolute right-2 top-12 z-10 w-56 origin-top-right rounded-md bg-gray-50 shadow-sm ring-1 ring-gray-400 ring-opacity-20 focus:outline-none">
           <div className="py-1">
             {withCopyLink && <CopyUrlToClipboard />}
             {onLinkNote && (
