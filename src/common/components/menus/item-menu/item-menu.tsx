@@ -8,6 +8,7 @@ import { ArrowPathRoundedSquareIcon, LinkIcon } from '@heroicons/react/24/solid'
 import { MenuBtn } from './menu-btn'
 import { CopyUrlToClipboard } from './copy-url-to-clipboard'
 import { TW_COLOR_TEXT_400 } from '&/common/constants/tw-colors'
+import { cl } from '&/common/utils'
 
 interface Props {
   onDelete?: () => void
@@ -18,6 +19,7 @@ interface Props {
   withCopyLink?: boolean
   isLoading?: boolean
   isArchived?: boolean
+  disabled?: boolean
 }
 
 export function ItemMenu({
@@ -28,6 +30,7 @@ export function ItemMenu({
   isLoading = false,
   isArchived,
   onEditOccurrence,
+  disabled,
 }: Props) {
   const { t } = useTranslation('action')
 
@@ -35,8 +38,11 @@ export function ItemMenu({
     <Menu as="div" className="inline-block text-left">
       <div>
         <Menu.Button
-          disabled={isLoading}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-gray-400 transition-colors hover:border-gray-200 hover:text-gray-500 focus:outline-none disabled:cursor-wait"
+          disabled={disabled || isLoading}
+          className={cl(
+            'flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-gray-400 transition-colors hover:border-gray-200 hover:text-gray-500 focus:outline-none disabled:text-gray-200 disabled:hover:border-transparent disabled:hover:text-gray-200',
+            isLoading ? 'disabled:cursor-wait' : 'disabled:cursor-default'
+          )}
         >
           <span className="sr-only">{t('openOptions')}</span>
           <EllipsisHorizontalIcon className="h-5 w-5" aria-hidden="true" />

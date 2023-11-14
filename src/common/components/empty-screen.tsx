@@ -19,7 +19,7 @@ export function EmptyScreen({ image, text, opacity }: Props) {
       enterFrom="opacity-0"
       enterTo="opacity-100"
     >
-      <div className="mb-20 mt-14 flex h-full flex-col items-center justify-center gap-4">
+      <div className="mb-20 flex h-full flex-col items-center justify-center gap-4">
         <img
           src={image}
           className={cl('mx-auto flex h-52 w-52 items-center justify-center', opacity ? ' opacity-25' : 'opacity-75')}

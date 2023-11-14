@@ -6,8 +6,10 @@ interface Props {
 
 export function DetailsNavbar({ children }: Props) {
   return (
-    <nav className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-2 shadow-sm lg:px-4">
-      {children}
-    </nav>
+    <div>
+      <nav className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-2 shadow-sm lg:px-4">
+        {children}
+      </nav>
+    </div>
   )
 }
