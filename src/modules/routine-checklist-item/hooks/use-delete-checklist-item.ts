@@ -19,13 +19,7 @@ export function useDeleteChecklistItem(routine: Routine) {
       const previousRoutine = queryClient.getQueryData(routineKey)
       queryClient.setQueryData(routineKey, (old?: Routine) => {
         if (!old) return
-        const oldChecklist = old.checklist || []
-        const itemIndex = old.checklist?.findIndex((item) => item.id === data)
-        const newChecklist = itemIndex
-          ? [...oldChecklist.slice(0, itemIndex), ...oldChecklist.slice(itemIndex + 1)]
-          : oldChecklist
-
-        return { ...old, checklist: newChecklist }
+        return { ...old, checklist: old.checklist?.filter((item) => item.id !== data) }
       })
       return { previousRoutine }
     },
