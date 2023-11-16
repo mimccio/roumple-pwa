@@ -3,14 +3,19 @@ import { useTranslation } from 'react-i18next'
 import { Popover, Transition } from '@headlessui/react'
 import { ClockIcon } from '@heroicons/react/24/solid'
 import { ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
 import { usePeriodText } from '&/common/hooks'
 import { cl } from '&/common/utils'
 import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
 import type { Routine } from '&/modules/routine/types'
-import { getIsScheduled, getScheduleTypeColor, getScheduleTypeLightColor } from '&/modules/routine/utils'
-import { useSchedule } from '&/modules/routine/hooks/use-schedule'
+import {
+  getIsScheduled,
+  getScheduleTypeBgColor,
+  getScheduleTypeBorderColor,
+  getScheduleTypeColor,
+} from '&/modules/routine/utils'
+import { useSchedule } from '&/modules/routine/hooks'
 
 interface Props {
   routine: Routine
@@ -22,8 +27,10 @@ export function RoutineSchedule({ routine, date }: Props) {
   const { getPeriodText } = usePeriodText()
   const periodText = getPeriodText({ scheduleType: routine.scheduleType, period: routine.period })
   const scheduleColor = getScheduleTypeColor(routine.scheduleType)
-  const isScheduledColor = getScheduleTypeLightColor(routine.scheduleType)
   const isScheduled = getIsScheduled({ routine, date })
+  const bg = isScheduled ? getScheduleTypeBgColor(routine.scheduleType) : 'bg-gray-50'
+  const border = isScheduled ? getScheduleTypeBorderColor(routine.scheduleType) : 'border-gray-200'
+
   const {
     dailyRecurrence,
     currentPeriod,
@@ -35,38 +42,32 @@ export function RoutineSchedule({ routine, date }: Props) {
     onSubmit,
   } = useSchedule({ routine, date })
 
-  const getIsScheduledText = () => {
-    if (routine.scheduleType === SCHEDULE_TYPES.monthly) return t('thisMonth', { ns: 'schedule' })
-    if (routine.scheduleType === SCHEDULE_TYPES.weekly) return t('thisWeek', { ns: 'schedule' })
-    return t('thisDay', { ns: 'schedule' })
-  }
-  const scheduledText = getIsScheduledText()
-
   return (
     <Popover className="relative">
-      <Popover.Button>
-        <div className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-1.5">
-          <p className="flex items-center gap-2">
-            {isScheduled ? (
-              <ClockIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
-            ) : (
-              <ClockOutlineIcon width={20} height={20} className={cl('transition-colors', scheduleColor)} />
+      <Popover.Button
+        className={cl(
+          'group relative flex w-full cursor-pointer items-center justify-between border-y px-4 py-1 text-left transition-all hover:opacity-75',
+          border,
+          bg
+        )}
+      >
+        <span className="flex items-center">
+          {isScheduled ? (
+            <ClockIcon className={cl('w-4 transition-colors', scheduleColor)} />
+          ) : (
+            <ClockOutlineIcon className={cl('w-4 text-gray-300 transition-colors')} />
+          )}
+
+          <span
+            className={cl(
+              'ml-3 block truncate text-sm   transition-colors ',
+              isScheduled ? scheduleColor : 'text-gray-300'
             )}
-            <span className="font-semibold text-gray-500 transition-colors group-hover:text-gray-600">
-              {periodText}
-            </span>
-          </p>
-          {!isScheduled && (
-            <p className="text-sm lowercase text-gray-300 transition-colors group-hover:text-gray-400">
-              {t('notScheduledFor', { ns: 'schedule' })} {scheduledText}
-            </p>
-          )}
-          {isScheduled && (
-            <p className={cl('ml-2 text-sm lowercase transition-colors', isScheduledColor)}>
-              {t('scheduledFor', { ns: 'schedule' })} {scheduledText}
-            </p>
-          )}
-        </div>
+          >
+            {periodText}
+          </span>
+        </span>
+        <ChevronDownIcon className={cl('w-4 opacity-30', isScheduled ? scheduleColor : 'text-gray-400')} />
       </Popover.Button>
 
       <Transition
@@ -78,7 +79,7 @@ export function RoutineSchedule({ routine, date }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute z-10 w-full max-w-lg rounded-lg bg-white p-4 shadow-md">
+        <Popover.Panel className="absolute left-1 right-1 z-10 mt-1 max-w-lg rounded-lg bg-gray-50 p-4 shadow-md">
           {({ close }) => (
             <div>
               <RoutineScheduleSelector

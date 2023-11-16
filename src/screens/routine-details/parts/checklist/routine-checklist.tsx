@@ -13,9 +13,10 @@ interface Props {
   date: Date
   action?: RoutineAction
   isLoading: boolean
+  archived: boolean
 }
 
-export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
+export function RoutineChecklist({ routine, date, action, isLoading, archived }: Props) {
   const { t } = useTranslation(['common', 'routine', 'schedule'])
   const { onDelete } = useDeleteChecklistItem(routine)
   const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({
@@ -38,12 +39,14 @@ export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
   }
 
   return (
-    <div className="w-full max-w-2xl flex-1 px-4 2xl:mt-4">
+    <div className="mt-4 w-full max-w-2xl px-4">
       <div className="flex flex-col">
         <h4 className="font-bold uppercase text-gray-400">{t('checklist', { ns: 'common' })}</h4>
-        <p className="text-xs text-gray-300">
-          {t('checklistWillReset', { ns: 'routine' })} {getText()}
-        </p>
+        {!archived && (
+          <p className="text-xs text-gray-300">
+            {t('checklistWillReset', { ns: 'routine' })} {getText()}
+          </p>
+        )}
       </div>
 
       <div className="mt-4 flex flex-col gap-2">
@@ -54,7 +57,7 @@ export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
             onDelete={handleDelete}
             onSelect={onSelectChecklistItem}
             isChecked={action?.checkedList?.includes(checklistItem.id)}
-            isLoading={isLoading}
+            disabled={isLoading || archived}
           />
         ))}
         <NewChecklistItem routine={routine} />

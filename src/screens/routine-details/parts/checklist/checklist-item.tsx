@@ -9,16 +9,16 @@ interface Props {
   onDelete: (id: string) => void
   onSelect: (id: string) => void
   isChecked?: boolean
-  isLoading: boolean
+  disabled: boolean
 }
 
-export function ChecklistItem({ checklistItem, onDelete, onSelect, isChecked, isLoading }: Props) {
+export function ChecklistItem({ checklistItem, onDelete, onSelect, isChecked, disabled }: Props) {
   const { register, submit } = useEditChecklistItem(checklistItem)
   const handleSelect = () => onSelect(checklistItem.id)
 
   return (
     <div className="flex w-full items-center gap-2">
-      <button className="group  disabled:animate-pulse" onClick={handleSelect} disabled={isLoading}>
+      <button className="group  disabled:animate-pulse" onClick={handleSelect} disabled={disabled}>
         <div
           className={cl(
             'flex h-5 w-5 items-center justify-center rounded-md border-2 transition-colors enabled:border-gray-300',
