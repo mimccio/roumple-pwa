@@ -15,8 +15,10 @@ export function CreatedAt({ createdAt }: Props) {
   const displayedDate = createdAt ? format(new Date(createdAt), 'd MMMM yyyy', { locale }) : null
 
   return (
-    <p className={cl('text-right text-xs text-gray-300', !displayedDate && 'opacity-0')}>
-      {t('createdOn')} {displayedDate}
-    </p>
+    <div className="flex justify-center py-3">
+      <p className={cl('text-right text-xs text-gray-300', !displayedDate && 'opacity-0')}>
+        {t('createdOn')} {displayedDate}
+      </p>
+    </div>
   )
 }

@@ -31,3 +31,15 @@ export const getScheduleTypeBg = (scheduleType: ScheduleType | TaskScheduleType)
   if (scheduleType === SCHEDULE_TYPES.monthly) return 'bg-purple-500 group-hover:bg-purple-600'
   return 'bg-gray-500 group-hover:bg-gray-600'
 }
+
+export const getPriorityToColor = (priority: number) => {
+  if (priority === 2) return 'to-orange-100'
+  if (priority === 1) return 'to-blue-100'
+  return 'to-gray-100'
+}
+
+export const getPriorityFromColor = (priority: number) => {
+  if (priority === 2) return 'from-orange-50'
+  if (priority === 1) return 'from-blue-50'
+  return 'from-gray-50'
+}

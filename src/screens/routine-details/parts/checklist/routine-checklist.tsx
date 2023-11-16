@@ -49,7 +49,7 @@ export function RoutineChecklist({ routine, date, action, isLoading, archived }:
         )}
       </div>
 
-      <div className="mt-4 flex flex-col gap-y-1">
+      <div className="mt-2 flex flex-col gap-y-1">
         {routine.checklist?.map((checklistItem) => (
           <ChecklistItem
             checklistItem={checklistItem}

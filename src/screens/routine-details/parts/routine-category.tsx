@@ -1,6 +1,6 @@
+import { CategorySelector } from '&/common/components/inputs/category-selector'
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineCategory } from '&/modules/routine/hooks'
-import { CategorySelector } from '../components/category-selector'
 
 interface Props {
   routine: Routine

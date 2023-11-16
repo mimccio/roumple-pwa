@@ -26,7 +26,7 @@ const DisableEnter = Extension.create({
 })
 
 export function NameEditor({ name, id, submit }: Props) {
-  const { t } = useTranslation('error')
+  const { t } = useTranslation(['common', 'error'])
 
   const editor = useEditor({
     extensions: [Document, Text, Paragraph, DisableEnter, CharacterCount.configure({ limit: NAME_MAX_CHARS })],
@@ -56,23 +56,26 @@ export function NameEditor({ name, id, submit }: Props) {
   const charNum = editor?.storage.characterCount.characters()
 
   return (
-    <div className="relative mx-auto flex min-h-[64px] w-full max-w-5xl items-center px-4 py-1">
-      <EditorContent className="inline-block w-full" id={id} onBlur={onBlur} editor={editor} />
+    <div className="relative bg-gray-50">
+      <span className="absolute bottom-1 right-2 text-xs lowercase text-gray-300">{t('name', { ns: 'common' })}</span>
+      <div className="relative mx-auto flex min-h-[64px] w-full max-w-5xl items-center px-4 py-1">
+        <EditorContent className="inline-block w-full" id={id} onBlur={onBlur} editor={editor} />
 
-      <Transition
-        show={charNum >= 300}
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <p className="absolute bottom-0 right-0 z-10 pr-2 text-xs text-red-400">
-          {t('maxChars', { maxChars: NAME_MAX_CHARS })}
-        </p>
-      </Transition>
+        <Transition
+          show={charNum >= 300}
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <p className="absolute bottom-0 right-0 z-10 pr-2 text-xs text-red-400">
+            {t('maxChars', { ns: 'error', maxChars: NAME_MAX_CHARS })}
+          </p>
+        </Transition>
+      </div>
     </div>
   )
 }

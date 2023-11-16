@@ -50,13 +50,8 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery, r
         />
       )}
       <RoutineDescription routine={routine} />
-      <div className="border-b border-gray-200 ">
-        <RoutineNotes routineNoteList={routineNoteList} />
-      </div>
-
-      <div className="flex justify-center py-4">
-        <CreatedAt createdAt={routine.created_at} />
-      </div>
+      <RoutineNotes routineNoteList={routineNoteList} />
+      <CreatedAt createdAt={routine.created_at} />
     </>
   )
 }
