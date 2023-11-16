@@ -16,10 +16,10 @@ export function RoutineNotes({ routineNoteList }: Props) {
 
   if (!routineNoteList?.length) return null
   return (
-    <div className="flex flex-col gap-y-2 border-t border-gray-100 p-4">
-      <h4 className="font-bold uppercase text-gray-400 ">{t('notes')}</h4>
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-y-2  p-4">
+      <h4 className="font-semibold text-gray-400 ">{t('notes')}</h4>
 
-      <ul className="flex flex-col gap-y-2">
+      <ul className="flex flex-col gap-y-1">
         {routineNoteList.map((routineNote) => (
           <li key={routineNote.id} className="flex justify-between">
             <Link to={`note/${routineNote.note.id}`} className="flex items-center gap-x-2 text-gray-500">

@@ -39,9 +39,9 @@ export function RoutineChecklist({ routine, date, action, isLoading, archived }:
   }
 
   return (
-    <div className="mt-4 w-full max-w-2xl px-4">
-      <div className="flex flex-col">
-        <h4 className="font-bold uppercase text-gray-400">{t('checklist', { ns: 'common' })}</h4>
+    <div className="mx-auto mt-4 w-full max-w-5xl px-4">
+      <div className="items-top flex flex-wrap justify-between gap-x-14">
+        <h4 className="font-semibold  text-gray-400">{t('checklist', { ns: 'common' })}</h4>
         {!archived && (
           <p className="text-xs text-gray-300">
             {t('checklistWillReset', { ns: 'routine' })} {getText()}
@@ -49,7 +49,7 @@ export function RoutineChecklist({ routine, date, action, isLoading, archived }:
         )}
       </div>
 
-      <div className="mt-4 flex flex-col gap-2">
+      <div className="mt-4 flex flex-col gap-y-1">
         {routine.checklist?.map((checklistItem) => (
           <ChecklistItem
             checklistItem={checklistItem}

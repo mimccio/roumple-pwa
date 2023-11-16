@@ -13,7 +13,7 @@ export function RoutineName({ routine }: Props) {
   const { submit } = useEditRoutineName(routine)
 
   return (
-    <div className="relative bg-gray-100">
+    <div className="relative bg-gray-50">
       <span className="absolute bottom-1 right-2 text-xs lowercase text-gray-300">{t('name', { ns: 'common' })}</span>
       <NameEditor id={routine.id} name={routine.name} submit={submit} />
     </div>

@@ -33,8 +33,7 @@ export function NameEditor({ name, id, submit }: Props) {
     content: name,
     editorProps: {
       attributes: {
-        class:
-          'prose relative prose-gray py-2 font-semibold transition-colors rounded-lg prose-2xl mx-auto focus:outline-none',
+        class: 'prose relative prose-gray py-2 font-semibold transition-colors rounded-lg prose-2xl focus:outline-none',
       },
     },
   })
@@ -57,7 +56,7 @@ export function NameEditor({ name, id, submit }: Props) {
   const charNum = editor?.storage.characterCount.characters()
 
   return (
-    <div className="relative flex min-h-[64px] items-center px-4 py-1">
+    <div className="relative mx-auto flex min-h-[64px] w-full max-w-5xl items-center px-4 py-1">
       <EditorContent className="inline-block w-full" id={id} onBlur={onBlur} editor={editor} />
 
       <Transition

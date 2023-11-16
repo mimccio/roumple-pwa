@@ -39,6 +39,7 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery, r
       {!routine.archived && (
         <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.scheduleType} />
       )}
+
       {!offline && (
         <RoutineChecklist
           archived={routine.archived}
@@ -49,7 +50,9 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery, r
         />
       )}
       <RoutineDescription routine={routine} />
-      <RoutineNotes routineNoteList={routineNoteList} />
+      <div className="border-b border-gray-200 ">
+        <RoutineNotes routineNoteList={routineNoteList} />
+      </div>
 
       <div className="flex justify-center py-4">
         <CreatedAt createdAt={routine.created_at} />
