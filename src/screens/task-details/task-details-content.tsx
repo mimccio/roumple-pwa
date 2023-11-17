@@ -1,9 +1,7 @@
-import { DetailsLoadingPage } from '&/common/components/details-loading-page'
 import { CreatedAt } from '&/common/components/display/created-at'
+import { EmptyDetails } from '&/common/components/empty-screens/details'
 
 import { Task } from '&/modules/task/types'
-import { NotFoundDetails, OfflineError } from '../errors'
-
 import { TaskChecklist } from './parts/checklist/task-checklist'
 import { TaskCategory } from './parts/task-category'
 import { TaskDescription } from './parts/task-description'
@@ -19,9 +17,8 @@ interface Props {
 }
 
 export function TaskDetailsContent({ task, isLoading, isPaused }: Props) {
-  if (isLoading) return <DetailsLoadingPage />
-  if (!task && isPaused) return <OfflineError />
-  if (!task) return <NotFoundDetails />
+  if (!task) return <EmptyDetails isLoading={isLoading} isPaused={isPaused} />
+
   return (
     <>
       <TaskCategory task={task} />

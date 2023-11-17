@@ -7,7 +7,7 @@ import type { Routine } from '&/modules/routine/types'
 import { NavbarContent } from './navbar-content'
 
 interface Props {
-  routine: Routine
+  routine?: Routine
   date: Date
   handleDateChange: (date: Date) => void
 }
@@ -19,7 +19,7 @@ export function RoutineNavbar({ routine, date, handleDateChange }: Props) {
     <DetailsNavbar>
       <h4 className="text-sm font-semibold text-gray-500">{t('routine')}</h4>
       <div className="flex gap-x-2">
-        <NavbarContent routine={routine} date={date} handleDateChange={handleDateChange} />
+        {routine && <NavbarContent routine={routine} date={date} handleDateChange={handleDateChange} />}
         <CloseNavBtn />
       </div>
     </DetailsNavbar>

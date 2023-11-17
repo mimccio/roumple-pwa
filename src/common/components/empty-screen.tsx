@@ -21,7 +21,7 @@ export function EmptyScreen({ image, text, opacity, headerMargin }: Props) {
       enterTo="opacity-100"
     >
       <div
-        className={cl('mb-20 flex h-full flex-col items-center justify-center gap-4', headerMargin ? 'mt-14' : 'mt-0')}
+        className={cl('mb-20 flex grow flex-col items-center justify-center gap-4', headerMargin ? 'mt-14' : 'mt-0')}
       >
         <img
           src={image}
