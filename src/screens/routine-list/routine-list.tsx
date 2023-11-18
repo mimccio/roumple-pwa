@@ -1,10 +1,10 @@
 import { ListSkeleton } from '&/common/components/skeletons'
 import { ContentLayout, MainListLayout } from '&/common/components/layouts'
+import { MainListError, MainListOffline } from '&/common/components/fallbacks/main-list'
 
 import { useRoutineList } from '&/modules/routine/hooks'
 import { CreateRoutineModale } from '&/modules/routine/components/create-routine-modale'
 
-import { MainError, OfflineError } from '../errors'
 import { Header } from './parts/header'
 import { GroupedByScheduleRoutineList } from './parts/grouped-by-schedule-routine-list'
 import { EmptyContent } from './parts/empty-content'
@@ -34,9 +34,10 @@ export function RoutineList() {
         handleSortChange={handleSortChange}
         onCreate={onOpenCreate}
       />
+
       <ContentLayout>
-        {showStatus.error && <MainError />}
-        {showStatus.offline && <OfflineError />}
+        {showStatus.error && <MainListError />}
+        {showStatus.offline && <MainListOffline />}
 
         <MainListLayout>
           {showStatus.loading && <ListSkeleton />}

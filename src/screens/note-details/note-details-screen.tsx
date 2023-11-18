@@ -1,5 +1,5 @@
 import { CreatedAt } from '&/common/components/display/created-at'
-import { EmptyDetails } from '&/common/components/empty-screens/details'
+import { DetailsFallback } from '&/common/components/fallbacks/details'
 
 import { useGetNoteDetail } from '&/modules/note/hooks'
 
@@ -11,7 +11,7 @@ import { NoteNavbar } from './parts/note-navbar'
 export function NoteDetailsScreen() {
   const { note, isLoading, isPaused, routineNoteList } = useGetNoteDetail()
 
-  if (!note) return <EmptyDetails isLoading={isLoading} isPaused={isPaused} />
+  if (!note) return <DetailsFallback isLoading={isLoading} isPaused={isPaused} />
 
   return (
     <>

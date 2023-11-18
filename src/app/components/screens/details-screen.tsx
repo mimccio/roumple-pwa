@@ -2,13 +2,12 @@ import { Route, Routes, useMatch } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { cl } from '&/common/utils'
-import { FatalError, NotFoundDetails } from '&/screens/errors'
-import { EmptyItem } from '&/screens/empty-item'
 import { SettingsDetails } from '&/screens/settings/settings-details'
 import { CategoryDetailsScreen } from '&/screens/categories/category-details-screen'
 import { RoutineDetailsScreen } from '&/screens/routine-details'
 import { NoteDetailsScreen } from '&/screens/note-details'
 import { TaskDetailsScreen } from '&/screens/task-details'
+import { ErrorFallback, NotFoundFallback, SelectItemFallback } from '&/screens/fallbacks/details'
 
 export function DetailsScreen() {
   const matchNav = useMatch('/:nav/d/*')
@@ -22,7 +21,7 @@ export function DetailsScreen() {
         showDetails ? 'z-10 lg:z-0' : '-z-10 lg:z-0'
       )}
     >
-      <ErrorBoundary fallback={<FatalError />}>
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <Routes>
           <Route path=":nav/d/routine/:routineId/:activity?/*" element={<RoutineDetailsScreen />} />
 
@@ -35,8 +34,8 @@ export function DetailsScreen() {
           <Route path="categories" element={<CategoryDetailsScreen />} />
           <Route path="settings" element={<SettingsDetails />} />
 
-          <Route path=":nav/d/*" element={<NotFoundDetails />} />
-          <Route path="*" element={<EmptyItem />} />
+          <Route path=":nav/d/*" element={<NotFoundFallback />} />
+          <Route path="*" element={<SelectItemFallback />} />
         </Routes>
       </ErrorBoundary>
     </section>

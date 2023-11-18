@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import fatalErrorImg from '&/assets/illustrations/fatal-error.png'
-import { Illustration } from './parts/illustration'
-import { EmptyDetailsLayout } from './parts/empty-details-layout'
+import { Illustration } from '../../illustrations'
+import { MainListFallbackLayout } from './main-list-fallback-layout'
 
-export function DetailsError() {
+export function MainListError() {
   const { t } = useTranslation('error')
+
   return (
-    <EmptyDetailsLayout>
+    <MainListFallbackLayout>
       <Illustration text={t('anErrorOcurred')} image={fatalErrorImg} />
-    </EmptyDetailsLayout>
+    </MainListFallbackLayout>
   )
 }

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-import { EmptyDetails } from '&/common/components/empty-screens/details'
+import { DetailsFallback } from '&/common/components/fallbacks/details'
 import type { RoutineAction, Routine } from '&/modules/routine/types'
 import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
 
@@ -29,7 +29,7 @@ export function RoutineDetailsContent({
 }: Props) {
   const { activity } = useParams()
 
-  if (!routine) return <EmptyDetails isLoading={isLoading} isPaused={isPaused} />
+  if (!routine) return <DetailsFallback isLoading={isLoading} isPaused={isPaused} />
 
   return (
     <>

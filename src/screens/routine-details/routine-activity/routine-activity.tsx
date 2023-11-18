@@ -4,13 +4,13 @@ import { SignalSlashIcon } from '@heroicons/react/24/outline'
 import { SCHEDULE_TYPES } from '&/common/constants'
 import { useMainPath } from '&/common/hooks'
 import { SyncSpinner } from '&/common/components/spinners'
+import { DetailsFallback } from '&/common/components/fallbacks/details'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity'
 import { DayActivity } from './day-activity'
 import { WeekActivity } from './week-activity'
 import { MonthActivity } from './month-activity'
-import { EmptyDetails } from '&/common/components/empty-screens/details'
 
 interface Props {
   routine: Routine
@@ -23,7 +23,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
   const { actions, isLoading, isError, isPaused } = useRoutineActivity(routine)
   const url = `${mainPath}/d/routine/${routine.id}`
 
-  if (!actions) return <EmptyDetails isError={isError} isLoading={isLoading} isPaused={isPaused} />
+  if (!actions) return <DetailsFallback isError={isError} isLoading={isLoading} isPaused={isPaused} />
 
   return (
     <div className="mb-8 border-t border-gray-200 p-2">

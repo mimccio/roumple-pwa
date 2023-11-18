@@ -1,5 +1,5 @@
 import { CreatedAt } from '&/common/components/display/created-at'
-import { EmptyDetails } from '&/common/components/empty-screens/details'
+import { DetailsFallback } from '&/common/components/fallbacks/details'
 
 import { Task } from '&/modules/task/types'
 import { TaskChecklist } from './parts/checklist/task-checklist'
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function TaskDetailsContent({ task, isLoading, isPaused }: Props) {
-  if (!task) return <EmptyDetails isLoading={isLoading} isPaused={isPaused} />
+  if (!task) return <DetailsFallback isLoading={isLoading} isPaused={isPaused} />
 
   return (
     <>

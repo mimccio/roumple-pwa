@@ -8,15 +8,16 @@ import { Month } from '&/screens/board/month'
 import { RoutineList } from '&/screens/routine-list'
 import { SettingsMain } from '&/screens/settings/settings-main'
 import { Categories } from '&/screens/categories'
-import { FatalError, NotFoundMain } from '&/screens/errors'
+
 import { FolderListScreen, NoteListByFolderScreen, NoteListInboxScreen } from '&/screens/note-list'
 import { TaskListScreen } from '&/screens/task-list'
 import { Example } from '&/screens/example'
+import { ErrorFallback, NotFoundFallback } from '&/screens/fallbacks/main'
 
 export function MainScreen() {
   return (
     <main className="absolute bottom-0 left-0 right-0 top-0 h-screen min-h-screen w-full flex-col sm:w-full sm:flex-1  md:flex lg:relative lg:w-1/2 lg:border-r">
-      <ErrorBoundary fallback={<FatalError />}>
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <Routes>
           {/* Board */}
           <Route path="/today/*" element={<Today />} />
@@ -37,7 +38,7 @@ export function MainScreen() {
           <Route path="/categories/*" element={<Categories />} />
           <Route path="/settings/*" element={<SettingsMain />} />
           {/* catch all */}
-          <Route path="*" element={<NotFoundMain />} />
+          <Route path="*" element={<NotFoundFallback />} />
         </Routes>
       </ErrorBoundary>
     </main>
