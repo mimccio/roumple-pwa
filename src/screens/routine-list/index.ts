@@ -1,1 +1,1 @@
-export * from './routine-list'
+export * from './routine-list-screen'

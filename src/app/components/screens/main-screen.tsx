@@ -5,7 +5,7 @@ import { Today } from '&/screens/board/today'
 import { Week } from '&/screens/board/week'
 import { Month } from '&/screens/board/month'
 
-import { RoutineList } from '&/screens/routine-list'
+import { RoutineListScreen } from '&/screens/routine-list'
 import { SettingsMain } from '&/screens/settings/settings-main'
 import { Categories } from '&/screens/categories'
 
@@ -27,7 +27,7 @@ export function MainScreen() {
           {import.meta.env.MODE === 'development' && <Route path="/example/*" element={<Example />} />}
 
           {/* Nav */}
-          <Route path="/routines/*" element={<RoutineList />} />
+          <Route path="/routines/*" element={<RoutineListScreen />} />
           <Route path="/tasks/*" element={<TaskListScreen />} />
 
           <Route path="/notes" element={<Navigate to="folders" />} />

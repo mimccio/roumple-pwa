@@ -5,5 +5,5 @@ interface Props {
 }
 
 export function MainListFallbackLayout({ children }: Props) {
-  return <div className="flex grow items-center justify-center pb-20 pt-8 ">{children}</div>
+  return <div className="flex grow items-center justify-center pb-20">{children}</div>
 }

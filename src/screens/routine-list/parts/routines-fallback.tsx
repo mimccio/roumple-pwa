@@ -2,27 +2,38 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import locationImg from '&/assets/illustrations/location.png'
 import workflowImg from '&/assets/illustrations/workflow.png'
-import { EmptyMainContent } from '&/common/components/empty-screens'
+import { MainListError, MainListOffline, MainListFallback } from '&/common/components/fallbacks/main-list'
+import { MainListSkeleton } from '&/common/components/skeletons/main-list-skeleton'
 
 interface Props {
   category: { name: string } | null
-  showStatus: { empty: boolean; emptyFilteredList: boolean }
+  showStatus: {
+    empty: boolean
+    emptyFilteredList: boolean
+    error: boolean
+    offline: boolean
+    loading: boolean
+    data: boolean
+  }
   archived: boolean
   onOpenCreate: () => void
 }
 
-export function EmptyContent({ showStatus, category, archived, onOpenCreate }: Props) {
+export function RoutinesFallback({ showStatus, category, archived, onOpenCreate }: Props) {
   const { t } = useTranslation('routine')
-  if (!showStatus.empty && !showStatus.emptyFilteredList) return null
+  if (showStatus.data || (!showStatus.empty && !showStatus.emptyFilteredList)) return null
 
   return (
-    <div className="absolute bottom-0 top-0 w-full">
+    <>
+      {showStatus.loading && <MainListSkeleton />}
+      {showStatus.error && <MainListError />}
+      {showStatus.offline && <MainListOffline />}
       {showStatus.empty && !archived && (
-        <EmptyMainContent onClick={onOpenCreate} text={t('createNewRoutine')} image={workflowImg} />
+        <MainListFallback onClick={onOpenCreate} text={t('createNewRoutine')} image={workflowImg} />
       )}
-      {showStatus.empty && archived && <EmptyMainContent text={t('noArchivedRoutine')} image={locationImg} />}
+      {showStatus.empty && archived && <MainListFallback text={t('noArchivedRoutine')} image={locationImg} />}
       {showStatus.emptyFilteredList && category && !archived && (
-        <EmptyMainContent
+        <MainListFallback
           text={
             <Trans t={t} i18nKey="noRoutineWithCategory" values={{ category: category.name }}>
               No routine with <span className="font-semibold">{category.name}</span> category
@@ -32,7 +43,7 @@ export function EmptyContent({ showStatus, category, archived, onOpenCreate }: P
         />
       )}
       {showStatus.emptyFilteredList && category && archived && (
-        <EmptyMainContent
+        <MainListFallback
           text={
             <Trans t={t} i18nKey="noArchivedRoutineWithCategory" values={{ category: category.name }}>
               No archived routine with <span className="font-semibold">{category.name}</span> category
@@ -41,6 +52,6 @@ export function EmptyContent({ showStatus, category, archived, onOpenCreate }: P
           image={locationImg}
         />
       )}
-    </div>
+    </>
   )
 }
