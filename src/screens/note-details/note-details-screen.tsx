@@ -2,10 +2,11 @@ import { CreatedAt } from '&/common/components/display/created-at'
 import { DetailsFallback } from '&/common/components/fallbacks/details'
 
 import { useGetNoteDetail } from '&/modules/note/hooks'
-
-import { InfoSection } from './parts/info-section'
+import { LinkedRoutines } from './parts/linked-routines'
+import { LinkedTasks } from './parts/linked-tasks'
 import { NoteCategory } from './parts/note-category'
 import { NoteEditor } from './parts/note-editor'
+import { NoteFolder } from './parts/note-folder'
 import { NoteNavbar } from './parts/note-navbar'
 
 export function NoteDetailsScreen() {
@@ -17,7 +18,9 @@ export function NoteDetailsScreen() {
     <>
       <NoteNavbar note={note} />
       <NoteCategory note={note} />
-      <InfoSection note={note} routineNoteList={routineNoteList} />
+      <NoteFolder note={note} />
+      <LinkedRoutines routineNoteList={routineNoteList} />
+      <LinkedTasks taskNoteList={note.taskNotes} />
       <NoteEditor note={note} />
       <CreatedAt createdAt={note.created_at} />
     </>

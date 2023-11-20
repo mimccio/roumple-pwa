@@ -23,7 +23,7 @@ export function CategoryBtn({ isLoading, isError, category }: Props) {
   return (
     <Listbox.Button
       className={cl(
-        'group relative flex w-full cursor-pointer items-center justify-between border-y px-4 py-1 text-left transition-all hover:opacity-75',
+        'relative flex w-full cursor-pointer items-center justify-between border-y px-4 py-1 text-left transition-all hover:opacity-75',
         border,
         bg,
         isLoading && 'cursor-wait',

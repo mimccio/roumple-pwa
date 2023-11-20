@@ -2,7 +2,7 @@ import { JSONContent } from '@tiptap/react'
 import type { Category } from '../category/types'
 import type { NoteFolder } from '../note-folder/types'
 
-interface TaskNote {
+export interface TaskNote {
   id: string
   task: { id: string; name: string }
   deleted?: boolean

@@ -1,5 +1,7 @@
 import type { ElementType } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Listbox } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 import { cl } from '&/common/utils'
 
@@ -11,27 +13,34 @@ interface Props {
   defaultName?: string
 }
 
-export function SelectorBtn({ isLoading, isError, item, Icon, defaultName = 'none' }: Props) {
+export function SelectorBtn({ isLoading, item, isError, Icon, defaultName = 'none' }: Props) {
+  const { t } = useTranslation('error')
+
   return (
     <Listbox.Button
       className={cl(
-        'group relative cursor-pointer rounded-md py-1.5 text-left transition-colors',
+        'group relative flex w-full  items-center justify-between border-b px-4 py-1 text-left text-sm transition-all hover:opacity-75',
         isLoading && 'cursor-wait',
         isError && 'cursor-not-allowed'
       )}
     >
       <span className="flex items-center">
-        {Icon && <Icon height={16} width={16} className="text-gray-300" />}
+        {Icon && <Icon height={14} width={14} className={cl('mr-3', isError ? 'text-red-200' : 'text-gray-300')} />}
 
-        <span
-          className={cl(
-            'ml-3 block truncate font-semibold transition-colors ',
-            item?.id ? 'text-gray-500 group-hover:text-gray-600' : 'text-gray-300 group-hover:text-gray-400'
-          )}
-        >
-          {item?.name || (isLoading ? '' : isError ? 'Error' : defaultName)}
-        </span>
+        {isError ? (
+          <span className="text-red-400">{t('error', { ns: 'error' })}</span>
+        ) : (
+          <span
+            className={cl(
+              'block truncate font-semibold transition-colors ',
+              item?.id ? 'text-gray-500 ' : 'text-gray-300 '
+            )}
+          >
+            {item?.name || defaultName}
+          </span>
+        )}
       </span>
+      <ChevronDownIcon className="w-4 text-gray-200" />
     </Listbox.Button>
   )
 }
