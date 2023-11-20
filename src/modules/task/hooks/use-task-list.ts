@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
-import { useShow } from '&/common/hooks'
 import { categoryAtom } from '&/modules/category/atoms'
 
 import type { SortType } from '../types'
@@ -10,6 +9,7 @@ import { TASK_KEYS } from '../constants'
 import { sortTypeAtom } from '../atoms'
 import { sortTask } from '../utils'
 import { fetchTaskList } from '../queries'
+import { getShowStatus } from '&/common/utils'
 
 export function useTaskList() {
   const [category] = useAtom(categoryAtom)
@@ -17,18 +17,18 @@ export function useTaskList() {
   const [showDone, setShowDone] = useState(false)
   const [createIsOpen, setCreateIsOpen] = useState(false)
 
-  const { data, isLoading, error, isPaused } = useQuery({
+  const tasksQuery = useQuery({
     queryKey: TASK_KEYS.list({ done: showDone }),
     queryFn: fetchTaskList,
   })
 
   const taskList = category?.id
-    ? data?.filter((task) => task.category?.id === category.id).sort(sortTask(sortType))
-    : data
-    ? data.sort(sortTask(sortType))
+    ? tasksQuery.data?.filter((task) => task.category?.id === category.id).sort(sortTask(sortType))
+    : tasksQuery.data
+    ? tasksQuery.data.sort(sortTask(sortType))
     : undefined
 
-  const showStatus = useShow({ data, isLoading, error, isPaused, filteredList: taskList })
+  const showStatus = getShowStatus(tasksQuery, taskList)
   const handleDoneChange = () => setShowDone((prevState) => !prevState)
   const handleSortChange = (newSortType: SortType) => setSortType(newSortType)
   const onOpenCreate = () => setCreateIsOpen(true)

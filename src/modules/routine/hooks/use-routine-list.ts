@@ -24,7 +24,7 @@ export function useRoutineList() {
   })
 
   const routineList: Routine[] = category?.id
-    ? data?.filter((task) => task.category?.id === category.id).sort(sortRoutines(sortType)) || []
+    ? data?.filter((routine) => routine.category?.id === category.id).sort(sortRoutines(sortType)) || []
     : data
     ? data.sort(sortRoutines(sortType))
     : []

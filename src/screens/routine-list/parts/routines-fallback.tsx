@@ -2,30 +2,27 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import locationImg from '&/assets/illustrations/location.png'
 import workflowImg from '&/assets/illustrations/workflow.png'
-import { MainListError, MainListOffline, MainListFallback } from '&/common/components/fallbacks/main-list'
-import { MainListSkeleton } from '&/common/components/skeletons/main-list-skeleton'
+import {
+  MainListError,
+  MainListOffline,
+  MainListFallback,
+  MainListLoading,
+} from '&/common/components/fallbacks/main-list'
+import { ShowStatus } from '&/common/types'
 
 interface Props {
   category: { name: string } | null
-  showStatus: {
-    empty: boolean
-    emptyFilteredList: boolean
-    error: boolean
-    offline: boolean
-    loading: boolean
-    data: boolean
-  }
+  showStatus: ShowStatus
   archived: boolean
   onOpenCreate: () => void
 }
 
 export function RoutinesFallback({ showStatus, category, archived, onOpenCreate }: Props) {
   const { t } = useTranslation('routine')
-  if (showStatus.data || (!showStatus.empty && !showStatus.emptyFilteredList)) return null
 
   return (
     <>
-      {showStatus.loading && <MainListSkeleton />}
+      {showStatus.loading && <MainListLoading />}
       {showStatus.error && <MainListError />}
       {showStatus.offline && <MainListOffline />}
       {showStatus.empty && !archived && (

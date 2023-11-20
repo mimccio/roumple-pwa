@@ -5,19 +5,24 @@ import workflowImg from '&/assets/illustrations/workflow.png'
 import successImg from '&/assets/illustrations/success.png'
 import locationImg from '&/assets/illustrations/location.png'
 
+import { MainListError, MainListLoading, MainListOffline } from '&/common/components/fallbacks/main-list'
+import { ShowStatus } from '&/common/types'
+
 interface Props {
   category: { name: string } | null
-  showStatus: { empty: boolean; emptyFilteredList: boolean }
+  showStatus: ShowStatus
   showDone: boolean
   onOpenCreate: () => void
 }
 
-export function EmptyContent({ showStatus, category, showDone, onOpenCreate }: Props) {
+export function TasksFallback({ showStatus, category, showDone, onOpenCreate }: Props) {
   const { t } = useTranslation('task')
-  if (!showStatus.empty && !showStatus.emptyFilteredList) return null
 
   return (
-    <div className="absolute bottom-0 top-0 w-full">
+    <>
+      {showStatus.loading && <MainListLoading />}
+      {showStatus.error && <MainListError />}
+      {showStatus.offline && <MainListOffline />}
       {showStatus.empty && !showDone && (
         <EmptyMainContent onClick={onOpenCreate} text={t('createNewTask')} image={workflowImg} />
       )}
@@ -42,6 +47,6 @@ export function EmptyContent({ showStatus, category, showDone, onOpenCreate }: P
           image={locationImg}
         />
       )}
-    </div>
+    </>
   )
 }

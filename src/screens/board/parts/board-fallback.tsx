@@ -5,18 +5,18 @@ import { EmptyMainContent } from '&/common/components/empty-screens'
 import successImg from '&/assets/illustrations/success.png'
 import orderCompletedImg from '&/assets/illustrations/order-completed.png'
 import { categoryAtom } from '&/modules/category/atoms'
+import { ShowStatus } from '&/common/types'
+import { MainListError, MainListLoading, MainListOffline } from '&/common/components/fallbacks/main-list'
 
 interface Props {
-  showStatus: { empty: boolean; emptyFilteredList: boolean }
+  showStatus: ShowStatus
   showDone: boolean
 }
 
-export function EmptyContent({ showStatus, showDone }: Props) {
+export function BoardFallback({ showStatus, showDone }: Props) {
   const { t } = useTranslation('empty')
   const [category] = useAtom(categoryAtom)
-  const showEmpty = showStatus.emptyFilteredList || showStatus.empty
-
-  if (!showEmpty) return null
+  const isEmpty = showStatus.emptyFilteredList || showStatus.empty
 
   const todoText =
     showStatus.emptyFilteredList && category ? (
@@ -37,9 +37,12 @@ export function EmptyContent({ showStatus, showDone }: Props) {
     )
 
   return (
-    <div className="absolute bottom-0 top-0 w-full">
-      {!showDone && <EmptyMainContent text={todoText} image={orderCompletedImg} />}
-      {showDone && <EmptyMainContent text={doneText} image={successImg} />}
-    </div>
+    <>
+      {showStatus.loading && <MainListLoading />}
+      {showStatus.error && <MainListError />}
+      {showStatus.offline && <MainListOffline />}
+      {isEmpty && !showDone && <EmptyMainContent text={todoText} image={orderCompletedImg} />}
+      {isEmpty && showDone && <EmptyMainContent text={doneText} image={successImg} />}
+    </>
   )
 }
