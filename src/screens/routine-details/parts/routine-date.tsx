@@ -75,10 +75,10 @@ export function RoutineDate({ scheduleType, date: dayDate, handleDateChange }: P
   const goToCurrentDate = () => handleDateChange(today)
 
   return (
-    <div className="flex justify-between gap-x-2 border-b bg-gray-50 py-1">
+    <div className="flex justify-between gap-x-2 border-b bg-gray-50">
       <button
         onClick={onPreviousClick}
-        className="text-gray-500 transition-colors hover:text-gray-700 disabled:text-gray-300"
+        className="px-2 py-1 text-gray-500 transition-colors hover:text-gray-700 disabled:text-gray-300"
         disabled={previousIsDisabled}
       >
         <ChevronLeftIcon width={16} />
@@ -92,7 +92,7 @@ export function RoutineDate({ scheduleType, date: dayDate, handleDateChange }: P
       </button>
       <button
         onClick={onNexClick}
-        className=" text-gray-500 transition-colors hover:text-gray-700 disabled:text-gray-300"
+        className="px-2 py-1 text-gray-500 transition-colors hover:text-gray-700 disabled:text-gray-300"
         disabled={isCurrentDate}
       >
         <ChevronRightIcon width={16} />
