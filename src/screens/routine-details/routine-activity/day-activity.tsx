@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
-import { eachDayOfInterval, lastDayOfMonth, startOfMonth, subMonths } from 'date-fns'
 
 import { RoutineAction } from '&/modules/routine/types'
 import { DayActivityBoard } from './day-activity-board'
+import { getDaysList } from './utils/get-days-list'
 
 interface Props {
   actions: RoutineAction[]
@@ -12,23 +12,13 @@ interface Props {
   url: string
 }
 
+const BOARD_NUMBER = 4
+
 export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url }: Props) {
   const navigate = useNavigate()
-
-  const today = new Date()
-  const prevMonth = subMonths(today, 1)
-
-  const prevMonthDays = eachDayOfInterval({
-    start: startOfMonth(prevMonth),
-    end: lastDayOfMonth(prevMonth),
-  })
-
-  const currentMonthDays = eachDayOfInterval({
-    start: startOfMonth(today),
-    end: lastDayOfMonth(today),
-  })
-
   if (!actions) return null
+
+  const daysList = getDaysList({ count: BOARD_NUMBER, actions, occurrence, recurrence })
 
   const onDayClick = (date: Date) => {
     handleDateChange(date)
@@ -36,23 +26,21 @@ export function DayActivity({ actions, occurrence, handleDateChange, recurrence,
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
-      <DayActivityBoard
-        actions={actions}
-        days={prevMonthDays}
-        month={prevMonth}
-        occurrence={occurrence}
-        onDayClick={onDayClick}
-        recurrence={recurrence}
-      />
-      <DayActivityBoard
-        actions={actions}
-        days={currentMonthDays}
-        month={today}
-        occurrence={occurrence}
-        onDayClick={onDayClick}
-        recurrence={recurrence}
-      />
+    <div className="mx-auto flex max-w-2xl flex-wrap justify-center gap-x-12 gap-y-12">
+      {daysList.map(({ days, month, successNum, prevSuccessNum, isLast }) => (
+        <DayActivityBoard
+          actions={actions}
+          days={days}
+          isLast={isLast}
+          key={month.toISOString()}
+          month={month}
+          occurrence={occurrence}
+          onDayClick={onDayClick}
+          prevSuccessNum={prevSuccessNum}
+          recurrence={recurrence}
+          successNum={successNum}
+        />
+      ))}
     </div>
   )
 }

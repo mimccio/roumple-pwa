@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { SignalSlashIcon } from '@heroicons/react/24/outline'
 
+import locationImg from '&/assets/illustrations/location.png'
 import { SCHEDULE_TYPES } from '&/common/constants'
+import { cl, getScheduleTypeTextColor } from '&/common/utils'
 import { useMainPath } from '&/common/hooks'
 import { SyncSpinner } from '&/common/components/spinners'
 import { DetailsFallback } from '&/common/components/fallbacks/details'
@@ -26,8 +28,16 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
   if (!actions) return <DetailsFallback isError={isError} isLoading={isLoading} isPaused={isPaused} />
 
   return (
-    <div className="mb-8 border-t border-gray-200 p-2">
-      <h4 className="mb-4 p-4 text-center font-bold text-gray-500">{t('activity')}</h4>
+    <div className="border-t border-gray-200 px-4 pb-16 pt-4">
+      <h4 className="mb-4 font-serif font-bold text-gray-500">{t('activity')}</h4>
+      <p
+        className={cl(
+          'mx-auto mb-16 line-clamp-3 max-w-xl text-center text-lg font-semibold text-indigo-500',
+          getScheduleTypeTextColor(routine.scheduleType)
+        )}
+      >
+        {routine.name}
+      </p>
       {routine.scheduleType === SCHEDULE_TYPES.daily && (
         <DayActivity
           url={url}
@@ -68,6 +78,13 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           {t('offlineDataNotUpToDate')}
         </p>
       )}
+
+      <img
+        alt=""
+        src={locationImg}
+        className="mx-auto mt-16 flex h-52 w-52 items-center justify-center opacity-25"
+        aria-hidden="true"
+      />
     </div>
   )
 }

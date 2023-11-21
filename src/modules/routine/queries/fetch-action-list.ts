@@ -8,7 +8,7 @@ export const fetchActionList = async (routineId: string, scheduleType: ScheduleT
   const date = startOfToday()
 
   const getOldestDate = () => {
-    if (scheduleType === SCHEDULE_TYPES.daily) return startOfMonth(subMonths(date, 2))
+    if (scheduleType === SCHEDULE_TYPES.daily) return startOfMonth(subMonths(date, 3))
     if (scheduleType === SCHEDULE_TYPES.weekly) return startOfMonth(subMonths(date, 5))
     return startOfMonth(subMonths(date, 12))
   }
@@ -20,7 +20,7 @@ export const fetchActionList = async (routineId: string, scheduleType: ScheduleT
     .select('id, status, date, checkedList: checked_list, doneOccurrence:done_occurrence, scheduleType: schedule_type')
     .eq('routine_id', routineId)
     .gte('date', format(new Date(oldestDate), DATE_FORMAT))
-    .limit(65)
+    .limit(125)
 
   if (error) throw error
   return data as RoutineAction[]
