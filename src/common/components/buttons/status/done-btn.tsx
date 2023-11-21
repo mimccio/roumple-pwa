@@ -14,11 +14,10 @@ export function DoneBtn({ handleClick, isSelected, showCheck }: Props) {
   return (
     <Tooltip message={t('done')}>
       <button
+        disabled={isSelected}
         className={cl(
-          'group flex h-10 w-10 items-center justify-center rounded-md transition-colors ',
-          isSelected
-            ? 'bg-green-400 shadow-md shadow-green-600/50 hover:bg-green-300'
-            : 'hover:bg-green-300 hover:shadow-md'
+          'group flex h-10 w-10 items-center justify-center rounded-md border transition-colors disabled:cursor-default',
+          isSelected ? ' border-green-400 bg-green-400' : 'border-transparent hover:border-green-400 hover:bg-green-300'
         )}
         onClick={handleClick}
       >

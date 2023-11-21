@@ -16,8 +16,8 @@ export function TodoBtn({ handleClick, isSelected }: Props) {
     <Tooltip message={t('reset')} position="start">
       <button
         className={cl(
-          'group flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-gray-50',
-          isSelected ? 'bg-white shadow-md' : ' hover:shadow-md'
+          'group flex h-10 w-10 items-center justify-center rounded-md border transition-colors hover:border-gray-200 hover:bg-gray-50',
+          isSelected ? 'border-gray-200 bg-white' : 'border-transparent'
         )}
         onClick={handleClick}
       >
