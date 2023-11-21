@@ -119,7 +119,8 @@ export function Occurrence({ routine, action, date }: Props) {
       <Popover.Button className={cl('text-lg font-bold')}>
         {color !== 'transparent' && (
           <motion.p
-            className="origin-left rounded-lg bg-gray-50 px-2 py-1 shadow-md"
+            initial={false}
+            className="origin-left rounded-lg border bg-gray-50 px-2 py-1 "
             animate={isAnimating ? animationVariant : 'initial'}
             variants={variants}
             style={{ color: color || 'transparent' }}
