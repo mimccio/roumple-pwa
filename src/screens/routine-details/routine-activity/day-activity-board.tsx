@@ -1,4 +1,5 @@
-import { compareAsc, format, getDay, isSameDay } from 'date-fns'
+import { compareAsc, format, getDay, isSameDay, isToday } from 'date-fns'
+import { motion } from 'framer-motion'
 
 import { STATUSES } from '&/common/constants'
 import { cl } from '&/common/utils'
@@ -43,28 +44,35 @@ export function DayActivityBoard({
           const action = actions.find((action) => isSameDay(day, new Date(action.date)))
           const isFuture = compareAsc(day, new Date()) > 0
           const isScheduled = recurrence.includes(getDay(day))
+          const isPurple = isToday(day)
 
           return (
             <div
               key={day.toString()}
               className={cl(dayIdx === 0 && colStartClasses[getDay(day) - 1], 'flex items-center justify-center')}
             >
-              <button
+              <motion.button
                 onClick={() => onDayClick(day)}
                 type="button"
                 disabled={isFuture}
                 className={cl(
-                  'h-4 w-4 rounded-md border',
-                  !isScheduled && !action && 'border-gray-100 bg-white',
-                  isFuture && isScheduled && 'border-gray-100 bg-gray-50',
-                  Boolean(action) && 'border-transparent',
-                  action?.status === STATUSES.inProgress && 'bg-cyan-500',
-                  action?.status === STATUSES.todo && action.doneOccurrence === 0 && 'bg-gray-200',
-                  action?.doneOccurrence && action.doneOccurrence > 0 ? 'bg-cyan-500' : '',
-                  action?.doneOccurrence && action.doneOccurrence >= occurrence ? 'bg-green-500' : '',
-                  !action && 'bg-gray-200'
+                  'group flex h-4 w-4 items-center justify-center rounded-md border text-[9px] text-gray-500 ',
+                  isPurple && 'border-2 border-indigo-500',
+                  !isPurple && !isScheduled && !action && 'border-gray-100 bg-white',
+                  isFuture && isScheduled && 'border-gray-100 bg-green-50 text-green-400',
+                  !isPurple && Boolean(action) && 'border-transparent',
+                  action?.status === STATUSES.inProgress && 'bg-cyan-500 text-cyan-50',
+                  action?.status === STATUSES.todo &&
+                    action.doneOccurrence === 0 &&
+                    (isPurple ? ' bg-indigo-400' : 'bg-gray-200'),
+                  action?.doneOccurrence && action.doneOccurrence > 0 ? 'bg-cyan-500 text-cyan-50' : '',
+                  action?.doneOccurrence && action.doneOccurrence >= occurrence ? 'bg-green-500 text-green-50' : '',
+                  !action && (isPurple ? ' bg-indigo-400' : 'bg-gray-200')
                 )}
-              ></button>
+                whileHover={{ scale: isFuture ? 1 : 1.5 }}
+              >
+                <span className="opacity-0 transition-opacity group-hover:opacity-100">{format(day, 'dd')}</span>
+              </motion.button>
             </div>
           )
         })}
