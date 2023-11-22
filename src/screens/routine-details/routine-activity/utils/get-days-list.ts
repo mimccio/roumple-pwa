@@ -26,5 +26,5 @@ export const getDaysList = ({ count = 4, actions, occurrence, recurrence }: Prop
     prevSuccessNum = successNum
     return boardData
   })
-  return daysList.reverse()
+  return daysList
 }
