@@ -31,7 +31,7 @@ export function WeekActivity({ actions, occurrence, handleDateChange, recurrence
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-x-4 gap-y-8">
+    <div className="mx-auto flex max-w-2xl flex-wrap justify-center gap-x-12 gap-y-12">
       {daysList.map(({ days, month, successNum, prevSuccessNum, isLast }) => (
         <WeekActivityBoard
           actions={actions}
