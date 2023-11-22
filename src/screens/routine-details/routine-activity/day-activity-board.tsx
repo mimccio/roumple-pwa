@@ -41,15 +41,19 @@ export function DayActivityBoard({
       </h6>
       <div className="col-start-1 grid h-48 w-64 grid-cols-7 items-center rounded-xl border border-gray-200 p-1 shadow-sm">
         {days.map((day, dayIdx) => {
+          const dayNum = getDay(day)
           const action = actions.find((action) => isSameDay(day, new Date(action.date)))
           const isFuture = compareAsc(day, new Date()) > 0
-          const isScheduled = recurrence.includes(getDay(day))
+          const isScheduled = recurrence.includes(dayNum)
           const isPurple = isToday(day)
 
           return (
             <div
               key={day.toString()}
-              className={cl(dayIdx === 0 && colStartClasses[getDay(day) - 1], 'flex items-center justify-center')}
+              className={cl(
+                dayIdx === 0 && colStartClasses[dayNum === 0 ? 6 : dayNum - 1],
+                'flex items-center justify-center'
+              )}
             >
               <motion.button
                 onClick={() => onDayClick(day)}
