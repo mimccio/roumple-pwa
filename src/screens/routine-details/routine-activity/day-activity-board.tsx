@@ -45,7 +45,8 @@ export function DayActivityBoard({
           const action = actions.find((action) => isSameDay(day, new Date(action.date)))
           const isFuture = compareAsc(day, new Date()) > 0
           const isScheduled = recurrence.includes(dayNum)
-          const isPurple = isToday(day)
+          const isCurDay = isToday(day)
+          const doneOccurrence = action?.doneOccurrence || 0
 
           return (
             <div
@@ -61,17 +62,17 @@ export function DayActivityBoard({
                 disabled={isFuture}
                 className={cl(
                   'group flex h-4 w-4 items-center justify-center rounded-md border text-[9px] text-gray-500 ',
-                  isPurple && 'border-2 border-indigo-500',
-                  !isPurple && !isScheduled && !action && 'border-gray-100 bg-white',
-                  isFuture && isScheduled && 'border-gray-100 bg-green-50 text-green-400',
-                  !isPurple && Boolean(action) && 'border-transparent',
-                  action?.status === STATUSES.inProgress && 'bg-cyan-500 text-cyan-50',
-                  action?.status === STATUSES.todo &&
-                    action.doneOccurrence === 0 &&
-                    (isPurple ? ' bg-indigo-400' : 'bg-gray-200'),
-                  action?.doneOccurrence && action.doneOccurrence > 0 ? 'bg-cyan-500 text-cyan-50' : '',
-                  action?.doneOccurrence && action.doneOccurrence >= occurrence ? 'bg-green-500 text-green-50' : '',
-                  !action && (isPurple ? ' bg-indigo-400' : 'bg-gray-200')
+                  !isFuture && isScheduled && !action && 'border-orange-100 bg-orange-50 text-orange-500',
+                  isCurDay && 'border-2 border-sky-500',
+                  !isScheduled && !action && 'border-gray-200 bg-white',
+                  isFuture && 'border-gray-200 bg-gray-100 text-gray-400',
+                  doneOccurrence === occurrence && 'border-green-400 bg-green-400 ',
+                  isScheduled &&
+                    action?.status === STATUSES.todo &&
+                    doneOccurrence === 0 &&
+                    'border-orange-100 bg-orange-50 text-orange-500',
+                  (doneOccurrence > 0 || action?.status === STATUSES.inProgress) &&
+                    'border-blue-400 bg-blue-400 text-blue-50'
                 )}
                 whileHover={{ scale: isFuture ? 1 : 1.5 }}
               >

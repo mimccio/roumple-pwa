@@ -47,6 +47,7 @@ export function WeekActivityBoard({
           const isScheduled = recurrence.includes(getWeek(firstDayOfWeek) % 2)
           const isCurWeek = isThisWeek(day, { weekStartsOn: 1 })
           const dayNum = getDay(day)
+          const doneOccurrence = action?.doneOccurrence || 0
 
           return (
             <div
@@ -66,18 +67,13 @@ export function WeekActivityBoard({
                   isCurWeek && 'border-2 border-sky-500',
                   !isScheduled && !action && 'border-gray-200 bg-white',
                   isFuture && 'border-gray-200 bg-gray-100 text-gray-400',
-                  action?.status === STATUSES.done &&
-                    action.doneOccurrence === occurrence &&
-                    'border-green-400 bg-green-400 ',
-                  action?.status === STATUSES.done &&
-                    action.doneOccurrence < occurrence &&
-                    'border-blue-400 bg-blue-400  text-blue-50',
-                  action?.status === STATUSES.inProgress && 'border-blue-400 bg-blue-400  text-blue-50',
+                  doneOccurrence === occurrence && 'border-green-400 bg-green-400 ',
                   isScheduled &&
                     action?.status === STATUSES.todo &&
-                    action.doneOccurrence === 0 &&
+                    doneOccurrence === 0 &&
                     'border-orange-100 bg-orange-50 text-orange-500',
-                  action?.doneOccurrence && action.doneOccurrence > 0 ? 'border-blue-400 bg-blue-400 text-blue-50' : ''
+                  (doneOccurrence > 0 || action?.status === STATUSES.inProgress) &&
+                    'border-blue-400 bg-blue-400 text-blue-50'
                 )}
                 whileHover={{ scale: isFuture ? 1 : 1.5 }}
               >
