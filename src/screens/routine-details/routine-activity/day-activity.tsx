@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { RoutineAction } from '&/modules/routine/types'
+import { getDaysList } from './utils'
 import { DayActivityBoard } from './day-activity-board'
-import { getDaysList } from './utils/get-days-list'
 
 interface Props {
   actions: RoutineAction[]
@@ -12,13 +13,17 @@ interface Props {
   url: string
 }
 
-const BOARD_NUMBER = 4
-
 export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url }: Props) {
   const navigate = useNavigate()
   if (!actions) return null
 
-  const daysList = getDaysList({ count: BOARD_NUMBER, actions, occurrence, recurrence })
+  const daysList = getDaysList({
+    count: 4,
+    actions,
+    occurrence,
+    recurrence,
+    scheduleType: SCHEDULE_TYPES.daily,
+  })
 
   const onDayClick = (date: Date) => {
     handleDateChange(date)

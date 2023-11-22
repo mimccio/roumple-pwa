@@ -13,6 +13,7 @@ import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity
 import { DayActivity } from './day-activity'
 import { WeekActivity } from './week-activity'
 import { MonthActivity } from './month-activity'
+import { Link } from 'react-router-dom'
 
 interface Props {
   routine: Routine
@@ -29,15 +30,17 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
 
   return (
     <div className="border-t border-gray-200 px-4 pb-16 pt-4">
-      <h4 className="mb-4 font-serif font-bold text-gray-500">{t('activity')}</h4>
-      <p
-        className={cl(
-          'mx-auto mb-16 line-clamp-3 max-w-xl text-center text-lg font-semibold text-indigo-500',
-          getScheduleTypeTextColor(routine.scheduleType)
-        )}
-      >
-        {routine.name}
-      </p>
+      <h3 className="mb-6 font-serif font-bold text-gray-500">{t('activity')}</h3>
+      <Link to={url} className=" mx-auto mb-12 flex w-fit max-w-xl px-4 py-1">
+        <h4
+          className={cl(
+            'line-clamp-3  text-lg font-semibold text-indigo-500',
+            getScheduleTypeTextColor(routine.scheduleType)
+          )}
+        >
+          {routine.name}
+        </h4>
+      </Link>
       {routine.scheduleType === SCHEDULE_TYPES.daily && (
         <DayActivity
           url={url}
@@ -54,7 +57,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           actions={actions}
           occurrence={routine.occurrence}
           handleDateChange={handleDateChange}
-          recurrence={routine.daily_recurrence}
+          recurrence={routine.weekly_recurrence}
         />
       )}
 
@@ -64,7 +67,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           actions={actions}
           occurrence={routine.occurrence}
           handleDateChange={handleDateChange}
-          recurrence={routine.daily_recurrence}
+          recurrence={routine.monthly_recurrence}
         />
       )}
 
