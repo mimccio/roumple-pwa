@@ -1,10 +1,10 @@
-import { compareAsc, format, getDay, getWeek, isSameDay, isThisWeek, startOfWeek } from 'date-fns'
+import { addDays, compareAsc, format, getDay, getWeek, isSameDay, startOfWeek } from 'date-fns'
 import { motion } from 'framer-motion'
 
-import { STATUSES } from '&/common/constants'
 import { cl } from '&/common/utils'
 import { useGetDateFnsLocale } from '&/common/hooks'
 import { RoutineAction } from '&/modules/routine/types'
+import { getSquareColors } from './utils'
 import { Progression } from './progression'
 
 const colStartClasses = ['', 'col-start-2', 'col-start-3', 'col-start-4', 'col-start-5', 'col-start-6', 'col-start-7']
@@ -19,6 +19,8 @@ interface Props {
   prevSuccessNum?: number
   successNum: number
   isLast?: boolean
+  previousCreation: boolean
+  createdAt: Date
 }
 
 export function WeekActivityBoard({
@@ -31,8 +33,11 @@ export function WeekActivityBoard({
   successNum,
   prevSuccessNum,
   isLast,
+  previousCreation,
+  createdAt,
 }: Props) {
   const { locale } = useGetDateFnsLocale()
+  if (previousCreation) return null
 
   return (
     <div>
@@ -44,10 +49,10 @@ export function WeekActivityBoard({
           const firstDayOfWeek = startOfWeek(day, { weekStartsOn: 1 })
           const action = actions.find((action) => isSameDay(firstDayOfWeek, new Date(action.date)))
           const isFuture = compareAsc(day, new Date()) > 0
-          const isScheduled = recurrence.includes(getWeek(firstDayOfWeek) % 2)
-          const isCurWeek = isThisWeek(day, { weekStartsOn: 1 })
+          const isScheduled =
+            compareAsc(addDays(firstDayOfWeek, 7), new Date(createdAt)) > 0 &&
+            recurrence.includes(getWeek(firstDayOfWeek) % 2)
           const dayNum = getDay(day)
-          const doneOccurrence = action?.doneOccurrence || 0
 
           return (
             <div
@@ -63,17 +68,7 @@ export function WeekActivityBoard({
                 disabled={isFuture}
                 className={cl(
                   'group flex h-4 w-4 items-center justify-center rounded-md border text-[9px] text-gray-500',
-                  !isFuture && isScheduled && !action && 'border-orange-100 bg-orange-50 text-orange-500',
-                  isCurWeek && 'border-2 border-sky-500',
-                  !isScheduled && !action && 'border-gray-200 bg-white',
-                  isFuture && 'border-gray-200 bg-gray-100 text-gray-400',
-                  doneOccurrence === occurrence && 'border-green-400 bg-green-400 ',
-                  isScheduled &&
-                    action?.status === STATUSES.todo &&
-                    doneOccurrence === 0 &&
-                    'border-orange-100 bg-orange-50 text-orange-500',
-                  (doneOccurrence > 0 || action?.status === STATUSES.inProgress) &&
-                    'border-blue-400 bg-blue-400 text-blue-50'
+                  getSquareColors({ action, day, isScheduled, occurrence, isFuture })
                 )}
                 whileHover={{ scale: isFuture ? 1 : 1.5 }}
               >

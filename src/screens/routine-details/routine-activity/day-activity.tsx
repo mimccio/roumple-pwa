@@ -11,9 +11,10 @@ interface Props {
   handleDateChange: (date: Date) => void
   recurrence: number[]
   url: string
+  createdAt: Date
 }
 
-export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url }: Props) {
+export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url, createdAt }: Props) {
   const navigate = useNavigate()
   if (!actions) return null
 
@@ -23,6 +24,7 @@ export function DayActivity({ actions, occurrence, handleDateChange, recurrence,
     occurrence,
     recurrence,
     scheduleType: SCHEDULE_TYPES.daily,
+    oldest: createdAt,
   })
 
   const onDayClick = (date: Date) => {
@@ -32,7 +34,7 @@ export function DayActivity({ actions, occurrence, handleDateChange, recurrence,
 
   return (
     <div className="mx-auto flex max-w-2xl flex-wrap justify-center gap-x-12 gap-y-12">
-      {daysList.map(({ days, month, successNum, prevSuccessNum, isLast }) => (
+      {daysList.map(({ days, month, successNum, prevSuccessNum, isLast, previousCreation }) => (
         <DayActivityBoard
           actions={actions}
           days={days}
@@ -44,6 +46,8 @@ export function DayActivity({ actions, occurrence, handleDateChange, recurrence,
           prevSuccessNum={prevSuccessNum}
           recurrence={recurrence}
           successNum={successNum}
+          createdAt={createdAt}
+          previousCreation={previousCreation}
         />
       ))}
     </div>

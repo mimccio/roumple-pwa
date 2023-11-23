@@ -1,4 +1,4 @@
-import { format, startOfMonth, startOfToday, subMonths } from 'date-fns'
+import { format, startOfMonth, startOfToday, startOfYear, subMonths, subYears } from 'date-fns'
 import { db } from '&/db'
 import type { ScheduleType } from '&/common/types'
 import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
@@ -10,7 +10,7 @@ export const fetchActionList = async (routineId: string, scheduleType: ScheduleT
   const getOldestDate = () => {
     if (scheduleType === SCHEDULE_TYPES.daily) return startOfMonth(subMonths(date, 3))
     if (scheduleType === SCHEDULE_TYPES.weekly) return startOfMonth(subMonths(date, 5))
-    return startOfMonth(subMonths(date, 12))
+    return startOfYear(subYears(date, 1))
   }
 
   const oldestDate = getOldestDate()

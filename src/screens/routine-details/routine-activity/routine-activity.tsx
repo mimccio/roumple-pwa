@@ -29,65 +29,66 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
   if (!actions) return <DetailsFallback isError={isError} isLoading={isLoading} isPaused={isPaused} />
 
   return (
-    <div className="border-t border-gray-200 px-4 pb-16 pt-4">
-      <h3 className="mb-6 font-serif font-bold text-gray-500">{t('activity')}</h3>
-      <Link to={url} className=" mx-auto mb-12 flex w-fit max-w-xl px-4 py-1">
-        <h4
-          className={cl(
-            'line-clamp-3  text-lg font-semibold text-indigo-500',
-            getScheduleTypeTextColor(routine.scheduleType)
-          )}
-        >
-          {routine.name}
-        </h4>
-      </Link>
-      {routine.scheduleType === SCHEDULE_TYPES.daily && (
-        <DayActivity
-          url={url}
-          actions={actions}
-          occurrence={routine.occurrence}
-          handleDateChange={handleDateChange}
-          recurrence={routine.daily_recurrence}
-        />
-      )}
+    <div className="flex h-full flex-col justify-between border-t border-gray-200 px-4 pb-16 pt-4">
+      <div>
+        <h3 className="mb-6 font-serif font-bold text-gray-500">{t('activity')}</h3>
+        <Link to={url} className=" mx-auto mb-12 flex w-fit max-w-xl px-4 py-1">
+          <h4
+            className={cl(
+              'line-clamp-3  text-lg font-semibold text-indigo-500',
+              getScheduleTypeTextColor(routine.scheduleType)
+            )}
+          >
+            {routine.name}
+          </h4>
+        </Link>
+        {routine.scheduleType === SCHEDULE_TYPES.daily && (
+          <DayActivity
+            url={url}
+            actions={actions}
+            occurrence={routine.occurrence}
+            handleDateChange={handleDateChange}
+            recurrence={routine.daily_recurrence}
+            createdAt={routine.created_at}
+          />
+        )}
 
-      {routine.scheduleType === SCHEDULE_TYPES.weekly && (
-        <WeekActivity
-          url={url}
-          actions={actions}
-          occurrence={routine.occurrence}
-          handleDateChange={handleDateChange}
-          recurrence={routine.weekly_recurrence}
-        />
-      )}
+        {routine.scheduleType === SCHEDULE_TYPES.weekly && (
+          <WeekActivity
+            url={url}
+            actions={actions}
+            occurrence={routine.occurrence}
+            handleDateChange={handleDateChange}
+            recurrence={routine.weekly_recurrence}
+            createdAt={routine.created_at}
+          />
+        )}
 
-      {routine.scheduleType === SCHEDULE_TYPES.monthly && (
-        <MonthActivity
-          url={url}
-          actions={actions}
-          occurrence={routine.occurrence}
-          handleDateChange={handleDateChange}
-          recurrence={routine.monthly_recurrence}
-        />
-      )}
+        {routine.scheduleType === SCHEDULE_TYPES.monthly && (
+          <MonthActivity
+            url={url}
+            actions={actions}
+            occurrence={routine.occurrence}
+            handleDateChange={handleDateChange}
+            recurrence={routine.monthly_recurrence}
+          />
+        )}
 
-      <SyncSpinner isLoading={isLoading} text={t('loadingDataNotUpToDate')} />
+        <SyncSpinner isLoading={isLoading} text={t('loadingDataNotUpToDate')} />
 
-      {isPaused && (
-        <p className="mt-12 flex items-start justify-center gap-x-1 px-4 text-center text-gray-400">
-          <span className="flex h-6 items-center">
-            <SignalSlashIcon width={18} />
-          </span>
-          {t('offlineDataNotUpToDate')}
-        </p>
-      )}
+        {isPaused && (
+          <p className="mt-12 flex items-start justify-center gap-x-1 px-4 text-center text-gray-400">
+            <span className="flex h-6 items-center">
+              <SignalSlashIcon width={18} />
+            </span>
+            {t('offlineDataNotUpToDate')}
+          </p>
+        )}
+      </div>
 
-      <img
-        alt=""
-        src={locationImg}
-        className="mx-auto mt-16 flex h-52 w-52 items-center justify-center opacity-25"
-        aria-hidden="true"
-      />
+      <div className="mx-auto pb-16 pt-12">
+        <img alt="" src={locationImg} className="h-52 w-52  opacity-25" aria-hidden="true" />
+      </div>
     </div>
   )
 }
