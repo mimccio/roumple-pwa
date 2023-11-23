@@ -76,10 +76,7 @@ export function DayActivityBoard({
         })}
       </div>
 
-      <div className="mt-2 flex items-center justify-center gap-x-4 text-sm font-semibold text-gray-500">
-        <span>{successNum} %</span>
-        <Progression prev={prevSuccessNum} cur={successNum} isLast={isLast} />
-      </div>
+      <Progression successNum={successNum} prevSuccessNum={prevSuccessNum} isLast={isLast} />
     </div>
   )
 }

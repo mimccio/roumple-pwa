@@ -1,9 +1,37 @@
 import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
 import { ScheduleType } from '&/common/types'
 import { RoutineAction } from '&/modules/routine/types'
-import { addDays, compareAsc, getDay, getWeek, isSameDay, isSunday, startOfWeek } from 'date-fns'
+import {
+  addDays,
+  addMonths,
+  compareAsc,
+  getDay,
+  getMonth,
+  getWeek,
+  isSameDay,
+  isSunday,
+  startOfMonth,
+  startOfWeek,
+} from 'date-fns'
 
 // IN_PROGRESS is worth 1/2 DONE - if it doesn't make sense remove and une only DONE occurrences
+
+interface GetScore {
+  action?: RoutineAction
+  occurrence: number
+}
+
+const getScore = ({ action, occurrence }: GetScore) => {
+  if (!action) return 0
+  const { doneOccurrence, status } = action
+
+  if (doneOccurrence >= occurrence) return 1
+  if (status === STATUSES.inProgress || doneOccurrence > 0) {
+    const doneScore = (action.doneOccurrence || 0) + (status === STATUSES.inProgress ? 0.5 : 0)
+    return doneScore > 0 ? doneScore / occurrence : 0
+  }
+  return 0
+}
 
 interface Props {
   actions: RoutineAction[]
@@ -15,7 +43,6 @@ interface Props {
 
 // DAYS
 export const getDaySuccessPercentage = ({ days, recurrence, actions, occurrence, oldest }: Props) => {
-  if (!recurrence.length) return 100
   let scheduledDays = 0
   let doneDays = 0
 
@@ -23,22 +50,15 @@ export const getDaySuccessPercentage = ({ days, recurrence, actions, occurrence,
     if (compareAsc(addDays(day, 1), new Date(oldest)) > 0 && recurrence.includes(getDay(day)))
       scheduledDays = scheduledDays + 1
     const action = actions.find((action) => isSameDay(day, new Date(action.date)))
-    if (action?.doneOccurrence && action.doneOccurrence >= occurrence) {
-      doneDays = doneDays + 1
-    } else if (action?.status === STATUSES.inProgress || (action?.doneOccurrence && action.doneOccurrence > 0)) {
-      const doneScore = (action.doneOccurrence || 0) + (action?.status === STATUSES.inProgress ? 0.5 : 0)
-      doneDays = doneDays + (doneScore > 0 ? doneScore / occurrence : 0)
-    }
+    doneDays = doneDays + getScore({ action, occurrence })
   })
 
   if (doneDays > scheduledDays) doneDays = scheduledDays
-
   return scheduledDays >= 1 ? Math.round((doneDays / scheduledDays) * 100) : 100
 }
 
 // WEEKS
 export const getWeekSuccessPercentage = ({ days, recurrence, actions, occurrence, oldest }: Props) => {
-  if (!recurrence.length) return 100
   let scheduledWeeks = 0
   let doneWeeks = 0
 
@@ -46,22 +66,41 @@ export const getWeekSuccessPercentage = ({ days, recurrence, actions, occurrence
     if (!isSunday(day)) return
     if (compareAsc(day, new Date(oldest || days[0])) > 0 && recurrence.includes(getWeek(day) % 2))
       scheduledWeeks = scheduledWeeks + 1
-
     const action = actions.find((action) => isSameDay(startOfWeek(day, { weekStartsOn: 1 }), new Date(action.date)))
-
-    if (action?.doneOccurrence && action.doneOccurrence >= occurrence) {
-      doneWeeks = doneWeeks + 1
-    } else if (action?.status === STATUSES.inProgress || (action?.doneOccurrence && action.doneOccurrence > 0)) {
-      const doneScore = (action.doneOccurrence || 0) + (action?.status === STATUSES.inProgress ? 0.5 : 0)
-      doneWeeks = doneWeeks + (doneScore > 0 ? doneScore / occurrence : 0)
-    }
+    doneWeeks = doneWeeks + getScore({ action, occurrence })
   })
 
   if (doneWeeks > scheduledWeeks) doneWeeks = scheduledWeeks
   return scheduledWeeks >= 1 ? Math.round((doneWeeks / scheduledWeeks) * 100) : 100
 }
 
-// ALL
+interface MonthsParams {
+  actions: RoutineAction[]
+  occurrence: number
+  months: Date[]
+  recurrence: number[]
+  oldest: Date
+}
+
+//MONTHS
+export const getMonthSuccessPercentage = ({ months, recurrence, actions, occurrence, oldest }: MonthsParams) => {
+  if (!recurrence.length) return 100
+  let scheduledMonths = 0
+  let doneMonths = 0
+
+  months.forEach((month) => {
+    if (compareAsc(addMonths(month, 1), new Date(oldest)) > 0 && recurrence.includes(getMonth(month))) {
+      scheduledMonths = scheduledMonths + 1
+    }
+    const action = actions.find((action) => isSameDay(startOfMonth(month), new Date(action.date)))
+    doneMonths = doneMonths + getScore({ action, occurrence })
+  })
+
+  if (doneMonths > scheduledMonths) doneMonths = scheduledMonths
+  return scheduledMonths >= 1 ? Math.round((doneMonths / scheduledMonths) * 100) : 100
+}
+
+// DAYS & WEEKS
 export const getSuccessPercentage = ({
   actions,
   days,
@@ -70,6 +109,7 @@ export const getSuccessPercentage = ({
   scheduleType,
   oldest,
 }: Props & { scheduleType: ScheduleType }) => {
+  if (!recurrence.length) return 100
   if (scheduleType === SCHEDULE_TYPES.daily)
     return getDaySuccessPercentage({ actions, occurrence, days, recurrence, oldest })
   if (scheduleType === SCHEDULE_TYPES.weekly)

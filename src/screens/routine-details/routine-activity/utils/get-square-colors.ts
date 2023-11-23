@@ -9,9 +9,10 @@ interface Params {
   isFuture: boolean
   occurrence: number
   isScheduled: boolean
+  isThisMonth?: boolean
 }
 
-export const getSquareColors = ({ action, day, occurrence, isFuture, isScheduled }: Params) => {
+export const getSquareColors = ({ action, day, occurrence, isFuture, isScheduled, isThisMonth }: Params) => {
   const doneOccurrence = action?.doneOccurrence || 0
 
   let bg = 'bg-white text-gray-400'
@@ -33,7 +34,8 @@ export const getSquareColors = ({ action, day, occurrence, isFuture, isScheduled
     bg = 'bg-green-400 text-white'
     border = 'border-green-400'
   }
-  if (isToday(day)) border = 'border-2 border-indigo-500'
+  if (isToday(day)) border = 'border-2 border-indigo-500 shadow-md shadow-indigo-100'
+  if (isThisMonth) border = 'border-4 border-purple-500 shadow-lg shadow-purple-200'
 
   return cl(bg, border)
 }

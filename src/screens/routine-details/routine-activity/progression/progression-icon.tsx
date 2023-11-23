@@ -6,7 +6,7 @@ interface Props {
   isLast?: boolean
 }
 
-export function Progression({ prev, cur, isLast }: Props) {
+export function ProgressionIcon({ prev, cur, isLast }: Props) {
   if (prev == undefined) return null
   if (Math.abs(cur - prev) < 4) return <Bars2Icon className="w-6 text-blue-500" />
   if (cur > prev) return <ArrowTrendingUpIcon className="w-6 text-green-500" />

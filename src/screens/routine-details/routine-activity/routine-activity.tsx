@@ -71,6 +71,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
             occurrence={routine.occurrence}
             handleDateChange={handleDateChange}
             recurrence={routine.monthly_recurrence}
+            oldest={routine.created_at}
           />
         )}
 
