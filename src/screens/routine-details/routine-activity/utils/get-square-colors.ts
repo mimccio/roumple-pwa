@@ -14,14 +14,16 @@ interface Params {
 export const getSquareColors = ({ action, day, occurrence, isFuture, isScheduled }: Params) => {
   const doneOccurrence = action?.doneOccurrence || 0
 
-  if (isFuture) return cl('border-gray-200', isScheduled ? 'bg-gray-100' : 'bg-white')
-
   let bg = 'bg-white text-gray-400'
   let border = 'border-gray-200'
 
   if (isScheduled) {
     bg = 'bg-orange-100 text-orange-600'
     border = 'border-orange-200 '
+  }
+  if (isFuture) {
+    border = 'border-gray-200'
+    bg = isScheduled ? 'bg-gray-100' : 'bg-white'
   }
   if (doneOccurrence > 0 || action?.status === STATUSES.inProgress) {
     bg = 'bg-blue-400 text-white'
