@@ -7,6 +7,7 @@ import { sortItems } from '&/common/utils/list'
 import { categoryAtom } from '&/modules/category/atoms'
 import { useBoardTasks } from '&/modules/task/hooks'
 import { useBoardRoutines, useUpsertAction } from '&/modules/routine/hooks'
+import { showPeriodAtom } from '../atoms'
 
 interface Params {
   scheduleType: ScheduleType
@@ -14,8 +15,8 @@ interface Params {
 
 export function useBoardList({ scheduleType }: Params) {
   const [category] = useAtom(categoryAtom)
+  const [showPeriod, setShowPeriod] = useAtom(showPeriodAtom)
   const [showDone, setShowDone] = useState(false)
-  const [showPeriod, setShowPeriod] = useState(true)
 
   const handleShowDone = () => setShowDone((prevState) => !prevState)
   const handleShowPeriod = () => setShowPeriod((prevState) => !prevState)
