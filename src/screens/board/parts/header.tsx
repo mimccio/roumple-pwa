@@ -6,7 +6,7 @@ import { CheckBadgeIcon as CheckBadgeOutlineIcon, ClockIcon as ClockOutlineIcon 
 import type { ScheduleType } from '&/common/types'
 import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
 import { Tooltip } from '&/common/components/tooltip'
-import { cl } from '&/common/utils'
+import { cl, getScheduleTypeTextColor } from '&/common/utils'
 import { getGroupHoverPeriodColor, getPeriodColor } from '&/modules/routine/utils'
 import { categoryAtom } from '&/modules/category/atoms'
 
@@ -23,6 +23,7 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, schedule
   const [category, setCategory] = useAtom(categoryAtom)
   const periodColor = getPeriodColor(scheduleType)
   const hoverPeriodColor = getGroupHoverPeriodColor(scheduleType)
+  const titleTextColor = getScheduleTypeTextColor(scheduleType)
 
   return (
     <header
@@ -31,7 +32,7 @@ export function Header({ title, showDone, handleDoneChange, showPeriod, schedule
         category?.color ? TW_COLOR_BORDER_500[category.color] : 'border-gray-200'
       )}
     >
-      <div className=" text flex h-full items-center text-xl font-bold leading-6 text-gray-500">{title}</div>
+      <h1 className={cl('text flex h-full items-center text-xl font-bold leading-6', titleTextColor)}>{title}</h1>
       <div className="flex gap-1">
         <Tooltip message={showPeriod ? 'hide period' : 'show period'}>
           <button

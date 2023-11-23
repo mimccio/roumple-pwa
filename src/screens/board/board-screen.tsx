@@ -19,7 +19,7 @@ export function BoardScreen({ scheduleType, title }: Props) {
         handleShowPeriod={handleShowPeriod}
         showDone={showDone}
         showPeriod={showPeriod}
-        title={<h1 className="text-indigo-700">{title}</h1>}
+        title={title}
         scheduleType={scheduleType}
       />
       <ContentLayout>
