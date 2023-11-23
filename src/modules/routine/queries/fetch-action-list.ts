@@ -19,6 +19,7 @@ export const fetchActionList = async (routineId: string, scheduleType: ScheduleT
     .from('routine_action')
     .select('id, status, date, checkedList: checked_list, doneOccurrence:done_occurrence, scheduleType: schedule_type')
     .eq('routine_id', routineId)
+    .eq('schedule_type', scheduleType)
     .gte('date', format(new Date(oldestDate), DATE_FORMAT))
     .limit(125)
 
