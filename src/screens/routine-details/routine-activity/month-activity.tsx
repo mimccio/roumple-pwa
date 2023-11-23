@@ -22,7 +22,7 @@ export function MonthActivity({ actions, occurrence, handleDateChange, recurrenc
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-y-12">
+    <div className="mt-16 flex flex-col items-center justify-center gap-y-12">
       {getMonthsList({ count: 3, actions, occurrence, recurrence, oldest }).map((data) => (
         <MonthActivityBoard
           actions={actions}

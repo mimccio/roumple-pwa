@@ -32,8 +32,8 @@ export function MonthActivityBoard({ data, actions, occurrence, onMonthClick, re
 
   return (
     <div className="">
-      <h6 className="mb-4 ml-4 font-serif text-sm  font-semibold text-gray-500">{format(data.year, 'yyyy')}</h6>
-      <div className="flex flex-wrap  gap-x-4 gap-y-4 px-4">
+      <h6 className="mb-4 font-serif text-sm  font-semibold text-gray-500">{format(data.year, 'yyyy')}</h6>
+      <div className="flex flex-wrap  gap-x-4 gap-y-4">
         {data.months.map((month) => {
           const action = actions.find((action) => isSameMonth(month, new Date(action.date)))
           const isScheduled =
