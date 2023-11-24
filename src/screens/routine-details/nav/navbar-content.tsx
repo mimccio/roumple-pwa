@@ -6,7 +6,7 @@ import { ConfirmDeleteModale } from '&/common/components/modales'
 import { LinkNote } from '&/common/components/forms'
 
 import type { Routine } from '&/modules/routine/types'
-import { useArchiveRoutine, useDeleteRoutine } from '&/modules/routine/hooks'
+import { useArchiveRoutine, useDeleteRoutine, useEditRoutineShowChecklist } from '&/modules/routine/hooks'
 import { useCreateRoutineNote } from '&/modules/routine-note/hooks'
 
 import { ActivityBtn } from './activity-btn'
@@ -27,6 +27,7 @@ export function NavbarContent({ routine, date, handleDateChange }: Props) {
   const { onDeleteRoutine } = useDeleteRoutine()
   const { handleArchiveRoutine } = useArchiveRoutine()
   const { onCreateRoutineNote } = useCreateRoutineNote(routine)
+  const { toggleShowChecklist } = useEditRoutineShowChecklist()
 
   return (
     <>
@@ -36,7 +37,9 @@ export function NavbarContent({ routine, date, handleDateChange }: Props) {
         onLinkNote={() => setLinkSelectorIsOpen(true)}
         isArchived={routine?.archived}
         onEditOccurrence={() => setEditOccurrenceIsOpen(true)}
+        onToggleShowChecklist={() => toggleShowChecklist(routine.showChecklist)}
         withCopyLink
+        checklistIsDisplayed={routine.showChecklist}
       />
       <SelectDateBtn date={date} handleDateChange={handleDateChange} scheduleType={routine.scheduleType} />
       <ActivityBtn />

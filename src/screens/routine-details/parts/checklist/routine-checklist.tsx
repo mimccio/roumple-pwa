@@ -39,7 +39,7 @@ export function RoutineChecklist({ routine, date, action, isLoading, archived }:
   }
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-5xl px-4">
+    <div className="mx-auto mt-4 w-full max-w-5xl border-b px-4">
       <div className="items-top flex flex-wrap justify-between gap-x-14">
         <h4 className="font-semibold  text-gray-400">{t('checklist', { ns: 'common' })}</h4>
         {!archived && (

@@ -7,7 +7,7 @@ import { ItemMenu } from '&/common/components/menus'
 import { ConfirmDeleteModale } from '&/common/components/modales'
 
 import type { Task } from '&/modules/task/types'
-import { useDeleteTask } from '&/modules/task/hooks'
+import { useDeleteTask, useEditTaskShowChecklist } from '&/modules/task/hooks'
 
 import { CreateTaskNote } from './create-task-note'
 
@@ -20,6 +20,7 @@ export function TaskHeader({ task, isLoading }: Props) {
   const { t } = useTranslation('common')
   const { onDelete, isOpen, open, close } = useDeleteTask()
   const [linkSelectorIsOpen, setLinkSelectorIsOpen] = useState(false)
+  const { toggleShowChecklist } = useEditTaskShowChecklist()
 
   return (
     <DetailsNavbar>
@@ -31,6 +32,8 @@ export function TaskHeader({ task, isLoading }: Props) {
           isLoading={isLoading}
           disabled={!task}
           onLinkNote={() => setLinkSelectorIsOpen(true)}
+          onToggleShowChecklist={task ? () => toggleShowChecklist(task.showChecklist) : undefined}
+          checklistIsDisplayed={task?.showChecklist}
         />
         <CloseNavBtn />
         {task && (

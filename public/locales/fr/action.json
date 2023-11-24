@@ -22,5 +22,7 @@
   "clearDone": "Réinitialiser terminées",
   "editOccurrence": "Modifier l'occurrence",
   "selectDate": "selection de la date",
-  "confirm": "Confirmer"
+  "confirm": "Confirmer",
+  "Show checklist": "Afficher la checklist",
+  "Hide checklist": "Masquer la checklist"
 }

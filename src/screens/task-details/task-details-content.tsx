@@ -25,7 +25,7 @@ export function TaskDetailsContent({ task, isLoading, isPaused }: Props) {
       <TaskName task={task} />
       <Schedule task={task} />
       <TaskStatus task={task} />
-      <TaskChecklist task={task} />
+      {task.showChecklist && <TaskChecklist task={task} />}
       <TaskDescription task={task} />
       <TaskNotes />
       <CreatedAt createdAt={task.created_at} />

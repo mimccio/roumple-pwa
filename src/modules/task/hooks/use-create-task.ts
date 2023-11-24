@@ -103,6 +103,7 @@ export function useCreateTask() {
       date,
       checklist: [],
       checkedItemIds: [],
+      showChecklist: false,
     })
     reset()
   }

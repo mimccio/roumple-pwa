@@ -14,7 +14,17 @@ export const fetchBoardTasks = async ({ queryKey }: Params) => {
   let query = db
     .from('task')
     .select(
-      'id, created_at, name, priority, status, date, period, scheduleType: schedule_type, description, category(id, name, color)'
+      `id,
+      created_at,
+      name,
+      priority,
+      status,
+      date,
+      period,
+      scheduleType: schedule_type,
+      description,
+      showChecklist: show_checklist,
+      category(id, name, color)`
     )
     .eq('schedule_type', scheduleType)
     .order('date', { ascending: true })

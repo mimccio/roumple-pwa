@@ -42,7 +42,7 @@ export function SelectDateBtn({ handleDateChange, date, scheduleType }: Props) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Popover.Panel className="absolute right-0 top-12 z-10 origin-top-right rounded-lg border bg-white p-2 shadow-md">
+          <Popover.Panel className="absolute right-2 top-12 z-10 origin-top-right rounded-lg border bg-white p-2 shadow-md">
             {({ close }) => (
               <>
                 {scheduleType === SCHEDULE_TYPES.daily && (
