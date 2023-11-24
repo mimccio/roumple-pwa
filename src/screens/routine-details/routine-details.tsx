@@ -40,7 +40,7 @@ export function RoutineDetails({ routine, date, handleDateChange, actionQuery, r
         <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.scheduleType} />
       )}
 
-      {!offline && (
+      {!offline && routine.showChecklist && (
         <RoutineChecklist
           archived={routine.archived}
           isLoading={actionQuery.isLoading && !actionQuery.isPaused}

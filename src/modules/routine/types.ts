@@ -30,6 +30,7 @@ export interface Routine {
   actions?: RoutineAction[]
   checklist?: RoutineChecklistItem[]
   deletedCategory?: Category
+  showChecklist: boolean
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>

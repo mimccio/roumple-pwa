@@ -101,6 +101,7 @@ export function useCreateRoutine() {
       category_id: category?.id || null,
       created_at: new Date(),
       occurrence,
+      showChecklist: false,
     })
     reset()
   }

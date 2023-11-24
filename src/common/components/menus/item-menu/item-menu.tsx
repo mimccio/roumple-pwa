@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
-import { ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { ArrowPathRoundedSquareIcon, LinkIcon } from '@heroicons/react/24/solid'
 
 import { MenuBtn } from './menu-btn'
@@ -15,20 +15,24 @@ interface Props {
   onArchive?: () => void
   onLinkNote?: () => void
   onEditOccurrence?: () => void
+  onToggleShowChecklist?: () => void
 
   withCopyLink?: boolean
   isLoading?: boolean
   isArchived?: boolean
   disabled?: boolean
+  checklistIsDisplayed?: boolean
 }
 
 export function ItemMenu({
   onDelete,
   onArchive,
   onLinkNote,
+  onToggleShowChecklist,
   withCopyLink = false,
   isLoading = false,
   isArchived,
+  checklistIsDisplayed,
   onEditOccurrence,
   disabled,
 }: Props) {
@@ -61,6 +65,11 @@ export function ItemMenu({
         <Menu.Items className="absolute right-2 top-12 z-10 w-56 origin-top-right rounded-md bg-gray-50 shadow-sm ring-1 ring-gray-400 ring-opacity-20 focus:outline-none">
           <div className="py-1">
             {withCopyLink && <CopyUrlToClipboard />}
+            {onToggleShowChecklist && (
+              <MenuBtn Icon={checklistIsDisplayed ? EyeSlashIcon : EyeIcon} handleClick={onToggleShowChecklist}>
+                {t(checklistIsDisplayed ? 'Hide checklist' : 'Show checklist')}
+              </MenuBtn>
+            )}
             {onLinkNote && (
               <MenuBtn Icon={LinkIcon} handleClick={onLinkNote}>
                 {t('linkNote')}
