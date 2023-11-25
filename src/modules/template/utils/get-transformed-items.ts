@@ -45,6 +45,7 @@ export const getTransformedRoutines = async (templateRoutines?: TemplateRoutine[
     period: templateRoutine.period,
     occurrence: templateRoutine.occurrence,
     category_id: templateRoutine.templateCategory?.id ? uuidv5(templateRoutine.templateCategory.id, userId) : null,
+    show_checklist: templateRoutine.showChecklist,
   }))
 }
 
@@ -62,6 +63,7 @@ export const getTransformedTasks = async (templateTasks?: TemplateTask[]) => {
     priority: templateTask.priority,
     period: templateTask.period,
     schedule_type: templateTask.schedule_type,
+    show_checklist: templateTask.showChecklist,
     // date: templateTask.date, // TODO?
   }))
 }
