@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Transition } from '@headlessui/react'
 
 import signInImg from '&/assets/illustrations/sign-in.png'
@@ -60,6 +60,7 @@ export function Login() {
             />
           }
         />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </main>
   )

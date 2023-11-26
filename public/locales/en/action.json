@@ -22,5 +22,8 @@
   "clearDone": "Clear done",
   "back": "back",
   "editOccurrence": "Edit occurrence",
-  "selectDate": "select date"
+  "selectDate": "select date",
+  "confirm": "Confirm",
+  "Show checklist": "Show checklist",
+  "Hide checklist": "Hide checklist"
 }

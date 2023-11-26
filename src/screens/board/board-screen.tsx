@@ -1,10 +1,7 @@
 import type { ScheduleType } from '&/common/types'
-import { MainListLayout, ContentLayout } from '&/common/components/layouts'
-import { ListSkeleton } from '&/common/components/list-skeleton'
+import { ContentLayout } from '&/common/components/layouts'
 import { useBoardList } from '&/modules/board/hooks'
-
-import { MainError, OfflineError } from '../errors'
-import { Header, EmptyContent, PeriodList, ItemList } from './parts'
+import { Header, BoardList, BoardFallback } from './parts'
 
 interface Props {
   scheduleType: ScheduleType
@@ -22,29 +19,20 @@ export function BoardScreen({ scheduleType, title }: Props) {
         handleShowPeriod={handleShowPeriod}
         showDone={showDone}
         showPeriod={showPeriod}
-        title={<h1 className="text-indigo-700">{title}</h1>}
+        title={title}
         scheduleType={scheduleType}
       />
       <ContentLayout>
-        {showStatus.error && <MainError />}
-        {showStatus.offline && <OfflineError />}
-
-        <MainListLayout>
-          {showStatus.loading && <ListSkeleton />}
-          {showStatus.data && !showPeriod && (
-            <ItemList list={list} handleUpdateRoutineStatus={handleUpdateRoutineStatus} showDone={showDone} />
-          )}
-
-          {showStatus.data && showPeriod && (
-            <PeriodList
-              scheduleType={scheduleType}
-              list={list}
-              handleUpdateRoutineStatus={handleUpdateRoutineStatus}
-              showDone={showDone}
-            />
-          )}
-        </MainListLayout>
-        <EmptyContent showStatus={showStatus} showDone={showDone} />
+        {list.length > 0 && (
+          <BoardList
+            handleUpdateRoutineStatus={handleUpdateRoutineStatus}
+            list={list}
+            scheduleType={scheduleType}
+            showDone={showDone}
+            showPeriod={showPeriod}
+          />
+        )}
+        <BoardFallback showStatus={showStatus} showDone={showDone} />
       </ContentLayout>
     </>
   )

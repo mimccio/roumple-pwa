@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { ScheduleType } from '&/common/types'
@@ -15,6 +16,7 @@ interface Params {
 }
 
 export function useSchedule({ routine, date: mainDate }: Params) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const [currentType, setType] = useState(routine.scheduleType)
   const [currentPeriod, setPeriod] = useState(routine.period)
@@ -31,13 +33,15 @@ export function useSchedule({ routine, date: mainDate }: Params) {
   }, [routine])
 
   const boardPrevTypeKey = ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date })
-  const { mutate } = useMutation(editRoutineSchedule, {
+  const { mutate } = useMutation({
+    mutationFn: editRoutineSchedule,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
+      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists() })
 
       // ⛳ Update Item
+      const prevRoutine = queryClient.getQueryData(ROUTINE_KEYS.detail(data.id))
       queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), data)
 
       // 🗃️ Update Routine List
@@ -78,24 +82,24 @@ export function useSchedule({ routine, date: mainDate }: Params) {
         })
       }
 
-      return { previousRoutineList, previousBoardPrevType, previousNewPrevType }
+      return { previousRoutineList, previousBoardPrevType, previousNewPrevType, prevRoutine }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), routine)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), context?.prevRoutine)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
       queryClient.setQueryData(boardPrevTypeKey, context?.previousBoardPrevType)
       queryClient.setQueryData(
         ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
         context?.previousNewPrevType
-      )
-      toast.error("Schedule modification didn't work")
+      ) // TODO: verifier
+      toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
-      queryClient.invalidateQueries(boardPrevTypeKey)
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: variables.archived }) })
+      queryClient.invalidateQueries({ queryKey: boardPrevTypeKey })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }) })
     },
   })
 

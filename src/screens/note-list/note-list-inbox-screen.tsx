@@ -3,18 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { InboxIcon } from '@heroicons/react/24/solid'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 
-import { ListSkeleton } from '&/common/components/list-skeleton'
+import { ListSkeleton } from '&/common/components/skeletons'
 import { ContentLayout } from '&/common/components/layouts'
 import { useNoteList } from '&/modules/note/hooks'
-import { MainError } from '&/screens/errors'
+import { MainError, OfflineError } from '&/screens/errors'
 import { NoteListItem } from './parts/note-list-item'
 import { NoteListHeader } from './parts/note-list-header'
 
 export function NoteListInboxScreen() {
   const { t } = useTranslation('note')
   const { noteList, show } = useNoteList()
-
-  if (show.error) return <MainError />
 
   return (
     <>
@@ -25,8 +23,11 @@ export function NoteListInboxScreen() {
           <InboxIcon width={20} className="text-gray-400 transition-colors group-hover:text-gray-300" />
           <span className="font-semibold text-gray-500 transition-colors  group-hover:text-gray-400">{t('inbox')}</span>
         </Link>
+        {show.error && <MainError />}
+        {show.offline && <OfflineError />}
         <div className="flex flex-col gap-2 p-2 px-4">
           {show.loading && <ListSkeleton />}
+          {show.empty && <p className="ml-8 text-sm font-semibold text-gray-300">{t('emptyFolder')}</p>}
           {noteList?.map((note) => (
             <NoteListItem key={note.id} note={note} />
           ))}

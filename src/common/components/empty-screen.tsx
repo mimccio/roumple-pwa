@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { Transition } from '@headlessui/react'
 import { cl } from '../utils'
 
@@ -5,19 +7,22 @@ interface Props {
   text: string
   image: string
   opacity?: boolean
+  headerMargin?: boolean
 }
 
-export function EmptyScreen({ image, text, opacity }: Props) {
+export function EmptyScreen({ image, text, opacity, headerMargin }: Props) {
   return (
     <Transition
       appear
       show
-      className="flex h-full w-full flex-col items-center justify-center pt-14"
+      as={Fragment}
       enter="transition-opacity duration-1000"
       enterFrom="opacity-0"
       enterTo="opacity-100"
     >
-      <div className="mb-20 flex flex-col items-center justify-center gap-4 py-8">
+      <div
+        className={cl('mb-20 flex grow flex-col items-center justify-center gap-4', headerMargin ? 'mt-14' : 'mt-0')}
+      >
         <img
           src={image}
           className={cl('mx-auto flex h-52 w-52 items-center justify-center', opacity ? ' opacity-25' : 'opacity-75')}

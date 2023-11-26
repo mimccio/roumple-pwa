@@ -12,10 +12,10 @@ export function TaskNotes() {
 
   if (!taskNotes?.length) return null
   return (
-    <div className="flex flex-col gap-y-2 border-t border-gray-100 p-4">
-      <h4 className="font-bold uppercase text-gray-400 ">{t('notes')}</h4>
+    <div className="flex flex-col gap-y-2 p-4">
+      <h4 className="font-semibold text-gray-400 ">{t('notes')}</h4>
 
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-1">
         {taskNotes.map((taskNote) => (
           <div key={taskNote?.id} className="flex justify-between">
             <Link to={`note/${taskNote.note.id}`} className="flex items-center gap-x-2 text-gray-500">

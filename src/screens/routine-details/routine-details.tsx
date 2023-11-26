@@ -1,81 +1,57 @@
-import { useTranslation } from 'react-i18next'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-import { DetailContentSection, DetailInfoSection } from '&/common/components/layouts'
 import { CreatedAt } from '&/common/components/display/created-at'
-import { RoutineAction, Routine } from '&/modules/routine/types'
-import { RoutineStatusSelector } from '&/modules/routine/components'
+
+import type { RoutineAction, Routine } from '&/modules/routine/types'
+import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
+import { getIsCurrentDate } from '&/modules/routine/utils'
 
 import {
-  Priority,
   RoutineCategory,
   RoutineChecklist,
+  RoutineDate,
   RoutineDescription,
   RoutineName,
   RoutineNotes,
   RoutineSchedule,
-  Occurrence,
-  RoutineDate,
+  RoutineStatus,
 } from './parts'
-import { OfflineError } from '../errors'
-import { getIsCurrentDate } from '&/modules/routine/utils'
 
 interface Props {
   routine: Routine
   date: Date
   handleDateChange: (date: Date) => void
   actionQuery: UseQueryResult<RoutineAction | undefined, unknown>
+  routineNoteList?: RoutineNoteByRoutine[]
 }
 
-export function RoutineDetails({ routine, date, handleDateChange, actionQuery }: Props) {
-  const { t } = useTranslation('common')
-  const isCurrentDate = getIsCurrentDate({ scheduleType: routine.scheduleType, date })
-
-  if (!actionQuery.data && actionQuery.isPaused && !isCurrentDate) {
-    return (
-      <>
-        <DetailInfoSection>
-          <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.scheduleType} />
-        </DetailInfoSection>
-        <OfflineError />
-      </>
-    )
-  }
+export function RoutineDetails({ routine, date, handleDateChange, actionQuery, routineNoteList }: Props) {
+  const offline =
+    !actionQuery.data && actionQuery.isPaused && !getIsCurrentDate({ scheduleType: routine.scheduleType, date })
 
   return (
     <>
-      <DetailInfoSection>
+      <RoutineCategory routine={routine} />
+      <RoutineName routine={routine} />
+      <RoutineSchedule routine={routine} date={date} />
+      <RoutineStatus routine={routine} actionQuery={actionQuery} date={date} offline={offline} />
+
+      {!routine.archived && (
         <RoutineDate handleDateChange={handleDateChange} date={date} scheduleType={routine.scheduleType} />
-        <div className="-mx-1 mb-4 mt-2 flex items-center justify-between">
-          <div className="flex items-center gap-x-4">
-            <RoutineStatusSelector routine={routine} actionQuery={actionQuery} date={date} />
-            {actionQuery.isLoading && !actionQuery.isPaused ? null : (
-              <Occurrence routine={routine} action={actionQuery.data} date={date} />
-            )}
-          </div>
+      )}
 
-          <div className="flex items-center gap-x-4">
-            {routine.archived && <p className="font-bold uppercase text-gray-400">{t('archived')}</p>}
-            <Priority routine={routine} />
-          </div>
-        </div>
-
-        <RoutineSchedule routine={routine} date={date} />
-        <RoutineCategory routine={routine} />
-        <CreatedAt createdAt={routine.created_at} />
-      </DetailInfoSection>
-
-      <DetailContentSection>
-        <RoutineName routine={routine} />
-        <RoutineDescription routine={routine} />
+      {!offline && routine.showChecklist && (
         <RoutineChecklist
+          archived={routine.archived}
+          isLoading={actionQuery.isLoading && !actionQuery.isPaused}
           routine={routine}
           date={date}
-          action={actionQuery.data}
-          isLoading={actionQuery.isLoading && !actionQuery.isPaused}
+          action={!routine.archived ? actionQuery.data : undefined}
         />
-        <RoutineNotes />
-      </DetailContentSection>
+      )}
+      <RoutineDescription routine={routine} />
+      <RoutineNotes routineNoteList={routineNoteList} />
+      <CreatedAt createdAt={routine.created_at} />
     </>
   )
 }

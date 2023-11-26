@@ -1,5 +1,5 @@
-import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
@@ -10,10 +10,11 @@ import type { TaskChecklistItem } from '../types'
 import { editTaskChecklistItem } from '../mutations'
 
 export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
-  const ref = useRef<HTMLFormElement>(null)
 
-  const { mutate } = useMutation(editTaskChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: editTaskChecklistItem,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(checklistItem.task_id) })
 
@@ -40,10 +41,10 @@ export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData(TASK_KEYS.detail(checklistItem.task_id), context?.previousTask)
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(checklistItem.task_id))
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(checklistItem.task_id) })
     },
   })
 
@@ -65,7 +66,7 @@ export function useEditChecklistItem(checklistItem: TaskChecklistItem) {
     mutate({ ...checklistItem, name })
   })
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, handleSubmit, errors, submit, ref, name }
 }

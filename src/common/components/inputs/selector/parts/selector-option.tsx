@@ -25,7 +25,7 @@ export function SelectorOption({ option, selected, Icon }: Props) {
       {({ active }) => (
         <>
           <div className="flex cursor-pointer items-center">
-            {Icon && <Icon height={16} className="text-gray-300" />}
+            {Icon && <Icon height={14} className="text-gray-300" />}
             <span className={cl(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>{option.name}</span>
           </div>
 

@@ -1,7 +1,7 @@
-import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { v4 as uuidv4 } from 'uuid'
 
 import { useOutsideClick } from '&/common/hooks'
@@ -10,11 +10,12 @@ import { createNoteFolder } from '../mutations'
 import { NoteFolder } from '../types'
 
 export function useCreateNoteFolder() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
-  const ref = useRef<HTMLFormElement>(null)
 
-  const { mutate } = useMutation(createNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: createNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
       const previousFolderList = queryClient.getQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
@@ -28,10 +29,10 @@ export function useCreateNoteFolder() {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData([NOTE_FOLDER_KEYS.list({ categoryId: undefined })], context?.previousFolderList)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
     },
   })
 
@@ -53,7 +54,7 @@ export function useCreateNoteFolder() {
     reset()
   })
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, handleSubmit, errors, submit, ref, name }
 }

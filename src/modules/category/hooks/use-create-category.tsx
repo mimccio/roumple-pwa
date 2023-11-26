@@ -1,22 +1,24 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
 import type { TwColor } from '&/common/types'
+import { useOutsideClick } from '&/common/hooks'
 import { createCategory } from '../mutations'
 import { Category } from '../types'
 import { CATEGORY_LIST } from '../constants'
-import { useOutsideClick } from '&/common/hooks'
 
 export function useCreateCategory() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
-  const ref = useRef<HTMLFormElement>(null)
   const [color, setColor] = useState<TwColor>('gray')
 
-  const { mutate } = useMutation(createCategory, {
+  const { mutate } = useMutation({
+    mutationFn: createCategory,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
 
@@ -29,10 +31,10 @@ export function useCreateCategory() {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData([CATEGORY_LIST], context?.previousCategoryList)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([CATEGORY_LIST])
+      queryClient.invalidateQueries({ queryKey: [CATEGORY_LIST] })
     },
   })
 
@@ -57,7 +59,7 @@ export function useCreateCategory() {
 
   const handleColorChange = (color: TwColor) => setColor(color)
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, handleSubmit, errors, submit, handleColorChange, ref, name, color }
 }

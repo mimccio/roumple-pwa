@@ -6,5 +6,8 @@
   "Refresh": "Rafraîchir",
   "Dismiss": "Rejeter",
   "Offline ready": "Prêt hors ligne",
-  "appReadyToWorkOffline": "L'application est prête pour fonctionner hors ligne."
+  "appReadyToWorkOffline": "L'application est prête pour fonctionner hors ligne.",
+  "Back online": "De retour en ligne",
+  "Offline": "Hors ligne",
+  "Data may not be up to date": "Les données peuvent ne pas être à jour"
 }

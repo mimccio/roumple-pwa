@@ -18,18 +18,19 @@ export interface Routine {
   name: string
   description?: JSONContent
   archived: boolean
+  scheduleType: ScheduleType
   priority: number
+  occurrence: number
   period: number
   daily_recurrence: number[]
-  weekly_recurrence: number[]
   monthly_recurrence: number[]
-  scheduleType: ScheduleType
+  weekly_recurrence: number[]
   category_id?: string | null
   category: Category | null
+  actions?: RoutineAction[]
   checklist?: RoutineChecklistItem[]
   deletedCategory?: Category
-  occurrence: number
-  actions?: RoutineAction[]
+  showChecklist: boolean
 }
 
 export type RoutineItem = Omit<Routine, 'actions'>

@@ -9,7 +9,10 @@ import { fetchNoteFolderList } from '../queries'
 export function useFolderList() {
   const [category] = useAtom(categoryAtom)
 
-  const { data, isLoading, error } = useQuery(NOTE_FOLDER_KEYS.list({ categoryId: category?.id }), fetchNoteFolderList)
+  const { data, isLoading, error } = useQuery({
+    queryKey: NOTE_FOLDER_KEYS.list({ categoryId: category?.id }),
+    queryFn: fetchNoteFolderList,
+  })
 
   return { folderList: data, isLoading, error, category }
 }

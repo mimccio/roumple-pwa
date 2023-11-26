@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function NoteListItem({ note }: Props) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation(['common', 'note'])
   const createdAt = note.created_at ? format(new Date(note.created_at), 'dd/MM/yy') : null
   const iconColor = note.category ? getTwColor('text', note.category?.color, 500) : 'text-gray-300'
 
@@ -39,14 +39,14 @@ export function NoteListItem({ note }: Props) {
             <p
               className={cl('truncate font-semibold transition-colors', note.title ? 'text-gray-700' : 'text-gray-500')}
             >
-              {note.title || 'new note'}
+              {note.title || t('new note', { ns: 'note' })}
             </p>
             <div className="flex justify-between gap-2  text-xs font-semibold text-gray-400">
               <p className="flex items-end gap-4">
                 <span className="flex items-center gap-1">
                   <TagIcon width={12} className="text-gray-300" />
                   <span className={cl(!note.category?.name && 'text-gray-300')}>
-                    {note.category?.name || t('noCategory')}
+                    {note.category?.name || t('noCategory', { ns: 'common' })}
                   </span>
                 </span>
 

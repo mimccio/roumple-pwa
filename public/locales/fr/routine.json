@@ -10,5 +10,7 @@
   "time-per_one": "fois par ",
   "time-per_other": "fois par ",
   "noRoutineWithCategory": "Aucune routine avec catégorie \"<1>{{category}}\"</1>",
-  "noArchivedRoutineWithCategory": "Aucune routine archivée avec catégorie \"<1>{{category}}\"</1>"
+  "noArchivedRoutineWithCategory": "Aucune routine archivée avec catégorie \"<1>{{category}}\"</1>",
+  "Error fetching linked routines": "Erreur lors de la récupération des routines liées",
+  "Offline no status to show": "Hors ligne, aucun status à afficher"
 }

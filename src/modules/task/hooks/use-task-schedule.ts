@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek } from 'date-fns'
 import { toast } from 'react-hot-toast'
 
@@ -10,6 +11,7 @@ import { TASK_KEYS } from '../constants'
 import { editTaskSchedule } from '../mutations'
 
 export function useTaskSchedule(task: Task) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const [scheduleType, setScheduleType] = useState(task.scheduleType)
   const [period, setPeriod] = useState(task.period)
@@ -23,7 +25,8 @@ export function useTaskSchedule(task: Task) {
 
   const onSelectDate = (date: Date | null) => setDate(date)
 
-  const { mutate } = useMutation(editTaskSchedule, {
+  const { mutate } = useMutation({
+    mutationFn: editTaskSchedule,
     onMutate: async (data) => {
       const listKey = TASK_KEYS.list({ done: data.status === STATUSES.done })
 
@@ -33,6 +36,7 @@ export function useTaskSchedule(task: Task) {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.boards() })
 
       // Update item
+      const prevTask = queryClient.getQueryData(TASK_KEYS.detail(data.id))
       queryClient.setQueryData(TASK_KEYS.detail(data.id), () => data)
 
       // Update task list
@@ -55,11 +59,11 @@ export function useTaskSchedule(task: Task) {
       const prevNewBoardList = queryClient.getQueryData(newBoardKey)
       queryClient.setQueryData(newBoardKey, (old: Task[] = []) => [...old, data])
 
-      return { previousTaskList, prevPreviousBoardList, prevNewBoardList }
+      return { previousTaskList, prevPreviousBoardList, prevNewBoardList, prevTask }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
+      queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
       queryClient.setQueryData(TASK_KEYS.list({ done: item.status === STATUSES.done }), context?.previousTaskList)
       queryClient.setQueryData(
         TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate }),
@@ -69,13 +73,15 @@ export function useTaskSchedule(task: Task) {
         TASK_KEYS.board({ scheduleType: item.scheduleType, date: todayDate }),
         context?.prevNewBoardList
       )
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(TASK_KEYS.list({ done: variables.status === STATUSES.done }))
-      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: variables.scheduleType, date: todayDate }))
-      queryClient.invalidateQueries(TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate }))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: variables.status === STATUSES.done }) })
+      queryClient.invalidateQueries({
+        queryKey: TASK_KEYS.board({ scheduleType: variables.scheduleType, date: todayDate }),
+      })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.board({ scheduleType: task.scheduleType, date: todayDate }) })
     },
   })
 

@@ -1,21 +1,26 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { NoteFolder } from '&/modules/note-folder/types'
 import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
-import { useFolderList } from '&/modules/note-folder/hooks'
+import { useGetAllFolderList } from '&/modules/note-folder/hooks'
 import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'
 import { sortNotes } from '../utils'
 import { editNoteFolder } from '../mutations'
 
 export function useNoteFolder(note: Note) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
-  const { folderList, isLoading, error } = useFolderList()
+  const { folderList, isLoading, isError } = useGetAllFolderList()
 
-  const { mutate } = useMutation(editNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
+
+      const prevNoteFolder = queryClient.getQueryData(NOTE_KEYS.detail(data.id))
       queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => data)
 
       const previousNoteListPreviousFolder = queryClient.getQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }))
@@ -73,11 +78,12 @@ export function useNoteFolder(note: Note) {
         previousNoteListNewFolder,
         previousNoteFolder,
         previousNoteFolderCategory,
+        prevNoteFolder,
       }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(NOTE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_KEYS.detail(item.id), context?.prevNoteFolder)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: note.folder?.id }), context?.previousNoteListPreviousFolder)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: item.folder?.id }), context?.previousNoteListNewFolder)
       queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), context?.previousNoteFolder)
@@ -86,13 +92,13 @@ export function useNoteFolder(note: Note) {
         context?.previousNoteFolderCategory
       )
 
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(NOTE_KEYS.lists(), { exact: false })
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }) })
     },
   })
 
@@ -101,5 +107,5 @@ export function useNoteFolder(note: Note) {
     mutate({ ...note, folder })
   }
 
-  return { onSelect, folderList, isLoading, error }
+  return { onSelect, folderList, isLoading, isError }
 }

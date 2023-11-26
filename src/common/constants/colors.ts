@@ -1,4 +1,6 @@
+export const SPINNER_COLOR_LIGHT = 'rgb(224 231 255)'
 export const SPINNER_COLOR = 'rgb(199 210 254)'
+export const SPINNER_COLOR_STRONG = 'rgb(99 102 241)'
 
 export const TW_COLOR_LIST = [
   'gray',

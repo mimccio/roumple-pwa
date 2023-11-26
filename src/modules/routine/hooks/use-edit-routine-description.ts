@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { JSONContent } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
@@ -7,21 +8,28 @@ import { ROUTINE_KEYS } from '../constants'
 import { editRoutineDescription } from '../mutations'
 
 export function useEditRoutineDescription(routine: Routine) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editRoutineDescription, {
+  const { mutate } = useMutation({
+    mutationFn: editRoutineDescription,
     onMutate: async (data) => {
+      // 🗝️ Keys
+      const detailKey = ROUTINE_KEYS.detail(data.id)
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      await queryClient.cancelQueries({ queryKey: detailKey })
       // ⛳ Update Item
-      queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), { ...routine, description: data.description })
+      const prevRoutine = queryClient.getQueryData(detailKey)
+      queryClient.setQueryData(detailKey, { ...routine, description: data.description })
+
+      return { prevRoutine }
     },
-    onError: (_err, item) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
-      toast.error("Modification didn't work")
+    onError: (_err, variables, context) => {
+      queryClient.setQueryData(ROUTINE_KEYS.detail(variables.id), context?.prevRoutine)
+      toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
     },
   })
 

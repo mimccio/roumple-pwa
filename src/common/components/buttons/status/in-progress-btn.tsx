@@ -13,9 +13,10 @@ export function InProgressBtn({ handleClick, isSelected }: Props) {
   return (
     <Tooltip message={t('inProgress')}>
       <button
+        disabled={isSelected}
         className={cl(
-          'group flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-gray-50',
-          isSelected ? 'bg-white shadow-md' : ' hover:shadow-md'
+          'group flex h-10 w-10 items-center justify-center rounded-md border transition-colors disabled:cursor-default ',
+          isSelected ? 'border-gray-200 bg-white' : 'border-transparent hover:border-gray-200 hover:bg-gray-50'
         )}
         onClick={handleClick}
       >

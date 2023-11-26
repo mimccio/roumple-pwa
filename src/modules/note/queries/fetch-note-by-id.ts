@@ -11,7 +11,13 @@ export const fetchNoteById = async ({ queryKey }: IParams) => {
   const { data, error } = await db
     .from('note')
     .select(
-      'id, title, created_at, content, folder:note_folder(id, name), category(id, name, color), routineNotes:routine_note(id, routine(id, name)), taskNotes:task_note(id, task(id, name))'
+      `id, 
+      title, 
+      created_at, 
+      content, 
+      folder:note_folder(id, name), 
+      category(id, name, color), 
+      taskNotes:task_note(id, task(id, name))`
     )
     .eq('id', noteId)
     .order('created_at')

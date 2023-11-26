@@ -18,14 +18,15 @@ export function useUpsertAction({ scheduleType, date }: Params) {
   const queryClient = useQueryClient()
   const boardKey = ROUTINE_KEYS.board({ scheduleType, date })
 
-  const { mutate } = useMutation(upsertRoutineAction, {
+  const { mutate } = useMutation({
+    mutationFn: upsertRoutineAction,
     onMutate: async (data) => {
       const actionKey = ACTION_KEYS.detail({ routineId: data.routine.id, scheduleType, date })
 
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: actionKey })
       await queryClient.cancelQueries({ queryKey: ACTION_KEYS.list(data.routine.id) })
-      await queryClient.cancelQueries(boardKey)
+      await queryClient.cancelQueries({ queryKey: boardKey })
 
       const newAction = {
         id: data.actionId || uuidv5(format(date, DATE_FORMAT), data.routine.id),
@@ -62,7 +63,6 @@ export function useUpsertAction({ scheduleType, date }: Params) {
       return { previousList, previousActionList, previousAction }
     },
     onError: (_err, item, context) => {
-      // queryClient.setQueryData(ROUTINE_KEYS.detail(item.routine.id), item.routine)
       queryClient.setQueryData(boardKey, context?.previousList)
       queryClient.setQueryData(ACTION_KEYS.list(item.routine.id), context?.previousActionList)
       queryClient.setQueryData(
@@ -72,8 +72,7 @@ export function useUpsertAction({ scheduleType, date }: Params) {
 
       toast.error('Error on check routine')
     },
-    onSuccess: (_data, variables) => {
-      // queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.routine.id) })
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: boardKey })
       queryClient.invalidateQueries({ queryKey: ACTION_KEYS.list(variables.routine.id) })
       queryClient.invalidateQueries({

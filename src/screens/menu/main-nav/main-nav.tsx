@@ -23,7 +23,7 @@ export function MainNav({ close }: Props) {
       <NavItem close={close} name={t('routines')} to="routines" Icon={ArrowPathRoundedSquareIcon} />
       <NavItem close={close} name={t('tasks')} to="tasks" Icon={CheckCircleIcon} />
       <NavItem close={close} name={t('notes')} to="notes" Icon={DocumentTextIcon} />
-      <NavItem close={close} name={t('planing')} to="planing" Icon={CalendarDaysIcon} />
+      <NavItem close={close} name={t('planning')} to="planning" Icon={CalendarDaysIcon} />
 
       <NavItem close={close} name={t('categories')} to="categories" Icon={TagIcon} />
       <NavItem close={close} name={t('settings')} to="settings" Icon={Cog6ToothIcon} />

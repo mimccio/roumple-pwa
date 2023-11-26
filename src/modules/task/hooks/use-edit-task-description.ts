@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { JSONContent } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
@@ -7,19 +8,23 @@ import { TASK_KEYS } from '../constants'
 import { editTaskDescription } from '../mutations'
 
 export function useEditTaskDescription(task: Task) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editTaskDescription, {
+  const { mutate } = useMutation({
+    mutationFn: editTaskDescription,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.detail(data.id) })
+      const prevTask = queryClient.getQueryData(TASK_KEYS.detail(data.id))
       queryClient.setQueryData(TASK_KEYS.detail(data.id), data)
+      return { prevTask }
     },
-    onError: (_err, item) => {
-      queryClient.setQueryData(TASK_KEYS.detail(item.id), item)
-      toast.error("Modification didn't work")
+    onError: (_err, item, context) => {
+      queryClient.setQueryData(TASK_KEYS.detail(item.id), context?.prevTask)
+      toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_KEYS.detail(variables.id))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.detail(variables.id) })
     },
   })
 

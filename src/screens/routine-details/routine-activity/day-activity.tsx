@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
-import { eachDayOfInterval, lastDayOfMonth, startOfMonth, subMonths } from 'date-fns'
 
+import { SCHEDULE_TYPES } from '&/common/constants'
 import { RoutineAction } from '&/modules/routine/types'
+import { getDaysList } from './utils'
 import { DayActivityBoard } from './day-activity-board'
 
 interface Props {
@@ -10,25 +11,21 @@ interface Props {
   handleDateChange: (date: Date) => void
   recurrence: number[]
   url: string
+  createdAt: Date
 }
 
-export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url }: Props) {
+export function DayActivity({ actions, occurrence, handleDateChange, recurrence, url, createdAt }: Props) {
   const navigate = useNavigate()
-
-  const today = new Date()
-  const prevMonth = subMonths(today, 1)
-
-  const prevMonthDays = eachDayOfInterval({
-    start: startOfMonth(prevMonth),
-    end: lastDayOfMonth(prevMonth),
-  })
-
-  const currentMonthDays = eachDayOfInterval({
-    start: startOfMonth(today),
-    end: lastDayOfMonth(today),
-  })
-
   if (!actions) return null
+
+  const daysList = getDaysList({
+    count: 4,
+    actions,
+    occurrence,
+    recurrence,
+    scheduleType: SCHEDULE_TYPES.daily,
+    oldest: createdAt,
+  })
 
   const onDayClick = (date: Date) => {
     handleDateChange(date)
@@ -36,23 +33,23 @@ export function DayActivity({ actions, occurrence, handleDateChange, recurrence,
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
-      <DayActivityBoard
-        actions={actions}
-        days={prevMonthDays}
-        month={prevMonth}
-        occurrence={occurrence}
-        onDayClick={onDayClick}
-        recurrence={recurrence}
-      />
-      <DayActivityBoard
-        actions={actions}
-        days={currentMonthDays}
-        month={today}
-        occurrence={occurrence}
-        onDayClick={onDayClick}
-        recurrence={recurrence}
-      />
+    <div className="mx-auto flex max-w-2xl flex-wrap justify-center gap-x-12 gap-y-12">
+      {daysList.map(({ days, month, successNum, prevSuccessNum, isLast, previousCreation }) => (
+        <DayActivityBoard
+          actions={actions}
+          days={days}
+          isLast={isLast}
+          key={month.toISOString()}
+          month={month}
+          occurrence={occurrence}
+          onDayClick={onDayClick}
+          prevSuccessNum={prevSuccessNum}
+          recurrence={recurrence}
+          successNum={successNum}
+          createdAt={createdAt}
+          previousCreation={previousCreation}
+        />
+      ))}
     </div>
   )
 }

@@ -12,7 +12,19 @@ export const fetchTaskList = async ({ queryKey }: FetchTaskListParams) => {
   let query = db
     .from('task')
     .select(
-      'id, name, created_at, priority, status, description, category(id, name, color), scheduleType:schedule_type, period, date, checklist:task_checklist_item(id, name, created_at, task_id, user_id), checkedItemIds: checked_item_ids'
+      `id,
+      name,
+      created_at,
+      priority,
+      status,
+      description,
+      category(id, name, color),
+      scheduleType:schedule_type,
+      period,
+      date,
+      showChecklist: show_checklist,
+      checklist:task_checklist_item(id, name, created_at, task_id, user_id),
+      checkedItemIds: checked_item_ids`
     )
     .order('date', { ascending: true })
 

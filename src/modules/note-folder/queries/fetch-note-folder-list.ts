@@ -2,7 +2,7 @@ import { db } from '&/db'
 import { NoteFolder } from '../types'
 
 interface FetchNoteFolderListParams {
-  queryKey: readonly ['NOTE_FOLDER', 'LIST', { readonly categoryId?: string }]
+  queryKey: readonly ['NOTE_FOLDER', 'LIST', { readonly categoryId?: string | null }]
 }
 
 export const fetchNoteFolderList = async ({ queryKey }: FetchNoteFolderListParams) => {

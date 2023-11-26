@@ -20,10 +20,10 @@ export function useBoardRoutines({ scheduleType, showDone }: Params) {
   const date = getScheduleTypeDate({ scheduleType, date: startOfToday() })
 
   const [category] = useAtom(categoryAtom)
-  const { data, isLoading, error, isPaused } = useQuery(
-    ROUTINE_KEYS.board({ date: getScheduleTypeDate({ scheduleType, date }), scheduleType }),
-    fetchBoardRoutines
-  )
+  const { data, isLoading, error, isPaused } = useQuery({
+    queryKey: ROUTINE_KEYS.board({ date: getScheduleTypeDate({ scheduleType, date }), scheduleType }),
+    queryFn: fetchBoardRoutines,
+  })
 
   // Remove old queries (older than 2 month)
   queryClient.removeQueries({

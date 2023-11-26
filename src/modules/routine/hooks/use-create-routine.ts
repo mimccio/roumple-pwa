@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
@@ -15,6 +16,7 @@ import { ROUTINE_KEYS } from '../constants'
 import { createRoutine } from '../mutations'
 
 export function useCreateRoutine() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [globalCategory, setGlobalCategory] = useAtom(categoryAtom)
@@ -36,7 +38,8 @@ export function useCreateRoutine() {
   }, [globalCategory])
 
   const listKey = ROUTINE_KEYS.list({ archived: false })
-  const { mutate } = useMutation(createRoutine, {
+  const { mutate } = useMutation({
+    mutationFn: createRoutine,
     onMutate: async (data) => {
       const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
       // ✖️ Cancel related queries
@@ -57,18 +60,18 @@ export function useCreateRoutine() {
       return { previousRoutineList, previousBoardList }
     },
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(id), undefined)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(id), null)
       queryClient.setQueryData(listKey, context?.previousRoutineList)
       queryClient.setQueryData(
         ROUTINE_KEYS.board({ scheduleType: item.scheduleType, date }),
         context?.previousBoardList
       )
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(id))
-      queryClient.invalidateQueries(listKey)
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ scheduleType: variables.scheduleType, date }))
+    onSettled: (_data, _error, routine) => {
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(id) })
+      queryClient.invalidateQueries({ queryKey: listKey })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ scheduleType: routine.scheduleType, date }) })
     },
   })
 
@@ -98,6 +101,7 @@ export function useCreateRoutine() {
       category_id: category?.id || null,
       created_at: new Date(),
       occurrence,
+      showChecklist: false,
     })
     reset()
   }

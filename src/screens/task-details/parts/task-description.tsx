@@ -9,5 +9,5 @@ interface Props {
 export function TaskDescription({ task }: Props) {
   const { submit } = useEditTaskDescription(task)
 
-  return <DocumentEditor content={task.description} id={task.id} submit={submit} bt />
+  return <DocumentEditor content={task.description} id={task.id} submit={submit} />
 }

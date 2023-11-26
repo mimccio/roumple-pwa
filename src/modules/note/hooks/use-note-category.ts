@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { useAtom } from 'jotai'
 
@@ -15,15 +16,18 @@ import { NoteFolder } from '&/modules/note-folder/types'
 // TODO!: use setQueriesData
 
 export function useNoteCategory(note: Note) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const { categoryList, isLoading, error } = useCategories()
   const [selectedCategory, setSelectedCategory] = useAtom(categoryAtom)
 
-  const { mutate } = useMutation(editNoteCategory, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteCategory,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_KEYS.all, exact: false })
 
       // Note item
+      const prevNote = queryClient.getQueryData(NOTE_KEYS.detail(data.id))
       queryClient.setQueryData(NOTE_KEYS.detail(data.id), () => data)
 
       // Note list
@@ -63,11 +67,11 @@ export function useNoteCategory(note: Note) {
         return [...old.slice(0, folderIndex), newFolder, ...old.slice(folderIndex + 1)]
       })
 
-      return { previousNoteList, previousFolderListPrevCategory, previousFolderListNewCategory }
+      return { previousNoteList, previousFolderListPrevCategory, previousFolderListNewCategory, prevNote }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(NOTE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_KEYS.detail(item.id), context?.prevNote)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: item.folder?.id }), context?.previousNoteList)
       queryClient.setQueryData(
         NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }),
@@ -78,13 +82,13 @@ export function useNoteCategory(note: Note) {
         context?.previousFolderListNewCategory
       )
 
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: note.folder?.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }))
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: note.folder?.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: note.category?.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: variables.category?.id }) })
     },
   })
 

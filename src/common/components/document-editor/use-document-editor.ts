@@ -10,7 +10,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
-import { debounce } from 'lodash'
+import { debounce, isEqual } from 'lodash'
 import { EditorState } from 'prosemirror-state'
 import { getUrl } from '&/common/utils'
 
@@ -44,12 +44,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
   const onBlur = () => {
     onUpdate.cancel()
     const json = editor?.getJSON()
-
-    // Compare before saving (remove if it's bad on performance)
-    const prev = JSON.stringify(content?.content)
-    const current = JSON.stringify(json?.content)
-
-    if (prev !== current) {
+    if (!isEqual(content?.content, json?.content)) {
       submit(editor?.getJSON())
     }
   }
@@ -110,6 +105,7 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
     },
   })
 
+  // change editor on id change
   useEffect(() => {
     if (!editor) return
     editor.commands.setContent(content || null)
@@ -121,7 +117,14 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
       selection: editor.state.selection,
     })
     editor.view.updateState(newEditorState)
+    if (forceTitle && !content?.length) editor.commands.focus()
   }, [id, editor]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // change editor on content change
+  useEffect(() => {
+    if (!editor) return
+    editor.commands.setContent(content || null)
+  }, [editor, content])
 
   useEffect(() => {
     document.querySelectorAll<HTMLElement>('a.tiptap-link').forEach((a) => {
@@ -140,10 +143,6 @@ export function useDocumentEditor({ submit, content, id, forceTitle, placeholder
       return () => a.removeEventListener('click', handleClick)
     })
   }, [navigate, id, editor, refreshLink])
-
-  // useEffect(() => {
-  //   editor?.commands.focus('end')
-  // }, [note.id, editor])
 
   return { editor }
 }

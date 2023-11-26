@@ -1,18 +1,19 @@
 import { useTranslation } from 'react-i18next'
-import { RingLoader } from 'react-spinners'
-import { Transition } from '@headlessui/react'
 import { SignalSlashIcon } from '@heroicons/react/24/outline'
 
-import { SCHEDULE_TYPES, SPINNER_COLOR } from '&/common/constants'
+import locationImg from '&/assets/illustrations/location.png'
+import { SCHEDULE_TYPES } from '&/common/constants'
+import { cl, getScheduleTypeTextColor } from '&/common/utils'
 import { useMainPath } from '&/common/hooks'
-import { DetailsLoadingPage } from '&/common/components/details-loading-page'
+import { SyncSpinner } from '&/common/components/spinners'
+import { DetailsFallback } from '&/common/components/fallbacks/details'
 
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineActivity } from '&/modules/routine/hooks/use-routine-activity'
-import { FatalError, OfflineError } from '&/screens/errors'
 import { DayActivity } from './day-activity'
 import { WeekActivity } from './week-activity'
 import { MonthActivity } from './month-activity'
+import { Link } from 'react-router-dom'
 
 interface Props {
   routine: Routine
@@ -25,13 +26,22 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
   const { actions, isLoading, isError, isPaused } = useRoutineActivity(routine)
   const url = `${mainPath}/d/routine/${routine.id}`
 
-  if (isError) return <FatalError />
-  if (!actions && isPaused) return <OfflineError />
-  if (isLoading && !actions) return <DetailsLoadingPage />
-  if (actions) {
-    return (
-      <div className="mb-8 p-2">
-        <h4 className="mb-4 p-4 text-center font-bold text-gray-500">{t('activity')}</h4>
+  if (!actions) return <DetailsFallback isError={isError} isLoading={isLoading} isPaused={isPaused} />
+
+  return (
+    <div className="flex h-full flex-col justify-between border-t border-gray-200 px-4 pb-16 pt-4">
+      <div>
+        <h3 className="mb-6 font-serif font-bold text-gray-500">{t('activity')}</h3>
+        <Link to={url} className=" mx-auto mb-12 flex w-fit max-w-xl px-4 py-1">
+          <h4
+            className={cl(
+              'line-clamp-3  text-lg font-semibold text-indigo-500',
+              getScheduleTypeTextColor(routine.scheduleType)
+            )}
+          >
+            {routine.name}
+          </h4>
+        </Link>
         {routine.scheduleType === SCHEDULE_TYPES.daily && (
           <DayActivity
             url={url}
@@ -39,6 +49,7 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
             occurrence={routine.occurrence}
             handleDateChange={handleDateChange}
             recurrence={routine.daily_recurrence}
+            createdAt={routine.created_at}
           />
         )}
 
@@ -48,7 +59,8 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
             actions={actions}
             occurrence={routine.occurrence}
             handleDateChange={handleDateChange}
-            recurrence={routine.daily_recurrence}
+            recurrence={routine.weekly_recurrence}
+            createdAt={routine.created_at}
           />
         )}
 
@@ -58,28 +70,13 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
             actions={actions}
             occurrence={routine.occurrence}
             handleDateChange={handleDateChange}
-            recurrence={routine.daily_recurrence}
+            recurrence={routine.monthly_recurrence}
+            oldest={routine.created_at}
           />
         )}
 
-        <Transition
-          as="div"
-          appear
-          show={isLoading}
-          className="mt-12 flex flex-col items-center justify-center gap-y-8"
-          enter="transition ease-in-out duration-700 delay-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-        >
-          <RingLoader
-            color={SPINNER_COLOR}
-            loading
-            size={50}
-            aria-label="Loading Spinner"
-            data-testid="fetching loader"
-          />
-          <p className="text-gray-400">{t('loadingDataNotUpToDate')}</p>
-        </Transition>
+        <SyncSpinner isLoading={isLoading} text={t('loadingDataNotUpToDate')} />
+
         {isPaused && (
           <p className="mt-12 flex items-start justify-center gap-x-1 px-4 text-center text-gray-400">
             <span className="flex h-6 items-center">
@@ -89,7 +86,10 @@ export function RoutineActivity({ routine, handleDateChange }: Props) {
           </p>
         )}
       </div>
-    )
-  }
-  return <FatalError />
+
+      <div className="mx-auto pb-16 pt-12">
+        <img alt="" src={locationImg} className="h-52 w-52  opacity-25" aria-hidden="true" />
+      </div>
+    </div>
+  )
 }

@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 import { SimpleContent } from './parts/simple-content'
 import { ClickableContent } from './parts/clickable-content'
 
+// TODO: use main-list fallback and delete
+
 interface Props {
   text: string | ReactNode
   image: string

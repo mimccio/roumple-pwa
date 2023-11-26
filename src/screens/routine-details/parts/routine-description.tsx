@@ -9,5 +9,5 @@ interface Props {
 export function RoutineDescription({ routine }: Props) {
   const { submit } = useEditRoutineDescription(routine)
 
-  return <DocumentEditor content={routine.description} id={routine.id} submit={submit} bt />
+  return <DocumentEditor content={routine.description} id={routine.id} submit={submit} />
 }

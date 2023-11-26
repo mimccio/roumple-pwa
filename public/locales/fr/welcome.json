@@ -1,7 +1,6 @@
 {
-  "title": "Bienvenue sur Roumple",
-  "firstTask": "Créez votre première Tâche",
-  "firstRoutine": "Créez votre première Routine",
-  "firstNote": "Créez votre première Note",
-  "firstCategory": "Créez votre première Category"
+  "Welcome to": "Bienvenue sur",
+  "Start blank or use a template": "Commencez vide ou utilisez un template",
+  "Start blank": "Démarrer vide",
+  "Start to organize your life": "Commencez à organizer votre vie"
 }

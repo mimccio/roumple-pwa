@@ -1,11 +1,14 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Popover, Transition } from '@headlessui/react'
-import { CalendarDaysIcon } from '@heroicons/react/24/solid'
+import { CalendarDaysIcon, ClockIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 import { cl, getScheduleTypeBg, getScheduleTypeIconColor, isPassed } from '&/common/utils'
 import { usePeriodText } from '&/common/hooks'
+
 import type { Task } from '&/modules/task/types'
+import { getScheduleTypeBgColor, getScheduleTypeBorderColor } from '&/modules/routine/utils'
 import { useDateText, useTaskSchedule } from '&/modules/task/hooks'
 import { TaskSchedule } from '&/modules/task/components'
 
@@ -23,25 +26,40 @@ export function Schedule({ task }: Props) {
   const scheduleColor = isPassed({ date, scheduleType }) ? 'text-red-400' : getScheduleTypeIconColor(task.scheduleType)
   const btnBg = getScheduleTypeBg(scheduleType)
 
+  const getBg = () => {
+    if (isPassed({ date, scheduleType })) return 'bg-red-50'
+    if (!task.scheduleType) return 'bg-gray-50'
+    return getScheduleTypeBgColor(task.scheduleType)
+  }
+
+  const getBorderColor = () => {
+    if (isPassed({ date, scheduleType })) return 'border-red-200'
+    if (!task.scheduleType) return 'border-gray-200'
+    return getScheduleTypeBorderColor(task.scheduleType)
+  }
+
   return (
     <Popover className="relative">
-      <Popover.Button>
-        <div className="group flex flex-wrap items-center gap-x-4 gap-y-1">
-          <p className="flex items-center gap-2">
-            <CalendarDaysIcon height={18} className={cl('transition-colors', scheduleColor)} />
-            <span
-              className={cl(
-                'font-semibold  transition-colors ',
-                task.scheduleType
-                  ? 'text-gray-500 group-hover:text-gray-600'
-                  : 'text-gray-400 group-hover:text-gray-500'
-              )}
-            >
-              {getDateText(task)}
+      <Popover.Button
+        className={cl(
+          'group flex w-full  items-center justify-between gap-x-4 gap-y-1 border-y px-4 py-1 text-sm transition-all hover:opacity-75',
+          getBg(),
+          getBorderColor(),
+          scheduleColor
+        )}
+      >
+        <p className="flex flex-wrap items-center gap-x-8 gap-y-1">
+          <span className="flex items-center gap-x-2">
+            <CalendarDaysIcon height={14} className={cl(' transition-colors', scheduleColor)} />
+            {getDateText(task)}
+          </span>
+          {periodText && (
+            <span className="flex items-center gap-x-2">
+              <ClockIcon height={14} className={cl('transition-colors', scheduleColor)} /> {periodText}
             </span>
-            <span className="text-gray-400">{periodText && `(${periodText})`}</span>
-          </p>
-        </div>
+          )}
+        </p>
+        <ChevronDownIcon className={cl('w-4 opacity-30', scheduleColor)} />
       </Popover.Button>
 
       <Transition
@@ -53,7 +71,7 @@ export function Schedule({ task }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute z-10 w-full max-w-lg rounded-lg bg-white p-4 shadow-md">
+        <Popover.Panel className="absolute left-1 right-1 z-10 mt-1 w-full max-w-lg rounded-lg bg-white p-4 shadow-md">
           {({ close }) => (
             <div>
               <TaskSchedule

@@ -10,7 +10,8 @@ export function useArchiveRoutine() {
   const queryClient = useQueryClient()
   const date = startOfToday()
 
-  const { mutate } = useMutation(archiveRoutine, {
+  const { mutate } = useMutation({
+    mutationFn: archiveRoutine,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
@@ -51,7 +52,7 @@ export function useArchiveRoutine() {
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), { ...item, archived: !item.archived })
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: false }), context?.previousRoutineList)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: true }), context?.previousArchivedRoutineList)
       queryClient.setQueryData(
@@ -61,11 +62,11 @@ export function useArchiveRoutine() {
       toast.error("Archive didn't work")
     },
 
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: false }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: true }))
-      queryClient.invalidateQueries(ROUTINE_KEYS.board({ date, scheduleType: variables.scheduleType }))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: false }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: true }) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.board({ date, scheduleType: variables.scheduleType }) })
     },
   })
 

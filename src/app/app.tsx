@@ -11,11 +11,13 @@ import '&/assets/fonts/fonts.css'
 import { editCategory } from '&/modules/category/mutations'
 import { CATEGORY_LIST } from '&/modules/category/constants'
 import { Login } from '&/screens/login'
+import { WelcomeScreen } from '&/screens/welcome'
+import { TemplateDetailsScreen } from '&/screens/template-details'
 
 import './i18n'
-import { AuthenticatedApp } from './authenticated-app'
-import { appLoader, loginLoader, logoutLoader } from './loaders'
-import { Fallback } from './fallback'
+import { AuthenticatedApp } from './components/authenticated-app'
+import { appLoader, loginLoader, logoutLoader, onboardingLoader } from './loaders'
+import { Fallback } from './components/fallback'
 import './styles.css'
 
 inject({ debug: false })
@@ -27,13 +29,13 @@ const persister = createSyncStoragePersister({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-      staleTime: 2000,
+      gcTime: 1000 * 60 * 60 * 24 * 3, // 3 days
+      staleTime: 1000 * 60 * 10, // 10 min
       retry: 1,
-      useErrorBoundary: false,
+      throwOnError: false,
       refetchOnWindowFocus: false,
     },
-    mutations: { networkMode: 'offlineFirst' },
+    // mutations: { networkMode: 'offlineFirst' },
   },
 })
 
@@ -51,9 +53,12 @@ const router = createBrowserRouter(
     <>
       {/* redirect to board if auth */}
       <Route path="login/*" element={<Login />} loader={loginLoader} />
-      {/* redirect to login on logout */}
+      {/* redirect to login after logout */}
       <Route path="logout" loader={logoutLoader} />
-      {/* redirect to today */}
+      {/* Onboarding */}
+      <Route path="welcome/:templateId/*" element={<TemplateDetailsScreen />} loader={onboardingLoader} />
+      <Route path="welcome/*" element={<WelcomeScreen />} loader={onboardingLoader} />
+      {/* redirect home to today */}
       <Route path="/" element={<Navigate to="today" />} />
       {/* redirect to login if NO auth */}
       <Route path="*" element={<AuthenticatedApp />} loader={appLoader} />

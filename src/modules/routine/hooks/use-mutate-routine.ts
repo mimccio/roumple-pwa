@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
@@ -8,18 +9,25 @@ import { getScheduleTypeDate } from '../utils'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useMutateRoutine(mutation: (routine: Routine) => any) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const today = startOfToday()
 
-  const { mutate } = useMutation(mutation, {
+  const { mutate } = useMutation({
+    mutationFn: mutation,
     onMutate: async (data) => {
       const date = getScheduleTypeDate({ scheduleType: data.scheduleType, date: today })
+      const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
 
       // ✖️ Cancel related queries
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.lists(), exact: false })
-      await queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) })
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.detail(data.id) }),
+        queryClient.cancelQueries({ queryKey: ROUTINE_KEYS.list({ archived: data.archived }) }),
+        queryClient.cancelQueries({ queryKey: boardKey }),
+      ])
 
       // ⛳ Update Item
+      const prevRoutine = queryClient.getQueryData(ROUTINE_KEYS.detail(data.id))
       queryClient.setQueryData(ROUTINE_KEYS.detail(data.id), data)
 
       // 🗃️ Update Routine List
@@ -31,18 +39,17 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
       })
 
       // 🏫 Update Routine Board
-      const boardKey = ROUTINE_KEYS.board({ scheduleType: data.scheduleType, date })
       const previousBoardRoutineList = queryClient.getQueryData(boardKey)
       queryClient.setQueryData(boardKey, (old: Routine[] = []) => {
         const routineIndex = old.findIndex((item) => item.id === data.id)
         return [...old.slice(0, routineIndex), { ...old[routineIndex], ...data }, ...old.slice(routineIndex + 1)]
       })
 
-      return { previousRoutineList, previousBoardRoutineList }
+      return { previousRoutineList, previousBoardRoutineList, prevRoutine }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), item)
+      queryClient.setQueryData(ROUTINE_KEYS.detail(item.id), context?.prevRoutine)
       queryClient.setQueryData(ROUTINE_KEYS.list({ archived: item.archived }), context?.previousRoutineList)
       queryClient.setQueryData(
         ROUTINE_KEYS.board({
@@ -51,17 +58,17 @@ export function useMutateRoutine(mutation: (routine: Routine) => any) {
         }),
         context?.previousBoardRoutineList
       )
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(ROUTINE_KEYS.detail(variables.id))
-      queryClient.invalidateQueries(ROUTINE_KEYS.list({ archived: variables.archived }))
-      queryClient.invalidateQueries(
-        ROUTINE_KEYS.board({
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.detail(variables.id) })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.list({ archived: variables.archived }) })
+      queryClient.invalidateQueries({
+        queryKey: ROUTINE_KEYS.board({
           scheduleType: variables.scheduleType,
           date: getScheduleTypeDate({ scheduleType: variables.scheduleType, date: today }),
-        })
-      )
+        }),
+      })
     },
   })
 

@@ -18,5 +18,8 @@
   "title": "title",
   "linkUrl": "Link url",
   "activity": "Activity",
-  "seeMore": "see more"
+  "seeMore": "see more",
+  "planning": "Planning",
+  "noItem": "No item",
+  "feedback": "Feedback"
 }

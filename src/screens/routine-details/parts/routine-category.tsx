@@ -1,4 +1,4 @@
-import { CategorySelector } from '&/common/components/inputs/category-selector/category-selector'
+import { CategorySelector } from '&/common/components/inputs/category-selector'
 import type { Routine } from '&/modules/routine/types'
 import { useRoutineCategory } from '&/modules/routine/hooks'
 

@@ -119,7 +119,8 @@ export function Occurrence({ routine, action, date }: Props) {
       <Popover.Button className={cl('text-lg font-bold')}>
         {color !== 'transparent' && (
           <motion.p
-            className="origin-left rounded-lg bg-gray-50 px-2 py-1 shadow-md"
+            initial={false}
+            className="origin-left rounded-lg border bg-gray-50 px-2 py-1 "
             animate={isAnimating ? animationVariant : 'initial'}
             variants={variants}
             style={{ color: color || 'transparent' }}
@@ -139,7 +140,7 @@ export function Occurrence({ routine, action, date }: Props) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute left-1/2 z-10 mt-4 w-max max-w-lg -translate-x-1/2 rounded-lg bg-white p-4 shadow-md">
+        <Popover.Panel className="left- absolute z-10 mt-2 w-max max-w-lg rounded-lg bg-white p-4 shadow-md">
           {({ close }) => (
             <div>
               <div>

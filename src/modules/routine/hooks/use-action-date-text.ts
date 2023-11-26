@@ -3,12 +3,13 @@ import { endOfWeek, format, startOfWeek } from 'date-fns'
 
 import type { ScheduleType } from '&/common/types'
 import { SCHEDULE_TYPES } from '&/common/constants'
-import { getDateFnsLocale } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
 
 export function useActionDateText() {
   const { t } = useTranslation('schedule')
+  const { locale } = useGetDateFnsLocale()
 
-  const getDayDateText = (date: Date) => format(date, 'EEEE dd MMM yyyy', { locale: getDateFnsLocale() })
+  const getDayDateText = (date: Date) => format(date, 'EEEE dd MMM yyyy', { locale })
 
   const getWeekDateText = (date: Date) => {
     const start = format(startOfWeek(date, { weekStartsOn: 1 }), 'dd MMM')

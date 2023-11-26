@@ -7,7 +7,7 @@
   "note": "Note",
   "notes": "Notes",
   "category": "Catégorie",
-  "categories": "Categories",
+  "categories": "Catégories",
   "settings": "Paramètres",
   "noCategory": "Aucune catégorie",
   "archived": "Archivé",
@@ -18,5 +18,8 @@
   "title": "titre",
   "linkUrl": "Lien url",
   "activity": "Activité",
-  "seeMore": "voir plus"
+  "seeMore": "voir plus",
+  "planning": "Planning",
+  "noItem": "Aucun item",
+  "feedback": "Feedback"
 }

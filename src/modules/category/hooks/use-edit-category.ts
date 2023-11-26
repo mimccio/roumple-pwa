@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
 import type { TwColor } from '&/common/types'
@@ -20,9 +21,11 @@ interface Params {
 }
 
 export function useEditCategory({ category }: Params) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(editCategory, {
+  const { mutate } = useMutation({
+    mutationFn: editCategory,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: [CATEGORY_LIST] })
@@ -46,35 +49,35 @@ export function useEditCategory({ category }: Params) {
       })
 
       // Update Routines
-      queryClient.setQueriesData(ROUTINE_KEYS.lists(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.lists() }, (old: Routine[] = []) => {
         return old.map((routine) => (routine.category?.id === data.id ? { ...routine, category: data } : routine))
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.boards(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.boards() }, (old: Routine[] = []) => {
         return old.map((routine) => (routine.category?.id === data.id ? { ...routine, category: data } : routine))
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.details(), (old?: Routine) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.details() }, (old?: Routine) =>
         old?.category?.id === data.id ? { ...old, category: data } : old
       )
 
       // Update Tasks
-      queryClient.setQueriesData(TASK_KEYS.lists(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.lists() }, (old: Task[] = []) => {
         return old.map((task) => (task.category?.id === data.id ? { ...task, category: data } : task))
       })
-      queryClient.setQueriesData(TASK_KEYS.boards(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.boards() }, (old: Task[] = []) => {
         return old.map((task) => (task.category?.id === data.id ? { ...task, category: data } : task))
       })
-      queryClient.setQueriesData(TASK_KEYS.details(), (old?: Task) =>
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.details() }, (old?: Task) =>
         old?.category?.id === data.id ? { ...old, category: data } : old
       )
 
       // Update Notes
-      queryClient.setQueriesData(NOTE_KEYS.lists(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.lists() }, (old: Note[] = []) => {
         return old.map((note) => (note.category?.id === data.id ? { ...note, category: data } : note))
       })
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old: Note[] = []) => {
         return old.map((note) => (note.category?.id === data.id ? { ...note, category: data } : note))
       })
-      queryClient.setQueriesData(NOTE_KEYS.details(), (old?: Note) =>
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.details() }, (old?: Note) =>
         old?.category?.id === data.id ? { ...old, category: data } : old
       )
 
@@ -91,55 +94,55 @@ export function useEditCategory({ category }: Params) {
       }
 
       // Update Routines
-      queryClient.setQueriesData(ROUTINE_KEYS.lists(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.lists() }, (old: Routine[] = []) => {
         return old.map((routine) =>
           routine.category?.id === item.id ? { ...routine, category: context.category } : routine
         )
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.boards(), (old: Routine[] = []) => {
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.boards() }, (old: Routine[] = []) => {
         return old.map((routine) =>
           routine.category?.id === item.id ? { ...routine, category: context.category } : routine
         )
       })
-      queryClient.setQueriesData(ROUTINE_KEYS.details(), (old?: Routine) =>
+      queryClient.setQueriesData({ queryKey: ROUTINE_KEYS.details() }, (old?: Routine) =>
         old?.category?.id === item.id ? { ...old, category: context.category } : old
       )
 
       // Update Tasks
-      queryClient.setQueriesData(TASK_KEYS.lists(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.lists() }, (old: Task[] = []) => {
         return old.map((task) => (task.category?.id === item.id ? { ...task, category: context.category } : task))
       })
-      queryClient.setQueriesData(TASK_KEYS.boards(), (old: Task[] = []) => {
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.boards() }, (old: Task[] = []) => {
         return old.map((task) => (task.category?.id === item.id ? { ...task, category: context.category } : task))
       })
-      queryClient.setQueriesData(TASK_KEYS.details(), (old?: Task) =>
+      queryClient.setQueriesData({ queryKey: TASK_KEYS.details() }, (old?: Task) =>
         old?.category?.id === item.id ? { ...old, category: context.category } : old
       )
 
       // Update Notes
-      queryClient.setQueriesData(NOTE_KEYS.lists(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.lists() }, (old: Note[] = []) => {
         return old.map((note) => (note.category?.id === item.id ? { ...note, category: context.category } : note))
       })
-      queryClient.setQueriesData(NOTE_KEYS.searches(), (old: Note[] = []) => {
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.searches() }, (old: Note[] = []) => {
         return old.map((note) => (note.category?.id === item.id ? { ...note, category: context.category } : note))
       })
-      queryClient.setQueriesData(NOTE_KEYS.details(), (old?: Note) =>
+      queryClient.setQueriesData({ queryKey: NOTE_KEYS.details() }, (old?: Note) =>
         old?.category?.id === item.id ? { ...old, category: context.category } : old
       )
 
-      toast.error("Modification didn't work")
+      toast.error(t('errorModification'))
     },
     onSettled: () => {
-      queryClient.invalidateQueries([CATEGORY_LIST])
-      queryClient.invalidateQueries(ROUTINE_KEYS.lists())
-      queryClient.invalidateQueries(ROUTINE_KEYS.boards())
-      queryClient.invalidateQueries(ROUTINE_KEYS.details())
-      queryClient.invalidateQueries(TASK_KEYS.lists())
-      queryClient.invalidateQueries(TASK_KEYS.boards())
-      queryClient.invalidateQueries(TASK_KEYS.details())
-      queryClient.invalidateQueries(NOTE_KEYS.lists())
-      queryClient.invalidateQueries(NOTE_KEYS.searches())
-      queryClient.invalidateQueries(NOTE_KEYS.details())
+      queryClient.invalidateQueries({ queryKey: [CATEGORY_LIST] })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.boards() })
+      queryClient.invalidateQueries({ queryKey: ROUTINE_KEYS.details() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.boards() })
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.details() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.lists() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.searches() })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.details() })
     },
   })
 

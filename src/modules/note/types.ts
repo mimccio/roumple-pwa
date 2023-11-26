@@ -2,14 +2,10 @@ import { JSONContent } from '@tiptap/react'
 import type { Category } from '../category/types'
 import type { NoteFolder } from '../note-folder/types'
 
-interface RoutineNote {
-  id: string
-  routine: { id: string; name: string }
-}
-
-interface TaskNote {
+export interface TaskNote {
   id: string
   task: { id: string; name: string }
+  deleted?: boolean
 }
 
 export interface Note {
@@ -19,7 +15,6 @@ export interface Note {
   created_at?: Date
   category?: Category | null
   folder?: NoteFolder | null
-  routineNotes?: RoutineNote[]
   taskNotes?: TaskNote[]
   deletedCategory?: Category
 }

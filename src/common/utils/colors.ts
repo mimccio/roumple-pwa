@@ -1,6 +1,7 @@
 import type { ScheduleType, TwColor } from '../types'
 import { SCHEDULE_TYPES, TW_COLOR_TEXT_500 } from '../constants'
 import type { TaskScheduleType } from '&/modules/task/types'
+import { cl } from '.'
 
 export const getPriorityTWTextColor = (priority: number) => {
   if (priority === 1) return 'text-blue-500'
@@ -30,4 +31,26 @@ export const getScheduleTypeBg = (scheduleType: ScheduleType | TaskScheduleType)
   if (scheduleType === SCHEDULE_TYPES.weekly) return 'bg-sky-500 group-hover:bg-sky-600'
   if (scheduleType === SCHEDULE_TYPES.monthly) return 'bg-purple-500 group-hover:bg-purple-600'
   return 'bg-gray-500 group-hover:bg-gray-600'
+}
+
+export const getPriorityToColor = (priority: number) => {
+  if (priority === 2) return 'to-orange-100'
+  if (priority === 1) return 'to-blue-100'
+  return 'to-gray-100'
+}
+
+export const getPriorityFromColor = (priority: number) => {
+  if (priority === 2) return 'from-orange-50'
+  if (priority === 1) return 'from-blue-50'
+  return 'from-gray-50'
+}
+
+export const getScheduleTypeTextColor = (scheduleType: ScheduleType | TaskScheduleType, withGroupHover?: boolean) => {
+  if (scheduleType === SCHEDULE_TYPES.daily)
+    return cl('text-indigo-500', withGroupHover ? 'group-hover:text-indigo-600' : '')
+  if (scheduleType === SCHEDULE_TYPES.weekly)
+    return cl('text-sky-500', withGroupHover ? 'group-hover:text-sky-600' : '')
+  if (scheduleType === SCHEDULE_TYPES.monthly)
+    return cl('text-purple-500', withGroupHover ? 'group-hover:text-purple-600' : '')
+  return cl('text-gray-500', withGroupHover ? 'group-hover:text-gray-600' : '')
 }

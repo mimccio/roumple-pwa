@@ -1,6 +1,6 @@
-import { useRef } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -10,12 +10,13 @@ import { Routine } from '&/modules/routine/types'
 import { ROUTINE_KEYS } from '&/modules/routine/constants'
 
 export function useCreateChecklistItem(routine: Routine) {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
-  const ref = useRef<HTMLFormElement>(null)
   const routineKey = ROUTINE_KEYS.detail(routine.id)
 
-  const { mutate } = useMutation(createRoutineChecklistItem, {
+  const { mutate } = useMutation({
+    mutationFn: createRoutineChecklistItem,
     onMutate: async (data) => {
       // ✖️ Cancel related queries
       await queryClient.cancelQueries({ queryKey: routineKey })
@@ -34,10 +35,10 @@ export function useCreateChecklistItem(routine: Routine) {
 
     onError: (_err, _item, context) => {
       queryClient.setQueryData(routineKey, context?.previousRoutine)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(routineKey)
+      queryClient.invalidateQueries({ queryKey: routineKey })
     },
   })
 
@@ -59,7 +60,7 @@ export function useCreateChecklistItem(routine: Routine) {
     reset()
   })
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, handleSubmit, errors, submit, ref, name }
 }

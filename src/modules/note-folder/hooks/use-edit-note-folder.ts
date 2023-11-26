@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -13,16 +13,17 @@ import { editNoteFolder } from '../mutations'
 
 export function useEditNoteFolder(folder: NoteFolder) {
   const queryClient = useQueryClient()
-  const ref = useRef<HTMLFormElement>(null)
   const [isEditing, setIsEditing] = useState(false)
   const { categoryList } = useCategories()
 
-  const { mutate } = useMutation(editNoteFolder, {
+  const { mutate } = useMutation({
+    mutationFn: editNoteFolder,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.detail(data.id) })
-      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists(), exact: false })
+      await queryClient.cancelQueries({ queryKey: NOTE_FOLDER_KEYS.lists() })
 
       // Item
+      const prevNoteFolder = queryClient.getQueryData(NOTE_FOLDER_KEYS.detail(data.id))
       queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(data.id), () => ({ ...folder, name: data.name }))
 
       const previousNoteList = queryClient.getQueryData(NOTE_KEYS.list({ folderId: folder.id }))
@@ -58,20 +59,20 @@ export function useEditNoteFolder(folder: NoteFolder) {
         })
       }
 
-      return { previousNoteList, previousFolderList, categoryIds }
+      return { previousNoteList, previousFolderList, categoryIds, prevNoteFolder }
     },
 
     onError: (_err, item, context) => {
-      queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(item.id), item)
+      queryClient.setQueryData(NOTE_FOLDER_KEYS.detail(item.id), context?.prevNoteFolder)
       queryClient.setQueryData(NOTE_KEYS.list({ folderId: folder.id }), context?.previousNoteList)
       queryClient.setQueryData(NOTE_FOLDER_KEYS.list({ categoryId: undefined }), context?.previousFolderList)
 
       toast.error("Edit didn't work")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.detail(folder.id))
-      queryClient.invalidateQueries(NOTE_KEYS.list({ folderId: folder.id }))
-      queryClient.invalidateQueries(NOTE_FOLDER_KEYS.list({ categoryId: undefined }))
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.detail(folder.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.list({ folderId: folder.id }) })
+      queryClient.invalidateQueries({ queryKey: NOTE_FOLDER_KEYS.list({ categoryId: undefined }) })
     },
   })
 
@@ -96,7 +97,7 @@ export function useEditNoteFolder(folder: NoteFolder) {
 
   const onRename = () => setIsEditing(true)
 
-  useOutsideClick({ handler: clearErrors, ref })
+  const ref = useOutsideClick(clearErrors)
 
   return { register, errors, submit, ref, name, onRename, isEditing }
 }

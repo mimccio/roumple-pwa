@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 import { toast } from 'react-hot-toast'
@@ -14,6 +15,7 @@ import { TASK_KEYS } from '../constants'
 import { createTask } from '../mutations'
 
 export function useCreateTask() {
+  const { t } = useTranslation('error')
   const queryClient = useQueryClient()
   const id = uuidv4()
   const [globalCategory, setGlobalCategory] = useAtom(categoryAtom)
@@ -31,12 +33,15 @@ export function useCreateTask() {
     setCategory(globalCategory)
   }, [globalCategory])
 
-  const { mutate } = useMutation(createTask, {
+  const { mutate } = useMutation({
+    mutationFn: createTask,
     onMutate: async (data) => {
       // Cancel list queries
       await queryClient.cancelQueries({ queryKey: TASK_KEYS.list({ done: false }) })
       if (data.date != null && data.scheduleType != null) {
-        await queryClient.cancelQueries(TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date }))
+        await queryClient.cancelQueries({
+          queryKey: TASK_KEYS.board({ scheduleType: data.scheduleType, date: data.date }),
+        })
       }
 
       // Update item
@@ -68,10 +73,10 @@ export function useCreateTask() {
         )
       }
       navigate(mainPath)
-      toast.error("Creation didn't work")
+      toast.error(t('errorCreation'))
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(TASK_KEYS.list({ done: false }))
+      queryClient.invalidateQueries({ queryKey: TASK_KEYS.list({ done: false }) })
     },
   })
 
@@ -98,6 +103,7 @@ export function useCreateTask() {
       date,
       checklist: [],
       checkedItemIds: [],
+      showChecklist: false,
     })
     reset()
   }

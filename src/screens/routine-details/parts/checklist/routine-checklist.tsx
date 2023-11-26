@@ -13,9 +13,10 @@ interface Props {
   date: Date
   action?: RoutineAction
   isLoading: boolean
+  archived: boolean
 }
 
-export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
+export function RoutineChecklist({ routine, date, action, isLoading, archived }: Props) {
   const { t } = useTranslation(['common', 'routine', 'schedule'])
   const { onDelete } = useDeleteChecklistItem(routine)
   const { handleSelectChecklistItem, handleDeleteCheckedItem } = useUpsertAction({
@@ -38,15 +39,17 @@ export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
   }
 
   return (
-    <div className="w-full max-w-2xl flex-1 px-4 2xl:mt-4">
-      <div className="flex flex-col">
-        <h4 className="font-bold uppercase text-gray-400">{t('checklist', { ns: 'common' })}</h4>
-        <p className="text-xs text-gray-300">
-          {t('checklistWillReset', { ns: 'routine' })} {getText()}
-        </p>
+    <div className="mx-auto mt-4 w-full max-w-5xl border-b px-4">
+      <div className="items-top flex flex-wrap justify-between gap-x-14">
+        <h4 className="font-semibold  text-gray-400">{t('checklist', { ns: 'common' })}</h4>
+        {!archived && (
+          <p className="text-xs text-gray-300">
+            {t('checklistWillReset', { ns: 'routine' })} {getText()}
+          </p>
+        )}
       </div>
 
-      <div className="mt-4 flex flex-col gap-2">
+      <div className="mt-2 flex flex-col gap-y-1">
         {routine.checklist?.map((checklistItem) => (
           <ChecklistItem
             checklistItem={checklistItem}
@@ -54,7 +57,7 @@ export function RoutineChecklist({ routine, date, action, isLoading }: Props) {
             onDelete={handleDelete}
             onSelect={onSelectChecklistItem}
             isChecked={action?.checkedList?.includes(checklistItem.id)}
-            isLoading={isLoading}
+            disabled={isLoading || archived}
           />
         ))}
         <NewChecklistItem routine={routine} />

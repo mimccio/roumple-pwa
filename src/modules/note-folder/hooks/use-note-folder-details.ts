@@ -10,7 +10,9 @@ export function useNoteFolderDetails() {
   const { folderId } = useParams()
   const queryClient = useQueryClient()
 
-  const { data, isLoading, error, isPaused } = useQuery(NOTE_FOLDER_KEYS.detail(folderId), fetchNoteFolder, {
+  const { data, isLoading, error, isPaused } = useQuery({
+    queryKey: NOTE_FOLDER_KEYS.detail(folderId),
+    queryFn: fetchNoteFolder,
     enabled: Boolean(folderId),
     initialDataUpdatedAt: () => queryClient.getQueryState(NOTE_FOLDER_KEYS.list({}))?.dataUpdatedAt,
     initialData: () => {

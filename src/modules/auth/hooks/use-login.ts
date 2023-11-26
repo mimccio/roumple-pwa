@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { db } from '&/db'
+import { useGetLanguage } from '&/common/hooks'
 
 export const useLogin = () => {
   const navigate = useNavigate()
@@ -10,31 +11,32 @@ export const useLogin = () => {
   const [verifyIsLoading, setVerifyIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
+  const lang = useGetLanguage()
 
   const handleEmailChange = (evt: FormEvent<HTMLInputElement>) => setEmail(evt.currentTarget.value)
 
+  // TODO!: check redirect paths (button click & otp) for dev & prod
+
   const getURL = () => {
     let incompleteUrl = window.location.origin
-
     // Make sure to include `https://` when not localhost.
     incompleteUrl = incompleteUrl.includes('http') ? incompleteUrl : `https://${incompleteUrl}`
-    // Redirect to today because we can't do it with template for local supabase (issue with trailing #)
-    incompleteUrl = incompleteUrl.includes('localhost') ? `${incompleteUrl}/today` : incompleteUrl
+    // Redirect to /today
+    incompleteUrl = `${incompleteUrl}/today/`
     // Make sure to including trailing `/`.
     return incompleteUrl.charAt(incompleteUrl.length - 1) === '/' ? incompleteUrl : `${incompleteUrl}/`
   }
 
   const handleLogin = async (e: FormEvent) => {
     try {
-      e.preventDefault()
       setIsLoading(true)
+      e.preventDefault()
+      const emailRedirectTo = getURL()
       const { error } = await db.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: getURL(),
-          data: {
-            lang: navigator.language.slice(0, 2),
-          },
+          emailRedirectTo,
+          data: { lang },
         },
       })
       if (error) throw error
@@ -55,7 +57,7 @@ export const useLogin = () => {
         type: 'email',
       })
       if (error) throw error
-      navigate('/today')
+      navigate('/today/')
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {

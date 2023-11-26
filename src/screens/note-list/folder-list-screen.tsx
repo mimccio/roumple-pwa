@@ -1,4 +1,4 @@
-import { ListSkeletonSmall } from '&/common/components/list-skeleton-small'
+import { ListSkeletonSmall } from '&/common/components/skeletons'
 import { ContentLayout } from '&/common/components/layouts'
 import { useFolderList } from '&/modules/note-folder/hooks/use-folder-list'
 import { FolderItem } from './parts/folder-item'

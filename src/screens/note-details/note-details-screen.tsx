@@ -1,22 +1,28 @@
-import { DetailsLoadingPage } from '&/common/components/details-loading-page'
-import { useNoteDetail } from '&/modules/note/hooks/use-note-detail'
-import { NotFoundDetails, OfflineError } from '../errors'
-import { InfoSection } from './parts/info-section'
+import { CreatedAt } from '&/common/components/display/created-at'
+import { DetailsFallback } from '&/common/components/fallbacks/details'
+
+import { useGetNoteDetail } from '&/modules/note/hooks'
+import { LinkedRoutines } from './parts/linked-routines'
+import { LinkedTasks } from './parts/linked-tasks'
+import { NoteCategory } from './parts/note-category'
 import { NoteEditor } from './parts/note-editor'
+import { NoteFolder } from './parts/note-folder'
 import { NoteNavbar } from './parts/note-navbar'
 
 export function NoteDetailsScreen() {
-  const { note, isLoading, isPaused } = useNoteDetail()
+  const { note, isLoading, isPaused, routineNoteList } = useGetNoteDetail()
 
-  if (!note && isPaused) return <OfflineError />
-  if (!note) return <NotFoundDetails />
+  if (!note) return <DetailsFallback isLoading={isLoading} isPaused={isPaused} />
 
   return (
     <>
       <NoteNavbar note={note} />
-      {isLoading && <DetailsLoadingPage />}
-      {note && <InfoSection note={note} />}
-      {note && <NoteEditor note={note} />}
+      <NoteCategory note={note} />
+      <NoteFolder note={note} />
+      <LinkedRoutines routineNoteList={routineNoteList} />
+      <LinkedTasks taskNoteList={note.taskNotes} />
+      <NoteEditor note={note} />
+      <CreatedAt createdAt={note.created_at} />
     </>
   )
 }

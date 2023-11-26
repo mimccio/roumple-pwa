@@ -10,7 +10,8 @@ import { deleteTaskNote } from '../mutations'
 export function useDeleteTaskNote() {
   const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(deleteTaskNote, {
+  const { mutate } = useMutation({
+    mutationFn: deleteTaskNote,
     onMutate: async (data) => {
       // 🗝️ Keys
       const taskNotesKey = TASK_NOTES_KEYS.list(data.task.id)
@@ -49,9 +50,9 @@ export function useDeleteTaskNote() {
 
       toast.error("Delete didn't work")
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries(TASK_NOTES_KEYS.list(variables.task.id))
-      queryClient.invalidateQueries(NOTE_KEYS.detail(variables.note.id))
+    onSettled: (_data, _error, variables) => {
+      queryClient.invalidateQueries({ queryKey: TASK_NOTES_KEYS.list(variables.task.id) })
+      queryClient.invalidateQueries({ queryKey: NOTE_KEYS.detail(variables.note.id) })
     },
   })
 

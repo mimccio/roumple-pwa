@@ -1,8 +1,8 @@
 import { ContentLayout } from '&/common/components/layouts'
 import { useNoteFolderDetails } from '&/modules/note-folder/hooks'
 import { MainError, OfflineError } from '&/screens/errors'
+import { MainLoadingScreen } from '../main-loading-screen'
 import { FolderTitle } from './parts/folder-title'
-import { Loading } from './parts/loading'
 import { NoteListFolder } from './parts/note-list-folder'
 import { NoteListHeader } from './parts/note-list-header'
 
@@ -11,7 +11,7 @@ export function NoteListByFolderScreen() {
 
   if (show.offline) return <OfflineError />
   if (show.error) return <MainError />
-  if (show.loading) return <Loading />
+  if (show.loading) return <MainLoadingScreen />
 
   return (
     <>

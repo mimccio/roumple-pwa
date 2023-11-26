@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
@@ -18,7 +17,6 @@ interface Props {
 
 export function EditOccurrence({ routine, isOpen, close }: Props) {
   const { t } = useTranslation(['routine', 'action'])
-  const ref = useRef<HTMLFormElement>(null)
   const { submit, add, sub, onChange, onBlur, occurrence, reset } = useEditOccurrence(routine)
   const typeText = useOccurrenceTypeText(routine.scheduleType)
   const inputBg = getOccurrenceBg(routine.scheduleType)
@@ -27,13 +25,13 @@ export function EditOccurrence({ routine, isOpen, close }: Props) {
     if (routine.scheduleType === SCHEDULE_TYPES.monthly) return 'text-purple-600 group-hover:text-purple-700'
     return 'text-indigo-600 group-hover:text-indigo-700'
   }
-  useOutsideClick({ ref, handler: close })
+  const ref = useOutsideClick(close)
 
   return (
     <Transition
       ref={ref}
       show={isOpen}
-      className="absolute left-4 right-4 top-16 z-20 flex flex-col gap-4 rounded-md border bg-white p-4 shadow-md"
+      className="absolute left-1 right-1 top-16 z-20 flex flex-col gap-4 rounded-md border bg-white p-4 shadow-md sm:left-4 sm:right-4"
       enter="transition ease-out duration-100"
       enterFrom="transform opacity-0 scale-95"
       enterTo="transform opacity-100 scale-100"
@@ -78,7 +76,7 @@ export function EditOccurrence({ routine, isOpen, close }: Props) {
       <div className="mt-2 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
         <button
           type="button"
-          className=" text-gra-700 inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-300 sm:col-start-2"
+          className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-300 sm:col-start-2"
           onClick={() => {
             submit()
             close()

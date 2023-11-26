@@ -1,6 +1,6 @@
 import { compareAsc, differenceInMonths, format, startOfMonth, startOfToday } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import { getDateFnsLocale } from '&/common/utils'
+import { useGetDateFnsLocale } from '&/common/hooks'
 
 interface Props {
   onPreviousMonth: () => void
@@ -11,8 +11,9 @@ interface Props {
 }
 
 export function MonthSelector({ onPreviousMonth, onNextMonth, currentMonth, noFuture, pastLimit }: Props) {
-  const nextIsDisabled = noFuture && compareAsc(currentMonth, startOfMonth(startOfToday())) >= 0
+  const { locale } = useGetDateFnsLocale()
 
+  const nextIsDisabled = noFuture && compareAsc(currentMonth, startOfMonth(startOfToday())) >= 0
   const pastIsDisabled = pastLimit ? differenceInMonths(startOfToday(), currentMonth) >= pastLimit : false
 
   return (
@@ -27,7 +28,7 @@ export function MonthSelector({ onPreviousMonth, onNextMonth, currentMonth, noFu
         <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
       </button>
       <h2 className="text-sm font-semibold capitalize text-gray-600">
-        {format(currentMonth, 'MMMM yyyy', { locale: getDateFnsLocale() })}
+        {format(currentMonth, 'MMMM yyyy', { locale })}
       </h2>
       <button
         disabled={nextIsDisabled}

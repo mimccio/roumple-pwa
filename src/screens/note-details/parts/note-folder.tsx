@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function NoteFolder({ note }: Props) {
-  const { folderList, isLoading, error, onSelect } = useNoteFolder(note)
+  const { folderList, isLoading, isError, onSelect } = useNoteFolder(note)
   const ButtonIcon = note.folder?.id ? FolderIcon : InboxIcon
 
   return (
@@ -16,7 +16,7 @@ export function NoteFolder({ note }: Props) {
       item={note.folder}
       options={folderList}
       isLoading={isLoading}
-      isError={Boolean(error)}
+      isError={isError}
       onSelect={onSelect}
       ButtonIcon={ButtonIcon}
       DefaultOptionIcon={InboxIcon}

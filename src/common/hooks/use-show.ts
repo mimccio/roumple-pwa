@@ -1,3 +1,5 @@
+// TODO: use getShowStatus util
+
 interface Params {
   isLoading: boolean
   isPaused?: boolean

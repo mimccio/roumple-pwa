@@ -1,91 +1,94 @@
 import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
-import { ArrowPathRoundedSquareIcon, CheckCircleIcon, DocumentTextIcon, TagIcon } from '@heroicons/react/24/outline'
+import { AnimatePresence, motion } from 'framer-motion'
+import { LanguageIcon } from '@heroicons/react/24/outline'
 
 import welcomeImg from '&/assets/illustrations/welcome.png'
-import { CreateRoutineModale } from '&/modules/routine/components'
-import { useRoutineList } from '&/modules/routine/hooks'
-import { useTaskList } from '&/modules/task/hooks'
-import { CreateTaskModale } from '&/modules/task/components'
-import { useCreateNote } from '&/modules/note/hooks'
-import { Link } from 'react-router-dom'
+import { LoadingSpinner } from '&/common/components/spinners'
+import { useToggleOpen } from '&/common/hooks'
+import { LanguageSelector } from '&/common/components/inputs/language-selector'
+
+import { useGetTemplates } from '&/modules/template/hooks'
+import { TemplateItem } from '&/modules/template/components'
+
+import { BlankItem } from './parts/blank-item'
+import { NoTemplate } from './parts/no-template'
 
 export function WelcomeScreen() {
   const { t } = useTranslation('welcome')
-  const { onOpenCreate: openRoutine, onCloseCreate: closeRoutine, createIsOpen: routineIsOpen } = useRoutineList()
-  const { onOpenCreate: openTask, onCloseCreate: closeTask, createIsOpen: taskIsOpen } = useTaskList()
-  const { onCreate: onCreateNote } = useCreateNote()
+  const { isLoading, templateList } = useGetTemplates()
+  const { toggle, isOpen } = useToggleOpen()
 
   return (
-    <div className="relative mt-8 flex w-full flex-1 flex-col items-center p-4">
-      <h2 className="mb-8 text-center text-lg font-bold text-gray-600">{t('title')}</h2>
-
+    <div className="mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col items-center gap-y-12 px-4 pb-8 pt-32 text-gray-600">
+      <div className="absolute right-4 top-4 flex items-center gap-x-4">
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, scaleX: 0.5 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              exit={{ opacity: 0, scaleX: 0.7, transition: { duration: 0.1 } }}
+              style={{ originX: 1 }}
+            >
+              <div className="w-40">
+                <LanguageSelector />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button
+          onClick={toggle}
+          className="rounded-lg p-3 text-gray-400 transition-all hover:bg-gray-50 hover:text-gray-500 hover:shadow-md "
+        >
+          <LanguageIcon className="w-5 " />
+        </button>
+      </div>
+      <motion.h1
+        initial={{ translateY: -50, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
+        transition={{ duration: 0.75 }}
+        className="py-2 text-center text-4xl font-semibold text-indigo-500"
+      >
+        {t('Welcome to')}{' '}
+        <span className="bg-gradient-to-r from-emerald-500 via-pink-400 to-indigo-500 bg-clip-text text-transparent">
+          Roumple
+        </span>
+      </motion.h1>
       <motion.img
         src={welcomeImg}
         initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 0.75, scale: 1 }}
+        animate={{ opacity: 0.5, scale: 1 }}
         transition={{ duration: 0.75 }}
-        className="mx-auto flex h-52 w-52 items-center justify-center opacity-75"
+        className="mx-auto flex h-52 w-52 items-center justify-center opacity-50"
       />
+      <LoadingSpinner isLoading={isLoading} />
 
-      <ul className="mt-12 flex flex-col gap-y-2">
-        <motion.li
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-        >
-          <button className="group flex items-start gap-2 p-2" onClick={openTask}>
-            <CheckCircleIcon width={20} className="mt-0.5 text-gray-400 transition-colors group-hover:text-gray-500" />
-            <span className="font-semibold text-gray-600 transition-colors group-hover:text-gray-700">
-              {t('firstTask')}
-            </span>
-          </button>
-        </motion.li>
+      {templateList && templateList?.length >= 1 && (
+        <>
+          <motion.h2
+            initial={{ translateY: 20, opacity: 0 }}
+            animate={{ translateY: 0, opacity: 1 }}
+            transition={{ duration: 0.75, delay: 0.1 }}
+            className="mb-4 text-xl font-semibold text-gray-500"
+          >
+            {t('Start blank or use a template')}
+          </motion.h2>
 
-        <motion.li
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-        >
-          <button className="group flex items-start gap-2 p-2" onClick={openRoutine}>
-            <ArrowPathRoundedSquareIcon
-              width={20}
-              className="mt-0.5 text-gray-400 transition-colors group-hover:text-gray-500"
-            />
-            <span className="font-semibold text-gray-600 transition-colors group-hover:text-gray-700">
-              {t('firstRoutine')}
-            </span>
-          </button>
-        </motion.li>
+          <motion.div
+            initial={{ translateY: 100, opacity: 0 }}
+            animate={{ translateY: 0, opacity: 1 }}
+            transition={{ duration: 0.75, delay: 0.1 }}
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-8"
+          >
+            <BlankItem />
+            {templateList?.map((template) => (
+              <TemplateItem key={template.id} template={template} />
+            ))}
+          </motion.div>
+        </>
+      )}
 
-        <motion.li
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.6 }}
-        >
-          <button className="group flex items-start gap-2 p-2" onClick={onCreateNote}>
-            <DocumentTextIcon width={20} className="mt-0.5 text-gray-400 transition-colors group-hover:text-gray-500" />
-            <span className="font-semibold text-gray-600 transition-colors group-hover:text-gray-700">
-              {t('firstNote')}
-            </span>
-          </button>
-        </motion.li>
-
-        <motion.li
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.8 }}
-        >
-          <Link to="/categories" className="group flex items-start gap-2 p-2">
-            <TagIcon width={20} className="mt-0.5 text-gray-400 transition-colors group-hover:text-gray-500" />
-            <span className="font-semibold text-gray-600 transition-colors group-hover:text-gray-700">
-              {t('firstCategory')}
-            </span>
-          </Link>
-        </motion.li>
-      </ul>
-      <CreateRoutineModale isOpen={routineIsOpen} close={closeRoutine} />
-      <CreateTaskModale isOpen={taskIsOpen} close={closeTask} />
+      {!isLoading && !templateList?.length && <NoTemplate />}
     </div>
   )
 }
