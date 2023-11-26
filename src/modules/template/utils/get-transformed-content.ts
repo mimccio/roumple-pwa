@@ -44,7 +44,7 @@ const getTransformedUrl = (userId: string, href: string) => {
 
   const pathname = getTransformPath(userId, url.pathname)
   const transformedHref = new URL(pathname, getOrigin(url.hostname)).href
-
+  console.log('transformedHref :', transformedHref)
   return transformedHref
 }
 
