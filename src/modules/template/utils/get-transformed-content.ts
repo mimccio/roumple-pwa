@@ -4,8 +4,10 @@ import { v5 as uuidv5 } from 'uuid'
 
 const getTransformPath = (userId: string, path: string) => {
   const pathArr = path.split('/')
+  console.log('pathArr :', pathArr)
   if (pathArr[1] !== 'templates') return path
   const listType = pathArr[3]
+  console.log('listType :', listType)
   let newPath = path
   if (listType === 'routines') {
     newPath = pathArr[4] ? `/routines/d/routine/${uuidv5(pathArr[4], userId)}/` : '/routines'
@@ -21,16 +23,16 @@ const getTransformPath = (userId: string, path: string) => {
   } else if (listType === 'categories') {
     newPath = '/categories'
   }
-
+  console.log('newPath :', newPath)
   return newPath
 }
 
 const getTransformedUrl = (userId: string, href: string) => {
   const url = new URL(href)
-
+  console.log('url :', url)
   const isRoumple =
-    url.hostname === 'my.roumple.com' || url.hostname === 'dev.my.roumple.com' || url.hostname === 'localhost'
-
+    url.hostname === 'admin.roumple.com' || url.hostname === 'dev.admin.roumple.com' || url.hostname === 'localhost'
+  console.log('isRoumple :', isRoumple)
   if (!isRoumple) return href
 
   const pathname = getTransformPath(userId, url.pathname)
