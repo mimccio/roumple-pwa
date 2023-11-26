@@ -9,6 +9,7 @@ export default {
   plugins: [require('@tailwindcss/typography')],
   theme: {
     extend: {
+      screens: { xs: '320px' },
       fontSize: { '2xs': '.65rem' },
       fontFamily: {
         sans: ['nunito', ...defaultTheme.fontFamily.sans],
