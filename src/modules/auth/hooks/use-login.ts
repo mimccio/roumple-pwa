@@ -15,8 +15,6 @@ export const useLogin = () => {
 
   const handleEmailChange = (evt: FormEvent<HTMLInputElement>) => setEmail(evt.currentTarget.value)
 
-  // TODO!: check redirect paths (button click & otp) for dev & prod
-
   const getURL = () => {
     let incompleteUrl = window.location.origin
     // Make sure to include `https://` when not localhost.
