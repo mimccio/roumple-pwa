@@ -27,6 +27,13 @@ const getTransformPath = (userId: string, path: string) => {
   return newPath
 }
 
+const getOrigin = (hostname: string) => {
+  let origin = 'https://my.roumple.com'
+  if (hostname === 'dev.admin.roumple.com') origin = 'https://dev.my.roumple.com'
+  if (hostname === 'localhost') origin = 'http://localhost'
+  return origin
+}
+
 const getTransformedUrl = (userId: string, href: string) => {
   const url = new URL(href)
   console.log('url :', url)
@@ -36,7 +43,7 @@ const getTransformedUrl = (userId: string, href: string) => {
   if (!isRoumple) return href
 
   const pathname = getTransformPath(userId, url.pathname)
-  const transformedHref = new URL(pathname, url.origin).href
+  const transformedHref = new URL(pathname, getOrigin(url.hostname)).href
 
   return transformedHref
 }
