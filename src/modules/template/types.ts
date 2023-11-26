@@ -29,7 +29,7 @@ export interface TemplateRoutine {
   templateCategory: TemplateCategory | null
   templateChecklist?: TemplateRoutineChecklistItem[]
   occurrence: number
-  showChecklist: boolean
+  show_checklist: boolean
 }
 
 type TaskScheduleType = ScheduleType | null
@@ -52,7 +52,7 @@ export interface TemplateTask {
   schedule_type: TaskScheduleType
   date: Date | null
   templateChecklist: TemplateTaskChecklistItem[]
-  showChecklist: boolean
+  show_checklist: boolean
 }
 
 export interface TemplateNoteFolder {
