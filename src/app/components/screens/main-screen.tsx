@@ -16,7 +16,7 @@ import { ErrorFallback, NotFoundFallback } from '&/screens/fallbacks/main'
 
 export function MainScreen() {
   return (
-    <main className="absolute bottom-0 left-0 right-0 top-0 h-screen min-h-screen w-full flex-col sm:w-full sm:flex-1  md:flex lg:relative lg:w-1/2 lg:border-r">
+    <main className="absolute bottom-0 left-0 right-0 top-0 h-screen min-h-screen w-full flex-col overflow-hidden sm:w-full sm:flex-1 md:flex lg:relative lg:w-1/2 lg:border-r">
       <ErrorBoundary fallback={<ErrorFallback />}>
         <Routes>
           {/* Board */}
