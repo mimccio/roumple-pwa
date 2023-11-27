@@ -23,4 +23,13 @@ module.exports = {
     'jsx-a11y/alt-text': 'off', // TODO? add alt text ? (handle loading)
     'jsx-a11y/no-autofocus': 'off', // TODO? handle autofocus
   },
+  overrides: [
+    {
+      files: ['**/common/ui/*.tsx'],
+      rules: {
+        'react/prop-types': [2, { ignore: ['className'] }],
+        'react-refresh/only-export-components': 'off',
+      },
+    },
+  ],
 }
