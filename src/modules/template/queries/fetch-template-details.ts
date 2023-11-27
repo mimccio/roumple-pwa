@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import type { Template } from '../types'
 
 interface IParams {

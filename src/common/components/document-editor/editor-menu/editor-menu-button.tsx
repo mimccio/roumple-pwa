@@ -1,5 +1,5 @@
 import type { ReactNode, ComponentType, MouseEvent, RefObject } from 'react'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   children?: ReactNode

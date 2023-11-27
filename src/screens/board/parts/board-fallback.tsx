@@ -1,12 +1,12 @@
 import { Trans, useTranslation } from 'react-i18next'
 import { useAtom } from 'jotai'
 
-import { EmptyMainContent } from '&/common/components/empty-screens'
-import successImg from '&/assets/illustrations/success.png'
-import orderCompletedImg from '&/assets/illustrations/order-completed.png'
-import { categoryAtom } from '&/modules/category/atoms'
-import { ShowStatus } from '&/common/types'
-import { MainListError, MainListLoading, MainListOffline } from '&/common/components/fallbacks/main-list'
+import { EmptyMainContent } from '@/common/components/empty-screens'
+import successImg from '@/assets/illustrations/success.png'
+import orderCompletedImg from '@/assets/illustrations/order-completed.png'
+import { categoryAtom } from '@/modules/category/atoms'
+import { ShowStatus } from '@/common/types'
+import { MainListError, MainListLoading, MainListOffline } from '@/common/components/fallbacks/main-list'
 
 interface Props {
   showStatus: ShowStatus

@@ -1,5 +1,5 @@
-import { MainListLayout } from '&/common/components/layouts'
-import { Routine } from '&/modules/routine/types'
+import { MainListLayout } from '@/common/components/layouts'
+import { Routine } from '@/modules/routine/types'
 import { GroupedByScheduleRoutineList } from './grouped-by-schedule-routine-list'
 import { SimpleList } from './simple-list'
 

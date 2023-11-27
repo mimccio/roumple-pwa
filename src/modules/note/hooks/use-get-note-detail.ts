@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { useGetRoutineNoteByNoteList } from '&/modules/routine-note/hooks'
+import { useGetRoutineNoteByNoteList } from '@/modules/routine-note/hooks'
 import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'
 import { fetchNoteById } from '../queries'

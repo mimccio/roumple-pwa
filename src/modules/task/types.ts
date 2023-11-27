@@ -1,5 +1,5 @@
 import type { JSONContent } from '@tiptap/react'
-import type { ScheduleType, Status } from '&/common/types'
+import type { ScheduleType, Status } from '@/common/types'
 import type { Category } from '../category/types'
 import { TaskChecklistItem } from '../task-checklist-item/types'
 

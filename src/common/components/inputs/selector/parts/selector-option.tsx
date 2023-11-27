@@ -2,7 +2,7 @@ import type { ElementType } from 'react'
 import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   option: { id?: string; name: string }

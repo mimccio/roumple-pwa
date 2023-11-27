@@ -2,12 +2,12 @@ import { useTranslation } from 'react-i18next'
 import type { UseQueryResult } from '@tanstack/react-query'
 import { ArchiveBoxIcon, SignalSlashIcon } from '@heroicons/react/24/outline'
 
-import { STATUSES } from '&/common/constants'
-import { TW_COLOR_BG_50 } from '&/common/constants/tw-colors'
-import { cl, getPriorityFromColor, getPriorityToColor } from '&/common/utils'
-import { RoutineStatusSelector } from '&/modules/routine/components'
-import type { Routine, RoutineAction } from '&/modules/routine/types'
-import { getRoutineIsDone } from '&/modules/routine/utils/status'
+import { STATUSES } from '@/common/constants'
+import { TW_COLOR_BG_50 } from '@/common/constants/tw-colors'
+import { cl, getPriorityFromColor, getPriorityToColor } from '@/common/utils'
+import { RoutineStatusSelector } from '@/modules/routine/components'
+import type { Routine, RoutineAction } from '@/modules/routine/types'
+import { getRoutineIsDone } from '@/modules/routine/utils/status'
 import { Occurrence, Priority } from '.'
 
 interface Props {

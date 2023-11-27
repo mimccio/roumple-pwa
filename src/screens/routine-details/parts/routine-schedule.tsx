@@ -5,17 +5,17 @@ import { ClockIcon } from '@heroicons/react/24/solid'
 import { ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-import { usePeriodText } from '&/common/hooks'
-import { cl } from '&/common/utils'
-import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
-import type { Routine } from '&/modules/routine/types'
+import { usePeriodText } from '@/common/hooks'
+import { cl } from '@/common/utils'
+import { RoutineScheduleSelector } from '@/common/components/inputs/routine-schedule-selector'
+import type { Routine } from '@/modules/routine/types'
 import {
   getIsScheduled,
   getScheduleTypeBgColor,
   getScheduleTypeBorderColor,
   getScheduleTypeColor,
-} from '&/modules/routine/utils'
-import { useSchedule } from '&/modules/routine/hooks'
+} from '@/modules/routine/utils'
+import { useSchedule } from '@/modules/routine/hooks'
 
 interface Props {
   routine: Routine

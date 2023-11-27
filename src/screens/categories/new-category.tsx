@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
-import { useCreateCategory } from '&/modules/category/hooks'
+import { useCreateCategory } from '@/modules/category/hooks'
 import { LabelButton } from './label-button'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   disabled: boolean

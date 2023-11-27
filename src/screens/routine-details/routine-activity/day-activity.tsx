@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { RoutineAction } from '&/modules/routine/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { RoutineAction } from '@/modules/routine/types'
 import { getDaysList } from './utils'
 import { DayActivityBoard } from './day-activity-board'
 

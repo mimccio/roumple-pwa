@@ -1,5 +1,5 @@
 import { MoonLoader } from 'react-spinners'
-import { SPINNER_COLOR_STRONG } from '&/common/constants'
+import { SPINNER_COLOR_STRONG } from '@/common/constants'
 
 export function ItemSpinner() {
   return (

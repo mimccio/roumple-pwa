@@ -4,13 +4,13 @@ import { Popover, Transition } from '@headlessui/react'
 import { CalendarDaysIcon, ClockIcon } from '@heroicons/react/24/solid'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-import { cl, getScheduleTypeBg, getScheduleTypeIconColor, isPassed } from '&/common/utils'
-import { usePeriodText } from '&/common/hooks'
+import { cl, getScheduleTypeBg, getScheduleTypeIconColor, isPassed } from '@/common/utils'
+import { usePeriodText } from '@/common/hooks'
 
-import type { Task } from '&/modules/task/types'
-import { getScheduleTypeBgColor, getScheduleTypeBorderColor } from '&/modules/routine/utils'
-import { useDateText, useTaskSchedule } from '&/modules/task/hooks'
-import { TaskSchedule } from '&/modules/task/components'
+import type { Task } from '@/modules/task/types'
+import { getScheduleTypeBgColor, getScheduleTypeBorderColor } from '@/modules/routine/utils'
+import { useDateText, useTaskSchedule } from '@/modules/task/hooks'
+import { TaskSchedule } from '@/modules/task/components'
 
 interface Props {
   task: Task

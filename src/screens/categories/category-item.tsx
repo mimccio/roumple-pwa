@@ -1,7 +1,7 @@
-import { useDeleteCategory, useEditCategory } from '&/modules/category/hooks'
+import { useDeleteCategory, useEditCategory } from '@/modules/category/hooks'
 import { XCircleIcon } from '@heroicons/react/20/solid'
 import { LabelButton } from './label-button'
-import { Category } from '&/modules/category/types'
+import { Category } from '@/modules/category/types'
 
 interface Props {
   category: Category

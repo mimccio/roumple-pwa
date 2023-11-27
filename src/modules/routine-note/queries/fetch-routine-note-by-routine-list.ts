@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import type { FetchRoutineNoteListByRoutineQueryKey, RoutineNoteByRoutine } from '../types'
 
 export async function fetchRoutineNoteByRoutineList({ queryKey }: { queryKey: FetchRoutineNoteListByRoutineQueryKey }) {

@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
-import { STATUSES } from '&/common/constants'
-import { useMainPath } from '&/common/hooks'
+import { STATUSES } from '@/common/constants'
+import { useMainPath } from '@/common/hooks'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 import { deleteTask } from '../mutations'
-import { NOTE_KEYS } from '&/modules/note/constants'
-import { Note } from '&/modules/note/types'
+import { NOTE_KEYS } from '@/modules/note/constants'
+import { Note } from '@/modules/note/types'
 
 export function useDeleteTask() {
   const queryClient = useQueryClient()

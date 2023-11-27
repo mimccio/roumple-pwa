@@ -1,18 +1,18 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { Today } from '&/screens/board/today'
-import { Week } from '&/screens/board/week'
-import { Month } from '&/screens/board/month'
+import { Today } from '@/screens/board/today'
+import { Week } from '@/screens/board/week'
+import { Month } from '@/screens/board/month'
 
-import { RoutineListScreen } from '&/screens/routine-list'
-import { SettingsMain } from '&/screens/settings/settings-main'
-import { Categories } from '&/screens/categories'
+import { RoutineListScreen } from '@/screens/routine-list'
+import { SettingsMain } from '@/screens/settings/settings-main'
+import { Categories } from '@/screens/categories'
 
-import { FolderListScreen, NoteListByFolderScreen, NoteListInboxScreen } from '&/screens/note-list'
-import { TaskListScreen } from '&/screens/task-list'
-import { Example } from '&/screens/example'
-import { ErrorFallback, NotFoundFallback } from '&/screens/fallbacks/main'
+import { FolderListScreen, NoteListByFolderScreen, NoteListInboxScreen } from '@/screens/note-list'
+import { TaskListScreen } from '@/screens/task-list'
+import { Example } from '@/screens/example'
+import { ErrorFallback, NotFoundFallback } from '@/screens/fallbacks/main'
 
 export function MainScreen() {
   return (

@@ -1,8 +1,8 @@
 import { it, describe } from 'vitest'
 import { addDays, eachDayOfInterval, lastDayOfMonth, startOfMonth, subDays } from 'date-fns'
 
-import { STATUSES } from '&/common/constants'
-import type { RoutineAction } from '&/modules/routine/types'
+import { STATUSES } from '@/common/constants'
+import type { RoutineAction } from '@/modules/routine/types'
 import { getDaySuccessPercentage, getWeekSuccessPercentage } from './get-success-percentage'
 
 const today = new Date('01/01/2023')

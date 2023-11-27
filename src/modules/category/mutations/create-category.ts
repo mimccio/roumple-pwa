@@ -1,5 +1,5 @@
-import { db } from '&/db'
-import { getUserId } from '&/modules/utils/get-user-id'
+import { db } from '@/db'
+import { getUserId } from '@/modules/utils/get-user-id'
 import { Category } from '../types'
 
 export const createCategory = async ({ id, name, color }: Category) => {

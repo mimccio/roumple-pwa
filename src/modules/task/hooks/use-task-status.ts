@@ -1,5 +1,5 @@
-import type { Status } from '&/common/types'
-import { STATUSES } from '&/common/constants'
+import type { Status } from '@/common/types'
+import { STATUSES } from '@/common/constants'
 import type { Task } from '../types'
 import { useMutateTaskStatus } from './use-mutate-task-status'
 

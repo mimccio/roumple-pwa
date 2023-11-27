@@ -6,7 +6,7 @@ import { compareAsc, isSameDay, startOfToday } from 'date-fns'
 import { ACTION_KEYS, ROUTINE_KEYS } from '../constants'
 import { fetchRoutineById, fetchRoutineAction } from '../queries'
 import { Routine } from '../types'
-import { useGetRoutineNoteByRoutineList } from '&/modules/routine-note/hooks'
+import { useGetRoutineNoteByRoutineList } from '@/modules/routine-note/hooks'
 
 export function useRoutineDetail() {
   const { routineId } = useParams()

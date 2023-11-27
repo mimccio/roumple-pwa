@@ -1,7 +1,7 @@
 import { EditorContent } from '@tiptap/react'
 import type { JSONContent } from '@tiptap/react'
 
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 import { useDocumentEditor } from './use-document-editor'
 import { EditorMenu } from './editor-menu'
 import './style.css'

@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
-import { useOutsideClick } from '&/common/hooks'
-import type { Task } from '&/modules/task/types'
-import { TASK_KEYS } from '&/modules/task/constants'
+import { useOutsideClick } from '@/common/hooks'
+import type { Task } from '@/modules/task/types'
+import { TASK_KEYS } from '@/modules/task/constants'
 import type { TaskChecklistItem } from '../types'
 import { editTaskChecklistItem } from '../mutations'
 

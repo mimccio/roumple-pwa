@@ -1,8 +1,8 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
-import { useEditChecklistItem } from '&/modules/routine-checklist-item/hooks'
-import { RoutineChecklistItem } from '&/modules/routine-checklist-item/types'
+import { useEditChecklistItem } from '@/modules/routine-checklist-item/hooks'
+import { RoutineChecklistItem } from '@/modules/routine-checklist-item/types'
 import { CheckIcon } from '@heroicons/react/24/solid'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   checklistItem: RoutineChecklistItem

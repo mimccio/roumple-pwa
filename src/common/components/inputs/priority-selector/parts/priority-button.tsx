@@ -1,4 +1,4 @@
-import { cl, getPriorityTWTextColor } from '&/common/utils'
+import { cl, getPriorityTWTextColor } from '@/common/utils'
 import { Menu } from '@headlessui/react'
 import { FlagIcon } from '@heroicons/react/24/solid'
 

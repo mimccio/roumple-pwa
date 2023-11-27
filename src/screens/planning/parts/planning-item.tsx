@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 
-import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
-import { cl, getTwBgColor } from '&/common/utils'
-import { Routine } from '&/modules/routine/types'
-import { Task } from '&/modules/task/types'
+import { TW_COLOR_BG_600_HOVER } from '@/common/constants/tw-colors'
+import { cl, getTwBgColor } from '@/common/utils'
+import { Routine } from '@/modules/routine/types'
+import { Task } from '@/modules/task/types'
 import { getItemUrl } from '../utils'
 
 interface Props {

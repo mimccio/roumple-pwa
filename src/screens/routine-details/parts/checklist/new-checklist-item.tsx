@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/24/solid'
-import { cl } from '&/common/utils'
-import type { Routine } from '&/modules/routine/types'
-import { useCreateChecklistItem } from '&/modules/routine-checklist-item/hooks'
+import { cl } from '@/common/utils'
+import type { Routine } from '@/modules/routine/types'
+import { useCreateChecklistItem } from '@/modules/routine-checklist-item/hooks'
 
 interface Props {
   routine: Routine

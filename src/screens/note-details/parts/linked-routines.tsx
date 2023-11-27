@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
 
-import { DetailsInfoPopover } from '&/common/components/popovers/details-info-popover'
-import { RoutineNoteByNote } from '&/modules/routine-note/types'
+import { DetailsInfoPopover } from '@/common/components/popovers/details-info-popover'
+import { RoutineNoteByNote } from '@/modules/routine-note/types'
 
 interface Props {
   routineNoteList?: RoutineNoteByNote[]

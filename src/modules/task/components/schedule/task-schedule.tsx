@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 import { startOfToday } from 'date-fns'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
+import { SCHEDULE_TYPES } from '@/common/constants'
 import { TaskScheduleType } from '../../types'
 import { DayCard, MonthCard, WeekCard, DayDateBtn, WeekDateBtn, MonthDateBtn } from './parts'
 

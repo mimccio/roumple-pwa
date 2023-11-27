@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { Note } from '../types'
 
 export const editNoteContent = async ({ id, title, content }: Note) => {

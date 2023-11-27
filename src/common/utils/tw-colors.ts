@@ -13,7 +13,7 @@ import {
   TW_COLOR_TEXT_400,
   TW_COLOR_TEXT_500,
   TW_COLOR_TEXT_700,
-} from '&/common/constants/tw-colors'
+} from '@/common/constants/tw-colors'
 import type { TwColor } from '../types'
 import { TW_COLOR_BORDER_500 } from '../constants'
 

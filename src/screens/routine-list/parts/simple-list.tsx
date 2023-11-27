@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import type { Routine } from '&/modules/routine/types'
+import type { Routine } from '@/modules/routine/types'
 import { Item } from './item'
 
 interface Props {

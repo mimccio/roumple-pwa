@@ -1,5 +1,5 @@
-import { cl, getTwColor } from '&/common/utils'
-import { TemplateRoutine, TemplateTask } from '&/modules/template/types'
+import { cl, getTwColor } from '@/common/utils'
+import { TemplateRoutine, TemplateTask } from '@/modules/template/types'
 import { TagIcon } from '@heroicons/react/24/outline'
 
 interface Props {

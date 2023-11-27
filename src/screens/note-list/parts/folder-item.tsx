@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { FolderIcon } from '@heroicons/react/24/solid'
 import { FolderIcon as FolderOutlineIcon } from '@heroicons/react/24/outline'
 
-import { NoteFolder } from '&/modules/note-folder/types'
+import { NoteFolder } from '@/modules/note-folder/types'
 
 interface Props {
   folder: NoteFolder

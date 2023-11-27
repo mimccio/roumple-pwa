@@ -1,8 +1,8 @@
-import { db } from '&/db'
-import { getUserId } from '&/modules/utils/get-user-id'
+import { db } from '@/db'
+import { getUserId } from '@/modules/utils/get-user-id'
 import { format } from 'date-fns'
 import { Task } from '../types'
-import { DATE_FORMAT } from '&/common/constants'
+import { DATE_FORMAT } from '@/common/constants'
 
 export const createTask = async ({ id, created_at, name, category, priority, period, scheduleType, date }: Task) => {
   const user_id = await getUserId()

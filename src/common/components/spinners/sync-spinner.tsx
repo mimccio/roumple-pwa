@@ -1,5 +1,5 @@
 import { SyncLoader } from 'react-spinners'
-import { SPINNER_COLOR_LIGHT } from '&/common/constants'
+import { SPINNER_COLOR_LIGHT } from '@/common/constants'
 import { Transition } from '@headlessui/react'
 
 interface Props {

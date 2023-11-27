@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
-import { LoadingSpinner } from '&/common/components/spinners'
-import { useSetOnboarded } from '&/modules/auth/hooks'
+import { LoadingSpinner } from '@/common/components/spinners'
+import { useSetOnboarded } from '@/modules/auth/hooks'
 
 export function NoTemplate() {
   const { t } = useTranslation('welcome')

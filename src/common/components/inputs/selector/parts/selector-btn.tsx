@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Listbox } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   item?: { id: string; name: string } | null

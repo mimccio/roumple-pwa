@@ -1,10 +1,10 @@
 import { format, startOfWeek } from 'date-fns'
 import { v5 as uuidv5 } from 'uuid'
 
-import { db } from '&/db'
-import type { Status } from '&/common/types'
-import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
-import { getUserId } from '&/modules/utils'
+import { db } from '@/db'
+import type { Status } from '@/common/types'
+import { DATE_FORMAT, SCHEDULE_TYPES } from '@/common/constants'
+import { getUserId } from '@/modules/utils'
 import type { Routine } from '../types'
 
 interface Params {

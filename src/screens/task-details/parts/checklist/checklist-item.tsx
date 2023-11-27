@@ -1,9 +1,9 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
-import { useEditChecklistItem } from '&/modules/task-checklist-item/hooks'
+import { useEditChecklistItem } from '@/modules/task-checklist-item/hooks'
 
 import { CheckIcon } from '@heroicons/react/24/solid'
-import { cl } from '&/common/utils'
-import { TaskChecklistItem } from '&/modules/task-checklist-item/types'
+import { cl } from '@/common/utils'
+import { TaskChecklistItem } from '@/modules/task-checklist-item/types'
 
 interface Props {
   checklistItem: TaskChecklistItem

@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Listbox, Transition } from '@headlessui/react'
 
-import type { Category } from '&/modules/category/types'
+import type { Category } from '@/modules/category/types'
 import { CategoryOption } from './parts/category-option'
 import { CategoryBtn } from './parts/category-btn'
 

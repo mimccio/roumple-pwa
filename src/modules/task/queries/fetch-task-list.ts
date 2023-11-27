@@ -1,5 +1,5 @@
-import { db } from '&/db'
-import { STATUSES } from '&/common/constants'
+import { db } from '@/db'
+import { STATUSES } from '@/common/constants'
 import { Task } from '../types'
 
 interface FetchTaskListParams {

@@ -12,7 +12,7 @@ import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import { debounce, isEqual } from 'lodash'
 import { EditorState } from 'prosemirror-state'
-import { getUrl } from '&/common/utils'
+import { getUrl } from '@/common/utils'
 
 interface Params {
   submit: (json?: JSONContent | undefined) => void

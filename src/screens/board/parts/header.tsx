@@ -3,12 +3,12 @@ import { useAtom } from 'jotai'
 import { TagIcon, CheckBadgeIcon, ClockIcon } from '@heroicons/react/24/solid'
 import { CheckBadgeIcon as CheckBadgeOutlineIcon, ClockIcon as ClockOutlineIcon } from '@heroicons/react/24/outline'
 
-import type { ScheduleType } from '&/common/types'
-import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
-import { Tooltip } from '&/common/components/tooltip'
-import { cl, getScheduleTypeTextColor } from '&/common/utils'
-import { getGroupHoverPeriodColor, getPeriodColor } from '&/modules/routine/utils'
-import { categoryAtom } from '&/modules/category/atoms'
+import type { ScheduleType } from '@/common/types'
+import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '@/common/constants'
+import { Tooltip } from '@/common/components/tooltip'
+import { cl, getScheduleTypeTextColor } from '@/common/utils'
+import { getGroupHoverPeriodColor, getPeriodColor } from '@/modules/routine/utils'
+import { categoryAtom } from '@/modules/category/atoms'
 
 interface Props {
   title: ReactNode

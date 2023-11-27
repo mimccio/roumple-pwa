@@ -1,4 +1,4 @@
-import { useRoutineDetail } from '&/modules/routine/hooks'
+import { useRoutineDetail } from '@/modules/routine/hooks'
 import { RoutineNavbar } from './nav'
 import { RoutineDetailsContent } from './routine-details-content'
 

@@ -7,12 +7,12 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
 
-import '&/assets/fonts/fonts.css'
-import { editCategory } from '&/modules/category/mutations'
-import { CATEGORY_LIST } from '&/modules/category/constants'
-import { Login } from '&/screens/login'
-import { WelcomeScreen } from '&/screens/welcome'
-import { TemplateDetailsScreen } from '&/screens/template-details'
+import '@/assets/fonts/fonts.css'
+import { editCategory } from '@/modules/category/mutations'
+import { CATEGORY_LIST } from '@/modules/category/constants'
+import { Login } from '@/screens/login'
+import { WelcomeScreen } from '@/screens/welcome'
+import { TemplateDetailsScreen } from '@/screens/template-details'
 
 import './i18n'
 import { AuthenticatedApp } from './components/authenticated-app'

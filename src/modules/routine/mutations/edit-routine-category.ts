@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { Routine } from '../types'
 
 export const editRoutineCategory = async ({ id, category }: Routine) => {

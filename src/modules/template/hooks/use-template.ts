@@ -4,14 +4,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 
-import { useSetOnboarded } from '&/modules/auth/hooks'
-import { CATEGORY_LIST } from '&/modules/category/constants'
-import { ROUTINE_KEYS } from '&/modules/routine/constants'
-import { TASK_KEYS } from '&/modules/task/constants'
-import { NOTE_KEYS } from '&/modules/note/constants'
-import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
-import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
-import { TASK_NOTES_KEYS } from '&/modules/task-note/constants'
+import { useSetOnboarded } from '@/modules/auth/hooks'
+import { CATEGORY_LIST } from '@/modules/category/constants'
+import { ROUTINE_KEYS } from '@/modules/routine/constants'
+import { TASK_KEYS } from '@/modules/task/constants'
+import { NOTE_KEYS } from '@/modules/note/constants'
+import { NOTE_FOLDER_KEYS } from '@/modules/note-folder/constants'
+import { ROUTINE_NOTE_KEYS } from '@/modules/routine-note/constants'
+import { TASK_NOTES_KEYS } from '@/modules/task-note/constants'
 
 import {
   createBulkCategories,

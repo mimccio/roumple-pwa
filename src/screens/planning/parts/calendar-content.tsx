@@ -1,11 +1,11 @@
 import { getDate, isSameMonth, isToday } from 'date-fns'
 
-import type { ScheduleType } from '&/common/types'
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl } from '&/common/utils'
+import type { ScheduleType } from '@/common/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { cl } from '@/common/utils'
 
-import type { Routine } from '&/modules/routine/types'
-import type { Task } from '&/modules/task/types'
+import type { Routine } from '@/modules/routine/types'
+import type { Task } from '@/modules/task/types'
 
 import { mergeTaskAndRoutines } from '../utils/'
 import { PlanningItem } from './planning-item'

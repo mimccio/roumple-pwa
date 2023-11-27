@@ -1,4 +1,4 @@
-import { ScheduleType, TwColor } from '&/common/types'
+import { ScheduleType, TwColor } from '@/common/types'
 import { JSONContent } from '@tiptap/react'
 
 export type TemplateCategory = {

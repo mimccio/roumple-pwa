@@ -1,5 +1,5 @@
-import { db } from '&/db'
-import { getUserId } from '&/modules/utils/get-user-id'
+import { db } from '@/db'
+import { getUserId } from '@/modules/utils/get-user-id'
 import { Routine } from '../types'
 
 export const createRoutine = async ({

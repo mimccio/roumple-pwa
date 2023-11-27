@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useOutsideClick } from '&/common/hooks'
+import { useOutsideClick } from '@/common/hooks'
 
 import { createTaskChecklistItem } from '../mutations'
-import { TASK_KEYS } from '&/modules/task/constants'
-import { Task } from '&/modules/task/types'
+import { TASK_KEYS } from '@/modules/task/constants'
+import { Task } from '@/modules/task/types'
 
 export function useCreateChecklistItem(task: Task) {
   const { t } = useTranslation('error')

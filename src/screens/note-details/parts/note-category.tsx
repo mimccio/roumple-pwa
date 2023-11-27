@@ -1,7 +1,7 @@
-import { CategorySelector } from '&/common/components/inputs/category-selector'
+import { CategorySelector } from '@/common/components/inputs/category-selector'
 
-import type { Note } from '&/modules/note/types'
-import { useNoteCategory } from '&/modules/note/hooks'
+import type { Note } from '@/modules/note/types'
+import { useNoteCategory } from '@/modules/note/hooks'
 
 interface Props {
   note: Note

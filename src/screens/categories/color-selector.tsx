@@ -1,7 +1,7 @@
 import type { RefObject } from 'react'
 
-import { TW_COLOR_LIST } from '&/common/constants'
-import type { TwColor } from '&/common/types'
+import { TW_COLOR_LIST } from '@/common/constants'
+import type { TwColor } from '@/common/types'
 import { ColorItem } from './color-item'
 
 interface Props {

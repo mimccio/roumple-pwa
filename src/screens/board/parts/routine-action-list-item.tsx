@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { ArrowPathRoundedSquareIcon } from '@heroicons/react/24/solid'
-import { cl } from '&/common/utils'
-import { Routine, UpdateStatusParams } from '&/modules/routine/types'
+import { cl } from '@/common/utils'
+import { Routine, UpdateStatusParams } from '@/modules/routine/types'
 import { DoneButton } from './done-button'
 
 interface Props {

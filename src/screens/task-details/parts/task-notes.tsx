@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
-import { useTaskNoteList, useDeleteTaskNote } from '&/modules/task-note/hooks'
+import { useTaskNoteList, useDeleteTaskNote } from '@/modules/task-note/hooks'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
 export function TaskNotes() {

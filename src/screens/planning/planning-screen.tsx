@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { eachDayOfInterval, endOfMonth, endOfWeek, startOfWeek } from 'date-fns'
 
-import { ScheduleType } from '&/common/types'
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { useCalendar } from '&/common/components/calendars/hooks'
+import { ScheduleType } from '@/common/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { useCalendar } from '@/common/components/calendars/hooks'
 
-import type { Routine } from '&/modules/routine/types'
-import type { Task } from '&/modules/task/types'
-import { useRoutineList } from '&/modules/routine/hooks'
-import { useTaskList } from '&/modules/task/hooks'
+import type { Routine } from '@/modules/routine/types'
+import type { Task } from '@/modules/task/types'
+import { useRoutineList } from '@/modules/routine/hooks'
+import { useTaskList } from '@/modules/task/hooks'
 
 import { MainError, OfflineError } from '../errors'
 import { MainLoadingScreen } from '../main-loading-screen'

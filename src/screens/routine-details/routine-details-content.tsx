@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-import { DetailsFallback } from '&/common/components/fallbacks/details'
-import type { RoutineAction, Routine } from '&/modules/routine/types'
-import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
+import { DetailsFallback } from '@/common/components/fallbacks/details'
+import type { RoutineAction, Routine } from '@/modules/routine/types'
+import type { RoutineNoteByRoutine } from '@/modules/routine-note/types'
 
 import { RoutineActivity } from './routine-activity'
 import { RoutineDetails } from './routine-details'

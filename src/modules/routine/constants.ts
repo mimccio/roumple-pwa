@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
-import type { ScheduleType } from '&/common/types'
-import { DATE_FORMAT } from '&/common/constants'
+import type { ScheduleType } from '@/common/types'
+import { DATE_FORMAT } from '@/common/constants'
 import { getScheduleFormattedDate } from './utils'
 
 interface BoardOptions {

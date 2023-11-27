@@ -14,7 +14,7 @@ import {
   startOfWeek,
 } from 'date-fns'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
+import { SCHEDULE_TYPES } from '@/common/constants'
 import type { TaskScheduleType } from '../types'
 
 export function useDateText() {

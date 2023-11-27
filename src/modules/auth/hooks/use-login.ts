@@ -2,8 +2,8 @@ import type { FormEvent } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { db } from '&/db'
-import { useGetLanguage } from '&/common/hooks'
+import { db } from '@/db'
+import { useGetLanguage } from '@/common/hooks'
 
 export const useLogin = () => {
   const navigate = useNavigate()

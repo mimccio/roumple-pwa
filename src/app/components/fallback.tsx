@@ -1,4 +1,4 @@
-import { SPINNER_COLOR } from '&/common/constants'
+import { SPINNER_COLOR } from '@/common/constants'
 import { Transition } from '@headlessui/react'
 import { GridLoader } from 'react-spinners'
 

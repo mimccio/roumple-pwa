@@ -1,6 +1,6 @@
-import { STATUSES } from '&/common/constants'
-import { db } from '&/db'
-import { getUserId } from '&/modules/utils'
+import { STATUSES } from '@/common/constants'
+import { db } from '@/db'
+import { getUserId } from '@/modules/utils'
 
 export const deleteAllDoneTasks = async () => {
   const userId = await getUserId()

@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { Routine } from '../types'
 
 export const deleteRoutine = async ({ id }: Routine) => {

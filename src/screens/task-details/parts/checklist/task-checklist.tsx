@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import type { Task } from '&/modules/task/types'
-import { useCheckItem } from '&/modules/task/hooks'
-import { useDeleteChecklistItem } from '&/modules/task-checklist-item/hooks'
+import type { Task } from '@/modules/task/types'
+import { useCheckItem } from '@/modules/task/hooks'
+import { useDeleteChecklistItem } from '@/modules/task-checklist-item/hooks'
 import { ChecklistItem } from './checklist-item'
 import { NewChecklistItem } from './new-checklist-item'
 

@@ -7,8 +7,8 @@ import { startOfToday } from 'date-fns'
 import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'
 import { deleteRoutine } from '../mutations'
-import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
-import { RoutineNoteByNote } from '&/modules/routine-note/types'
+import { ROUTINE_NOTE_KEYS } from '@/modules/routine-note/constants'
+import { RoutineNoteByNote } from '@/modules/routine-note/types'
 
 export function useDeleteRoutine() {
   const { t } = useTranslation('error')

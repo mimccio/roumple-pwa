@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useOutsideClick } from '&/common/hooks'
+import { useOutsideClick } from '@/common/hooks'
 import { createRoutineChecklistItem } from '../mutations/create-routine-checklist-item'
-import { Routine } from '&/modules/routine/types'
-import { ROUTINE_KEYS } from '&/modules/routine/constants'
+import { Routine } from '@/modules/routine/types'
+import { ROUTINE_KEYS } from '@/modules/routine/constants'
 
 export function useCreateChecklistItem(routine: Routine) {
   const { t } = useTranslation('error')

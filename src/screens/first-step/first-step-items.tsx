@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { ArrowPathRoundedSquareIcon, CheckCircleIcon, DocumentTextIcon, TagIcon } from '@heroicons/react/24/outline'
 
-import { CreateRoutineModale } from '&/modules/routine/components'
-import { useRoutineList } from '&/modules/routine/hooks'
-import { useTaskList } from '&/modules/task/hooks'
-import { CreateTaskModale } from '&/modules/task/components'
-import { useCreateNote } from '&/modules/note/hooks'
+import { CreateRoutineModale } from '@/modules/routine/components'
+import { useRoutineList } from '@/modules/routine/hooks'
+import { useTaskList } from '@/modules/task/hooks'
+import { CreateTaskModale } from '@/modules/task/components'
+import { useCreateNote } from '@/modules/note/hooks'
 import { Link } from 'react-router-dom'
 
 export function FirstStepItems() {

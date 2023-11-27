@@ -11,11 +11,11 @@ import {
 } from 'date-fns'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl } from '&/common/utils'
-import type { ScheduleType } from '&/common/types'
-import { useActionDateText } from '&/modules/routine/hooks'
-import { getIsCurrentDate } from '&/modules/routine/utils'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { cl } from '@/common/utils'
+import type { ScheduleType } from '@/common/types'
+import { useActionDateText } from '@/modules/routine/hooks'
+import { getIsCurrentDate } from '@/modules/routine/utils'
 
 interface Props {
   scheduleType: ScheduleType

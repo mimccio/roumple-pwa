@@ -1,4 +1,4 @@
-import { useTaskDetail } from '&/modules/task/hooks'
+import { useTaskDetail } from '@/modules/task/hooks'
 import { TaskHeader } from './parts/task-header'
 import { TaskDetailsContent } from './task-details-content'
 

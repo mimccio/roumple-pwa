@@ -1,6 +1,6 @@
 import type { ScheduleType, TwColor } from '../types'
 import { SCHEDULE_TYPES, TW_COLOR_TEXT_500 } from '../constants'
-import type { TaskScheduleType } from '&/modules/task/types'
+import type { TaskScheduleType } from '@/modules/task/types'
 import { cl } from '.'
 
 export const getPriorityTWTextColor = (priority: number) => {

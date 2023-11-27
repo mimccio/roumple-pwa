@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { DetailsNavbar } from '&/common/components/layouts'
-import { CloseNavBtn } from '&/common/components/buttons'
-import { ItemMenu } from '&/common/components/menus'
-import { ConfirmDeleteModale } from '&/common/components/modales'
+import { DetailsNavbar } from '@/common/components/layouts'
+import { CloseNavBtn } from '@/common/components/buttons'
+import { ItemMenu } from '@/common/components/menus'
+import { ConfirmDeleteModale } from '@/common/components/modales'
 
-import type { Task } from '&/modules/task/types'
-import { useDeleteTask, useEditTaskShowChecklist } from '&/modules/task/hooks'
+import type { Task } from '@/modules/task/types'
+import { useDeleteTask, useEditTaskShowChecklist } from '@/modules/task/hooks'
 
 import { CreateTaskNote } from './create-task-note'
 

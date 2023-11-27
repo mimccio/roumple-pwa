@@ -1,8 +1,8 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Routine } from '&/modules/routine/types'
-import { ROUTINE_KEYS } from '&/modules/routine/constants'
+import type { Routine } from '@/modules/routine/types'
+import { ROUTINE_KEYS } from '@/modules/routine/constants'
 import { deletedRoutineChecklistItem } from '../mutations'
 
 export function useDeleteChecklistItem(routine: Routine) {

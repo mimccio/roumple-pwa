@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 
 export const getUserId = async () => {
   const { data } = await db.auth.getSession()

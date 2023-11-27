@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { ListSkeleton } from '&/common/components/skeletons'
-import { useNoteList } from '&/modules/note/hooks/use-note-list'
-import { MainError, OfflineError } from '&/screens/errors'
+import { ListSkeleton } from '@/common/components/skeletons'
+import { useNoteList } from '@/modules/note/hooks/use-note-list'
+import { MainError, OfflineError } from '@/screens/errors'
 import { NoteListItem } from './note-list-item'
 
 export function NoteListFolder() {

@@ -1,12 +1,12 @@
 import { Trans, useTranslation } from 'react-i18next'
 
-import { EmptyMainContent } from '&/common/components/empty-screens'
-import workflowImg from '&/assets/illustrations/workflow.png'
-import successImg from '&/assets/illustrations/success.png'
-import locationImg from '&/assets/illustrations/location.png'
+import { EmptyMainContent } from '@/common/components/empty-screens'
+import workflowImg from '@/assets/illustrations/workflow.png'
+import successImg from '@/assets/illustrations/success.png'
+import locationImg from '@/assets/illustrations/location.png'
 
-import { MainListError, MainListLoading, MainListOffline } from '&/common/components/fallbacks/main-list'
-import { ShowStatus } from '&/common/types'
+import { MainListError, MainListLoading, MainListOffline } from '@/common/components/fallbacks/main-list'
+import { ShowStatus } from '@/common/types'
 
 interface Props {
   category: { name: string } | null

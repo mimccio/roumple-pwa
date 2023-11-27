@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
-import { categoryAtom } from '&/modules/category/atoms'
+import { categoryAtom } from '@/modules/category/atoms'
 
 import type { SortType } from '../types'
 import { TASK_KEYS } from '../constants'
 import { sortTypeAtom } from '../atoms'
 import { sortTask } from '../utils'
 import { fetchTaskList } from '../queries'
-import { getShowStatus } from '&/common/utils'
+import { getShowStatus } from '@/common/utils'
 
 export function useTaskList() {
   const [category] = useAtom(categoryAtom)

@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { useAtom } from 'jotai'
 
-import type { Category } from '&/modules/category/types'
-import { useCategories } from '&/modules/category/hooks'
-import { categoryAtom } from '&/modules/category/atoms'
+import type { Category } from '@/modules/category/types'
+import { useCategories } from '@/modules/category/hooks'
+import { categoryAtom } from '@/modules/category/atoms'
 
 import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'
 import { editNoteCategory } from '../mutations'
-import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
-import { NoteFolder } from '&/modules/note-folder/types'
+import { NOTE_FOLDER_KEYS } from '@/modules/note-folder/constants'
+import { NoteFolder } from '@/modules/note-folder/types'
 
 // TODO!: use setQueriesData
 

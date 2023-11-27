@@ -6,8 +6,8 @@ import { toast } from 'react-hot-toast'
 import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'
 import { editNoteContent } from '../mutations'
-import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
-import { RoutineNoteByRoutine } from '&/modules/routine-note/types'
+import { ROUTINE_NOTE_KEYS } from '@/modules/routine-note/constants'
+import { RoutineNoteByRoutine } from '@/modules/routine-note/types'
 import { sortRoutineNotes } from '../utils'
 
 export function useEditNoteContent(note: Note) {

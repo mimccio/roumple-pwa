@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NewRoutine } from '../types'
 
 export const createBulkRoutines = async (routines: NewRoutine[]) => {

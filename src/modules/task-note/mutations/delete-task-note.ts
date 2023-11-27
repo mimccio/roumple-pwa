@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { TaskNote } from '../types'
 
 export const deleteTaskNote = async ({ id }: TaskNote) => {

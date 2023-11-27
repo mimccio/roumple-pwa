@@ -1,4 +1,4 @@
-import { DATE_FORMAT } from '&/common/constants'
+import { DATE_FORMAT } from '@/common/constants'
 import { format } from 'date-fns'
 import type { TaskScheduleType } from './types'
 

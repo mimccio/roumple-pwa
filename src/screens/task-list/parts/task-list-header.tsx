@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { CheckBadgeIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { CheckCircleIcon, CheckBadgeIcon as CheckBadgeOutlineIcon } from '@heroicons/react/24/outline'
 
-import { Tooltip } from '&/common/components/tooltip'
-import { Header } from '&/common/components/layouts'
-import { CategoryBtn } from '&/common/components/buttons'
-import type { SortType } from '&/modules/task/types'
+import { Tooltip } from '@/common/components/tooltip'
+import { Header } from '@/common/components/layouts'
+import { CategoryBtn } from '@/common/components/buttons'
+import type { SortType } from '@/modules/task/types'
 import { TasksMenu } from './tasks-menu'
 
 interface Props {

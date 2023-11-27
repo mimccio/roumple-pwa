@@ -1,7 +1,7 @@
 import { Trans, useTranslation } from 'react-i18next'
 import { BugAntIcon, FaceSmileIcon, HandThumbUpIcon, LightBulbIcon, MegaphoneIcon } from '@heroicons/react/24/outline'
 
-import { ContentLayout } from '&/common/components/layouts'
+import { ContentLayout } from '@/common/components/layouts'
 import { FeedbackHeader } from './parts/feedback-header'
 
 export function FeedbackScreen() {

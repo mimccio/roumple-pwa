@@ -1,8 +1,8 @@
 import { addMonths, isThisMonth, subMonths } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { useDateText } from '&/modules/task/hooks'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { useDateText } from '@/modules/task/hooks'
 
 interface Props {
   date: Date

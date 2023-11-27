@@ -1,6 +1,6 @@
-import { DocumentEditor } from '&/common/components/document-editor'
-import type { Routine } from '&/modules/routine/types'
-import { useEditRoutineDescription } from '&/modules/routine/hooks'
+import { DocumentEditor } from '@/common/components/document-editor'
+import type { Routine } from '@/modules/routine/types'
+import { useEditRoutineDescription } from '@/modules/routine/hooks'
 
 interface Props {
   routine: Routine

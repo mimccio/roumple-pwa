@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { useSetOnboarded } from '&/modules/auth/hooks'
-import { ConfirmModale } from '&/common/components/modales/confirm-modale'
+import { useSetOnboarded } from '@/modules/auth/hooks'
+import { ConfirmModale } from '@/common/components/modales/confirm-modale'
 import { useNavigate } from 'react-router-dom'
 
 interface IParams {

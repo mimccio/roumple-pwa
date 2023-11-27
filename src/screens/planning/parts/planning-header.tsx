@@ -1,8 +1,8 @@
 import { format, isSameMonth } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
-import { cl } from '&/common/utils'
-import { useGetDateFnsLocale } from '&/common/hooks'
+import { cl } from '@/common/utils'
+import { useGetDateFnsLocale } from '@/common/hooks'
 
 interface Props {
   date: Date

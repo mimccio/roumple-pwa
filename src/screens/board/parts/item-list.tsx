@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import type { Routine, UpdateStatusParams } from '&/modules/routine/types'
-import type { Task } from '&/modules/task/types'
-import { TaskListItem } from '&/modules/task/components'
+import type { Routine, UpdateStatusParams } from '@/modules/routine/types'
+import type { Task } from '@/modules/task/types'
+import { TaskListItem } from '@/modules/task/components'
 import { RoutineActionListItem } from './routine-action-list-item'
 
 interface Props {

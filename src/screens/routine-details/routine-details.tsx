@@ -1,10 +1,10 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 
-import { CreatedAt } from '&/common/components/display/created-at'
+import { CreatedAt } from '@/common/components/display/created-at'
 
-import type { RoutineAction, Routine } from '&/modules/routine/types'
-import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
-import { getIsCurrentDate } from '&/modules/routine/utils'
+import type { RoutineAction, Routine } from '@/modules/routine/types'
+import type { RoutineNoteByRoutine } from '@/modules/routine-note/types'
+import { getIsCurrentDate } from '@/modules/routine/utils'
 
 import {
   RoutineCategory,

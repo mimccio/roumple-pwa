@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import type { Routine } from '../types'
 
 interface IParams {

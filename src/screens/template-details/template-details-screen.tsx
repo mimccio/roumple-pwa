@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { DetailsLoadingPage } from '&/common/components/details-loading-page'
-import { useTemplate } from '&/modules/template/hooks'
-import { NotFoundScreen } from '&/screens/errors'
+import { DetailsLoadingPage } from '@/common/components/details-loading-page'
+import { useTemplate } from '@/modules/template/hooks'
+import { NotFoundScreen } from '@/screens/errors'
 import { Details } from './screens/details'
 import { Creating } from './screens/creating'
 

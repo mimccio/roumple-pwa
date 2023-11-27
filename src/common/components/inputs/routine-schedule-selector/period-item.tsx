@@ -1,8 +1,8 @@
 import type { FormEvent } from 'react'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl } from '&/common/utils'
-import type { ScheduleType } from '&/common/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { cl } from '@/common/utils'
+import type { ScheduleType } from '@/common/types'
 
 interface Props {
   checked: boolean

@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { InboxIcon } from '@heroicons/react/24/solid'
 import { ExclamationTriangleIcon, SignalSlashIcon } from '@heroicons/react/24/outline'
 
-import { ListSkeletonSmall } from '&/common/components/skeletons'
-import { useNoteList } from '&/modules/note/hooks'
+import { ListSkeletonSmall } from '@/common/components/skeletons'
+import { useNoteList } from '@/modules/note/hooks'
 import { InboxPreviewItem } from './inbox-preview-item'
 
 const LIMIT = 5

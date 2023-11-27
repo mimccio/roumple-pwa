@@ -2,7 +2,7 @@ import { compareAsc } from 'date-fns'
 
 import type { Routine, SortType } from '../types'
 import { SORT_TYPES } from '../constants'
-import { RoutineNoteByNote } from '&/modules/routine-note/types'
+import { RoutineNoteByNote } from '@/modules/routine-note/types'
 
 export const sortTaskByPriority = (a: Routine, b: Routine) => {
   if (a.priority === b.priority) {

@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { MainListLayout } from '&/common/components/layouts'
-import type { Task } from '&/modules/task/types'
-import { TaskListItem } from '&/modules/task/components'
+import { MainListLayout } from '@/common/components/layouts'
+import type { Task } from '@/modules/task/types'
+import { TaskListItem } from '@/modules/task/components'
 
 interface Props {
   list?: Task[]

@@ -1,8 +1,8 @@
-import { CreateItemModale } from '&/common/components/modales'
-import { RoutineScheduleSelector } from '&/common/components/inputs/routine-schedule-selector'
-import { ModalePrioritySelector } from '&/common/components/inputs/modale-priority-selector'
-import { ModaleCategorySelector } from '&/common/components/inputs/modale-category-selector'
-import { useCreateRoutine } from '&/modules/routine/hooks'
+import { CreateItemModale } from '@/common/components/modales'
+import { RoutineScheduleSelector } from '@/common/components/inputs/routine-schedule-selector'
+import { ModalePrioritySelector } from '@/common/components/inputs/modale-priority-selector'
+import { ModaleCategorySelector } from '@/common/components/inputs/modale-category-selector'
+import { useCreateRoutine } from '@/modules/routine/hooks'
 import { RoutineName } from './parts/routine-name'
 import { Occurrence } from './parts/occurrence'
 

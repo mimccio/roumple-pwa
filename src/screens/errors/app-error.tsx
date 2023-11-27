@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import fatalErrorImg from '&/assets/illustrations/fatal-error.png'
+import fatalErrorImg from '@/assets/illustrations/fatal-error.png'
 
 export function AppError() {
   const { t } = useTranslation('error')

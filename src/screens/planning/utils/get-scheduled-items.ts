@@ -1,7 +1,7 @@
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { ScheduleType } from '&/common/types'
-import { Routine } from '&/modules/routine/types'
-import { Task } from '&/modules/task/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { ScheduleType } from '@/common/types'
+import { Routine } from '@/modules/routine/types'
+import { Task } from '@/modules/task/types'
 import {
   compareAsc,
   getDay,

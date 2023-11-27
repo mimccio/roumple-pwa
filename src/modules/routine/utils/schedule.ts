@@ -10,8 +10,8 @@ import {
   startOfToday,
   startOfWeek,
 } from 'date-fns'
-import type { ScheduleType } from '&/common/types'
-import { DATE_FORMAT, MONTH_DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
+import type { ScheduleType } from '@/common/types'
+import { DATE_FORMAT, MONTH_DATE_FORMAT, SCHEDULE_TYPES } from '@/common/constants'
 import type { Routine } from '../types'
 
 export const getIsScheduled = ({ routine, date }: { routine: Routine; date: Date }) => {

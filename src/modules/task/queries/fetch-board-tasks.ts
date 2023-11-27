@@ -1,7 +1,7 @@
 import { format, lastDayOfWeek, lastDayOfMonth } from 'date-fns'
 
-import { db } from '&/db'
-import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
+import { db } from '@/db'
+import { DATE_FORMAT, SCHEDULE_TYPES } from '@/common/constants'
 import type { Task, TaskScheduleType } from '../types'
 
 interface Params {

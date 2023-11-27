@@ -1,5 +1,5 @@
-import type { ScheduleType } from '&/common/types'
-import { SCHEDULE_TYPES } from '&/common/constants'
+import type { ScheduleType } from '@/common/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
 
 export const getPeriodColor = (scheduleType: ScheduleType) => {
   if (scheduleType === SCHEDULE_TYPES.weekly) return 'text-sky-500'

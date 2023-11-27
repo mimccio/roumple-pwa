@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 import { FolderIcon, TagIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
 
-import { cl, getTwColor } from '&/common/utils'
-import type { Note } from '&/modules/note/types'
+import { cl, getTwColor } from '@/common/utils'
+import type { Note } from '@/modules/note/types'
 
 interface Props {
   note: Note

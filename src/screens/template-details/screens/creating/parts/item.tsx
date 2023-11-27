@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
-import { CreationStatusItem } from '&/modules/template/types'
+import { CreationStatusItem } from '@/modules/template/types'
 import { ItemSpinner } from './item-spinner'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   name: string

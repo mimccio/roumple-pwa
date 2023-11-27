@@ -2,9 +2,9 @@ import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { PresentationChartBarIcon } from '@heroicons/react/24/outline'
 
-import { useMainPath } from '&/common/hooks'
-import { Tooltip } from '&/common/components/tooltip'
-import { cl } from '&/common/utils'
+import { useMainPath } from '@/common/hooks'
+import { Tooltip } from '@/common/components/tooltip'
+import { cl } from '@/common/utils'
 
 export function ActivityBtn() {
   const { t } = useTranslation('common')

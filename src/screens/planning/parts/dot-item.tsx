@@ -1,5 +1,5 @@
-import { TwColor } from '&/common/types'
-import { cl, getTwBgColor } from '&/common/utils'
+import { TwColor } from '@/common/types'
+import { cl, getTwBgColor } from '@/common/utils'
 
 interface Props {
   color?: TwColor

@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
-import type { RoutineNoteByNote } from '&/modules/routine-note/types'
-import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
+import type { RoutineNoteByNote } from '@/modules/routine-note/types'
+import { ROUTINE_NOTE_KEYS } from '@/modules/routine-note/constants'
 
 import type { Routine } from '../types'
 import { ROUTINE_KEYS } from '../constants'

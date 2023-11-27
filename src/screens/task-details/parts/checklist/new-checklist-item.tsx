@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
-import type { Task } from '&/modules/task/types'
-import { useCreateChecklistItem } from '&/modules/task-checklist-item/hooks'
+import { cl } from '@/common/utils'
+import type { Task } from '@/modules/task/types'
+import { useCreateChecklistItem } from '@/modules/task-checklist-item/hooks'
 
 interface Props {
   task: Task

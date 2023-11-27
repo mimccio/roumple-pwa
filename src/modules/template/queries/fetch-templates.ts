@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 
 interface FetchTemplatesParams {
   queryKey: readonly ['TEMPLATE', 'LIST', { lang: string }]

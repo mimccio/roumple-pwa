@@ -1,7 +1,7 @@
 import { compareAsc, eachDayOfInterval, lastDayOfMonth, startOfMonth, subMonths } from 'date-fns'
 
-import type { ScheduleType } from '&/common/types'
-import type { RoutineAction } from '&/modules/routine/types'
+import type { ScheduleType } from '@/common/types'
+import type { RoutineAction } from '@/modules/routine/types'
 import { getSuccessPercentage } from './get-success-percentage'
 
 interface Props {

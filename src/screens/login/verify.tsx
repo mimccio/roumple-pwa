@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import OTPInput from 'react-otp-input'
 import { Link } from 'react-router-dom'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   code: string

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { ConfirmModale } from '&/common/components/modales/confirm-modale'
+import { ConfirmModale } from '@/common/components/modales/confirm-modale'
 
 interface IParams {
   isOpen: boolean

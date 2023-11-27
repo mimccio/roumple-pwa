@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 
-import { STATUSES } from '&/common/constants'
+import { STATUSES } from '@/common/constants'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 import { deleteAllDoneTasks } from '../mutations'

@@ -3,9 +3,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { addWeeks, subWeeks, isThisWeek } from 'date-fns'
 import { Popover, Transition } from '@headlessui/react'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { CalendarBtn, WeekCalendar } from '&/common/components/calendars'
-import { useDateText } from '&/modules/task/hooks'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { CalendarBtn, WeekCalendar } from '@/common/components/calendars'
+import { useDateText } from '@/modules/task/hooks'
 
 interface Props {
   date: Date

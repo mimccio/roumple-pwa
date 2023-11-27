@@ -1,6 +1,6 @@
 import { addMonths, compareAsc, eachMonthOfInterval, startOfYear, subYears } from 'date-fns'
 
-import type { RoutineAction } from '&/modules/routine/types'
+import type { RoutineAction } from '@/modules/routine/types'
 import { getMonthSuccessPercentage } from '.'
 
 interface Params {

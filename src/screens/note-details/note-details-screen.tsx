@@ -1,7 +1,7 @@
-import { CreatedAt } from '&/common/components/display/created-at'
-import { DetailsFallback } from '&/common/components/fallbacks/details'
+import { CreatedAt } from '@/common/components/display/created-at'
+import { DetailsFallback } from '@/common/components/fallbacks/details'
 
-import { useGetNoteDetail } from '&/modules/note/hooks'
+import { useGetNoteDetail } from '@/modules/note/hooks'
 import { LinkedRoutines } from './parts/linked-routines'
 import { LinkedTasks } from './parts/linked-tasks'
 import { NoteCategory } from './parts/note-category'

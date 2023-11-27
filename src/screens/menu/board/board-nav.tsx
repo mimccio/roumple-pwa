@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import { cl } from '&/common/utils'
-import { useBoardCount } from '&/modules/board/hooks'
+import { cl } from '@/common/utils'
+import { useBoardCount } from '@/modules/board/hooks'
 
 interface Props {
   close: () => void

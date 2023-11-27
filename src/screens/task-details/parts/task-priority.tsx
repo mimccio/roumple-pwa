@@ -1,6 +1,6 @@
-import { PrioritySelector } from '&/common/components/inputs/priority-selector'
-import type { Task } from '&/modules/task/types'
-import { useTaskPriority } from '&/modules/task/hooks'
+import { PrioritySelector } from '@/common/components/inputs/priority-selector'
+import type { Task } from '@/modules/task/types'
+import { useTaskPriority } from '@/modules/task/hooks'
 
 interface Props {
   task: Task

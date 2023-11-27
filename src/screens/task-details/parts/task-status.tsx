@@ -1,9 +1,9 @@
-import { STATUSES } from '&/common/constants'
-import { cl, getPriorityFromColor, getPriorityToColor } from '&/common/utils'
+import { STATUSES } from '@/common/constants'
+import { cl, getPriorityFromColor, getPriorityToColor } from '@/common/utils'
 
-import type { Task } from '&/modules/task/types'
-import { useTaskStatus } from '&/modules/task/hooks'
-import { TaskStatusSelector } from '&/modules/task/components'
+import type { Task } from '@/modules/task/types'
+import { useTaskStatus } from '@/modules/task/hooks'
+import { TaskStatusSelector } from '@/modules/task/components'
 import { TaskPriority } from './task-priority'
 
 interface Props {

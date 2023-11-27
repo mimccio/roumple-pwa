@@ -1,7 +1,7 @@
-import { usePopper } from '&/common/hooks'
+import { usePopper } from '@/common/hooks'
 import { TagIcon } from '@heroicons/react/20/solid'
 import { ColorSelector } from './color-selector'
-import { TwColor } from '&/common/types'
+import { TwColor } from '@/common/types'
 
 interface Props {
   handleColorChange: (color: TwColor) => void

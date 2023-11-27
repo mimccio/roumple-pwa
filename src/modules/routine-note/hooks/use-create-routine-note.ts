@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { v5 as uuidv5 } from 'uuid'
 
-import { sortRoutineNoteByNoteList, sortRoutineNoteByRoutineList } from '&/common/utils'
-import type { Note } from '&/modules/note/types'
-import type { Routine } from '&/modules/routine/types'
+import { sortRoutineNoteByNoteList, sortRoutineNoteByRoutineList } from '@/common/utils'
+import type { Note } from '@/modules/note/types'
+import type { Routine } from '@/modules/routine/types'
 
 import type { RoutineNoteByNote, RoutineNoteByRoutine } from '../types'
 import { createRoutineNote } from '../mutations'

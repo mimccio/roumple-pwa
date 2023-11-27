@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { Popover, Transition } from '@headlessui/react'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 
-import type { ScheduleType } from '&/common/types'
-import { Tooltip } from '&/common/components/tooltip'
-import { CalendarBtn, DayCalendar, WeekCalendar } from '&/common/components/calendars'
-import { SCHEDULE_TYPES } from '&/common/constants'
+import type { ScheduleType } from '@/common/types'
+import { Tooltip } from '@/common/components/tooltip'
+import { CalendarBtn, DayCalendar, WeekCalendar } from '@/common/components/calendars'
+import { SCHEDULE_TYPES } from '@/common/constants'
 import { useParams } from 'react-router-dom'
 
 interface Props {

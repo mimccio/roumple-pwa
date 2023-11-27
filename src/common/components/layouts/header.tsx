@@ -1,9 +1,9 @@
 import { ReactNode } from 'react'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 import { useAtom } from 'jotai'
 
-import { TW_COLOR_BORDER_500 } from '&/common/constants'
-import { categoryAtom } from '&/modules/category/atoms'
+import { TW_COLOR_BORDER_500 } from '@/common/constants'
+import { categoryAtom } from '@/modules/category/atoms'
 
 interface Props {
   children: ReactNode

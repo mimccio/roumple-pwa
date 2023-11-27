@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 
-import { cl } from '&/common/utils'
-import { useGetDateFnsLocale } from '&/common/hooks'
+import { cl } from '@/common/utils'
+import { useGetDateFnsLocale } from '@/common/hooks'
 
 interface Props {
   createdAt?: Date

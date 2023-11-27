@@ -1,13 +1,13 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import { startOfMonth, startOfWeek } from 'date-fns'
 
-import type { Status } from '&/common/types'
-import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
-import { TodoBtn, InProgressBtn, DoneBtn, LoadingButton } from '&/common/components/buttons/status'
+import type { Status } from '@/common/types'
+import { SCHEDULE_TYPES, STATUSES } from '@/common/constants'
+import { TodoBtn, InProgressBtn, DoneBtn, LoadingButton } from '@/common/components/buttons/status'
 
-import type { RoutineAction, Routine } from '&/modules/routine/types'
-import { useUpsertAction } from '&/modules/routine/hooks'
-import { getRoutineIsDone } from '&/modules/routine/utils/status'
+import type { RoutineAction, Routine } from '@/modules/routine/types'
+import { useUpsertAction } from '@/modules/routine/hooks'
+import { getRoutineIsDone } from '@/modules/routine/utils/status'
 
 interface Props {
   routine: Routine

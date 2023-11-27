@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NoteFolder } from '../types'
 
 export const deleteNoteFolder = async ({ id }: NoteFolder) => {

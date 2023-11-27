@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/20/solid'
-import { cl } from '&/common/utils'
-import { Tooltip } from '&/common/components/tooltip'
+import { cl } from '@/common/utils'
+import { Tooltip } from '@/common/components/tooltip'
 
 interface Props {
   handleClick: () => void

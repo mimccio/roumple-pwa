@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { Routine } from '../types'
 
 export const editRoutineName = async ({ id, name }: Pick<Routine, 'id' | 'name'>) => {

@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 
-import { DetailsInfoPopover } from '&/common/components/popovers/details-info-popover'
-import { TaskNote } from '&/modules/note/types'
+import { DetailsInfoPopover } from '@/common/components/popovers/details-info-popover'
+import { TaskNote } from '@/modules/note/types'
 
 interface Props {
   taskNoteList?: TaskNote[]

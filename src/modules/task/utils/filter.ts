@@ -1,5 +1,5 @@
-import { STATUSES } from '&/common/constants'
-import { Category } from '&/modules/category/types'
+import { STATUSES } from '@/common/constants'
+import { Category } from '@/modules/category/types'
 import { Task } from '../types'
 
 export const filterTasks = ({

@@ -1,5 +1,5 @@
 import { PropagateLoader } from 'react-spinners'
-import { SPINNER_COLOR } from '&/common/constants'
+import { SPINNER_COLOR } from '@/common/constants'
 
 export function TitleSpinner() {
   return (

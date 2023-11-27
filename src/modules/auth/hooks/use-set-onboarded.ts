@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { getIsOnboarded } from '../utils'
 
 export function useSetOnboarded() {

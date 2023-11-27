@@ -1,6 +1,6 @@
 import { compareAsc, differenceInMonths, format, startOfMonth, startOfToday } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import { useGetDateFnsLocale } from '&/common/hooks'
+import { useGetDateFnsLocale } from '@/common/hooks'
 
 interface Props {
   onPreviousMonth: () => void

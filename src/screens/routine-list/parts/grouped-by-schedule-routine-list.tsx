@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
 import groupBy from 'lodash/groupBy'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { Disclosure } from '&/common/components/disclosure'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { Disclosure } from '@/common/components/disclosure'
 
-import type { Routine } from '&/modules/routine/types'
+import type { Routine } from '@/modules/routine/types'
 import { SimpleList } from './simple-list'
 
 interface Props {

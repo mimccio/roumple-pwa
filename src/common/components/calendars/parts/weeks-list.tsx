@@ -10,7 +10,7 @@ import {
   startOfToday,
   startOfWeek,
 } from 'date-fns'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   weeks: Date[]

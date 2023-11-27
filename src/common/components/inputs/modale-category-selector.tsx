@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon, TagIcon } from '@heroicons/react/20/solid'
 
-import { cl } from '&/common/utils'
-import type { Category } from '&/modules/category/types'
-import { useCategories } from '&/modules/category/hooks'
+import { cl } from '@/common/utils'
+import type { Category } from '@/modules/category/types'
+import { useCategories } from '@/modules/category/hooks'
 
 interface Props {
   category: Category | null

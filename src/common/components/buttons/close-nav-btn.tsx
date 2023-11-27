@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
-import { useMainPath } from '&/common/hooks'
+import { useMainPath } from '@/common/hooks'
 import { Tooltip } from '../tooltip'
 
 interface Props {

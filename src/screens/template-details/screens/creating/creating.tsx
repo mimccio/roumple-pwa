@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
-import { CreationStatus, Template } from '&/modules/template/types'
+import { CreationStatus, Template } from '@/modules/template/types'
 import { Item } from './parts/item'
 import { TitleSpinner } from './parts/title-spinner'
-import { useNavigateToEntry } from '&/modules/template/hooks'
+import { useNavigateToEntry } from '@/modules/template/hooks'
 
 interface Props {
   template: Template

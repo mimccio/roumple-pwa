@@ -1,8 +1,8 @@
 import type { ElementType, ReactNode } from 'react'
 import { Menu } from '@headlessui/react'
 
-import { TW_COLOR_TEXT_400 } from '&/common/constants/tw-colors'
-import { cl } from '&/common/utils'
+import { TW_COLOR_TEXT_400 } from '@/common/constants/tw-colors'
+import { cl } from '@/common/utils'
 
 interface Props {
   handleClick: () => void

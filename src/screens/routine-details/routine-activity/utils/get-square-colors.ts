@@ -1,7 +1,7 @@
 import { isToday } from 'date-fns'
-import { STATUSES } from '&/common/constants'
-import { cl } from '&/common/utils'
-import type { RoutineAction } from '&/modules/routine/types'
+import { STATUSES } from '@/common/constants'
+import { cl } from '@/common/utils'
+import type { RoutineAction } from '@/modules/routine/types'
 
 interface Params {
   action?: RoutineAction

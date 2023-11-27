@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 
-import type { Language } from '&/common/types'
-import { LANGUAGES } from '&/common/constants'
-import { useGetLanguage } from '&/common/hooks'
+import type { Language } from '@/common/types'
+import { LANGUAGES } from '@/common/constants'
+import { useGetLanguage } from '@/common/hooks'
 import toast from 'react-hot-toast'
 
 const LANGUAGE_OPTIONS = [

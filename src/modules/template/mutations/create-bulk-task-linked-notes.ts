@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NewTaskNote } from '../types'
 
 export const createBulkTaskLinkedNotes = async (taskLinkedNotes: NewTaskNote[]) => {

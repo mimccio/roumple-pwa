@@ -1,6 +1,6 @@
-import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
-import { ScheduleType } from '&/common/types'
-import { RoutineAction } from '&/modules/routine/types'
+import { SCHEDULE_TYPES, STATUSES } from '@/common/constants'
+import { ScheduleType } from '@/common/types'
+import { RoutineAction } from '@/modules/routine/types'
 import {
   addDays,
   addMonths,

@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai'
 
-import type { Category } from '&/modules/category/types'
-import { useCategories } from '&/modules/category/hooks'
-import { categoryAtom } from '&/modules/category/atoms'
+import type { Category } from '@/modules/category/types'
+import { useCategories } from '@/modules/category/hooks'
+import { categoryAtom } from '@/modules/category/atoms'
 
 import type { Routine } from '../types'
 import { editRoutineCategory } from '../mutations'

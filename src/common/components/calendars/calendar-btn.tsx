@@ -1,5 +1,5 @@
-import type { ScheduleType } from '&/common/types'
-import { cl, getScheduleTypeBg } from '&/common/utils'
+import type { ScheduleType } from '@/common/types'
+import { cl, getScheduleTypeBg } from '@/common/utils'
 
 interface Props {
   scheduleType: ScheduleType

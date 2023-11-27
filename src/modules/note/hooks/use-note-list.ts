@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
-import { getShowStatus } from '&/common/utils'
-import { categoryAtom } from '&/modules/category/atoms'
+import { getShowStatus } from '@/common/utils'
+import { categoryAtom } from '@/modules/category/atoms'
 
 import type { Note, NoteListQueryKey } from '../types'
 import { NOTE_KEYS } from '../constants'

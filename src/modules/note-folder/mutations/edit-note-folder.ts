@@ -1,5 +1,5 @@
-import { db } from '&/db'
-import { getUserId } from '&/modules/utils/get-user-id'
+import { db } from '@/db'
+import { getUserId } from '@/modules/utils/get-user-id'
 import type { NoteFolder } from '../types'
 
 export const editNoteFolder = async ({ id, name }: NoteFolder) => {

@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { startOfToday } from 'date-fns'
 import toast from 'react-hot-toast'
 
-import { STATUSES } from '&/common/constants'
-import type { Note } from '&/modules/note/types'
-import { NOTE_KEYS } from '&/modules/note/constants'
+import { STATUSES } from '@/common/constants'
+import type { Note } from '@/modules/note/types'
+import { NOTE_KEYS } from '@/modules/note/constants'
 
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'

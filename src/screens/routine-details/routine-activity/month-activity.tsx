@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import type { RoutineAction } from '&/modules/routine/types'
+import type { RoutineAction } from '@/modules/routine/types'
 import { getMonthsList } from './utils'
 import { MonthActivityBoard } from './month-activity-board'
 

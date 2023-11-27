@@ -1,10 +1,10 @@
 import { addMonths, compareAsc, format, getMonth, isSameMonth, isThisMonth } from 'date-fns'
 import { motion } from 'framer-motion'
 
-import { useGetDateFnsLocale } from '&/common/hooks'
-import { cl } from '&/common/utils'
+import { useGetDateFnsLocale } from '@/common/hooks'
+import { cl } from '@/common/utils'
 
-import { RoutineAction } from '&/modules/routine/types'
+import { RoutineAction } from '@/modules/routine/types'
 import { getSquareColors } from './utils'
 import { Progression } from './progression'
 

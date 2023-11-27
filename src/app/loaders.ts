@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom'
-import { db } from '&/db'
+import { db } from '@/db'
 
 // Keep false instead you want to unBoard user to access welcome page
 const unBoard = false

@@ -1,4 +1,4 @@
-import { TwColor } from '&/common/types'
+import { TwColor } from '@/common/types'
 
 export interface Category {
   id: string

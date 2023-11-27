@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { ModaleNameEditor } from '&/common/components/inputs/modale-name-editor'
+import { ModaleNameEditor } from '@/common/components/inputs/modale-name-editor'
 
 interface Props {
   name: string

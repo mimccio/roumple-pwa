@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { v4 as uuidv4 } from 'uuid'
 import { useAtom } from 'jotai'
 
-import { categoryAtom } from '&/modules/category/atoms'
-import { useNoteFolderDetails } from '&/modules/note-folder/hooks'
+import { categoryAtom } from '@/modules/category/atoms'
+import { useNoteFolderDetails } from '@/modules/note-folder/hooks'
 
 import type { Note } from '../types'
 import { NOTE_KEYS } from '../constants'

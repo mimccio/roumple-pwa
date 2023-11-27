@@ -1,4 +1,4 @@
-import { STATUSES } from '&/common/constants'
+import { STATUSES } from '@/common/constants'
 import { Routine, RoutineAction } from '../types'
 
 export const getRoutineIsDone = ({ routine, action: routineAction }: { routine: Routine; action?: RoutineAction }) => {

@@ -1,6 +1,6 @@
-import type { TwColor } from '&/common/types'
-import { TW_COLOR_BG_500, TW_COLOR_LIST } from '&/common/constants'
-import { cl } from '&/common/utils'
+import type { TwColor } from '@/common/types'
+import { TW_COLOR_BG_500, TW_COLOR_LIST } from '@/common/constants'
+import { cl } from '@/common/utils'
 
 interface Props {
   color: string

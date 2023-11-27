@@ -1,7 +1,7 @@
-import { MainListLayout } from '&/common/components/layouts'
-import { ScheduleType } from '&/common/types'
-import { Routine, UpdateStatusParams } from '&/modules/routine/types'
-import { Task } from '&/modules/task/types'
+import { MainListLayout } from '@/common/components/layouts'
+import { ScheduleType } from '@/common/types'
+import { Routine, UpdateStatusParams } from '@/modules/routine/types'
+import { Task } from '@/modules/task/types'
 import { ItemList, PeriodList } from '.'
 
 interface Props {

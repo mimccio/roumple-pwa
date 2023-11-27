@@ -1,4 +1,4 @@
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 import { Transition } from '@headlessui/react'
 import { ReactNode } from 'react'
 

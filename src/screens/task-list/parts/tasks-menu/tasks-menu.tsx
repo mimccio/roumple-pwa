@@ -5,12 +5,12 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import { AdjustmentsVerticalIcon, CheckIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid'
 import { useAtom } from 'jotai'
 
-import type { SortType } from '&/modules/task/types'
-import { SORT_TYPES } from '&/modules/task/constants'
-import { sortTypeAtom } from '&/modules/task/atoms'
+import type { SortType } from '@/modules/task/types'
+import { SORT_TYPES } from '@/modules/task/constants'
+import { sortTypeAtom } from '@/modules/task/atoms'
 import { MenuBtn } from './menu-btn'
-import { ConfirmDeleteModale } from '&/common/components/modales'
-import { useDeleteAllDoneTasks } from '&/modules/task/hooks'
+import { ConfirmDeleteModale } from '@/common/components/modales'
+import { useDeleteAllDoneTasks } from '@/modules/task/hooks'
 
 interface Props {
   handleSortChange: (sortType: SortType) => void

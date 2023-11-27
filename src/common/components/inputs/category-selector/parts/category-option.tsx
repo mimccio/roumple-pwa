@@ -1,8 +1,8 @@
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, TagIcon } from '@heroicons/react/24/solid'
 
-import type { TwColor } from '&/common/types'
-import { cl, getTWTextColor500 } from '&/common/utils'
+import type { TwColor } from '@/common/types'
+import { cl, getTWTextColor500 } from '@/common/utils'
 
 interface CategoryOption {
   id: string | null

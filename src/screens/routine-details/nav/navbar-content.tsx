@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ItemMenu } from '&/common/components/menus'
-import { ConfirmDeleteModale } from '&/common/components/modales'
-import { LinkNote } from '&/common/components/forms'
+import { ItemMenu } from '@/common/components/menus'
+import { ConfirmDeleteModale } from '@/common/components/modales'
+import { LinkNote } from '@/common/components/forms'
 
-import type { Routine } from '&/modules/routine/types'
-import { useArchiveRoutine, useDeleteRoutine, useEditRoutineShowChecklist } from '&/modules/routine/hooks'
-import { useCreateRoutineNote } from '&/modules/routine-note/hooks'
+import type { Routine } from '@/modules/routine/types'
+import { useArchiveRoutine, useDeleteRoutine, useEditRoutineShowChecklist } from '@/modules/routine/hooks'
+import { useCreateRoutineNote } from '@/modules/routine-note/hooks'
 
 import { ActivityBtn } from './activity-btn'
 import { EditOccurrence } from './edit-occurrence'

@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { PencilIcon } from '@heroicons/react/24/solid'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   onDelete?: () => void

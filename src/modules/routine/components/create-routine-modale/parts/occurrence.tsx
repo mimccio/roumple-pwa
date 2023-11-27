@@ -2,11 +2,11 @@ import type { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl } from '&/common/utils'
-import type { ScheduleType } from '&/common/types'
-import { useOccurrenceTypeText } from '&/common/hooks'
-import { getOccurrenceBg } from '&/modules/routine/utils'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { cl } from '@/common/utils'
+import type { ScheduleType } from '@/common/types'
+import { useOccurrenceTypeText } from '@/common/hooks'
+import { getOccurrenceBg } from '@/modules/routine/utils'
 
 interface Props {
   occurrence: number

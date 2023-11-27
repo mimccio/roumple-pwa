@@ -3,13 +3,13 @@ import { Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon, ExclamationTriangleIcon, SignalSlashIcon } from '@heroicons/react/24/outline'
 
-import { cl } from '&/common/utils'
-import { useOutsideClick } from '&/common/hooks'
-import { ListSkeletonSmall } from '&/common/components/skeletons'
-import { DotSpinner } from '&/common/components/spinners'
+import { cl } from '@/common/utils'
+import { useOutsideClick } from '@/common/hooks'
+import { ListSkeletonSmall } from '@/common/components/skeletons'
+import { DotSpinner } from '@/common/components/spinners'
 
-import { useGetSearchNote } from '&/modules/note/hooks'
-import type { Note } from '&/modules/note/types'
+import { useGetSearchNote } from '@/modules/note/hooks'
+import type { Note } from '@/modules/note/types'
 
 interface Props {
   isOpen: boolean

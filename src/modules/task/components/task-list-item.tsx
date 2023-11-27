@@ -2,13 +2,13 @@ import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { format, getWeek } from 'date-fns'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl, getTwColor } from '&/common/utils'
-import { useGetDateFnsLocale } from '&/common/hooks'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { cl, getTwColor } from '@/common/utils'
+import { useGetDateFnsLocale } from '@/common/hooks'
 
-import type { Task } from '&/modules/task/types'
-import { useTaskStatus } from '&/modules/task/hooks'
-import { SquareDoneButton } from '&/modules/task/components'
+import type { Task } from '@/modules/task/types'
+import { useTaskStatus } from '@/modules/task/hooks'
+import { SquareDoneButton } from '@/modules/task/components'
 
 interface Props {
   task: Task

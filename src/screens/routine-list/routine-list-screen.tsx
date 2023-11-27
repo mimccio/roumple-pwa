@@ -1,7 +1,7 @@
-import { ContentLayout } from '&/common/components/layouts'
+import { ContentLayout } from '@/common/components/layouts'
 
-import { useRoutineList } from '&/modules/routine/hooks'
-import { CreateRoutineModale } from '&/modules/routine/components/create-routine-modale'
+import { useRoutineList } from '@/modules/routine/hooks'
+import { CreateRoutineModale } from '@/modules/routine/components/create-routine-modale'
 
 import { Header } from './parts/header'
 import { RoutinesFallback } from './parts/routines-fallback'

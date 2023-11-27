@@ -1,7 +1,7 @@
 import { useIsFetching, useIsMutating, onlineManager } from '@tanstack/react-query'
 import { Transition } from '@headlessui/react'
 import { DotLoader } from 'react-spinners'
-import { SPINNER_COLOR } from '&/common/constants'
+import { SPINNER_COLOR } from '@/common/constants'
 
 export function FetchingSpinner() {
   const fetchingNum = useIsFetching()

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { startOfToday } from 'date-fns'
 
-import { STATUSES } from '&/common/constants'
+import { STATUSES } from '@/common/constants'
 import type { Task } from '../types'
 import { TASK_KEYS } from '../constants'
 

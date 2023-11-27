@@ -1,7 +1,7 @@
-import { ContentLayout } from '&/common/components/layouts'
+import { ContentLayout } from '@/common/components/layouts'
 
-import { useTaskList } from '&/modules/task/hooks'
-import { CreateTaskModale } from '&/modules/task/components'
+import { useTaskList } from '@/modules/task/hooks'
+import { CreateTaskModale } from '@/modules/task/components'
 import { TaskListHeader } from './parts/task-list-header'
 import { TaskListContent } from './parts/task-list-content'
 import { TasksFallback } from './parts/tasks-fallback'

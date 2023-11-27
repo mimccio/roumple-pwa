@@ -1,9 +1,9 @@
 import { addDays, compareAsc, format, getDay, getWeek, isSameDay, startOfWeek } from 'date-fns'
 import { motion } from 'framer-motion'
 
-import { cl } from '&/common/utils'
-import { useGetDateFnsLocale } from '&/common/hooks'
-import { RoutineAction } from '&/modules/routine/types'
+import { cl } from '@/common/utils'
+import { useGetDateFnsLocale } from '@/common/hooks'
+import { RoutineAction } from '@/modules/routine/types'
 import { getSquareColors } from './utils'
 import { Progression } from './progression'
 

@@ -2,9 +2,9 @@ import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import type { ScheduleType } from '&/common/types'
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { cl } from '&/common/utils'
+import type { ScheduleType } from '@/common/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { cl } from '@/common/utils'
 
 import { DayCircle } from './day-circle'
 import { PeriodItem } from './period-item'

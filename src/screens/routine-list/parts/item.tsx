@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { cl } from '&/common/utils'
-import { RoutineItem } from '&/modules/routine/types'
-import { getScheduleTypeColor } from '&/modules/routine/utils'
+import { cl } from '@/common/utils'
+import { RoutineItem } from '@/modules/routine/types'
+import { getScheduleTypeColor } from '@/modules/routine/utils'
 import { FlagIcon } from '@heroicons/react/24/solid'
 import { NavLink } from 'react-router-dom'
 

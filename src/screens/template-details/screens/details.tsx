@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 
-import educationImg from '&/assets/illustrations/education.png'
-import { useToggleOpen } from '&/common/hooks'
-import { EmptyScreen } from '&/common/components/empty-screen'
-import type { Template } from '&/modules/template/types'
-import { ConfirmUseTemplateModale, ListItem, NoteListItem } from '&/modules/template/components'
+import educationImg from '@/assets/illustrations/education.png'
+import { useToggleOpen } from '@/common/hooks'
+import { EmptyScreen } from '@/common/components/empty-screen'
+import type { Template } from '@/modules/template/types'
+import { ConfirmUseTemplateModale, ListItem, NoteListItem } from '@/modules/template/components'
 
 interface Props {
   template: Template

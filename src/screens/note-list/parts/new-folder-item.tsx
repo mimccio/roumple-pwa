@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
-import { useCreateNoteFolder } from '&/modules/note-folder/hooks'
+import { cl } from '@/common/utils'
+import { useCreateNoteFolder } from '@/modules/note-folder/hooks'
 
 export function NewFolderItem() {
   const { t } = useTranslation('note')

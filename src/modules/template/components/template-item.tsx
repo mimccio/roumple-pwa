@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 
-import type { TemplateListItem } from '&/modules/template/types'
+import type { TemplateListItem } from '@/modules/template/types'
 
 interface Props {
   template: TemplateListItem

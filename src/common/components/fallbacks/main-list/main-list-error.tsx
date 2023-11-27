@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import fatalErrorImg from '&/assets/illustrations/fatal-error.png'
+import fatalErrorImg from '@/assets/illustrations/fatal-error.png'
 import { Illustration } from '../../illustrations'
 import { MainListFallbackLayout } from './main-list-fallback-layout'
 

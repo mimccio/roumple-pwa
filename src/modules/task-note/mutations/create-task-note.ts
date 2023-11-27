@@ -1,5 +1,5 @@
-import { db } from '&/db'
-import { getUserId } from '&/modules/utils'
+import { db } from '@/db'
+import { getUserId } from '@/modules/utils'
 import { TaskNote } from '../types'
 
 export const createTaskNote = async ({ id, note, task }: TaskNote) => {

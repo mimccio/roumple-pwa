@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useOutsideClick } from '&/common/hooks'
+import { useOutsideClick } from '@/common/hooks'
 import { NOTE_FOLDER_KEYS } from '../constants'
 import { createNoteFolder } from '../mutations'
 import { NoteFolder } from '../types'

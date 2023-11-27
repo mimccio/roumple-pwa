@@ -1,9 +1,9 @@
 import { TagIcon } from '@heroicons/react/24/solid'
 import { useAtom } from 'jotai'
 
-import { TW_COLOR_TEXT_500 } from '&/common/constants'
-import { cl } from '&/common/utils'
-import { categoryAtom } from '&/modules/category/atoms'
+import { TW_COLOR_TEXT_500 } from '@/common/constants'
+import { cl } from '@/common/utils'
+import { categoryAtom } from '@/modules/category/atoms'
 
 export function CategoryBtn() {
   const [category, setCategory] = useAtom(categoryAtom)

@@ -1,7 +1,7 @@
-import { CreatedAt } from '&/common/components/display/created-at'
-import { DetailsFallback } from '&/common/components/fallbacks/details'
+import { CreatedAt } from '@/common/components/display/created-at'
+import { DetailsFallback } from '@/common/components/fallbacks/details'
 
-import { Task } from '&/modules/task/types'
+import { Task } from '@/modules/task/types'
 import { TaskChecklist } from './parts/checklist/task-checklist'
 import { TaskCategory } from './parts/task-category'
 import { TaskDescription } from './parts/task-description'

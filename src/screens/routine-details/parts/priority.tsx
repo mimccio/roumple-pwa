@@ -1,6 +1,6 @@
-import { PrioritySelector } from '&/common/components/inputs/priority-selector'
-import { useRoutinePriority } from '&/modules/routine/hooks'
-import { Routine } from '&/modules/routine/types'
+import { PrioritySelector } from '@/common/components/inputs/priority-selector'
+import { useRoutinePriority } from '@/modules/routine/hooks'
+import { Routine } from '@/modules/routine/types'
 
 interface Props {
   routine: Routine

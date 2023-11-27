@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
-import { Tooltip } from '&/common/components/tooltip'
-import { Header } from '&/common/components/layouts'
-import { CategoryBtn } from '&/common/components/buttons'
+import { Tooltip } from '@/common/components/tooltip'
+import { Header } from '@/common/components/layouts'
+import { CategoryBtn } from '@/common/components/buttons'
 
-import { useCreateNote } from '&/modules/note/hooks'
+import { useCreateNote } from '@/modules/note/hooks'
 
 export function NoteListHeader() {
   const { t } = useTranslation(['common', 'note'])

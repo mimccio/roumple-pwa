@@ -1,6 +1,6 @@
-import type { ScheduleType } from '&/common/types'
-import { ContentLayout } from '&/common/components/layouts'
-import { useBoardList } from '&/modules/board/hooks'
+import type { ScheduleType } from '@/common/types'
+import { ContentLayout } from '@/common/components/layouts'
+import { useBoardList } from '@/modules/board/hooks'
 import { Header, BoardList, BoardFallback } from './parts'
 
 interface Props {

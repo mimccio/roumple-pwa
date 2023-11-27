@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 
 export const getIsOnboarded = async () => {
   const { data, error } = await db.auth.getSession()

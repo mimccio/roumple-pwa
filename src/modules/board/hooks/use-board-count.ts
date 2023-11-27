@@ -1,6 +1,6 @@
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { useBoardRoutineCount } from '&/modules/routine/hooks'
-import { useBoardTaskCount } from '&/modules/task/hooks'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { useBoardRoutineCount } from '@/modules/routine/hooks'
+import { useBoardTaskCount } from '@/modules/task/hooks'
 
 export function useBoardCount() {
   const routineDailyQuery = useBoardRoutineCount({ scheduleType: SCHEDULE_TYPES.daily })

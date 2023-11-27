@@ -1,11 +1,11 @@
 import { useState, type FormEvent } from 'react'
 import { CheckIcon, ChartBarIcon } from '@heroicons/react/20/solid'
 
-import { STATUSES } from '&/common/constants'
-import { cl } from '&/common/utils'
-import type { Routine, UpdateStatusParams } from '&/modules/routine/types'
+import { STATUSES } from '@/common/constants'
+import { cl } from '@/common/utils'
+import type { Routine, UpdateStatusParams } from '@/modules/routine/types'
 import './plusOneAnimation.css'
-import { getRoutineIsDone } from '&/modules/routine/utils/status'
+import { getRoutineIsDone } from '@/modules/routine/utils/status'
 
 interface Props {
   routine: Routine

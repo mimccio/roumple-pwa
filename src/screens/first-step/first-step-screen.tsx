@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 
-import deliveryImg from '&/assets/illustrations/delivery.png'
+import deliveryImg from '@/assets/illustrations/delivery.png'
 import { FirstStepItems } from './first-step-items'
 
 export function FirstStepScreen() {

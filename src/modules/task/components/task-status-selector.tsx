@@ -1,6 +1,6 @@
-import type { Status } from '&/common/types'
-import { STATUSES } from '&/common/constants'
-import { TodoBtn, InProgressBtn, DoneBtn } from '&/common/components/buttons/status'
+import type { Status } from '@/common/types'
+import { STATUSES } from '@/common/constants'
+import { TodoBtn, InProgressBtn, DoneBtn } from '@/common/components/buttons/status'
 
 interface Props {
   status: Status

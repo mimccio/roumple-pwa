@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 
-import workflowImg from '&/assets/illustrations/workflow.png'
-import { useGetTemplates } from '&/modules/template/hooks'
-import { TemplateItem, TemplateItemSkeleton } from '&/modules/template/components'
+import workflowImg from '@/assets/illustrations/workflow.png'
+import { useGetTemplates } from '@/modules/template/hooks'
+import { TemplateItem, TemplateItemSkeleton } from '@/modules/template/components'
 import { MainError } from '../errors'
 
 export function TemplatesScreen() {

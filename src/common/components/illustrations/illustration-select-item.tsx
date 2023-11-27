@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import educationImg from '&/assets/illustrations/education.png'
+import educationImg from '@/assets/illustrations/education.png'
 import { Illustration } from '.'
 
 export function IllustrationSelectItem() {

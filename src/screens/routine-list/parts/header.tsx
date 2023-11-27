@@ -3,11 +3,11 @@ import { useAtom } from 'jotai'
 import { TagIcon, PlusIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid'
 import { ArchiveBoxIcon as ArchiveBoxOutlineIcon, ArrowPathRoundedSquareIcon } from '@heroicons/react/24/outline'
 
-import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '&/common/constants'
-import { cl } from '&/common/utils'
-import { Tooltip } from '&/common/components/tooltip'
-import type { SortType } from '&/modules/routine/types'
-import { categoryAtom } from '&/modules/category/atoms'
+import { TW_COLOR_BORDER_500, TW_COLOR_TEXT_500 } from '@/common/constants'
+import { cl } from '@/common/utils'
+import { Tooltip } from '@/common/components/tooltip'
+import type { SortType } from '@/modules/routine/types'
+import { categoryAtom } from '@/modules/category/atoms'
 import { RoutinesMenu } from './routines-menu'
 
 interface Props {

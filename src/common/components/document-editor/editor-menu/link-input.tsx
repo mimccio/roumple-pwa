@@ -5,7 +5,7 @@ import { Editor } from '@tiptap/react'
 import { Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   isOpen: boolean

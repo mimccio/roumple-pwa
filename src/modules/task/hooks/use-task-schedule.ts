@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek } from 'date-fns'
 import { toast } from 'react-hot-toast'
 
-import { SCHEDULE_TYPES, STATUSES } from '&/common/constants'
+import { SCHEDULE_TYPES, STATUSES } from '@/common/constants'
 import type { Task, TaskScheduleType } from '../types'
 import { sortTaskByDate } from '../utils'
 import { TASK_KEYS } from '../constants'

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import error404Img from '&/assets/illustrations/error-404.png'
+import error404Img from '@/assets/illustrations/error-404.png'
 import { Illustration } from '.'
 
 export function IllustrationNotFound() {

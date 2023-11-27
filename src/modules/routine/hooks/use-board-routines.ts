@@ -2,9 +2,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import { compareDesc, startOfToday, subMonths } from 'date-fns'
 
-import type { ScheduleType } from '&/common/types'
-import { useShow } from '&/common/hooks'
-import { categoryAtom } from '&/modules/category/atoms'
+import type { ScheduleType } from '@/common/types'
+import { useShow } from '@/common/hooks'
+import { categoryAtom } from '@/modules/category/atoms'
 
 import { ROUTINE_KEYS } from '../constants'
 import { filterRoutines, getScheduleTypeDate } from '../utils'

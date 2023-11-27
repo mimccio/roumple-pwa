@@ -4,7 +4,7 @@ import { NOTE_FOLDER_KEYS } from '../constants'
 import { fetchNoteFolder } from '../queries'
 import { useParams } from 'react-router-dom'
 import { NoteFolder } from '../types'
-import { useShow } from '&/common/hooks/use-show'
+import { useShow } from '@/common/hooks/use-show'
 
 export function useNoteFolderDetails() {
   const { folderId } = useParams()

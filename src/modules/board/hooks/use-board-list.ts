@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useAtom } from 'jotai'
 
-import type { ScheduleType } from '&/common/types'
-import { sortItems } from '&/common/utils/list'
+import type { ScheduleType } from '@/common/types'
+import { sortItems } from '@/common/utils/list'
 
-import { categoryAtom } from '&/modules/category/atoms'
-import { useBoardTasks } from '&/modules/task/hooks'
-import { useBoardRoutines, useUpsertAction } from '&/modules/routine/hooks'
+import { categoryAtom } from '@/modules/category/atoms'
+import { useBoardTasks } from '@/modules/task/hooks'
+import { useBoardRoutines, useUpsertAction } from '@/modules/routine/hooks'
 import { showPeriodAtom } from '../atoms'
 
 interface Params {

@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { RoutineNoteByRoutine } from '../types'
 
 export const deleteRoutineNote = async (routineNote: RoutineNoteByRoutine) => {

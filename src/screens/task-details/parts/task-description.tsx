@@ -1,6 +1,6 @@
-import { DocumentEditor } from '&/common/components/document-editor'
-import type { Task } from '&/modules/task/types'
-import { useEditTaskDescription } from '&/modules/task/hooks'
+import { DocumentEditor } from '@/common/components/document-editor'
+import type { Task } from '@/modules/task/types'
+import { useEditTaskDescription } from '@/modules/task/hooks'
 
 interface Props {
   task: Task

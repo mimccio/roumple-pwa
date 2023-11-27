@@ -1,5 +1,5 @@
 import { it, describe } from 'vitest'
-import { STATUSES } from '&/common/constants'
+import { STATUSES } from '@/common/constants'
 import { Routine, RoutineAction } from '../types'
 import { getRoutineIsDone } from './status'
 

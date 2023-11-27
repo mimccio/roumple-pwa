@@ -1,5 +1,5 @@
 import { compareAsc, format, getDay, isEqual, isSameMonth, isToday, startOfToday } from 'date-fns'
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 
 interface Props {
   days: Date[]

@@ -1,9 +1,9 @@
 import type { FormEvent } from 'react'
 import { CheckIcon, ChartBarIcon } from '@heroicons/react/20/solid'
 
-import type { Status } from '&/common/types'
-import { STATUSES } from '&/common/constants'
-import { cl, getPriorityTWBorderColor } from '&/common/utils'
+import type { Status } from '@/common/types'
+import { STATUSES } from '@/common/constants'
+import { cl, getPriorityTWBorderColor } from '@/common/utils'
 
 interface Props {
   priority: number

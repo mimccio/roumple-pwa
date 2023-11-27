@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { useGetLanguage } from '&/common/hooks'
+import { useGetLanguage } from '@/common/hooks'
 import { TEMPLATE_KEYS } from '../constants'
 import { fetchTemplates } from '../queries'
 

@@ -1,7 +1,7 @@
 import { format, startOfMonth, startOfToday, startOfYear, subMonths, subYears } from 'date-fns'
-import { db } from '&/db'
-import type { ScheduleType } from '&/common/types'
-import { DATE_FORMAT, SCHEDULE_TYPES } from '&/common/constants'
+import { db } from '@/db'
+import type { ScheduleType } from '@/common/types'
+import { DATE_FORMAT, SCHEDULE_TYPES } from '@/common/constants'
 import type { RoutineAction } from '../types'
 
 export const fetchActionList = async (routineId: string, scheduleType: ScheduleType) => {

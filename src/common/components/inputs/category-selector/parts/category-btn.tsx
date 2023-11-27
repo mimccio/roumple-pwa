@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { Listbox } from '@headlessui/react'
 import { TagIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
-import type { Category } from '&/modules/category/types'
-import { TW_COLOR_TEXT_500 } from '&/common/constants'
-import { TW_COLOR_BG_50, TW_COLOR_BORDER_200 } from '&/common/constants/tw-colors'
+import { cl } from '@/common/utils'
+import type { Category } from '@/modules/category/types'
+import { TW_COLOR_TEXT_500 } from '@/common/constants'
+import { TW_COLOR_BG_50, TW_COLOR_BORDER_200 } from '@/common/constants/tw-colors'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 interface Props {

@@ -1,6 +1,6 @@
-import { LinkNote } from '&/common/components/forms'
-import { useCreateTaskNote } from '&/modules/task-note/hooks'
-import { Task } from '&/modules/task/types'
+import { LinkNote } from '@/common/components/forms'
+import { useCreateTaskNote } from '@/modules/task-note/hooks'
+import { Task } from '@/modules/task/types'
 
 interface Props {
   task: Task

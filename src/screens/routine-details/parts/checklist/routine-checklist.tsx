@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { useDeleteChecklistItem } from '&/modules/routine-checklist-item/hooks/use-delete-checklist-item'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { useDeleteChecklistItem } from '@/modules/routine-checklist-item/hooks/use-delete-checklist-item'
 
-import { useUpsertAction } from '&/modules/routine/hooks'
-import { Routine, RoutineAction } from '&/modules/routine/types'
+import { useUpsertAction } from '@/modules/routine/hooks'
+import { Routine, RoutineAction } from '@/modules/routine/types'
 import { ChecklistItem } from './checklist-item'
 import { NewChecklistItem } from './new-checklist-item'
 

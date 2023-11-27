@@ -1,5 +1,5 @@
 import { v5 as uuidv5 } from 'uuid'
-import { getUserId } from '&/modules/utils'
+import { getUserId } from '@/modules/utils'
 
 import { ENTRY_TYPES } from '../constants'
 import { EntryType } from '../types'

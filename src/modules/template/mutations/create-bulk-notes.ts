@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NewNote } from '../types'
 
 export const createBulkNotes = async (notes: NewNote[]) => {

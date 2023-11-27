@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
-import { Routine } from '&/modules/routine/types'
-import { ROUTINE_KEYS } from '&/modules/routine/constants'
-import { useOutsideClick } from '&/common/hooks'
+import { Routine } from '@/modules/routine/types'
+import { ROUTINE_KEYS } from '@/modules/routine/constants'
+import { useOutsideClick } from '@/common/hooks'
 import type { RoutineChecklistItem } from '../types'
 import { editRoutineChecklistItem } from '../mutations'
 

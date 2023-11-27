@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NewTaskChecklistItem } from '../types'
 
 export const createBulkTaskChecklistItems = async (taskChecklistItems: NewTaskChecklistItem[]) => {

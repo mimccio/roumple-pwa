@@ -1,5 +1,5 @@
-import { db } from '&/db'
-import type { ScheduleType } from '&/common/types'
+import { db } from '@/db'
+import type { ScheduleType } from '@/common/types'
 import type { RoutineAction } from '../types'
 
 interface IParams {

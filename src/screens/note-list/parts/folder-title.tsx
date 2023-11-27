@@ -4,10 +4,10 @@ import { FolderOpenIcon } from '@heroicons/react/24/outline'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
-import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-modale'
-import type { NoteFolder } from '&/modules/note-folder/types'
-import { useEditNoteFolder, useDeleteNoteFolder } from '&/modules/note-folder/hooks'
+import { cl } from '@/common/utils'
+import { ConfirmDeleteModale } from '@/common/components/modales/confirm-delete-modale'
+import type { NoteFolder } from '@/modules/note-folder/types'
+import { useEditNoteFolder, useDeleteNoteFolder } from '@/modules/note-folder/hooks'
 import { FolderMenu } from './folder-menu'
 
 interface Props {

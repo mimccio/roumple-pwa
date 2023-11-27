@@ -1,7 +1,7 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { format } from 'date-fns'
 import { Task } from '../types'
-import { DATE_FORMAT } from '&/common/constants'
+import { DATE_FORMAT } from '@/common/constants'
 
 export const editTaskSchedule = async ({ id, date, scheduleType, period }: Task) => {
   const { error } = await db

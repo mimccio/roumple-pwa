@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { DetailsNavbar } from '&/common/components/layouts'
-import { BackNavBtn, CloseNavBtn } from '&/common/components/buttons'
-import { ItemMenu } from '&/common/components/menus'
-import { ConfirmDeleteModale } from '&/common/components/modales/confirm-delete-modale'
+import { DetailsNavbar } from '@/common/components/layouts'
+import { BackNavBtn, CloseNavBtn } from '@/common/components/buttons'
+import { ItemMenu } from '@/common/components/menus'
+import { ConfirmDeleteModale } from '@/common/components/modales/confirm-delete-modale'
 
-import type { Note } from '&/modules/note/types'
-import { useDeleteNote } from '&/modules/note/hooks'
+import type { Note } from '@/modules/note/types'
+import { useDeleteNote } from '@/modules/note/hooks'
 import { useParams } from 'react-router-dom'
-import { useMainPath } from '&/common/hooks'
+import { useMainPath } from '@/common/hooks'
 
 interface Props {
   note: Note

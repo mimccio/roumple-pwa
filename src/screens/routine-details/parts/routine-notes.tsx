@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
-import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
-import { useDeleteRoutineNote } from '&/modules/routine-note/hooks'
+import type { RoutineNoteByRoutine } from '@/modules/routine-note/types'
+import { useDeleteRoutineNote } from '@/modules/routine-note/hooks'
 
 interface Props {
   routineNoteList?: RoutineNoteByRoutine[]

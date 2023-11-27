@@ -1,6 +1,6 @@
 import { v5 as uuidv5 } from 'uuid'
 
-import { getUserId } from '&/modules/utils'
+import { getUserId } from '@/modules/utils'
 import {
   TemplateCategory,
   TemplateNote,

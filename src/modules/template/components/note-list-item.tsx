@@ -1,5 +1,5 @@
-import { cl, getTwColor } from '&/common/utils'
-import { TemplateNote } from '&/modules/template/types'
+import { cl, getTwColor } from '@/common/utils'
+import { TemplateNote } from '@/modules/template/types'
 import { FolderIcon, TagIcon } from '@heroicons/react/24/outline'
 
 interface Props {

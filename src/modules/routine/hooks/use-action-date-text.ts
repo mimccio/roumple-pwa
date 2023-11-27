@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { endOfWeek, format, startOfWeek } from 'date-fns'
 
-import type { ScheduleType } from '&/common/types'
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { useGetDateFnsLocale } from '&/common/hooks'
+import type { ScheduleType } from '@/common/types'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { useGetDateFnsLocale } from '@/common/hooks'
 
 export function useActionDateText() {
   const { t } = useTranslation('schedule')

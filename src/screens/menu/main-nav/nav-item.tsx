@@ -1,4 +1,4 @@
-import { cl } from '&/common/utils'
+import { cl } from '@/common/utils'
 import type { ElementType } from 'react'
 import { NavLink } from 'react-router-dom'
 

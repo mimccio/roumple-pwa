@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
 import { Toast, toast as reactHotToast } from 'react-hot-toast'
-import constructionImg from '&/assets/illustrations/construction.png'
+import constructionImg from '@/assets/illustrations/construction.png'
 
 interface Props {
   toast: Toast

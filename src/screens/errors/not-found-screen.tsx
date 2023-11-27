@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Transition } from '@headlessui/react'
-import error404Img from '&/assets/illustrations/error-404.png'
+import error404Img from '@/assets/illustrations/error-404.png'
 import { Link } from 'react-router-dom'
 
 export function NotFoundScreen() {

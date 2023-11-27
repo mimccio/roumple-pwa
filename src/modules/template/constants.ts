@@ -1,4 +1,4 @@
-import { Language } from '&/common/types'
+import { Language } from '@/common/types'
 
 export const TEMPLATE_KEYS = {
   all: ['TEMPLATE'] as const,

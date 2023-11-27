@@ -1,14 +1,14 @@
 import { Trans, useTranslation } from 'react-i18next'
 
-import locationImg from '&/assets/illustrations/location.png'
-import workflowImg from '&/assets/illustrations/workflow.png'
+import locationImg from '@/assets/illustrations/location.png'
+import workflowImg from '@/assets/illustrations/workflow.png'
 import {
   MainListError,
   MainListOffline,
   MainListFallback,
   MainListLoading,
-} from '&/common/components/fallbacks/main-list'
-import { ShowStatus } from '&/common/types'
+} from '@/common/components/fallbacks/main-list'
+import { ShowStatus } from '@/common/types'
 
 interface Props {
   category: { name: string } | null

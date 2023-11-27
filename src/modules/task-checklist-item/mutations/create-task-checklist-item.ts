@@ -1,6 +1,6 @@
-import { db } from '&/db'
-import { Task } from '&/modules/task/types'
-import { getUserId } from '&/modules/utils/get-user-id'
+import { db } from '@/db'
+import { Task } from '@/modules/task/types'
+import { getUserId } from '@/modules/utils/get-user-id'
 
 interface CreateChecklistItemParams {
   id: string

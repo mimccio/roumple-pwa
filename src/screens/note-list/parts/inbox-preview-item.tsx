@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { DocumentTextIcon } from '@heroicons/react/24/outline'
 
-import { Note } from '&/modules/note/types'
-import { cl, getTwColor } from '&/common/utils'
+import { Note } from '@/modules/note/types'
+import { cl, getTwColor } from '@/common/utils'
 
 interface Props {
   note: Note

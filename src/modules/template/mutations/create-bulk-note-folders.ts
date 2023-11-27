@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NewNoteFolder } from '../types'
 
 export const createBulkNoteFolders = async (noteFolders: NewNoteFolder[]) => {

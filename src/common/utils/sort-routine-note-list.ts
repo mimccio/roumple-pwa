@@ -1,4 +1,4 @@
-import { RoutineNoteByNote, RoutineNoteByRoutine } from '&/modules/routine-note/types'
+import { RoutineNoteByNote, RoutineNoteByRoutine } from '@/modules/routine-note/types'
 
 export function sortRoutineNoteByRoutineList(a: RoutineNoteByRoutine, b: RoutineNoteByRoutine) {
   if (!a.note.title && !b.note.title) {

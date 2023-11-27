@@ -4,9 +4,9 @@ import { Menu, Transition } from '@headlessui/react'
 import { AdjustmentsVerticalIcon, CheckIcon, EllipsisHorizontalIcon, QueueListIcon } from '@heroicons/react/24/solid'
 import { useAtom } from 'jotai'
 
-import type { SortType } from '&/modules/routine/types'
-import { SORT_TYPES } from '&/modules/routine/constants'
-import { routineGroupByScheduleAtom, routineSortTypeAtom } from '&/modules/routine/atoms'
+import type { SortType } from '@/modules/routine/types'
+import { SORT_TYPES } from '@/modules/routine/constants'
+import { routineGroupByScheduleAtom, routineSortTypeAtom } from '@/modules/routine/atoms'
 import { MenuBtn } from './menu-btn'
 
 interface Props {

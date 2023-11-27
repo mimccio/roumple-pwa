@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '&/common/components/spinners'
+import { LoadingSpinner } from '@/common/components/spinners'
 
 export function MainLoadingScreen() {
   return (

@@ -1,8 +1,8 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Note } from '&/modules/note/types'
-import { NOTE_KEYS } from '&/modules/note/constants'
+import type { Note } from '@/modules/note/types'
+import { NOTE_KEYS } from '@/modules/note/constants'
 import type { TaskNote } from '../types'
 import { TASK_NOTES_KEYS } from '../constants'
 import { deleteTaskNote } from '../mutations'

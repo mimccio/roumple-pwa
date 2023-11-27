@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { Task } from '../types'
 
 export const editTaskCategory = async ({ id, category }: Task) => {

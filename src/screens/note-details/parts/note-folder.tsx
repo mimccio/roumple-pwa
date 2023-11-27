@@ -1,7 +1,7 @@
 import { FolderIcon, InboxIcon } from '@heroicons/react/24/solid'
-import { Selector } from '&/common/components/inputs/selector'
-import type { Note } from '&/modules/note/types'
-import { useNoteFolder } from '&/modules/note/hooks'
+import { Selector } from '@/common/components/inputs/selector'
+import type { Note } from '@/modules/note/types'
+import { useNoteFolder } from '@/modules/note/hooks'
 
 interface Props {
   note: Note

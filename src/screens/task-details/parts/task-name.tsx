@@ -1,6 +1,6 @@
-import { NameEditor } from '&/common/components/editors'
-import type { Task } from '&/modules/task/types'
-import { useEditTaskName } from '&/modules/task/hooks'
+import { NameEditor } from '@/common/components/editors'
+import type { Task } from '@/modules/task/types'
+import { useEditTaskName } from '@/modules/task/hooks'
 
 interface Props {
   task: Task

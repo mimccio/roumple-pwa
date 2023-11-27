@@ -1,6 +1,6 @@
-import { CategorySelector } from '&/common/components/inputs/category-selector'
-import type { Task } from '&/modules/task/types'
-import { useTaskCategory } from '&/modules/task/hooks'
+import { CategorySelector } from '@/common/components/inputs/category-selector'
+import type { Task } from '@/modules/task/types'
+import { useTaskCategory } from '@/modules/task/hooks'
 
 interface Props {
   task: Task

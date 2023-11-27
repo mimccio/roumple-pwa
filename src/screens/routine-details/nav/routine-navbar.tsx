@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 
-import { DetailsNavbar } from '&/common/components/layouts'
-import { CloseNavBtn } from '&/common/components/buttons'
+import { DetailsNavbar } from '@/common/components/layouts'
+import { CloseNavBtn } from '@/common/components/buttons'
 
-import type { Routine } from '&/modules/routine/types'
+import type { Routine } from '@/modules/routine/types'
 import { NavbarContent } from './navbar-content'
 
 interface Props {

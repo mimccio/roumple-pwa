@@ -2,11 +2,11 @@ import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import { cl } from '&/common/utils'
-import type { ScheduleType } from '&/common/types'
+import { cl } from '@/common/utils'
+import type { ScheduleType } from '@/common/types'
 import { PeriodItem } from './period-item'
 import { MonthCircle } from './month-circle'
-import { SCHEDULE_TYPES } from '&/common/constants'
+import { SCHEDULE_TYPES } from '@/common/constants'
 
 interface Props {
   scheduleType: ScheduleType

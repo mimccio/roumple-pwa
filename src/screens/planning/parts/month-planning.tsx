@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import type { ScheduleType } from '&/common/types'
-import { cl, getTwBgColor } from '&/common/utils'
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { TW_COLOR_BG_600_HOVER } from '&/common/constants/tw-colors'
+import type { ScheduleType } from '@/common/types'
+import { cl, getTwBgColor } from '@/common/utils'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { TW_COLOR_BG_600_HOVER } from '@/common/constants/tw-colors'
 
-import type { Routine } from '&/modules/routine/types'
-import type { Task } from '&/modules/task/types'
+import type { Routine } from '@/modules/routine/types'
+import type { Task } from '@/modules/task/types'
 import { mergeTaskAndRoutines, getItemUrl } from '../utils'
 import { DotItem } from './dot-item'
 

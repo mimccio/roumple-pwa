@@ -7,8 +7,8 @@ import { toast } from 'react-hot-toast'
 import type { NoteFolder } from '../types'
 import { NOTE_FOLDER_KEYS } from '../constants'
 import { deleteNoteFolder } from '../mutations'
-import { useCategories } from '&/modules/category/hooks'
-import { sortByCreatedAtAsc } from '&/common/utils'
+import { useCategories } from '@/modules/category/hooks'
+import { sortByCreatedAtAsc } from '@/common/utils'
 
 export function useDeleteNoteFolder(folder: NoteFolder) {
   const queryClient = useQueryClient()

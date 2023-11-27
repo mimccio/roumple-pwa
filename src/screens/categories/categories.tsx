@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 
-import { ContentLayout } from '&/common/components/layouts/content-layout'
-import { ListSkeleton } from '&/common/components/skeletons'
-import { useCategories } from '&/modules/category/hooks'
+import { ContentLayout } from '@/common/components/layouts/content-layout'
+import { ListSkeleton } from '@/common/components/skeletons'
+import { useCategories } from '@/modules/category/hooks'
 import { MainError } from '../errors'
 import { Header } from './header'
 import { CategoryItem } from './category-item'

@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { Note, NoteListQueryKey } from '../types'
 
 interface FetchNoteListParams {

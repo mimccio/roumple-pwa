@@ -1,7 +1,7 @@
-import { ModaleCategorySelector } from '&/common/components/inputs/modale-category-selector'
-import { ModalePrioritySelector } from '&/common/components/inputs/modale-priority-selector'
-import { CreateItemModale } from '&/common/components/modales'
-import { useCreateTask } from '&/modules/task/hooks'
+import { ModaleCategorySelector } from '@/common/components/inputs/modale-category-selector'
+import { ModalePrioritySelector } from '@/common/components/inputs/modale-priority-selector'
+import { CreateItemModale } from '@/common/components/modales'
+import { useCreateTask } from '@/modules/task/hooks'
 import { TaskSchedule } from '../schedule'
 import { TaskName } from './parts/task-name'
 

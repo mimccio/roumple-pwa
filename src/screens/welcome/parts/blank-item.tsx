@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { DocumentIcon } from '@heroicons/react/24/outline'
 
-import { useToggleOpen } from '&/common/hooks'
+import { useToggleOpen } from '@/common/hooks'
 import { ConfirmStartBlankModale } from './confirm-start-blank-modale'
 
 export function BlankItem() {

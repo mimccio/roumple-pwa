@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 
-import { useShow } from '&/common/hooks'
-import { categoryAtom } from '&/modules/category/atoms'
+import { useShow } from '@/common/hooks'
+import { categoryAtom } from '@/modules/category/atoms'
 
 import type { Routine, SortType } from '../types'
 import { routineGroupByScheduleAtom, routineSortTypeAtom } from '../atoms'

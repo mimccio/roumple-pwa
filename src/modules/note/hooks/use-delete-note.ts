@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 
-import { useMainPath } from '&/common/hooks'
+import { useMainPath } from '@/common/hooks'
 
-import type { NoteFolder } from '&/modules/note-folder/types'
-import type { RoutineNoteByRoutine } from '&/modules/routine-note/types'
+import type { NoteFolder } from '@/modules/note-folder/types'
+import type { RoutineNoteByRoutine } from '@/modules/routine-note/types'
 import type { Note } from '../types'
 
-import { NOTE_FOLDER_KEYS } from '&/modules/note-folder/constants'
-import { ROUTINE_NOTE_KEYS } from '&/modules/routine-note/constants'
+import { NOTE_FOLDER_KEYS } from '@/modules/note-folder/constants'
+import { ROUTINE_NOTE_KEYS } from '@/modules/routine-note/constants'
 import { NOTE_KEYS } from '../constants'
 
 import { deleteNote } from '../mutations'

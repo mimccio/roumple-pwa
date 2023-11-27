@@ -4,12 +4,12 @@ import { motion } from 'framer-motion'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import { SCHEDULE_TYPES } from '&/common/constants'
-import { useOccurrenceTypeText } from '&/common/hooks'
-import { cl } from '&/common/utils'
-import type { RoutineAction, Routine } from '&/modules/routine/types'
-import { useEditOccurrence } from '&/modules/routine/hooks'
-import { getOccurrenceBg } from '&/modules/routine/utils'
+import { SCHEDULE_TYPES } from '@/common/constants'
+import { useOccurrenceTypeText } from '@/common/hooks'
+import { cl } from '@/common/utils'
+import type { RoutineAction, Routine } from '@/modules/routine/types'
+import { useEditOccurrence } from '@/modules/routine/hooks'
+import { getOccurrenceBg } from '@/modules/routine/utils'
 
 interface Props {
   routine: Routine

@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { TagIcon } from '@heroicons/react/20/solid'
 
-import { TW_COLOR_BG_100 } from '&/common/constants/tw-colors'
-import { cl } from '&/common/utils'
-import { useMainPath } from '&/common/hooks'
-import type { Category } from '&/modules/category/types'
+import { TW_COLOR_BG_100 } from '@/common/constants/tw-colors'
+import { cl } from '@/common/utils'
+import { useMainPath } from '@/common/hooks'
+import type { Category } from '@/modules/category/types'
 
 interface Props {
   category: Category

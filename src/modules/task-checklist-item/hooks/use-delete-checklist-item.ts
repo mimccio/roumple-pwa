@@ -1,8 +1,8 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-import type { Task } from '&/modules/task/types'
-import { TASK_KEYS } from '&/modules/task/constants'
+import type { Task } from '@/modules/task/types'
+import { TASK_KEYS } from '@/modules/task/constants'
 import { deletedTaskChecklistItem } from '../mutations'
 
 export function useDeleteChecklistItem(task: Task) {

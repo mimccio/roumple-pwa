@@ -1,4 +1,4 @@
-import { db } from '&/db'
+import { db } from '@/db'
 import { NewRoutineNote } from '../types'
 
 export const createBulkRoutineLinkedNotes = async (routineLinkedNotes: NewRoutineNote[]) => {

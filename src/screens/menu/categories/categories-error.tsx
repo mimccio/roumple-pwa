@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import fatalErrorImg from '&/assets/illustrations/fatal-error.png'
+import fatalErrorImg from '@/assets/illustrations/fatal-error.png'
 
 export function CategoriesError() {
   const { t } = useTranslation('error')

@@ -1,13 +1,13 @@
 import { Route, Routes, useMatch } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { cl } from '&/common/utils'
-import { SettingsDetails } from '&/screens/settings/settings-details'
-import { CategoryDetailsScreen } from '&/screens/categories/category-details-screen'
-import { RoutineDetailsScreen } from '&/screens/routine-details'
-import { NoteDetailsScreen } from '&/screens/note-details'
-import { TaskDetailsScreen } from '&/screens/task-details'
-import { ErrorFallback, NotFoundFallback, SelectItemFallback } from '&/screens/fallbacks/details'
+import { cl } from '@/common/utils'
+import { SettingsDetails } from '@/screens/settings/settings-details'
+import { CategoryDetailsScreen } from '@/screens/categories/category-details-screen'
+import { RoutineDetailsScreen } from '@/screens/routine-details'
+import { NoteDetailsScreen } from '@/screens/note-details'
+import { TaskDetailsScreen } from '@/screens/task-details'
+import { ErrorFallback, NotFoundFallback, SelectItemFallback } from '@/screens/fallbacks/details'
 
 export function DetailsScreen() {
   const matchNav = useMatch('/:nav/d/*')

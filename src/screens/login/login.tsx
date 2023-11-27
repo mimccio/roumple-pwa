@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Transition } from '@headlessui/react'
 
-import signInImg from '&/assets/illustrations/sign-in.png'
-import { useLogin } from '&/modules/auth/hooks'
+import signInImg from '@/assets/illustrations/sign-in.png'
+import { useLogin } from '@/modules/auth/hooks'
 import { SignIn } from './sign-in'
 import { Verify } from './verify'
 
