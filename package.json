@@ -56,7 +56,7 @@
     "react-otp-input": "^3.0.2",
     "react-router-dom": "^6.11.1",
     "react-spinners": "^0.13.8",
-    "tailwind-merge": "^2.0.0",
+    "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.0"
   },
