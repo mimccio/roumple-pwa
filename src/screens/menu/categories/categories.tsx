@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
-import { TagIcon } from '@heroicons/react/20/solid'
 import { useTranslation } from 'react-i18next'
 import { useAtom } from 'jotai'
+import { TagIcon } from '@heroicons/react/20/solid'
 
-import { Category } from '@/modules/category/types'
-import { useCategories } from '@/modules/category/hooks'
+import type { Category } from '@/modules/category/types'
 import { categoryAtom } from '@/modules/category/atoms'
+import { useCategories } from '@/modules/category/hooks'
+import { CategoriesError } from './categories-error'
 import { CategoryItem } from './category-item'
 import { ListSkeleton } from './category-list-skeleton'
-import { CategoriesError } from './categories-error'
 
 interface Props {
   close: () => void
@@ -28,7 +28,7 @@ export function Categories({ close }: Props) {
   return (
     <div className="flex-1 py-4">
       <div className="flex items-center justify-between px-4">
-        <Link to="/categories">
+        <Link to="/categories" onClick={close}>
           <h4 className="text-sm font-bold uppercase text-gray-400">{t('categories')}</h4>
         </Link>
       </div>
