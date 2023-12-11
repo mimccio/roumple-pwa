@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 
+// TODO: add `ModeToggle` when ready
+// import { ModeToggle } from './mode-toggle'
+
 export function SettingsHeader() {
   const { t } = useTranslation('common')
   return (
@@ -10,6 +13,9 @@ export function SettingsHeader() {
 
         <h1 className="ml-2">{t('settings')}</h1>
       </div>
+      {/* <div className="flex justify-end">
+        <ModeToggle />
+      </div> */}
     </header>
   )
 }

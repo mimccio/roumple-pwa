@@ -1,10 +1,11 @@
-import { SPINNER_COLOR } from '@/common/constants'
 import { Transition } from '@headlessui/react'
 import { GridLoader } from 'react-spinners'
 
+import { SPINNER_COLOR } from '@/common/constants'
+
 export function Fallback() {
   return (
-    <div className="h-screen bg-gray-100 pt-[40vh]">
+    <div className="h-screen pt-[40vh]">
       <Transition
         as="div"
         appear

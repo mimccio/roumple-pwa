@@ -1,23 +1,24 @@
 import { Suspense } from 'react'
-import { Navigate, Route, createRoutesFromElements, createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { inject } from '@vercel/analytics'
-import { QueryClient } from '@tanstack/react-query'
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { inject } from '@vercel/analytics'
 import { Toaster } from 'react-hot-toast'
 
-import '@/assets/fonts/fonts.css'
-import { editCategory } from '@/modules/category/mutations'
+import { ThemeProvider } from '@/common/contexts/theme'
 import { CATEGORY_LIST } from '@/modules/category/constants'
+import { editCategory } from '@/modules/category/mutations'
 import { Login } from '@/screens/login'
-import { WelcomeScreen } from '@/screens/welcome'
 import { TemplateDetailsScreen } from '@/screens/template-details'
-
-import './i18n'
+import { WelcomeScreen } from '@/screens/welcome'
 import { AuthenticatedApp } from './components/authenticated-app'
-import { appLoader, loginLoader, logoutLoader, onboardingLoader } from './loaders'
 import { Fallback } from './components/fallback'
+import { appLoader, loginLoader, logoutLoader, onboardingLoader } from './loaders'
+
+import '@/assets/fonts/fonts.css'
+import './i18n'
 import './styles.css'
 
 inject({ debug: false })
@@ -78,10 +79,12 @@ export function App() {
         })
       }}
     >
-      <Suspense fallback={<Fallback />}>
-        <RouterProvider router={router} />
-        <Toaster position="bottom-center" />
-      </Suspense>
+      <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+        <Suspense fallback={<Fallback />}>
+          <RouterProvider router={router} />
+          <Toaster position="bottom-center" />
+        </Suspense>
+      </ThemeProvider>
       <ReactQueryDevtools />
     </PersistQueryClientProvider>
   )

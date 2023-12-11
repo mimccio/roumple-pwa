@@ -1,18 +1,17 @@
 import { useState } from 'react'
-import { Route, Routes } from 'react-router'
 import { ErrorBoundary } from 'react-error-boundary'
+import { Route, Routes } from 'react-router'
 
 import { AppError } from '@/screens/errors'
-import { PlanningScreen } from '@/screens/planning/planning-screen'
 import { FeedbackScreen } from '@/screens/feedback'
-import { Menu, MenuButton } from '@/screens/menu'
 import { FirstStepScreen } from '@/screens/first-step'
-import { TemplatesScreen } from '@/screens/templates'
+import { Menu, MenuButton } from '@/screens/menu'
+import { PlanningScreen } from '@/screens/planning/planning-screen'
 import { TemplateDetailsScreen } from '@/screens/template-details'
-
+import { TemplatesScreen } from '@/screens/templates'
 import { useOfflineToast } from '../hooks'
-import { MainScreen, DetailsScreen } from './screens'
 import { FetchingSpinner, OfflineIndicator } from './indicators'
+import { DetailsScreen, MainScreen } from './screens'
 
 export function AuthenticatedApp() {
   useOfflineToast()
@@ -21,7 +20,7 @@ export function AuthenticatedApp() {
 
   return (
     <ErrorBoundary fallback={<AppError />}>
-      <div className="relative flex min-h-screen overflow-hidden bg-white text-gray-800">
+      <div className="relative flex min-h-screen overflow-hidden ">
         <Menu close={toggleMenu} isOpen={menuIsOpen} />
         <MenuButton isOpen={menuIsOpen} toggle={toggleMenu} />
         <FetchingSpinner />

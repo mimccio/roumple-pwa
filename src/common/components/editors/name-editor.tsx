@@ -1,12 +1,12 @@
-import { useEffect, Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useEditor, EditorContent } from '@tiptap/react'
-import { Extension } from '@tiptap/core'
-import Document from '@tiptap/extension-document'
-import Text from '@tiptap/extension-text'
-import Paragraph from '@tiptap/extension-paragraph'
-import CharacterCount from '@tiptap/extension-character-count'
 import { Transition } from '@headlessui/react'
+import { Extension } from '@tiptap/core'
+import CharacterCount from '@tiptap/extension-character-count'
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import { EditorContent, useEditor } from '@tiptap/react'
 import { toast } from 'react-hot-toast'
 
 interface Props {
@@ -33,7 +33,8 @@ export function NameEditor({ name, id, submit }: Props) {
     content: name,
     editorProps: {
       attributes: {
-        class: 'prose relative prose-gray py-2 font-semibold transition-colors rounded-lg prose-2xl focus:outline-none',
+        class:
+          'prose relative prose-gray py-2 font-semibold transition-colors rounded-lg prose-2xl dark:prose-invert focus:outline-none',
       },
     },
   })

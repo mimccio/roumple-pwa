@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { DocumentDuplicateIcon, UserIcon, LanguageIcon } from '@heroicons/react/24/outline'
+import { DocumentDuplicateIcon, LanguageIcon, UserIcon } from '@heroicons/react/24/outline'
 
-import { ContentLayout } from '@/common/components/layouts'
 import { LanguageSelector } from '@/common/components/inputs/language-selector'
-
-import { SettingsHeader } from './parts/settings-header'
+import { ContentLayout } from '@/common/components/layouts'
 import { Section } from './parts/section'
+import { SettingsHeader } from './parts/settings-header'
 
 export function SettingsMain() {
   const { t } = useTranslation(['login', 'settings', 'template'])
@@ -15,7 +14,7 @@ export function SettingsMain() {
     <>
       <SettingsHeader />
       <ContentLayout>
-        <div className="mt-6 flex w-full flex-col gap-y-8 px-2 xl:px-4">
+        <div className="mt-4 flex w-full flex-col gap-y-8 px-2 xl:px-4">
           <Section title={t('Language', { ns: 'settings' })} Icon={LanguageIcon}>
             <div className="flex w-full flex-wrap items-center gap-x-8 gap-y-2">
               <span className="whitespace-nowrap">{t('Select language', { ns: 'settings' })}</span>
@@ -30,6 +29,7 @@ export function SettingsMain() {
               {t('View templates', { ns: 'settings' })}
             </Link>
           </Section>
+
           <Section title={t('Account', { ns: 'settings' })} Icon={UserIcon}>
             <Link
               to="/logout"
