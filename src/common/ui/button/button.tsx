@@ -24,6 +24,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant,
       size,
+      radius,
       color,
       asChild = false,
       startIcon,
@@ -32,9 +33,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       spinnerPosition = 'start',
       responsive,
+      fullWidth,
       ...props
     },
-    ref,
+    ref
   ) => {
     const Comp = asChild ? Slot : 'button'
     const isNotStartLoading = (isLoading && spinnerPosition !== 'start') || !isLoading
@@ -43,7 +45,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         disabled={isLoading}
-        className={cn(buttonVariants({ variant, size, color, responsive, className }))}
+        className={cn(buttonVariants({ variant, size, radius, color, responsive, fullWidth, className }))}
         ref={ref}
         {...props}
       >
@@ -60,6 +62,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </Comp>
     )
-  },
+  }
 )
 Button.displayName = 'Button'

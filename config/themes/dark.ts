@@ -5,7 +5,7 @@ const DARK_FOREGROUND = '0 0% 95%' // hsl(0 0% 95%)
 const ZINC950 = '240 10% 4%' // hsl(240 10% 4%)
 
 export const darkTheme = {
-  '--radius': '0.8rem',
+  '--radius': '1rem',
 
   '--background': '20 14% 4%', // hsl(20, 14%, 4%) stone-950
   '--foreground': DARK_FOREGROUND,

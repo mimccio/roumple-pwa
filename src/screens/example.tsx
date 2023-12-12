@@ -8,25 +8,21 @@ export function Example() {
     <div className="p-4 flex flex-col gap-4 ">
       <h2 className="font-bold text-xl mb-4 text-foreground">Bonjour !</h2>
       <div className="flex gap-2 items-center">
-        <Button size="lg">hello</Button>
-        <Button className="bg-zinc-800 text-zinc-300">hello</Button>
-        <Button color="month" size="sm">
-          hello
+        <Button className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600" radius="none">
+          hello - no
         </Button>
-        <Button color="gem" size="sm">
-          hello
+        <Button
+          className="bg-gradient-to-br from-sky-300  via-purple-300  to-indigo-400 hover:bg-gradient-to-br hover:from-sky-600  hover:via-purple-600  hover:to-indigo-600 text-zinc-800"
+          radius="sm"
+        >
+          hello - sm
         </Button>
-        <Button color="info" size="sm">
-          hello
+        <Button>hello - md</Button>
+        <Button radius="lg" color="gem">
+          hello - lg
         </Button>
-        <Button color="danger" size="sm">
-          hello
-        </Button>
-        <Button color="success" size="sm">
-          hello
-        </Button>
-        <Button color="warning" size="sm">
-          hello
+        <Button radius="full" color="info" size="sm">
+          hello - full
         </Button>
       </div>
       <div className="flex gap-2 items-center">
@@ -49,15 +45,15 @@ export function Example() {
           hello
         </Button>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center w-full bg-precious-dim">
         <Button variant="outline" size="lg">
           hello
         </Button>
         <Button color="month" variant="outline">
           hello
         </Button>
-        <Button variant="outline" size="sm">
-          hello
+        <Button fullWidth variant="outline" size="sm">
+          blou
         </Button>
       </div>
       <div className="flex gap-2 items-center">

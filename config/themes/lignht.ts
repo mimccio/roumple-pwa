@@ -6,7 +6,7 @@ const SLATE50 = '210 40% 98%' // hsl(210 40% 98%)
 const SLATE900 = '222.2 47.4% 11.2%' // hsl(222 48% 11%)
 
 export const lightTheme = {
-  '--radius': '0.8rem',
+  '--radius': '1rem',
 
   '--background': WHITE,
   '--foreground': LIGHT_FOREGROUND,

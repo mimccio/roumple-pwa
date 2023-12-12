@@ -1,5 +1,5 @@
 const solid = {
-  default: 'bg-default text-default-foreground hover:bg-default-soft',
+  default: 'bg-default text-default-foreground hover:bg-default-soft/90',
   primary: 'bg-primary text-primary-foreground hover:bg-primary-soft/90',
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary-soft/90',
   success: 'bg-success text-success-foreground hover:bg-success-soft/90',

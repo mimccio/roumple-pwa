@@ -13,7 +13,6 @@ export const buttonVariants = cva(
     'appearance-none',
     'whitespace-nowrap',
     'min-w-max',
-    'rounded-md',
     'font-medium',
     'subpixel-antialiased',
     'overflow-hidden',
@@ -30,7 +29,6 @@ export const buttonVariants = cva(
         solid: '',
         outline: 'border-2 bg-transparent',
         ghost: 'bg-transparent',
-        flat: '',
         link: 'underline-offset-4 hover:underline',
       },
       size: {
@@ -38,6 +36,13 @@ export const buttonVariants = cva(
         md: 'h-10 px-4 gap-x-2 text-sm',
         lg: 'h-11 px-6 gap-x-3 text-md',
         icon: 'h-10 w-10 [&>svg]:h-5 [&>svg]:w-5',
+      },
+      radius: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
       },
       color: {
         default: '',
@@ -56,11 +61,17 @@ export const buttonVariants = cva(
       responsive: {
         true: '',
       },
+      fullWidth: {
+        true: 'w-full',
+      },
     },
     defaultVariants: {
       variant: 'solid',
       size: 'md',
+      radius: 'md',
       color: 'default',
+      responsive: false,
+      fullWidth: false,
     },
     compoundVariants: [
       // solid / color
@@ -329,5 +340,5 @@ export const buttonVariants = cva(
         class: 'h-9 w-9 [&>svg]:h-4 [&>svg]:w-4 sm:h-10 sm:w-10 sm:[&>svg]:h-5 sm:[&>svg]:w-5',
       },
     ],
-  },
+  }
 )
